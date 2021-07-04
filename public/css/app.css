@@ -1,0 +1,50 @@
+@font-face {
+    font-family: Nexa;
+    src: url(../fonts/NexaLight.otf);
+}
+@font-face {
+    font-family: Nexa;
+    src: url(../fonts/NexaBold.otf);
+    font-weight: bold;
+}
+
+/* font settings */
+.font-nexa {
+    font-family: "Nexa";
+}
+
+.font-weight-bold {
+    font-weight: 700 !important;
+}
+
+.font-weight-black {
+    font-weight: 900 !important;
+}
+
+/* text settings */
+.text-gawedata {
+    color: #3F60F5;
+}
+.text-gawedata:hover {
+    color: #3F60F5;
+}
+
+/* button settings */
+.btn-gawedata {
+    background-color: #3F60F5;
+    color: #fff;
+    border-radius : 12px;
+}
+
+/* form setting */
+.input-login{
+    padding-top : .75rem !important;
+    padding-bottom : .75rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    background-color: #fbfbfb;
+    border-radius : 12px;
+}
+.input-login:focus{
+    background-color: #fff;
+}
