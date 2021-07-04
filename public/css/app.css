@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @font-face {
     font-family: Nexa;
     src: url(../fonts/NexaLight.otf);
@@ -12,6 +13,9 @@
 .font-nexa {
     font-family: "Nexa";
 }
+.font-archivo {
+    font-family: "Archivo" !important;
+}
 
 .font-weight-bold {
     font-weight: 700 !important;
@@ -23,28 +27,70 @@
 
 /* text settings */
 .text-gawedata {
-    color: #3F60F5;
+    color: #3f60f5;
 }
 .text-gawedata:hover {
-    color: #3F60F5;
+    color: #3f60f5;
+}
+
+.text-decoration-none {
+    text-decoration: none;
 }
 
 /* button settings */
 .btn-gawedata {
-    background-color: #3F60F5;
+    background-color: #3f60f5;
     color: #fff;
-    border-radius : 12px;
+    border-radius: 12px;
 }
 
-/* form setting */
-.input-login{
-    padding-top : .75rem !important;
-    padding-bottom : .75rem !important;
+/* form settings */
+.input-login {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
     padding-left: 1rem !important;
     padding-right: 1rem !important;
     background-color: #fbfbfb;
-    border-radius : 12px;
+    border-radius: 12px;
 }
-.input-login:focus{
+.input-login:focus {
     background-color: #fff;
+}
+
+/* navbar settings */
+#profile-menu-box{
+    display:none;
+    position: absolute;
+    width: 5vw;
+    height: 10vw;
+    top: 0;
+    right: 0;
+}
+#profile-menu {
+    position: absolute;
+    width: 20vw;
+    top: 5rem;
+    right: 0;
+    background: #ffffff;
+    box-shadow: 0px 4px 37px rgba(0, 15, 81, 0.06);
+    border-radius: 24px;
+    z-index: 100;
+}
+.profile-quota-box{
+    background-color: #eef0f5;
+    border-radius: 12px;
+    width: 100%;
+    height: 1vh;
+}
+.profile-quota{
+    background-color: #ffd54f;
+    border-radius: 12px;
+    width: 30%;
+    height: 1vh;
+}
+#user-profile:hover + #profile-menu-box{
+    display: block;
+}
+#profile-menu-box:hover{
+    display: block;
 }
