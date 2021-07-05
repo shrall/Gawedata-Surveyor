@@ -85,7 +85,6 @@
 .profile-quota{
     background-color: #ffd54f;
     border-radius: 12px;
-    width: 30%;
     height: 1vh;
 }
 #user-profile:hover + #profile-menu-box{

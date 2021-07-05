@@ -39,7 +39,7 @@
                                     <span class="fa fa-fw fa-info-circle text-secondary"></span>
                                 </p>
                                 <div class="profile-quota-box mb-1">
-                                    <div class="profile-quota"></div>
+                                    <div class="profile-quota" style="width: 30%;"></div>
                                 </div>
                                 <p class="my-0 text-secondary">Tersisa 40/150 kuota responden</p>
                                 <div class="my-3">
@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="mt-3">
                                     <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();"
+                                            document.getElementById('logout-form').submit();"
                                         class="text-dark text-decoration-none font-weight-bold">
                                         Logout
                                     </a>
