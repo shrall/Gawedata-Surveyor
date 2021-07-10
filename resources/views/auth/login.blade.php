@@ -11,10 +11,10 @@
                         <div class="col-6">
                             <input id="email" type="email"
                                 class="form-control input-login @error('email') is-invalid @enderror" name="email"
-                                value="{{ old('username') ?: old('email') }}" required autofocus placeholder="E-Mail">
+                                value="{{ old('email') }}" required autofocus placeholder="E-Mail">
                             @error('email')
                                 <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('username') ?: $errors->first('email') }}</strong>
+                                    <strong>{{ $errors->first('email') }}</strong>
                                 </span>
                             @enderror
                         </div>

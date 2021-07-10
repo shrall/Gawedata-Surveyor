@@ -15,7 +15,7 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item mx-4">
-                        <a href="#" class="btn btn-gawedata font-archivo">
+                        <a href="#" class="btn btn-gawedata font-lato">
                             Buat Survei
                         </a>
                     </li>
@@ -48,7 +48,7 @@
                                 </div>
                                 <hr>
                                 <div class="my-3">
-                                    <a href="#" class="text-dark text-decoration-none font-weight-bold">
+                                    <a href="{{route('user.editprofile')}}" class="text-dark text-decoration-none font-weight-bold">
                                         Account
                                     </a>
                                 </div>
