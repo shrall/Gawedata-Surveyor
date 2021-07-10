@@ -20,6 +20,10 @@
     font-family: "Lato" !important;
 }
 
+.font-weight-regular {
+    font-weight: 400 !important;
+}
+
 .font-weight-bold {
     font-weight: 700 !important;
 }

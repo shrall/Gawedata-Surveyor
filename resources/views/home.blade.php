@@ -41,7 +41,7 @@
                 <h5>Yuk, mulai buat survey</h5>
             </div>
         </div> --}}
-        <div class="row gy-4" id="survey-list-grid">
+        {{-- <div class="row gy-4" id="survey-list-grid">
             <div class="col-3 cursor-pointer">
                 <div class="card card-survey-grid px-1 py-3 text-gray">
                     <div class="card-header d-flex align-items-center">
@@ -122,6 +122,80 @@
                     </div>
                 </div>
             </div>
+        </div> --}}
+        <div id="survey-list-list">
+            <table class="table table-borderless table-hover">
+                <thead>
+                    <tr class="text-gray">
+                        <th class="font-weight-regular" scope="col" width="55%">Nama Survei</th>
+                        <th class="font-weight-regular text-end" scope="col">Status</th>
+                        <th class="font-weight-regular text-end" scope="col">Jumlah Responden</th>
+                        <th class="font-weight-regular text-end" scope="col">Tanggal Rilis</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray">
+                    <tr class="border-bottom">
+                        <th class="py-4 text-dark fs-5" scope="row">Survei Ras Kucing</th>
+                        <td class="py-4 text-end">
+                            <div>
+                                <span class="fa fa-fw fa-circle text-yellow me-2"></span>Draft
+                            </div>
+                        </td>
+                        <td class="py-4 text-end"><span class="fa fa-fw fa-users me-2"></span> 0/100 Responden</td>
+                        <td class="py-4 text-end">Hari ini 13.00 WIB</td>
+                    </tr>
+                    <tr class="border-bottom">
+                        <th class="py-4 text-dark fs-5" scope="row">Survei Ras Kucing</th>
+                        <td class="py-4 text-end">
+                            <div class="text-green">
+                                <span class="fa fa-fw fa-circle text-green me-2"></span>Published
+                            </div>
+                        </td>
+                        <td class="py-4 text-end"><span class="fa fa-fw fa-users me-2"></span> 0/100 Responden</td>
+                        <td class="py-4 text-end">Hari ini 13.00 WIB</td>
+                    </tr>
+                    <tr class="border-bottom">
+                        <th class="py-4 text-dark fs-5" scope="row">Survei Ras Kucing</th>
+                        <td class="py-4 text-end">
+                            <div class="text-green">
+                                <span class="fa fa-fw fa-circle text-green me-2"></span>Published
+                            </div>
+                        </td>
+                        <td class="py-4 text-end"><span class="fa fa-fw fa-users me-2"></span> 0/100 Responden</td>
+                        <td class="py-4 text-end">Hari ini 13.00 WIB</td>
+                    </tr>
+                    <tr class="border-bottom">
+                        <th class="py-4 text-dark fs-5" scope="row">Survei Ras Kucing</th>
+                        <td class="py-4 text-end">
+                            <div>
+                                <span class="fa fa-fw fa-circle text-yellow me-2"></span>Draft
+                            </div>
+                        </td>
+                        <td class="py-4 text-end"><span class="fa fa-fw fa-users me-2"></span> 0/100 Responden</td>
+                        <td class="py-4 text-end">Hari ini 13.00 WIB</td>
+                    </tr>
+                    <tr class="border-bottom">
+                        <th class="py-4 text-dark fs-5" scope="row">Survei Ras Kucing</th>
+                        <td class="py-4 text-end">
+                            <div class="text-green">
+                                <span class="fa fa-fw fa-circle text-green me-2"></span>Published
+                            </div>
+                        </td>
+                        <td class="py-4 text-end"><span class="fa fa-fw fa-users me-2"></span> 0/100 Responden</td>
+                        <td class="py-4 text-end">Hari ini 13.00 WIB</td>
+                    </tr>
+                    <tr>
+                        <th class="py-4 text-dark fs-5" scope="row">Survei Ras Kucing</th>
+                        <td class="py-4 text-end">
+                            <div>
+                                <span class="fa fa-fw fa-circle text-yellow me-2"></span>Draft
+                            </div>
+                        </td>
+                        <td class="py-4 text-end"><span class="fa fa-fw fa-users me-2"></span> 0/100 Responden</td>
+                        <td class="py-4 text-end">Hari ini 13.00 WIB</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 @endsection
