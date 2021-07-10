@@ -11,7 +11,7 @@
                     <h2 class="my-5">Reset Password</h2>
                     <div class="mb-3 position-relative">
                         <input id="old_password" type="password"
-                            class="form-control input-login @error('old_password') is-invalid @enderror" name="old_password"
+                            class="form-control input-text @error('old_password') is-invalid @enderror" name="old_password"
                             required placeholder="Password Lama">
                         <span id="eye-old-password"
                             class="fa fa-fw fa-eye cursor-pointer position-absolute top-50 end-0 translate-middle-y pe-4 me-3 fs-6 text-gray"
@@ -24,7 +24,7 @@
                     </div>
                     <div class="my-3 position-relative">
                         <input id="new_password" type="password"
-                            class="form-control input-login @error('new_password') is-invalid @enderror d-inline"
+                            class="form-control input-text @error('new_password') is-invalid @enderror d-inline"
                             name="new_password" required placeholder="Password Baru">
                         <span id="eye-new-password"
                             class="fa fa-fw fa-eye cursor-pointer position-absolute top-50 end-0 translate-middle-y pe-4 me-3 fs-6 text-gray"
@@ -37,7 +37,7 @@
                     </div>
                     <div class="my-3 position-relative">
                         <input id="new_password_confirmation" type="password"
-                            class="form-control input-login @error('new_password_confirmation') is-invalid @enderror"
+                            class="form-control input-text @error('new_password_confirmation') is-invalid @enderror"
                             name="new_password_confirmation" required placeholder="Konfirmasi Password Baru">
                         <span id="eye-new-password-confirmation"
                             class="fa fa-fw fa-eye cursor-pointer position-absolute top-50 end-0 translate-middle-y pe-4 me-3 fs-6 text-gray"

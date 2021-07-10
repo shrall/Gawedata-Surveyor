@@ -10,7 +10,7 @@
                     <div class="row mb-3 justify-content-center">
                         <div class="col-6">
                             <input id="email" type="email"
-                                class="form-control input-login @error('email') is-invalid @enderror" name="email"
+                                class="form-control input-text @error('email') is-invalid @enderror" name="email"
                                 value="{{ old('email') }}" required autofocus placeholder="E-Mail">
                             @error('email')
                                 <span class="invalid-feedback">
@@ -22,7 +22,7 @@
                     <div class="row justify-content-center">
                         <div class="col-6">
                             <input id="password" type="password"
-                                class="form-control input-login @error('password') is-invalid @enderror" name="password"
+                                class="form-control input-text @error('password') is-invalid @enderror" name="password"
                                 value="{{ old('password') }}" required autocomplete="password" placeholder="Password">
                             @error('password')
                                 <span class="invalid-feedback" role="alert">

@@ -10,7 +10,7 @@
                 <div class="container ms-5">
                     <h2 class="my-5">Edit Profile</h2>
                     <div class="mb-3">
-                        <input id="name" type="text" class="form-control input-login @error('name') is-invalid @enderror"
+                        <input id="name" type="text" class="form-control input-text @error('name') is-invalid @enderror"
                             name="name" required placeholder="Nama">
                         @error('name')
                             <span class="invalid-feedback">
@@ -19,7 +19,7 @@
                         @enderror
                     </div>
                     <div class="my-3">
-                        <input id="email" type="email" class="form-control input-login @error('email') is-invalid @enderror"
+                        <input id="email" type="email" class="form-control input-text @error('email') is-invalid @enderror"
                             name="email" required placeholder="E-Mail">
                         @error('email')
                             <span class="invalid-feedback">
