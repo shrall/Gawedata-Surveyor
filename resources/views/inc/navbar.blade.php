@@ -12,12 +12,11 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav me-auto">
                 </ul>
-
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item mx-4">
                         <a href="#" class="btn btn-gawedata font-archivo">
-                            Buat Survey
+                            Buat Survei
                         </a>
                     </li>
                     <li class="nav-item mx-2 ">
