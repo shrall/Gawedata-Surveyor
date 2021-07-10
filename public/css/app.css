@@ -38,6 +38,12 @@
 .text-gray {
     color: #adb3bc;
 }
+.text-yellow {
+    color: #FFC107;
+}
+.text-green {
+    color: #49D479;
+}
 
 .text-decoration-none {
     text-decoration: none;
@@ -119,7 +125,7 @@ input:focus {
     display: block;
 }
 
-/* user pages */
+/* user page */
 #user-sidebar li a {
     color: grey !important;
 }
@@ -132,4 +138,16 @@ input:focus {
 .active-border {
     border-left: 6px solid #3f60f5 !important;
     border-radius: 6px;
+}
+
+/* home */
+.card-survey-grid{
+    border: 0 !important;
+    border-radius: 18px;
+    box-shadow: 0px 3px 34px rgba(0, 0, 0, 0.06);
+}
+.card-survey-grid .card-header,
+.card-survey-grid .card-footer {
+    border: 0 !important;
+    background-color: #fff;
 }

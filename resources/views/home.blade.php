@@ -35,10 +35,92 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center">
+        {{-- <div class="row justify-content-center" id="survey-list-empty">
             <div class="col-4 text-center font-nexa my-5 pt-5">
                 <img src="{{asset('images/survey-empty.png')}}" alt="" srcset="">
                 <h5>Yuk, mulai buat survey</h5>
+            </div>
+        </div> --}}
+        <div class="row gy-4" id="survey-list-grid">
+            <div class="col-3 cursor-pointer">
+                <div class="card card-survey-grid px-1 py-3 text-gray">
+                    <div class="card-header d-flex align-items-center">
+                        <div>
+                            <span class="fa fa-fw fa-circle text-yellow me-2"></span>Draft
+                        </div>
+                        <div class="ms-auto">Hari ini 13.00 WIB</div>
+                    </div>
+                    <div class="card-body mt-4 pb-0">
+                        <h5 class="font-weight-bold text-dark">Survei Ras Kucing</h5>
+                    </div>
+                    <div class="card-footer pt-0">
+                        <span class="fa fa-fw fa-users me-2"></span> 0/100 Responden
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 cursor-pointer">
+                <div class="card card-survey-grid px-1 py-3 text-gray">
+                    <div class="card-header d-flex align-items-center">
+                        <div>
+                            <span class="fa fa-fw fa-circle text-yellow me-2"></span>Draft
+                        </div>
+                        <div class="ms-auto">Hari ini 13.00 WIB</div>
+                    </div>
+                    <div class="card-body mt-4 pb-0">
+                        <h5 class="font-weight-bold text-dark">Survei Ras Kucing</h5>
+                    </div>
+                    <div class="card-footer pt-0">
+                        <span class="fa fa-fw fa-users me-2"></span> 0/100 Responden
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 cursor-pointer">
+                <div class="card card-survey-grid px-1 py-3 text-gray">
+                    <div class="card-header d-flex align-items-center">
+                        <div>
+                            <span class="fa fa-fw fa-circle text-yellow me-2"></span>Draft
+                        </div>
+                        <div class="ms-auto">Hari ini 13.00 WIB</div>
+                    </div>
+                    <div class="card-body mt-4 pb-0">
+                        <h5 class="font-weight-bold text-dark">Survei Ras Kucing</h5>
+                    </div>
+                    <div class="card-footer pt-0">
+                        <span class="fa fa-fw fa-users me-2"></span> 0/100 Responden
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 cursor-pointer">
+                <div class="card card-survey-grid px-1 py-3 text-gray">
+                    <div class="card-header d-flex align-items-center">
+                        <div>
+                            <span class="fa fa-fw fa-circle text-yellow me-2"></span>Draft
+                        </div>
+                        <div class="ms-auto">Hari ini 13.00 WIB</div>
+                    </div>
+                    <div class="card-body mt-4 pb-0">
+                        <h5 class="font-weight-bold text-dark">Survei Ras Kucing</h5>
+                    </div>
+                    <div class="card-footer pt-0">
+                        <span class="fa fa-fw fa-users me-2"></span> 0/100 Responden
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 cursor-pointer">
+                <div class="card card-survey-grid px-1 py-3 text-gray">
+                    <div class="card-header d-flex align-items-center">
+                        <div class="text-green">
+                            <span class="fa fa-fw fa-circle text-green me-2"></span>Published
+                        </div>
+                        <div class="ms-auto">Hari ini 13.00 WIB</div>
+                    </div>
+                    <div class="card-body mt-4 pb-0">
+                        <h5 class="font-weight-bold text-dark">Survei Ras Kucing</h5>
+                    </div>
+                    <div class="card-footer pt-0">
+                        <span class="fa fa-fw fa-users me-2"></span> 0/100 Responden
+                    </div>
+                </div>
             </div>
         </div>
     </div>
