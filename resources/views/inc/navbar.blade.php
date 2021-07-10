@@ -20,12 +20,12 @@
                         </a>
                     </li>
                     <li class="nav-item mx-2 ">
-                        <a href="#" class="text-gawedata text-decoration-none font-weight-bold cursor-pointer">
+                        <a href="#" class="text-gawedata text-decoration-none font-weight-bold cursor-pointer" id="survey-button-grid" onclick="toggleSurveyViewGrid()">
                             <span class="fa fa-fw fa-th-large"></span>
                         </a>
                     </li>
                     <li class="nav-item mx-2 ">
-                        <a href="#" class="text-secondary text-decoration-none font-weight-bold cursor-pointer">
+                        <a href="#" class="text-secondary text-decoration-none font-weight-bold cursor-pointer" id="survey-button-list" onclick="toggleSurveyViewList()">
                             <span class="fa fa-fw fa-bars"></span>
                         </a>
                     </li>
