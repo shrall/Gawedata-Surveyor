@@ -24,7 +24,7 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::group(['as' => 'user.'], function () {
+Route::group(['middleware' => ['surveyor'], 'as' => 'user.'], function () {
     Route::get('edit-profile', [UserController::class, 'edit_profile'])->name('editprofile');
     Route::get('reset-password', [UserController::class, 'reset_password'])->name('resetpassword');
 });

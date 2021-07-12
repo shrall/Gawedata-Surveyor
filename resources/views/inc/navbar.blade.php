@@ -7,7 +7,7 @@
         <a class="navbar-brand" href="{{ url('/') }}">
             <img src="{{ asset('images/logo-with-text.png') }}" alt="" class="d-inline-block align-text-top">
         </a>
-        @auth
+        @if (Route::current()->getName() == 'home')
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav me-auto">
@@ -68,6 +68,6 @@
                     </li>
                 </ul>
             </div>
-        @endauth
+        @endif
     </div>
 </nav>
