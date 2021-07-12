@@ -8,52 +8,52 @@
             </div>
             <div class="col-4">
                 <div class="container ms-5">
-                    <h2 class="my-5">Reset Password</h2>
-                    <div class="mb-3 position-relative">
-                        <input id="old_password" type="password"
-                            class="form-control input-text @error('old_password') is-invalid @enderror" name="old_password"
-                            required placeholder="Password Lama">
-                        <span id="eye-old-password"
-                            class="fa fa-fw fa-eye cursor-pointer position-absolute top-50 end-0 translate-middle-y pe-4 me-3 fs-6 text-gray"
-                            onclick="toggleOldPassword()"></span>
-                        @error('old_password')
-                            <span class="invalid-feedback">
-                                <strong>{{ $errors->first('old_password') }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="my-3 position-relative">
-                        <input id="new_password" type="password"
-                            class="form-control input-text @error('new_password') is-invalid @enderror d-inline"
-                            name="new_password" required placeholder="Password Baru">
-                        <span id="eye-new-password"
-                            class="fa fa-fw fa-eye cursor-pointer position-absolute top-50 end-0 translate-middle-y pe-4 me-3 fs-6 text-gray"
-                            onclick="toggleNewPassword()"></span>
-                        @error('new_password')
-                            <span class="invalid-feedback">
-                                <strong>{{ $errors->first('new_password') }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="my-3 position-relative">
-                        <input id="new_password_confirmation" type="password"
-                            class="form-control input-text @error('new_password_confirmation') is-invalid @enderror"
-                            name="new_password_confirmation" required placeholder="Konfirmasi Password Baru">
-                        <span id="eye-new-password-confirmation"
-                            class="fa fa-fw fa-eye cursor-pointer position-absolute top-50 end-0 translate-middle-y pe-4 me-3 fs-6 text-gray"
-                            onclick="toggleNewPasswordConfirmation()"></span>
-                        @error('new_password_confirmation')
-                            <span class="invalid-feedback">
-                                <strong>{{ $errors->first('new_password_confirmation') }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="row justify-content-center px-2 mt-5 mb-2">
-                        <button type="submit" class="btn btn-gawedata col-12 py-2" id="login-button"
-                            onclick="submitLogin();">
-                            {{ __('Simpan') }}
-                        </button>
-                    </div>
+                    <form action="{{ route('user.updatepassword') }}" method="post">
+                        @csrf
+                        <h2 class="my-5">Reset Password</h2>
+                        <div class="mb-3 position-relative">
+                            <input id="current_password" type="password" class="form-control input-text"
+                                name="current_password" required placeholder="Password Lama">
+                            <span id="eye-current-password"
+                                class="fa fa-fw fa-eye cursor-pointer position-absolute top-50 end-0 translate-middle-y pe-4 me-3 fs-6 text-gray"
+                                onclick="togglecurrentPassword()"></span>
+                            @error('current_password')
+                                <span class="invalid-feedback">
+                                    <strong>{{ $errors->first('current_password') }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="my-3 position-relative">
+                            <input id="new_password" type="password" class="form-control input-text" name="new_password"
+                                required placeholder="Password Baru">
+                            <span id="eye-new-password"
+                                class="fa fa-fw fa-eye cursor-pointer position-absolute top-50 end-0 translate-middle-y pe-4 me-3 fs-6 text-gray"
+                                onclick="toggleNewPassword()"></span>
+                            @error('new_password')
+                                <span class="invalid-feedback">
+                                    <strong>{{ $errors->first('new_password') }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="my-3 position-relative">
+                            <input id="new_password_confirmation" type="password" class="form-control input-text"
+                                name="new_password_confirmation" required placeholder="Konfirmasi Password Baru">
+                            <span id="eye-new-password-confirmation"
+                                class="fa fa-fw fa-eye cursor-pointer position-absolute top-50 end-0 translate-middle-y pe-4 me-3 fs-6 text-gray"
+                                onclick="toggleNewPasswordConfirmation()"></span>
+                            @error('new_password_confirmation')
+                                <span class="invalid-feedback">
+                                    <strong>{{ $errors->first('new_password_confirmation') }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="row justify-content-center px-2 mt-5 mb-2">
+                            <button type="submit" class="btn btn-gawedata col-12 py-2" id="login-button"
+                                onclick="submitLogin();">
+                                {{ __('Simpan') }}
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -67,15 +67,15 @@
         });
     </script>
     <script>
-        function toggleOldPassword() {
-            if ($("#old_password").attr('type') == 'password') {
-                $("#old_password").attr('type', 'text');
-                $("#eye-old-password").removeClass('fa-eye');
-                $("#eye-old-password").addClass('fa-eye-slash');
+        function togglecurrentPassword() {
+            if ($("#current_password").attr('type') == 'password') {
+                $("#current_password").attr('type', 'text');
+                $("#eye-current-password").removeClass('fa-eye');
+                $("#eye-current-password").addClass('fa-eye-slash');
             } else {
-                $("#old_password").attr('type', 'password');
-                $("#eye-old-password").removeClass('fa-eye-slash');
-                $("#eye-old-password").addClass('fa-eye');
+                $("#current_password").attr('type', 'password');
+                $("#eye-current-password").removeClass('fa-eye-slash');
+                $("#eye-current-password").addClass('fa-eye');
             }
         }
 
