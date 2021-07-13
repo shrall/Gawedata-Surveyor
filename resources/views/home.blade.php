@@ -203,6 +203,7 @@
 @endsection
 
 @section('scripts')
+    {{-- filter --}}
     <script>
         $(function() {
             $('#select-filter').find('li').click(function() {
@@ -213,6 +214,7 @@
             });
         });
     </script>
+    {{-- toggle view --}}
     <script>
         function toggleSurveyViewList() {
             if ($("#survey-view-grid").hasClass('d-block')) {
@@ -237,5 +239,62 @@
             $(buttonOff).removeClass('text-gawedata');
             $(buttonOff).addClass('text-secondary');
         }
+    </script>
+    {{-- create survey --}}
+    <script>
+        //first step
+        function enableFirstButton() {
+            if ($("#survey-title").val() != "" &&
+                $("#survey-description").val() != "" &&
+                $("#survey-category").val() != "" &&
+                $("#survey-type").val() != "") {
+                $("#create-survey-next-button-1").prop("disabled", false);
+            } else {
+                $("#create-survey-next-button-1").prop("disabled", true);
+            }
+        }
+        $(function() {
+            $('#select-survey-category').find('li').click(function() {
+                $('#selected-survey-category').html($(this).text() +
+                    '<span class="fa fa-fw fa-chevron-down ms-auto"></span>');
+                $('#survey-category').val($(this).text());
+                enableFirstButton();
+            });
+            $('#select-survey-type').find('li').click(function() {
+                $('#selected-survey-type').html($(this).text() +
+                    '<span class="fa fa-fw fa-chevron-down ms-auto"></span>');
+                if ($(this).text() == 'Public (Semua responden dapat melihat dan mengisi survei)') {
+                    $('#survey-type').val('Public');
+                } else {
+                    $('#survey-type').val('Private');
+                }
+                enableFirstButton();
+            });
+        });
+        $("#survey-title").keyup(function() {
+            enableFirstButton();
+        });
+        $("#survey-description").keyup(function() {
+            enableFirstButton();
+        });
+    </script>
+    <script>
+        function changeStep(beforeStep, afterStep) {
+            $(beforeStep).addClass('d-none');
+            $(afterStep).removeClass('d-none');
+        }
+        $('#create-survey-next-button-1').click(function() {
+            if ($('#survey-type').val() == 'Private') {
+                changeStep('#first-step', '#second-step-private');
+            } else {
+                changeStep('#first-step', '#second-step-public');
+            }
+            $('#create-survey-sidebar').find('li:nth-child(1)').removeClass('active');
+            $('#create-survey-sidebar').find('li:nth-child(2)').addClass('active');
+            $('#create-survey-sidebar').find('li:nth-child(1)').find('div').removeClass('d-inline');
+            $('#create-survey-sidebar').find('li:nth-child(1)').find('div').addClass('d-none');
+            $('#create-survey-sidebar').find('li:nth-child(2)').find('div').removeClass('d-none');
+            $('#create-survey-sidebar').find('li:nth-child(2)').find('div').addClass('d-inline');
+        })
     </script>
 @endsection

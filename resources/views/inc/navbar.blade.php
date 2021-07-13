@@ -16,10 +16,11 @@
                 <ul class="navbar-nav ms-auto align-items-center">
                     @if (Route::current()->getName() == 'home')
                         <li class="nav-item mx-4">
-                            <a href="#" class="btn btn-gawedata font-lato">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#create-survey-modal" class="btn btn-gawedata font-lato">
                                 Buat Survei
                             </a>
                         </li>
+                        @include('inc.modal.survey.create')
                         <li class="nav-item mx-2 ">
                             <a href="#" class="text-gawedata text-decoration-none font-weight-bold cursor-pointer"
                                 id="survey-button-grid" onclick="toggleSurveyViewGrid()">
