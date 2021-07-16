@@ -50,7 +50,7 @@ class LoginController extends Controller
             Session::put('token', $response['data']['token']);
             return redirect()->route('home');
         } else {
-            return redirect()->route('login');
+            return redirect()->route('login')->withErrors(['msg', 'Error']);
         }
     }
 

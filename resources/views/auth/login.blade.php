@@ -4,31 +4,30 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                @if ($errors->any())
+                    <div class="row justify-content-center px-2 mb-4" id="login-failed">
+                        <div class="btn btn-error col-5 py-3 mx-2">
+                            Email atau password tidak cocok
+                        </div>
+                    </div>
+                @endif
                 <h3 class="font-weight-bold text-center mb-5">Login</h3>
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="row mb-3 justify-content-center">
                         <div class="col-6">
-                            <input id="email" type="email"
-                                class="form-control input-text @error('email') is-invalid @enderror" name="email"
-                                value="{{ old('email') }}" required autofocus placeholder="E-Mail">
-                            @error('email')
-                                <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('email') }}</strong>
-                                </span>
-                            @enderror
+                            <input id="email" type="text" class="form-control input-text" name="email" required
+                                placeholder="E-Mail">
+                            <span class="invalid-feedback text-end">
+                                <strong>Email tidak sesuai. Contoh email : contoh@gmail.com</strong>
+                            </span>
                         </div>
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-6">
                             <input id="password" type="password"
                                 class="form-control input-text @error('password') is-invalid @enderror" name="password"
-                                value="{{ old('password') }}" required autocomplete="password" placeholder="Password">
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                                required placeholder="Password">
                         </div>
                     </div>
                     <div class="row justify-content-center py-2">
@@ -51,8 +50,18 @@
 
 @section('scripts')
     <script>
+        function validateEmail(email) {
+            var regex =
+                /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            return email.match(regex)
+        }
+
         function submitLogin() {
-            if ($('#email').val() && $('#password').val()) {
+            if (!validateEmail($('#email').val())) {
+                event.preventDefault();
+                $('#email').addClass('is-invalid');
+            } else if (validateEmail($('#email').val()) && $('#password').val()) {
+                $('#email').removeClass('is-invalid');
                 $('#login-button').html('<span class="fa fa-fw fa-spin fa-circle-notch"></span>');
             }
         }

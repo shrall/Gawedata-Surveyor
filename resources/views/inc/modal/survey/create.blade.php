@@ -117,7 +117,8 @@
                                         id="create-survey-next-button-2">
                                         {{ __('Selanjutnya') }}
                                     </button>
-                                </div></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

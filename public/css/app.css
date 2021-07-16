@@ -77,6 +77,20 @@
     color: #fff;
     border-radius: 12px;
 }
+.btn-error {
+    background-color: #FF525D;
+    color: #fff;
+    border-radius: 12px;
+}
+
+/* error handling */
+.form-control.is-invalid, .was-validated .form-control:invalid{
+    border-color: #ced4da;
+    background-image: url();
+}
+.invalid-feedback{
+    color: #FF525D;
+}
 
 /* form settings */
 input:focus {
