@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $surveys = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/survey')
+            ->json()['data']['data'];
+        return view('home', compact('surveys'));
     }
 }
