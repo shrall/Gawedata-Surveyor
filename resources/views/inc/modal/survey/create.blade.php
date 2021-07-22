@@ -4,7 +4,7 @@
         <div class="modal-content ps-4 py-0" style="border-radius: 18px !important;">
             <div class="modal-body py-0">
                 <div class="row">
-                    <div class="col-5 text-start border-end pt-5 pe-0">
+                    <div class="col-5 text-start border-end pt-5 pe-0" id="create-survey-sidebar-col">
                         <ul class="list-unstyled font-weight-bold my-5" id="create-survey-sidebar">
                             <li class="my-4 active
                                 position-relative">
@@ -22,7 +22,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-7 text-center my-4" id="first-step">
+                    <div class="col-7 text-center my-4 d-inline" id="first-step">
                         <div class="d-flex">
                             <span class="fa fa-fw fa-times-circle fs-5 text-gray cursor-pointer ms-auto"
                                 data-bs-dismiss="modal" aria-label="Close"></span>
@@ -75,9 +75,11 @@
                                         </span>
                                         <ul class="dropdown-menu w-100 px-2">
                                             <div class="overflow-auto ps-2 pe-5" style="min-height:0;max-height: 30vh;">
-                                                <li class="dropdown-item">Public (Semua responden dapat melihat dan
+                                                <li class="dropdown-item" data-type="public">Public (Semua responden
+                                                    dapat melihat dan
                                                     mengisi survei)</li>
-                                                <li class="dropdown-item">Private (Hanya responden terpilih dapat
+                                                <li class="dropdown-item" data-type="private">Private (Hanya responden
+                                                    terpilih dapat
                                                     melihat dan mengisi survei)</li>
                                             </div>
                                         </ul>
@@ -86,7 +88,7 @@
                                 <div class="row justify-content-end px-2 mb-2">
                                     <button type="submit" class="btn btn-gawedata col-4 py-2" disabled
                                         id="create-survey-next-button-1">
-                                        {{ __('Selanjutnya') }}
+                                        Selanjutnya
                                     </button>
                                 </div>
                             </div>
@@ -98,6 +100,132 @@
                                 data-bs-dismiss="modal" aria-label="Close"></span>
                         </div>
                         <h5 class="my-1">Pilih Kriteria Responden</h5>
+                        <div class="row justify-content-center my-5">
+                            <div class="col-10">
+                                <div class="row justify-content-between align-items-center mb-3">
+                                    <div class="col-4 text-start">Jenis Kelamin</div>
+                                    <div class="col-6 text-end">
+                                        <input type="checkbox" class="btn-check" id="check-pria" autocomplete="off">
+                                        <label class="btn btn-checkbox-gawedata px-4 me-2" for="check-pria">Pria</label>
+                                        <input type="checkbox" class="btn-check" id="check-wanita" autocomplete="off">
+                                        <label class="btn btn-checkbox-gawedata px-4 ms-2"
+                                            for="check-wanita">Wanita</label>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-between align-items-center mb-3">
+                                    <div class="col-4 text-start">Rentang Umur</div>
+                                    <div class="col-5 text-end">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <input type="number" name="age-start" id="age-start"
+                                                class="form-control input-text text-center" min="0">
+                                            <span class="mx-2">sampai</span>
+                                            <input type="number" name="age-end" id="age-end"
+                                                class="form-control input-text text-center" max="1000">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <input id="survey-education" type="hidden" name="survey-education">
+                                    <div class="dropdown" id="select-survey-education">
+                                        <span class="form-control input-text d-flex align-items-center" type="button"
+                                            data-bs-toggle="dropdown" id="selected-survey-education">
+                                            Latar Belakang Pendidikan
+                                            <span class="fa fa-fw fa-chevron-down ms-auto"></span>
+                                        </span>
+                                        <ul class="dropdown-menu w-100 px-2">
+                                            <div class="overflow-auto ps-2 pe-5" style="min-height:0;max-height: 30vh;">
+                                                <li class="dropdown-item">SD</li>
+                                                <li class="dropdown-item">SMP</li>
+                                                <li class="dropdown-item">SMA</li>
+                                                <li class="dropdown-item">S1</li>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <input id="survey-education" type="hidden" name="survey-education">
+                                    <div class="dropdown" id="select-survey-education">
+                                        <span class="form-control input-text d-flex align-items-center" type="button"
+                                            data-bs-toggle="dropdown" id="selected-survey-education">
+                                            Latar Belakang Pendidikan
+                                            <span class="fa fa-fw fa-chevron-down ms-auto"></span>
+                                        </span>
+                                        <ul class="dropdown-menu w-100 px-2">
+                                            <div class="overflow-auto ps-2 pe-5" style="min-height:0;max-height: 30vh;">
+                                                <li class="dropdown-item">SD</li>
+                                                <li class="dropdown-item">SMP</li>
+                                                <li class="dropdown-item">SMA</li>
+                                                <li class="dropdown-item">S1</li>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <input id="survey-education" type="hidden" name="survey-education">
+                                    <div class="dropdown" id="select-survey-education">
+                                        <span class="form-control input-text d-flex align-items-center" type="button"
+                                            data-bs-toggle="dropdown" id="selected-survey-education">
+                                            Latar Belakang Pendidikan
+                                            <span class="fa fa-fw fa-chevron-down ms-auto"></span>
+                                        </span>
+                                        <ul class="dropdown-menu w-100 px-2">
+                                            <div class="overflow-auto ps-2 pe-5" style="min-height:0;max-height: 30vh;">
+                                                <li class="dropdown-item">SD</li>
+                                                <li class="dropdown-item">SMP</li>
+                                                <li class="dropdown-item">SMA</li>
+                                                <li class="dropdown-item">S1</li>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <input id="survey-education" type="hidden" name="survey-education">
+                                    <div class="dropdown" id="select-survey-education">
+                                        <span class="form-control input-text d-flex align-items-center" type="button"
+                                            data-bs-toggle="dropdown" id="selected-survey-education">
+                                            Latar Belakang Pendidikan
+                                            <span class="fa fa-fw fa-chevron-down ms-auto"></span>
+                                        </span>
+                                        <ul class="dropdown-menu w-100 px-2">
+                                            <div class="overflow-auto ps-2 pe-5" style="min-height:0;max-height: 30vh;">
+                                                <li class="dropdown-item">SD</li>
+                                                <li class="dropdown-item">SMP</li>
+                                                <li class="dropdown-item">SMA</li>
+                                                <li class="dropdown-item">S1</li>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <input id="survey-education" type="hidden" name="survey-education">
+                                    <div class="dropdown" id="select-survey-education">
+                                        <span class="form-control input-text d-flex align-items-center" type="button"
+                                            data-bs-toggle="dropdown" id="selected-survey-education">
+                                            Latar Belakang Pendidikan
+                                            <span class="fa fa-fw fa-chevron-down ms-auto"></span>
+                                        </span>
+                                        <ul class="dropdown-menu w-100 px-2">
+                                            <div class="overflow-auto ps-2 pe-5" style="min-height:0;max-height: 30vh;">
+                                                <li class="dropdown-item">SD</li>
+                                                <li class="dropdown-item">SMP</li>
+                                                <li class="dropdown-item">SMA</li>
+                                                <li class="dropdown-item">S1</li>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-between align-items-center px-2 mb-2">
+                                    <span
+                                        class="col-4 text-gawedata text-start cursor-pointer ps-0" id="create-survey-back-button-2-public">
+                                        <span class="fa fa-fw fa-arrow-left me-2"></span>Sebelumnya
+                                    </span>
+                                    <button type="submit"
+                                        class="btn btn-gawedata col-4 py-2" id="create-survey-next-button-2-public" disabled>
+                                        Selanjutnya
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-7 text-center my-4 d-none" id="second-step-private">
                         <div class="d-flex">
@@ -106,16 +234,20 @@
                         </div>
                         <h5 class="my-1">Pilih Kriteria Responden</h5>
                         <div class="row justify-content-center my-5 text-start">
-                            <div class="col-9">
+                            <div class="col-10">
                                 <p>Kamu telah memilih <b>jenis survei private</b>, admin Gawedata akan segera
                                     menghubungimu untuk meminta daftar undangan responden survei.</p>
                                 <p>Silahkan pilih jumlah responden untuk melanjutkan pembuatan survei.</p>
                             </div>
                             <div class="col-10">
-                                <div class="row justify-content-end px-2 my-2">
-                                    <button type="submit" class="btn btn-gawedata col-4 py-2"
-                                        id="create-survey-next-button-2">
-                                        {{ __('Selanjutnya') }}
+                                <div class="row justify-content-between align-items-center px-2 mb-2">
+                                    <span
+                                        class="col-4 text-gawedata text-start cursor-pointer ps-0" id="create-survey-back-button-2-private">
+                                        <span class="fa fa-fw fa-arrow-left me-2"></span>Sebelumnya
+                                    </span>
+                                    <button type="submit"
+                                        class="btn btn-gawedata col-4 py-2" id="create-survey-next-button-2-private" disabled>
+                                        Selanjutnya
                                     </button>
                                 </div>
                             </div>

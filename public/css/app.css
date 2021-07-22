@@ -8,7 +8,16 @@
     src: url(../fonts/NexaBold.otf);
     font-weight: bold;
 }
-
+/* input settings  */
+/* remove arrows on input number  */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
 /* scrollbar settings  */
 ::-webkit-scrollbar {
     width: 9px;
@@ -81,6 +90,16 @@
     background-color: #FF525D;
     color: #fff;
     border-radius: 12px;
+}
+.btn-checkbox-gawedata {
+    color: #3f60f5;
+    border-color: #3f60f5;
+    border-radius: 50px;
+}
+.btn-check:active+.btn-checkbox-gawedata, .btn-check:checked+.btn-checkbox-gawedata, .btn-checkbox-gawedata.active, .btn-checkbox-gawedata.dropdown-toggle.show, .btn-checkbox-gawedata:active{
+    color: #fff;
+    background-color: #3f60f5;
+    border-color: #3f60f5;
 }
 
 /* error handling */
@@ -190,7 +209,7 @@ input:focus {
 #create-survey-modal .modal-content {
     min-height: 65vh;
 }
-#create-survey-modal .modal-content .col-5 {
+#create-survey-modal .modal-content #create-survey-sidebar-col {
     min-height: 65vh;
 }
 /* sidebar steps menu */

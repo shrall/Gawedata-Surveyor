@@ -35,36 +35,37 @@
                 </div>
             </div>
         </div>
-        @if (count($surveys) > 1)
+        @if (count($surveys) > 0)
             <div class="d-block" id="survey-view-grid">
-                <div class="row gy-4">
+                <div class="row gy-4 mb-4">
                     @foreach ($surveys as $survey)
-                    <div class="col-3 cursor-pointer">
-                        <div class="card card-survey-grid px-1 py-3 text-gray">
-                            <div class="card-header d-flex align-items-center">
-                                @if ($survey['status_id'] == 4)
-                                <div>
-                                    <span class="fa fa-fw fa-circle text-yellow me-2"></span>Draft
+                        <a href="{{ route('user.survey.show', $survey['id']) }}" class="col-3 text-decoration-none">
+                            <div class="card card-survey-grid px-1 py-3 text-gray">
+                                <div class="card-header d-flex align-items-center">
+                                    @if ($survey['status_id'] == 4)
+                                        <div>
+                                            <span class="fa fa-fw fa-circle text-yellow me-2"></span>Draft
+                                        </div>
+                                    @elseif ($survey['status_id'] == 5)
+                                        <div class="text-gawedata">
+                                            <span class="fa fa-fw fa-circle text-gawedata me-2"></span>Submitted
+                                        </div>
+                                    @elseif ($survey['status_id'] == 6)
+                                        <div class="text-green">
+                                            <span class="fa fa-fw fa-circle text-green me-2"></span>Published
+                                        </div>
+                                    @endif
+                                    <div class="ms-auto">Hari ini 13.00 WIB</div>
                                 </div>
-                                @elseif ($survey['status_id'] == 5)
-                                <div class="text-gawedata">
-                                    <span class="fa fa-fw fa-circle text-gawedata me-2"></span>Submitted
+                                <div class="card-body mt-4 pb-0">
+                                    <h5 class="font-weight-bold text-dark">{{ $survey['title'] }}</h5>
                                 </div>
-                                @elseif ($survey['status_id'] == 6)
-                                <div class="text-green">
-                                    <span class="fa fa-fw fa-circle text-green me-2"></span>Published
+                                <div class="card-footer pt-0">
+                                    <span class="fa fa-fw fa-users me-2"></span> 0/{{ $survey['respondent_quota'] }}
+                                    Responden
                                 </div>
-                                @endif
-                                <div class="ms-auto">Hari ini 13.00 WIB</div>
                             </div>
-                            <div class="card-body mt-4 pb-0">
-                                <h5 class="font-weight-bold text-dark">{{$survey['title']}}</h5>
-                            </div>
-                            <div class="card-footer pt-0">
-                                <span class="fa fa-fw fa-users me-2"></span> 0/{{$survey['respondent_quota']}} Responden
-                            </div>
-                        </div>
-                    </div>
+                        </a>
                     @endforeach
                 </div>
             </div>
@@ -81,43 +82,45 @@
                     </thead>
                     <tbody class="text-gray">
                         @foreach ($surveys as $survey)
-                        <tr class="cursor-pointer @if($loop->iteration > 1)border-top @endif">
-                            <th class="py-4 text-dark fs-5" scope="row">{{$survey['title']}}</th>
-                            @if ($survey['status_id'] == 4)
-                            <td class="py-4">
-                                <div>
-                                    <span class="fa fa-fw fa-circle text-yellow me-2"></span>Draft
-                                </div>
-                            </td>
-                            @elseif ($survey['status_id'] == 5)
-                            <td class="py-4">
-                                <div class="text-gawedata">
-                                    <span class="fa fa-fw fa-circle text-gawedata me-2"></span>Submitted
-                                </div>
-                            </td>
-                            @elseif ($survey['status_id'] == 6)
-                            <td class="py-4">
-                                <div class="text-green">
-                                    <span class="fa fa-fw fa-circle text-green me-2"></span>Published
-                                </div>
-                            </td>
-                            @endif
-                            @if ($survey['is_private'])
-                            <td class="py-4">
-                                <div class="text-gray">
-                                    <span class="fa fa-fw fa-lock me-2"></span>Private
-                                </div>
-                            </td>
-                            @else
-                            <td class="py-4">
-                                <div class="text-gawedata">
-                                    <span class="fa fa-fw fa-globe me-2"></span>Public
-                                </div>
-                            </td>
-                            @endif
-                            <td class="py-4"><span class="fa fa-fw fa-users me-2"></span> 0/{{$survey['respondent_quota']}} Responden</td>
-                            <td class="py-4">Hari ini 13.00 WIB</td>
-                        </tr>
+                            <tr class="survey-row cursor-pointer @if ($loop->iteration > 1) border-top @endif"
+                                data-href="{{ route('user.survey.show', $survey['id']) }}">
+                                <th class="py-4 text-dark fs-5" scope="row">{{ $survey['title'] }}</th>
+                                @if ($survey['status_id'] == 4)
+                                    <td class="py-4">
+                                        <div>
+                                            <span class="fa fa-fw fa-circle text-yellow me-2"></span>Draft
+                                        </div>
+                                    </td>
+                                @elseif ($survey['status_id'] == 5)
+                                    <td class="py-4">
+                                        <div class="text-gawedata">
+                                            <span class="fa fa-fw fa-circle text-gawedata me-2"></span>Submitted
+                                        </div>
+                                    </td>
+                                @elseif ($survey['status_id'] == 6)
+                                    <td class="py-4">
+                                        <div class="text-green">
+                                            <span class="fa fa-fw fa-circle text-green me-2"></span>Published
+                                        </div>
+                                    </td>
+                                @endif
+                                @if ($survey['is_private'])
+                                    <td class="py-4">
+                                        <div class="text-gray">
+                                            <span class="fa fa-fw fa-lock me-2"></span>Private
+                                        </div>
+                                    </td>
+                                @else
+                                    <td class="py-4">
+                                        <div class="text-gawedata">
+                                            <span class="fa fa-fw fa-globe me-2"></span>Public
+                                        </div>
+                                    </td>
+                                @endif
+                                <td class="py-4"><span class="fa fa-fw fa-users me-2"></span>
+                                    0/{{ $survey['respondent_quota'] }} Responden</td>
+                                <td class="py-4">Hari ini 13.00 WIB</td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -134,6 +137,25 @@
 @endsection
 
 @section('scripts')
+    <script>
+        //     $(document).ready(function(){
+        //         $('input[type="checkbox"]').click(function(){
+        //             if($(this).prop("checked") == true){
+        //                 console.log("Checkbox is checked.");
+        //             }
+        //             else if($(this).prop("checked") == false){
+        //                 console.log("Checkbox is unchecked.");
+        //             }
+        //         });
+        //     });
+        //
+    </script>
+    {{-- to survey detail --}}
+    <script>
+        $(".survey-row").click(function() {
+            window.location = $(this).data("href");
+        });
+    </script>
     {{-- filter --}}
     <script>
         $(function() {
@@ -194,7 +216,7 @@
             $('#select-survey-type').find('li').click(function() {
                 $('#selected-survey-type').html($(this).text() +
                     '<span class="fa fa-fw fa-chevron-down ms-auto"></span>');
-                if ($(this).text() == 'Public (Semua responden dapat melihat dan mengisi survei)') {
+                if ($(this).data("type") == 'public') {
                     $('#survey-type').val('Public');
                 } else {
                     $('#survey-type').val('Private');
@@ -210,22 +232,35 @@
         });
     </script>
     <script>
-        function changeStep(beforeStep, afterStep) {
+        //second step public
+        $("#age-start").change(function() {
+            $("#age-end").attr('min', $("#age-start").val());
+        });
+    </script>
+    <script>
+        //change step
+        function changeStep(beforeStep, afterStep, beforeSidebar, afterSidebar) {
             $(beforeStep).addClass('d-none');
             $(afterStep).removeClass('d-none');
+            $('#create-survey-sidebar').find('li:nth-child(' + beforeSidebar + ')').removeClass('active');
+            $('#create-survey-sidebar').find('li:nth-child(' + afterSidebar + ')').addClass('active');
+            $('#create-survey-sidebar').find('li:nth-child(' + beforeSidebar + ')').find('div').removeClass('d-inline');
+            $('#create-survey-sidebar').find('li:nth-child(' + beforeSidebar + ')').find('div').addClass('d-none');
+            $('#create-survey-sidebar').find('li:nth-child(' + afterSidebar + ')').find('div').removeClass('d-none');
+            $('#create-survey-sidebar').find('li:nth-child(' + afterSidebar + ')').find('div').addClass('d-inline');
         }
         $('#create-survey-next-button-1').click(function() {
             if ($('#survey-type').val() == 'Private') {
-                changeStep('#first-step', '#second-step-private');
+                changeStep('#first-step', '#second-step-private', 1, 2);
             } else {
-                changeStep('#first-step', '#second-step-public');
+                changeStep('#first-step', '#second-step-public', 1, 2);
             }
-            $('#create-survey-sidebar').find('li:nth-child(1)').removeClass('active');
-            $('#create-survey-sidebar').find('li:nth-child(2)').addClass('active');
-            $('#create-survey-sidebar').find('li:nth-child(1)').find('div').removeClass('d-inline');
-            $('#create-survey-sidebar').find('li:nth-child(1)').find('div').addClass('d-none');
-            $('#create-survey-sidebar').find('li:nth-child(2)').find('div').removeClass('d-none');
-            $('#create-survey-sidebar').find('li:nth-child(2)').find('div').addClass('d-inline');
+        })
+        $('#create-survey-back-button-2-public').click(function() {
+                changeStep('#second-step-public', '#first-step', 2, 1);
+        })
+        $('#create-survey-back-button-2-private').click(function() {
+                changeStep('#second-step-private', '#first-step', 2, 1);
         })
     </script>
 @endsection
