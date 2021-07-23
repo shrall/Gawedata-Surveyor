@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class SurveyController extends Controller
 {
@@ -34,7 +35,7 @@ class SurveyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
@@ -80,5 +81,15 @@ class SurveyController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function get_city(Request $request){
+        $locations = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/location')
+            ->json()['data'];
+        collect($locations)->whereIn('id', $request->data)->all();
+        return collect($locations)->whereIn('id', $request->data)->all();
     }
 }

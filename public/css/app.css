@@ -12,11 +12,11 @@
 /* remove arrows on input number  */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
-input[type=number] {
-  -moz-appearance: textfield;
+input[type="number"] {
+    -moz-appearance: textfield;
 }
 /* scrollbar settings  */
 ::-webkit-scrollbar {
@@ -87,7 +87,7 @@ input[type=number] {
     border-radius: 12px;
 }
 .btn-error {
-    background-color: #FF525D;
+    background-color: #ff525d;
     color: #fff;
     border-radius: 12px;
 }
@@ -96,19 +96,24 @@ input[type=number] {
     border-color: #3f60f5;
     border-radius: 50px;
 }
-.btn-check:active+.btn-checkbox-gawedata, .btn-check:checked+.btn-checkbox-gawedata, .btn-checkbox-gawedata.active, .btn-checkbox-gawedata.dropdown-toggle.show, .btn-checkbox-gawedata:active{
+.btn-check:active + .btn-checkbox-gawedata,
+.btn-check:checked + .btn-checkbox-gawedata,
+.btn-checkbox-gawedata.active,
+.btn-checkbox-gawedata.dropdown-toggle.show,
+.btn-checkbox-gawedata:active {
     color: #fff;
     background-color: #3f60f5;
     border-color: #3f60f5;
 }
 
 /* error handling */
-.form-control.is-invalid, .was-validated .form-control:invalid{
+.form-control.is-invalid,
+.was-validated .form-control:invalid {
     border-color: #ced4da;
     background-image: url();
 }
-.invalid-feedback{
-    color: #FF525D;
+.invalid-feedback {
+    color: #ff525d;
 }
 
 /* form settings */
@@ -225,12 +230,106 @@ input:focus {
     border-radius: 12px;
 }
 
-#create-survey-modal .dropdown-menu .dropdown-item{
+#create-survey-modal .dropdown-menu .dropdown-item {
     cursor: pointer;
 }
 
-#create-survey-modal .dropdown-menu .dropdown-item:hover{
-    color: #3F60F5;
-    background-color: #EDF0FF;
+#create-survey-modal .dropdown-menu .dropdown-item:hover {
+    color: #3f60f5;
+    background-color: #edf0ff;
     border-radius: 8px;
+}
+
+/* select2 */
+.select2 {
+    display: block;
+    width: 100% !important;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    background-color: #fbfbfb;
+    border-radius: 12px;
+}
+.select2-container:focus {
+    background-color: #fff;
+}
+.select2-container--default .select2-selection--multiple {
+    background-color: #fbfbfb !important;
+    border: 0 !important;
+    cursor: text;
+    padding-bottom: 5px;
+    padding-right: 5px;
+    position: relative;
+    text-align: left;
+}
+.select2-container .select2-search--inline .select2-search__field {
+    margin-left: 0 !important;
+    font-family: "Lato" !important;
+}
+/* select2 dropdown  */
+span.select2-dropdown {
+    padding: 0.5rem ;
+}
+.select2-results__options{
+    padding-left: 0.5rem !important;
+    padding-right: 3rem !important;
+}
+span.select2-dropdown,
+span.select2-results,
+ul.select2-results__options {
+    border-radius: 12px;
+}
+.select2-container--open .select2-dropdown--below {
+    border: 1px solid rgba(0,0,0,.15) !important;
+    border-top-left-radius: 12px !important;
+    border-top-right-radius: 12px !important;
+    margin-top: .125rem;
+}
+.select2-container--open .select2-dropdown--above {
+    border: 1px solid rgba(0,0,0,.15) !important;
+    border-bottom-left-radius: 12px !important;
+    border-bottom-right-radius: 12px !important;
+    margin-bottom: .125rem;
+}
+.select2-container--default .select2-results>.select2-results__options {
+    max-height: 30vh !important;
+}
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+    color: #3f60f5 !important;
+    background-color: #edf0ff !important;
+    border-radius: 8px !important;
+}
+
+ul.select2-results__options li:hover {
+    color: #3f60f5;
+    background-color: #edf0ff;
+    border-radius: 8px;
+}
+/* select2 pills */
+.select2-container--default .select2-selection--multiple .select2-selection__choice{
+    background-color: #EDF0FF !important;
+    border: 0 !important;
+    padding: 0.125rem !important;
+    padding-left: 0.25rem !important;
+    padding-right: 20px !important;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+    border-right: 0 !important;
+    top: 0.125rem !important;
+    left: auto !important;
+    right: 0;
+    color: #3f60f5 !important;
+    padding-right: 0.5rem !important;
 }

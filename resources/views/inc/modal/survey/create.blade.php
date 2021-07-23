@@ -125,102 +125,51 @@
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <input id="survey-education" type="hidden" name="survey-education">
-                                    <div class="dropdown" id="select-survey-education">
-                                        <span class="form-control input-text d-flex align-items-center" type="button"
-                                            data-bs-toggle="dropdown" id="selected-survey-education">
-                                            Latar Belakang Pendidikan
-                                            <span class="fa fa-fw fa-chevron-down ms-auto"></span>
-                                        </span>
-                                        <ul class="dropdown-menu w-100 px-2">
-                                            <div class="overflow-auto ps-2 pe-5" style="min-height:0;max-height: 30vh;">
-                                                <li class="dropdown-item">SD</li>
-                                                <li class="dropdown-item">SMP</li>
-                                                <li class="dropdown-item">SMA</li>
-                                                <li class="dropdown-item">S1</li>
-                                            </div>
-                                        </ul>
-                                    </div>
+                                    <select class="form-control input-text" id="survey-province" name="province[]"
+                                        multiple="multiple">
+                                        @foreach ($locations as $location)
+                                            <option value="{{ $location['id'] }}">{{ $location['province_name'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="mb-3">
-                                    <input id="survey-education" type="hidden" name="survey-education">
-                                    <div class="dropdown" id="select-survey-education">
-                                        <span class="form-control input-text d-flex align-items-center" type="button"
-                                            data-bs-toggle="dropdown" id="selected-survey-education">
-                                            Latar Belakang Pendidikan
-                                            <span class="fa fa-fw fa-chevron-down ms-auto"></span>
-                                        </span>
-                                        <ul class="dropdown-menu w-100 px-2">
-                                            <div class="overflow-auto ps-2 pe-5" style="min-height:0;max-height: 30vh;">
-                                                <li class="dropdown-item">SD</li>
-                                                <li class="dropdown-item">SMP</li>
-                                                <li class="dropdown-item">SMA</li>
-                                                <li class="dropdown-item">S1</li>
-                                            </div>
-                                        </ul>
-                                    </div>
+                                    <select class="form-control input-text" id="survey-city" name="city[]"
+                                        multiple="multiple">
+                                    </select>
                                 </div>
                                 <div class="mb-3">
-                                    <input id="survey-education" type="hidden" name="survey-education">
-                                    <div class="dropdown" id="select-survey-education">
-                                        <span class="form-control input-text d-flex align-items-center" type="button"
-                                            data-bs-toggle="dropdown" id="selected-survey-education">
-                                            Latar Belakang Pendidikan
-                                            <span class="fa fa-fw fa-chevron-down ms-auto"></span>
-                                        </span>
-                                        <ul class="dropdown-menu w-100 px-2">
-                                            <div class="overflow-auto ps-2 pe-5" style="min-height:0;max-height: 30vh;">
-                                                <li class="dropdown-item">SD</li>
-                                                <li class="dropdown-item">SMP</li>
-                                                <li class="dropdown-item">SMA</li>
-                                                <li class="dropdown-item">S1</li>
-                                            </div>
-                                        </ul>
-                                    </div>
+                                    <select class="form-control input-text" id="survey-education" name="education[]"
+                                        multiple="multiple">
+                                        @foreach ($educations as $education)
+                                            <option value="{{ $education['id'] }}">{{ $education['name'] }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="mb-3">
-                                    <input id="survey-education" type="hidden" name="survey-education">
-                                    <div class="dropdown" id="select-survey-education">
-                                        <span class="form-control input-text d-flex align-items-center" type="button"
-                                            data-bs-toggle="dropdown" id="selected-survey-education">
-                                            Latar Belakang Pendidikan
-                                            <span class="fa fa-fw fa-chevron-down ms-auto"></span>
-                                        </span>
-                                        <ul class="dropdown-menu w-100 px-2">
-                                            <div class="overflow-auto ps-2 pe-5" style="min-height:0;max-height: 30vh;">
-                                                <li class="dropdown-item">SD</li>
-                                                <li class="dropdown-item">SMP</li>
-                                                <li class="dropdown-item">SMA</li>
-                                                <li class="dropdown-item">S1</li>
-                                            </div>
-                                        </ul>
-                                    </div>
+                                    <select class="form-control input-text" id="survey-profession" name="profession[]"
+                                        multiple="multiple">
+                                        @foreach ($professions as $profession)
+                                            <option value="{{ $profession['id'] }}">{{ $profession['name'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="mb-3">
-                                    <input id="survey-education" type="hidden" name="survey-education">
-                                    <div class="dropdown" id="select-survey-education">
-                                        <span class="form-control input-text d-flex align-items-center" type="button"
-                                            data-bs-toggle="dropdown" id="selected-survey-education">
-                                            Latar Belakang Pendidikan
-                                            <span class="fa fa-fw fa-chevron-down ms-auto"></span>
-                                        </span>
-                                        <ul class="dropdown-menu w-100 px-2">
-                                            <div class="overflow-auto ps-2 pe-5" style="min-height:0;max-height: 30vh;">
-                                                <li class="dropdown-item">SD</li>
-                                                <li class="dropdown-item">SMP</li>
-                                                <li class="dropdown-item">SMA</li>
-                                                <li class="dropdown-item">S1</li>
-                                            </div>
-                                        </ul>
-                                    </div>
+                                    <select class="form-control input-text" id="survey-expenses" name="expenses[]"
+                                        multiple="multiple">
+                                        @foreach ($expenses as $expense)
+                                            <option value="{{ $expense['id'] }}">{{ $expense['name'] }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="row justify-content-between align-items-center px-2 mb-2">
-                                    <span
-                                        class="col-4 text-gawedata text-start cursor-pointer ps-0" id="create-survey-back-button-2-public">
+                                    <span class="col-4 text-gawedata text-start cursor-pointer ps-0"
+                                        id="create-survey-back-button-2-public">
                                         <span class="fa fa-fw fa-arrow-left me-2"></span>Sebelumnya
                                     </span>
-                                    <button type="submit"
-                                        class="btn btn-gawedata col-4 py-2" id="create-survey-next-button-2-public" disabled>
+                                    <button type="submit" class="btn btn-gawedata col-4 py-2"
+                                        id="create-survey-next-button-2-public" disabled>
                                         Selanjutnya
                                     </button>
                                 </div>
@@ -241,12 +190,12 @@
                             </div>
                             <div class="col-10">
                                 <div class="row justify-content-between align-items-center px-2 mb-2">
-                                    <span
-                                        class="col-4 text-gawedata text-start cursor-pointer ps-0" id="create-survey-back-button-2-private">
+                                    <span class="col-4 text-gawedata text-start cursor-pointer ps-0"
+                                        id="create-survey-back-button-2-private">
                                         <span class="fa fa-fw fa-arrow-left me-2"></span>Sebelumnya
                                     </span>
-                                    <button type="submit"
-                                        class="btn btn-gawedata col-4 py-2" id="create-survey-next-button-2-private" disabled>
+                                    <button type="submit" class="btn btn-gawedata col-4 py-2"
+                                        id="create-survey-next-button-2-private" disabled>
                                         Selanjutnya
                                     </button>
                                 </div>

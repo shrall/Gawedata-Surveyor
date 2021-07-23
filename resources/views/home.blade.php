@@ -39,7 +39,7 @@
             <div class="d-block" id="survey-view-grid">
                 <div class="row gy-4 mb-4">
                     @foreach ($surveys as $survey)
-                        <a href="{{ route('user.survey.show', $survey['id']) }}" class="col-3 text-decoration-none">
+                        <a href="{{ route('survey.show', $survey['id']) }}" class="col-3 text-decoration-none">
                             <div class="card card-survey-grid px-1 py-3 text-gray">
                                 <div class="card-header d-flex align-items-center">
                                     @if ($survey['status_id'] == 4)
@@ -83,7 +83,7 @@
                     <tbody class="text-gray">
                         @foreach ($surveys as $survey)
                             <tr class="survey-row cursor-pointer @if ($loop->iteration > 1) border-top @endif"
-                                data-href="{{ route('user.survey.show', $survey['id']) }}">
+                                data-href="{{ route('survey.show', $survey['id']) }}">
                                 <th class="py-4 text-dark fs-5" scope="row">{{ $survey['title'] }}</th>
                                 @if ($survey['status_id'] == 4)
                                     <td class="py-4">
@@ -236,6 +236,58 @@
         $("#age-start").change(function() {
             $("#age-end").attr('min', $("#age-start").val());
         });
+        $(document).ready(function() {
+            $('#survey-province').select2({
+                dropdownParent: $('#create-survey-modal'),
+                placeholder: 'Domisili (Provinsi)'
+            });
+            $('#survey-city').select2({
+                dropdownParent: $('#create-survey-modal'),
+                placeholder: 'Domisili (Kota)',
+                disabled: true
+            });
+            $('#survey-education').select2({
+                dropdownParent: $('#create-survey-modal'),
+                placeholder: 'Latar Belakang Pendidikan'
+            });
+            $('#survey-profession').select2({
+                dropdownParent: $('#create-survey-modal'),
+                placeholder: 'Profesi'
+            });
+            $('#survey-expenses').select2({
+                dropdownParent: $('#create-survey-modal'),
+                placeholder: 'Pengeluaran Rumah Tangga Per-Bulan'
+            });
+        });
+        // buat nyalain
+        // $('#survey-city').prop("disabled", false);
+        //nangkep city
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $('#survey-province').on('change', function(e) {
+            $.post('{{ config('app.url') }}' + "/survey/getcity", {
+                    _token: CSRF_TOKEN,
+                    data: $('#survey-province').val(),
+                })
+                .done(function(data) {
+                    $('#survey-city').html('');
+                    $('#survey-city').val(null).trigger('change');
+                    if (data.length == 0) {
+                        $('#survey-city').prop("disabled", true);
+                    } else {
+                        $('#survey-city').prop("disabled", false);
+                        Object.values(data).forEach(element => {
+                            element.cities.forEach(element => {
+                                $('#survey-city').append('<option value="' + element.id + '">' +
+                                    element.city_name + '</option>')
+                            });
+                        });
+                    }
+                })
+                .fail(function() {
+                    console.log('fail');
+                })
+                .always(function() {});
+        });
     </script>
     <script>
         //change step
@@ -257,10 +309,10 @@
             }
         })
         $('#create-survey-back-button-2-public').click(function() {
-                changeStep('#second-step-public', '#first-step', 2, 1);
+            changeStep('#second-step-public', '#first-step', 2, 1);
         })
         $('#create-survey-back-button-2-private').click(function() {
-                changeStep('#second-step-private', '#first-step', 2, 1);
+            changeStep('#second-step-private', '#first-step', 2, 1);
         })
     </script>
 @endsection
