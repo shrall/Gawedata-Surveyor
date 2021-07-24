@@ -137,19 +137,6 @@
 @endsection
 
 @section('scripts')
-    <script>
-        //     $(document).ready(function(){
-        //         $('input[type="checkbox"]').click(function(){
-        //             if($(this).prop("checked") == true){
-        //                 console.log("Checkbox is checked.");
-        //             }
-        //             else if($(this).prop("checked") == false){
-        //                 console.log("Checkbox is unchecked.");
-        //             }
-        //         });
-        //     });
-        //
-    </script>
     {{-- to survey detail --}}
     <script>
         $(".survey-row").click(function() {
@@ -233,6 +220,28 @@
     </script>
     <script>
         //second step public
+        function enableSecondButton() {
+            if ($("#age-start").val() != "" &&
+                $("#age-end").val() != "" &&
+                $("#survey-province").val() != "" &&
+                $("#survey-city").val() != "" &&
+                $("#survey-education").val() != "" &&
+                $("#survey-profession").val() != "" &&
+                $("#survey-expense").val() != "") {
+                console.log('first if')
+                if ($("#check-pria").prop("checked") == true ||
+                    $("#check-wanita").prop("checked") == true) {
+                    console.log('second if')
+                    $("#create-survey-next-button-2-public").prop("disabled", false);
+                } else {
+                    console.log('second if fail')
+                    $("#create-survey-next-button-2-public").prop("disabled", true);
+                }
+            } else {
+                console.log('first if fail')
+                $("#create-survey-next-button-2-public").prop("disabled", true);
+            }
+        }
         $("#age-start").change(function() {
             $("#age-end").attr('min', $("#age-start").val());
         });
@@ -254,14 +263,12 @@
                 dropdownParent: $('#create-survey-modal'),
                 placeholder: 'Profesi'
             });
-            $('#survey-expenses').select2({
+            $('#survey-expense').select2({
                 dropdownParent: $('#create-survey-modal'),
                 placeholder: 'Pengeluaran Rumah Tangga Per-Bulan'
             });
         });
-        // buat nyalain
-        // $('#survey-city').prop("disabled", false);
-        //nangkep city
+        //get city list
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $('#survey-province').on('change', function(e) {
             $.post('{{ config('app.url') }}' + "/survey/getcity", {
@@ -285,8 +292,57 @@
                 })
                 .fail(function() {
                     console.log('fail');
-                })
-                .always(function() {});
+                });
+        });
+        $("#check-pria").click(function() {
+            enableSecondButton();
+        });
+        $("#check-wanita").click(function() {
+            enableSecondButton();
+        });
+        $("#age-start").keyup(function() {
+            enableSecondButton();
+        });
+        $("#age-end").keyup(function() {
+            enableSecondButton();
+        });
+        $('#survey-city').on('change', function(e) {
+            enableSecondButton();
+        });
+        $('#survey-education').on('change', function(e) {
+            enableSecondButton();
+        });
+        $('#survey-profession').on('change', function(e) {
+            enableSecondButton();
+        });
+        $('#survey-expense').on('change', function(e) {
+            enableSecondButton();
+        });
+    </script>
+    <script>
+        //third step
+        $(function() {
+            $("#survey-deadline").datepicker();
+        });
+
+        function enableThirdButton() {
+            if ($("#survey-deadline").val() != "" &&
+                parseInt($("#survey-respondent").val()) <= parseInt($(".user-quota").html())) {
+                $("#create-survey-next-button-3").prop("disabled", false);
+            } else {
+                $("#create-survey-next-button-3").prop("disabled", true);
+            }
+        }
+        $("#survey-respondent").keyup(function() {
+            if (parseInt($("#survey-respondent").val()) <= parseInt($(".user-quota").html())) {
+                $('#survey-respondent').removeClass('is-invalid');
+            } else {
+                $('#survey-respondent').addClass('is-invalid');
+            }
+            enableThirdButton();
+        });
+        $("#survey-deadline").change(function() {
+            enableThirdButton();
         });
     </script>
     <script>
@@ -308,11 +364,24 @@
                 changeStep('#first-step', '#second-step-public', 1, 2);
             }
         })
+        $('#create-survey-next-button-2-private').click(function() {
+            changeStep('#second-step-private', '#third-step', 2, 3);
+        })
+        $('#create-survey-next-button-2-public').click(function() {
+            changeStep('#second-step-public', '#third-step', 2, 3);
+        })
         $('#create-survey-back-button-2-public').click(function() {
             changeStep('#second-step-public', '#first-step', 2, 1);
         })
         $('#create-survey-back-button-2-private').click(function() {
             changeStep('#second-step-private', '#first-step', 2, 1);
+        })
+        $('#create-survey-back-button-3').click(function() {
+            if ($('#survey-type').val() == 'Private') {
+                changeStep('#third-step', '#second-step-private', 3, 2);
+            } else {
+                changeStep('#third-step', '#second-step-public', 3, 2);
+            }
         })
     </script>
 @endsection

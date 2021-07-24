@@ -18,6 +18,11 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
     -moz-appearance: textfield;
 }
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
 /* scrollbar settings  */
 ::-webkit-scrollbar {
     width: 9px;
@@ -109,7 +114,6 @@ input[type="number"] {
 /* error handling */
 .form-control.is-invalid,
 .was-validated .form-control:invalid {
-    border-color: #ced4da;
     background-image: url();
 }
 .invalid-feedback {

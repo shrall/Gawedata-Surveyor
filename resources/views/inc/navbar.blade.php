@@ -45,7 +45,7 @@
                                 <div class="profile-quota-box mb-1">
                                     <div class="profile-quota" style="width: 30%;"></div>
                                 </div>
-                                <p class="my-0 text-secondary">Tersisa 40/150 kuota responden</p>
+                                <p class="my-0 text-secondary">Tersisa <span class="user-quota">40</span>/150 kuota responden</p>
                                 <div class="my-3">
                                     <a href="#" class="text-gawedata text-decoration-none font-weight-bold">
                                         <span class="fa fa-fw fa-phone-alt me-2"></span>Hubungi Admin Via Whatsapp
