@@ -36,6 +36,26 @@ class SurveyController extends Controller
     public function store(Request $request)
     {
         dd($request);
+        // if ($request->survey_type == 'Public') {
+        //     $is_private = false;
+        // } else {
+        //     $is_private = true;
+        // }
+
+        // $response = Http::withHeaders([
+        //     'Authorization' => 'Bearer ' . session('token'),
+        // ])->post(config('services.api.url') . '/survey', [
+        //     'title' => $request->title,
+        //     'description' => $request->description,
+        //     'survey_category_id' => 1,
+        //     'respondent_quota' => $request->survey_respondent,
+        //     'is_private' => $is_private
+        // ])->json();
+        // if ($response['data'] != null) {
+        //     return redirect()->route('home');
+        // } else {
+        //     return redirect()->route('login')->withErrors(['msg', 'Error']);
+        // }
     }
 
     /**
@@ -83,7 +103,8 @@ class SurveyController extends Controller
         //
     }
 
-    public function get_city(Request $request){
+    public function get_city(Request $request)
+    {
         $locations = Http::withHeaders([
             'Authorization' => 'Bearer ' . session('token'),
         ])
@@ -91,5 +112,35 @@ class SurveyController extends Controller
             ->json()['data'];
         collect($locations)->whereIn('id', $request->data)->all();
         return collect($locations)->whereIn('id', $request->data)->all();
+    }
+
+    public function hasil($id)
+    {
+        $survey = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/survey/' . $id)
+            ->json()['data'];
+        return view('survey.hasil', compact('survey'));
+    }
+
+    public function analisa($id)
+    {
+        $survey = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/survey/' . $id)
+            ->json()['data'];
+        return view('survey.analisa', compact('survey'));
+    }
+
+    public function detail($id)
+    {
+        $survey = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/survey/' . $id)
+            ->json()['data'];
+        return view('survey.detail', compact('survey'));
     }
 }

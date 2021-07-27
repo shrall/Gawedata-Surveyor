@@ -30,5 +30,8 @@ Route::group(['middleware' => ['surveyor']], function () {
     Route::get('reset-password', [UserController::class, 'reset_password'])->name('user.resetpassword');
     Route::post('reset-password', [UserController::class, 'update_password'])->name('user.updatepassword');
     Route::resource('survey', SurveyController::class);
+    Route::get('survey/{id}/hasil', [SurveyController::class, 'hasil'])->name('survey.hasil');
+    Route::get('survey/{id}/analisa', [SurveyController::class, 'analisa'])->name('survey.analisa');
+    Route::get('survey/{id}/detail', [SurveyController::class, 'detail'])->name('survey.detail');
     Route::post('survey/getcity', [SurveyController::class, 'get_city'])->name('survey.getcity');
 });

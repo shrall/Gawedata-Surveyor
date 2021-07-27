@@ -10,13 +10,19 @@
         @if (Route::current()->getName() != 'login')
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav me-auto">
-                </ul>
+                @if (Route::current()->getName() == 'survey.show')
+                    <ul class="navbar-nav position-absolute top-50 start-50 translate-middle">
+                        <h4 class="font-lato font-weight-bold mb-0">{{ $survey['title'] }}
+                            <span class="far fa-fw fa-comment-dots text-gawedata cursor-pointer ms-2"></span>
+                        </h4>
+                    </ul>
+                @endif
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ms-auto align-items-center">
                     @if (Route::current()->getName() == 'home')
                         <li class="nav-item mx-4">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#create-survey-modal" class="btn btn-gawedata font-lato">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#create-survey-modal"
+                                class="btn btn-gawedata font-lato">
                                 Buat Survei
                             </a>
                         </li>
@@ -33,6 +39,14 @@
                                 <span class="fa fa-fw fa-bars"></span>
                             </a>
                         </li>
+                    @elseif (Route::current()->getName() == 'survey.show')
+                    <li class="nav-item mx-4">
+                        <a href="#"
+                            class="btn btn-gawedata-2 font-lato font-weight-bold">
+                            <span class="far fa-fw fa-paper-plane"></span>
+                            Bagikan Survei
+                        </a>
+                    </li>
                     @endif
                     <li class="nav-item mx-4 position-relative">
                         <img src="{{ asset('images/logo-with-text.png') }}" id="user-profile" class="rounded-circle"
@@ -45,7 +59,8 @@
                                 <div class="profile-quota-box mb-1">
                                     <div class="profile-quota" style="width: 30%;"></div>
                                 </div>
-                                <p class="my-0 text-secondary">Tersisa <span class="user-quota">40</span>/150 kuota responden</p>
+                                <p class="my-0 text-secondary">Tersisa <span class="user-quota">40</span>/150 kuota
+                                    responden</p>
                                 <div class="my-3">
                                     <a href="#" class="text-gawedata text-decoration-none font-weight-bold">
                                         <span class="fa fa-fw fa-phone-alt me-2"></span>Hubungi Admin Via Whatsapp
