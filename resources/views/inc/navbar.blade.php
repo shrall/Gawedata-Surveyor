@@ -10,7 +10,7 @@
         @if (Route::current()->getName() != 'login')
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
-                @if (Route::current()->getName() == 'survey.show')
+                @if (Route::current()->getName() == 'survey.hasil' || Route::current()->getName() == 'survey.analisa' || Route::current()->getName() == 'survey.detail')
                     <ul class="navbar-nav position-absolute top-50 start-50 translate-middle">
                         <h4 class="font-lato font-weight-bold mb-0">{{ $survey['title'] }}
                             <span class="far fa-fw fa-comment-dots text-gawedata cursor-pointer ms-2"></span>
@@ -39,7 +39,7 @@
                                 <span class="fa fa-fw fa-bars"></span>
                             </a>
                         </li>
-                    @elseif (Route::current()->getName() == 'survey.show')
+                    @elseif (Route::current()->getName() == 'survey.hasil' || Route::current()->getName() == 'survey.analisa' || Route::current()->getName() == 'survey.detail')
                     <li class="nav-item mx-4">
                         <a href="#"
                             class="btn btn-gawedata-2 font-lato font-weight-bold">

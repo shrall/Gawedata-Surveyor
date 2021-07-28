@@ -26,6 +26,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 /* scrollbar settings  */
 ::-webkit-scrollbar {
     width: 9px;
+    height: 10px;
 }
 ::-webkit-scrollbar-track {
     background: #fff;
@@ -95,6 +96,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-color: #fff;
     color: #3f60f5;
     border: 1px solid #d1d6eb;
+    border-radius: 12px;
+}
+.btn-gawedata-3 {
+    color: #3f60f5;
+    background: #EDF0FF;
     border-radius: 12px;
 }
 .btn-error {

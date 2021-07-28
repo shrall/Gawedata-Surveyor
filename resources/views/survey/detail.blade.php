@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
+        <div class="row" style="height:90vh;">
             <div class="col-4 text-start border-end">
                 @include('survey.inc.sidebar')
             </div>
             <div class="col-8 text-center my-4">
-                <div class="card card-survey-detail p-4">
+                <div class="card card-survey-detail border-0 p-4">
                     <table class="ms-4 px-4 py-2 font-lato">
                         <tr>
                             <td class="text-start text-gray" width="35%">ID Survei</td>
