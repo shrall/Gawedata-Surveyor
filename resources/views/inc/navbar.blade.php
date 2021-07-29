@@ -1,19 +1,43 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container justify-content-center">
-        {{-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-            <span class="navbar-toggler-icon"></span>
-        </button> --}}
         <a class="navbar-brand" href="{{ url('/') }}">
             <img src="{{ asset('images/logo-with-text.png') }}" alt="" class="d-inline-block align-text-top">
         </a>
         @if (Route::current()->getName() != 'login')
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
-                @if (Route::current()->getName() == 'survey.hasil' || Route::current()->getName() == 'survey.analisa' || Route::current()->getName() == 'survey.detail')
+                @if (Route::current()->getName() == 'survey.hasil' || Route::current()->getName() == 'survey.analisa' || Route::current()->getName() == 'survey.detail' || Route::current()->getName() == 'survey.show')
                     <ul class="navbar-nav position-absolute top-50 start-50 translate-middle">
                         <h4 class="font-lato font-weight-bold mb-0">{{ $survey['title'] }}
-                            <span class="far fa-fw fa-comment-dots text-gawedata cursor-pointer ms-2"></span>
+                            <span class="far fa-fw fa-comment-dots text-gawedata cursor-pointer ms-2"
+                                id="survey-menu-button"></span>
+                            <div class="fs-6" id="survey-menu-box">
+                                <div id="survey-menu" class="p-4">
+                                    <div>
+                                        <span class="fa fa-fw fa-circle text-yellow me-2"></span><span
+                                            class="text-gray">Draft</span>
+                                    </div>
+                                    <hr>
+                                    <div class="my-3">
+                                        <a href="#" class="text-dark text-decoration-none font-weight-bold">
+                                            Pengaturan Survei
+                                        </a>
+                                    </div>
+                                    <div class="mt-3">
+                                        <a href="#" onclick="event.preventDefault();
+                                                    document.getElementById('survey-delete-form').submit();"
+                                            class="text-red text-decoration-none font-weight-bold">
+                                            Hapus Survei
+                                        </a>
+                                        <form id="survey-delete-form"
+                                            action="{{ route('survey.destroy', $survey['id']) }}" method="POST"
+                                            style="display: none;">
+                                            @csrf
+                                            <input name="_method" type="hidden" value="DELETE">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </h4>
                     </ul>
                 @endif
@@ -39,14 +63,25 @@
                                 <span class="fa fa-fw fa-bars"></span>
                             </a>
                         </li>
-                    @elseif (Route::current()->getName() == 'survey.hasil' || Route::current()->getName() == 'survey.analisa' || Route::current()->getName() == 'survey.detail')
-                    <li class="nav-item mx-4">
-                        <a href="#"
-                            class="btn btn-gawedata-2 font-lato font-weight-bold">
-                            <span class="far fa-fw fa-paper-plane"></span>
-                            Bagikan Survei
-                        </a>
-                    </li>
+                    @elseif (Route::current()->getName() == 'survey.show')
+                        <li class="nav-item mx-2">
+                            <a href="#" class="btn btn-gawedata font-lato">
+                                Simpan (Draft)
+                            </a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a href="#" class="btn btn-gawedata-2 font-lato font-weight-bold">
+                                Submit Survei
+                            </a>
+                        </li>
+                    @elseif (Route::current()->getName() == 'survey.hasil' || Route::current()->getName() ==
+                        'survey.analisa' || Route::current()->getName() == 'survey.detail')
+                        <li class="nav-item mx-4">
+                            <a href="#" class="btn btn-gawedata-2 font-lato font-weight-bold">
+                                <span class="far fa-fw fa-paper-plane"></span>
+                                Bagikan Survei
+                            </a>
+                        </li>
                     @endif
                     <li class="nav-item mx-4 position-relative">
                         <img src="{{ asset('images/logo-with-text.png') }}" id="user-profile" class="rounded-circle"

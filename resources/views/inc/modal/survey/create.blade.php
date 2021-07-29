@@ -124,10 +124,10 @@
                                         <div class="col-4 text-start">Rentang Umur</div>
                                         <div class="col-5 text-end">
                                             <div class="d-flex justify-content-between align-items-center">
-                                                <input type="number" name="age-start" id="age-start"
+                                                <input type="number" name="age_start" id="age-start"
                                                     class="form-control input-text text-center" min="0">
                                                 <span class="mx-2">sampai</span>
-                                                <input type="number" name="age-end" id="age-end"
+                                                <input type="number" name="age_end" id="age-end"
                                                     class="form-control input-text text-center" max="1000">
                                             </div>
                                         </div>
@@ -248,7 +248,7 @@
                                     </div>
                                     <div class="row justify-content-between align-items-center mb-3">
                                         <div class="col-12">
-                                            <input type="number" name="survey-respondent" id="survey-respondent"
+                                            <input type="number" name="survey_respondent" id="survey-respondent"
                                                 class="form-control input-text" placeholder="Jumlah Responden" min="0"
                                                 required>
                                             <span class="invalid-feedback text-end">

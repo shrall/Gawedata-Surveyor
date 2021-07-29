@@ -35,22 +35,45 @@ class SurveyController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
-        // if ($request->survey_type == 'Public') {
-        //     $is_private = false;
-        // } else {
-        //     $is_private = true;
-        // }
+        if ($request->survey_type == 'Public') {
+            $is_private = false;
+        } else {
+            $is_private = true;
+        }
 
-        // $response = Http::withHeaders([
-        //     'Authorization' => 'Bearer ' . session('token'),
-        // ])->post(config('services.api.url') . '/survey', [
-        //     'title' => $request->title,
-        //     'description' => $request->description,
-        //     'survey_category_id' => 1,
-        //     'respondent_quota' => $request->survey_respondent,
-        //     'is_private' => $is_private
-        // ])->json();
+        $gender = array();
+        if ($request->has('check-pria')) {
+            array_push($gender, 1);
+        }
+        if ($request->has('check-wanita')) {
+            array_push($gender, 2);
+        }
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])->post(config('services.api.url') . '/survey', [
+            'title' => $request->title,
+            'description' => $request->description,
+            'survey_category_id' => 1,
+            'respondent_quota' => $request->survey_respondent,
+            'is_private' => $is_private,
+            'survey_type' => 'General',
+            'general_expired_date' => date('y-m-d', strtotime($request->survey_deadline)),
+            'min_age_criteria' => $request->age_start,
+            'max_age_criteria' => $request->age_end,
+            'estimate_time' => '5 menit',
+            'gender_id' => $gender,
+            'city_id' => $request->city,
+            'education_id' => $request->education,
+            'profession_id' => $request->profession,
+            'household_expense_id' => $request->expense
+        ])->json();
+
+        if ($response['success']){
+            return redirect()->route('survey.show', $response['data']['id']);
+        }else {
+            dd('dsad');
+        }
         // if ($response['data'] != null) {
         //     return redirect()->route('home');
         // } else {
@@ -66,7 +89,12 @@ class SurveyController extends Controller
      */
     public function show($id)
     {
-        //
+        $survey = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/survey/' . $id)
+            ->json()['data'];
+        return view('survey.draft', compact('survey'));
     }
 
     /**
@@ -100,7 +128,10 @@ class SurveyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])->delete(config('services.api.url') . '/survey/'. $id)->json();
+        return redirect()->route('home');
     }
 
     public function get_city(Request $request)
