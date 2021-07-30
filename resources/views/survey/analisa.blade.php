@@ -15,62 +15,8 @@
                         </a>
                     </div>
                     @include('survey.inc.chart.analisa.gender')
-                    <div class="row my-3">
-                        <div class="text-start">
-                            <h4 class="font-weight-bold">Umur</h4>
-                            <h6 class="text-gray">100 Jawaban</h6>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div id="age-chart"></div>
-                            </div>
-                            <div class="col-6 d-flex align-items-center" style="overflow: auto; white-space: nowrap;">
-                                <div class="d-flex flex-row">
-                                    <div class="col-12 d-flex flex-column h-100 justify-content-start">
-                                        <div class="row my-2 justify-content-start">
-                                            <div class="col-12 text-start">
-                                                <span class="fa fa-fw fa-circle me-2 fs-6" style="color:#3F60F5;"></span>21:
-                                                75%
-                                            </div>
-                                        </div>
-                                        <div class="row my-2 justify-content-start">
-                                            <div class="col-12 text-start">
-                                                <span class="fa fa-fw fa-circle me-2 fs-6" style="color:#46cb5a;"></span>22:
-                                                5%
-                                            </div>
-                                        </div>
-                                        <div class="row my-2 justify-content-start">
-                                            <div class="col-12 text-start">
-                                                <span class="fa fa-fw fa-circle me-2 fs-6" style="color:#b0744a;"></span>23:
-                                                5%
-                                            </div>
-                                        </div>
-                                        <div class="row my-2 justify-content-start">
-                                            <div class="col-12 text-start">
-                                                <span class="fa fa-fw fa-circle me-2 fs-6" style="color:#d5c64b;"></span>24:
-                                                5%
-                                            </div>
-                                        </div>
-                                        <div class="row my-2 justify-content-start">
-                                            <div class="col-12 text-start">
-                                                <span class="fa fa-fw fa-circle me-2 fs-6" style="color:#6bd5cf;"></span>25:
-                                                5%
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 d-flex flex-column h-100 justify-content-start">
-                                        <div class="row my-2 justify-content-start">
-                                            <div class="col-12 text-start">
-                                                <span class="fa fa-fw fa-circle me-2 fs-6" style="color:#d56bcb;"></span>26:
-                                                5%
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
+                    @include('survey.inc.chart.analisa.age')
+                    {{-- <div class="row">
                         <div class="text-start">
                             <h4 class="font-weight-bold">Provinsi</h4>
                             <h6 class="text-gray">Belum ada respon</h6>
@@ -80,7 +26,7 @@
                                 <h6 class="text-gray">Grafik akan muncul setelah ada respon</h6>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -100,133 +46,8 @@
             colors: ['#3F60F5', '#46cb5a', '#b0744a', '#d5c64b', '#6bd5cf', '#d56bcb']
         });
     </script>
-    <script>
-        var gender = [{
-                y: 75,
-                name: "Pria"
-            },
-            {
-                y: 25,
-                name: "Wanita"
-            },
-        ]
-
-        $('#gender-chart').highcharts({
-            chart: {
-                animation: false,
-                type: 'pie',
-                backgroundColor: null,
-                height: 250
-            },
-            title: {
-                text: null
-            },
-            exporting: {
-                enabled: false,
-            },
-            tooltip: {
-                valueSuffix: ' Responden',
-                enabled: true,
-                backgroundColor: '#ffffff',
-                borderColor: '#ffffff',
-                borderRadius: 12,
-                style: {
-                    fontFamily: 'Lato',
-                    fontWeight: 'bold',
-                },
-                formatter: function() {
-                    return '<h5 style="color:#a4a4a4;font-size: 1.1rem;">' + this.key + '</h5><br><br><h6>' +
-                        this.y + ' Responden (' + this.percentage + '%)</h6>';
-                }
-            },
-            plotOptions: {
-                pie: {
-                    shadow: false,
-                    center: ['50%', '50%'],
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: false
-                    },
-                },
-            },
-            series: [{
-                data: gender,
-                size: '90%',
-                innerSize: '75%',
-            }]
-        });
-    </script>
-    <script>
-        var age = [{
-                y: 75,
-                name: "21"
-            },
-            {
-                y: 5,
-                name: "22"
-            },
-            {
-                y: 5,
-                name: "23"
-            },
-            {
-                y: 5,
-                name: "24"
-            },
-            {
-                y: 5,
-                name: "25"
-            },
-            {
-                y: 5,
-                name: "26"
-            },
-        ]
-        $('#age-chart').highcharts({
-            chart: {
-                animation: false,
-                type: 'pie',
-                backgroundColor: null,
-                height: 250
-            },
-            title: {
-                text: null
-            },
-            exporting: {
-                enabled: false,
-            },
-            tooltip: {
-                valueSuffix: ' Responden',
-                enabled: true,
-                backgroundColor: '#ffffff',
-                borderColor: '#ffffff',
-                borderRadius: 12,
-                style: {
-                    fontFamily: 'Lato',
-                    fontWeight: 'bold',
-                },
-                formatter: function() {
-                    return '<h5 style="color:#a4a4a4;font-size: 1.1rem;">' + this.key + '</h5><br><br><h6>' +
-                        this.y + ' Responden (' + this.percentage + '%)</h6>';
-                }
-            },
-            plotOptions: {
-                pie: {
-                    shadow: false,
-                    center: ['50%', '50%'],
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: false
-                    },
-                },
-            },
-            series: [{
-                data: age,
-                size: '90%',
-                innerSize: '75%',
-            }]
-        });
-    </script>
+    @include('survey.inc.chart.analisa.script.gender')
+    @include('survey.inc.chart.analisa.script.age')
 @endsection
 
 @section('head')

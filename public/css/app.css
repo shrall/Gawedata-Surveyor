@@ -434,6 +434,31 @@ ul.select2-results__options li:hover {
 
 /* survey detail - hasil survei  */
 .card-open-ended {
-    background: #F4F4F4;
+    background: #f4f4f4;
     border-radius: 4px;
+}
+.carousel-inner {
+    background-color: #282828;
+    border-radius: 12px;
+}
+.carousel-item img {
+    max-width: 50vw;
+    height: 40vh;
+}
+.survey-result-image-nav-item {
+    width: 5vw;
+    height: 5vw;
+    object-position: center;
+    object-fit: cover;
+    box-sizing: border-box;
+    border-radius: 12px;
+    cursor: pointer;
+}
+.survey-result-image-nav-item:hover {
+    border-radius: 12px;
+    border: 6px solid #3F60F5;
+}
+.survey-result-image-nav.active .survey-result-image-nav-item{
+    border-radius: 12px;
+    border: 6px solid #3F60F5;
 }

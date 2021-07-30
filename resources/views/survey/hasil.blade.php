@@ -108,6 +108,60 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="text-start">
+                            <h4 class="font-weight-bold">Pertanyaan Action</h4>
+                            <h6 class="text-gray">Action Question (Upload Gambar) - 100 Jawaban</h6>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="action-image-carousel" class="carousel slide" data-bs-interval="false">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg"
+                                                class="d-block mx-auto">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVoR5pN5H7AFWzC4ajb_eGhbBuUcm1b_W3Ow&usqp=CAU"
+                                                class="d-block mx-auto">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="https://i0.wp.com/cdn2.iconfinder.com/data/icons/dog-2/32/corgi-512.png"
+                                                class="d-block mx-auto">
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#action-image-carousel" data-bs-slide="prev">
+                                        <span class="fa fa-fw fa-chevron-left fs-1"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#action-image-carousel" data-bs-slide="next">
+                                        <span class="fa fa-fw fa-chevron-right fs-1"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                                <div class="d-flex align-items-center my-2 pb-2"
+                                    style="overflow: auto; white-space: nowrap;">
+                                    <div class="survey-result-image-nav me-2" data-bs-target="#action-image-carousel"
+                                        data-bs-slide-to="0">
+                                        <img src="https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg"
+                                            class="survey-result-image-nav-item d-block mx-auto">
+                                    </div>
+                                    <div class="survey-result-image-nav mx-2" data-bs-target="#action-image-carousel"
+                                        data-bs-slide-to="1">
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVoR5pN5H7AFWzC4ajb_eGhbBuUcm1b_W3Ow&usqp=CAU"
+                                            class="survey-result-image-nav-item d-block mx-auto">
+                                    </div>
+                                    <div class="survey-result-image-nav mx-2" data-bs-target="#action-image-carousel"
+                                        data-bs-slide-to="2">
+                                        <img src="https://i0.wp.com/cdn2.iconfinder.com/data/icons/dog-2/32/corgi-512.png"
+                                            class="survey-result-image-nav-item d-block mx-auto">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

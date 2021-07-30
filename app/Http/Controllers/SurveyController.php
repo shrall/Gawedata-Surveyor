@@ -72,7 +72,7 @@ class SurveyController extends Controller
         if ($response['success']){
             return redirect()->route('survey.show', $response['data']['id']);
         }else {
-            dd('dsad');
+            dd($response);
         }
         // if ($response['data'] != null) {
         //     return redirect()->route('home');
