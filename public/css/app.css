@@ -29,7 +29,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     height: 10px;
 }
 ::-webkit-scrollbar-track {
-    background: #fff;
+    background: #f4f4f4;
 }
 ::-webkit-scrollbar-thumb {
     background: #b5b5b5;
@@ -103,7 +103,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 .btn-gawedata-3 {
     color: #3f60f5;
-    background: #EDF0FF;
+    background: #edf0ff;
     border-radius: 12px;
 }
 .btn-error {
@@ -430,4 +430,10 @@ ul.select2-results__options li:hover {
 }
 #survey-menu-box:hover {
     display: block;
+}
+
+/* survey detail - hasil survei  */
+.card-open-ended {
+    background: #F4F4F4;
+    border-radius: 4px;
 }

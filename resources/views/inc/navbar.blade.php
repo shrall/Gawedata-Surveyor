@@ -7,7 +7,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 @if (Route::current()->getName() == 'survey.hasil' || Route::current()->getName() == 'survey.analisa' || Route::current()->getName() == 'survey.detail' || Route::current()->getName() == 'survey.show')
-                    <ul class="navbar-nav position-absolute top-50 start-50 translate-middle">
+                    <ul class="navbar-nav position-absolute top-50 start-50 translate-middle" style="z-index: 100;">
                         <h4 class="font-lato font-weight-bold mb-0">{{ $survey['title'] }}
                             <span class="far fa-fw fa-comment-dots text-gawedata cursor-pointer ms-2"
                                 id="survey-menu-button"></span>
