@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row" style="height:90vh;">
             <div class="col-4 text-start border-end">
-                @include('survey.inc.sidebar.submitted')
+                @include('survey.inc.sidebar.published')
             </div>
             <div class="col-8 text-center my-4">
                 <div class="card card-survey-detail border-0 p-4">

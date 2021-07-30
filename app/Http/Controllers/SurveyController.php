@@ -69,9 +69,9 @@ class SurveyController extends Controller
             'household_expense_id' => $request->expense
         ])->json();
 
-        if ($response['success']){
+        if ($response['success']) {
             return redirect()->route('survey.show', $response['data']['id']);
-        }else {
+        } else {
             dd($response);
         }
         // if ($response['data'] != null) {
@@ -87,14 +87,20 @@ class SurveyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $i)
     {
         $survey = Http::withHeaders([
             'Authorization' => 'Bearer ' . session('token'),
         ])
             ->get(config('services.api.url') . '/survey/' . $id)
             ->json()['data'];
-        return view('survey.draft', compact('survey'));
+        if ($survey['status_id'] == 6) {
+            return redirect()->route('survey.hasil', $id);
+        } else if ($survey['status_id'] == 5) {
+            return redirect()->route('survey.submitted', $id, $i);
+        } else {
+            return view('survey.draft', compact('survey', 'i'));
+        }
     }
 
     /**
@@ -130,7 +136,7 @@ class SurveyController extends Controller
     {
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . session('token'),
-        ])->delete(config('services.api.url') . '/survey/'. $id)->json();
+        ])->delete(config('services.api.url') . '/survey/' . $id)->json();
         return redirect()->route('home');
     }
 
@@ -173,5 +179,15 @@ class SurveyController extends Controller
             ->get(config('services.api.url') . '/survey/' . $id)
             ->json()['data'];
         return view('survey.detail', compact('survey'));
+    }
+
+    public function submitted($id, $i)
+    {
+        $survey = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/survey/' . $id)
+            ->json()['data'];
+        return view('survey.submitted', compact('survey', 'i'));
     }
 }

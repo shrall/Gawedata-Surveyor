@@ -1,40 +1,23 @@
 <ul class="list-unstyled my-4">
     <li class="my-4">
-        <div class="card card-responden mx-3 p-4">
-            <h5 class="mb-4">Responden</h5>
-            <div class="responden-quota-box mb-1">
-                <div class="responden-quota" style="width: 30%;"></div>
-            </div>
-            <div class="d-flex justify-content-between font-nexa font-weight-regular">
-                <span>40 Mengisi</span>
-                <span>{{$survey['respondent_quota']}}</span>
-            </div>
+        <div class="card card-submitted mx-3 p-4">
+            <h5 class="font-lato font-weight-bold mb-4">Surveimu Sudah Tersubmit 🎉</h5>
+            <span class="text-gray">Tim gawedata sedang mereview surveimu dalam waktu 1x24 Jam</span>
         </div>
     </li>
     <div id="survey-detail-sidebar" class="mx-3">
-        <a href="{{ route('survey.hasil', $survey['id']) }}" class="text-decoration-none">
-            <li class="my-4 pe-4 py-3 @if (Route::current()->getName() == 'survey.hasil') active @endif position-relative">
-                <div class="active-border py-1 top-50 start-0 translate-middle-y d-inline @if (Route::current()->getName() != 'survey.hasil') invisible @endif "> 
-                </div>
-                <span href="{{ route('user.editprofile') }}" class="text-gray text-decoration-none ms-4 fs-6">
-                    Hasil Survei</span>
-            </li>
-        </a>
-        <a href="{{ route('survey.analisa', $survey['id']) }}" class="text-decoration-none">
-            <li class="my-4 pe-4 py-3 @if (Route::current()->getName() == 'survey.analisa') active @endif position-relative">
-                <div class="active-border py-1 top-50 start-0 translate-middle-y d-inline @if (Route::current()->getName() != 'survey.analisa') invisible @endif "> 
-                </div>
-                <span href="{{ route('user.editprofile') }}" class="text-gray text-decoration-none ms-4 fs-6">
-                    Analisa Kriteria Responden</span>
-            </li>
-        </a>
-        <a href="{{ route('survey.detail', $survey['id']) }}" class="text-decoration-none">
-            <li class="my-4 pe-4 py-3 @if (Route::current()->getName() == 'survey.detail') active @endif position-relative">
-                <div class="active-border py-1 top-50 start-0 translate-middle-y d-inline @if (Route::current()->getName() != 'survey.detail') invisible @endif "> 
-                </div>
-                <span href="{{ route('user.editprofile') }}" class="text-gray text-decoration-none ms-4 fs-6">
-                    Detail Survei</span>
-            </li>
-        </a>
+        <h4 class="font-lato ms-3">Pertanyaan</h4>
+        @foreach ($survey['questions'] as $question)
+            <a href="{{route('survey.submitted', ['id' => $survey['id'], 'i' => $loop->iteration])}}" class="text-decoration-none">
+                <li class="font-lato my-4 pe-4 py-3 @if ($loop->iteration == $i) active @endif position-relative">
+                    <div class="active-border py-1 top-50 start-0 translate-middle-y d-inline @if ($loop->iteration != $i) invisible @endif"> 
+                    </div>
+                    <span class="badge-pertanyaan font-weight-bold ms-4 p-2" style="color: #3f60f5 !important;">P{{ $loop->iteration }}</span>
+                    <span class="text-gray text-decoration-none ms-4 fs-6" style="color: #000 !important;">
+                        {{ $question['question'] }}
+                    </span>
+                </li>
+            </a>
+        @endforeach
     </div>
 </ul>

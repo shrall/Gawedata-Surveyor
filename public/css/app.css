@@ -462,3 +462,13 @@ ul.select2-results__options li:hover {
     border-radius: 12px;
     border: 6px solid #3F60F5;
 }
+
+/* survey detail - submitted */
+.card-submitted {
+    border-radius: 14px;
+}
+.badge-pertanyaan {
+    border-radius: 50%;
+    color: #3f60f5;
+    background: #EDF0FF;
+}
