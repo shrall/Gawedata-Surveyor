@@ -479,6 +479,9 @@ ul.select2-results__options li:hover {
 }
 
 /* survey detail - draft */
+#question-type-text-guide {
+    font-size: 0.875rem !important;
+}
 /* create question  */
 #select-question-type .dropdown-menu .dropdown-item {
     cursor: pointer;

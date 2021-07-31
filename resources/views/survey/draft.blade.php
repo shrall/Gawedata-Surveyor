@@ -27,7 +27,7 @@
                                     @if ($survey['questions'][$i - 1]['survey_question_type_id'] == 1)
                                         Single Answer
                                     @elseif ($survey['questions'][$i-1]['survey_question_type_id'] == 2)
-                                        Multi Answer
+                                        Multiple Answer
                                     @elseif ($survey['questions'][$i-1]['survey_question_type_id'] == 3)
                                         Scale Question
                                     @elseif ($survey['questions'][$i-1]['survey_question_type_id'] == 4)
@@ -43,13 +43,13 @@
                                 </span>
                                 <ul class="dropdown-menu w-100 px-2">
                                     <div class="overflow-auto px-1" style="min-height:0;max-height: 30vh;">
-                                        <li class="dropdown-item">Single Answer</li>
-                                        <li class="dropdown-item">Multi Answer</li>
-                                        <li class="dropdown-item">Scale Question</li>
-                                        <li class="dropdown-item">Grid Question</li>
-                                        <li class="dropdown-item">Priority Question</li>
-                                        <li class="dropdown-item">Open Ended Question</li>
-                                        <li class="dropdown-item">Action</li>
+                                        <li class="dropdown-item" data-type=1>Single Answer</li>
+                                        <li class="dropdown-item" data-type=2>Multiple Answer</li>
+                                        <li class="dropdown-item" data-type=3>Scale Question</li>
+                                        <li class="dropdown-item" data-type=4>Grid Question</li>
+                                        <li class="dropdown-item" data-type=5>Priority Question</li>
+                                        <li class="dropdown-item" data-type=6>Open Ended Question</li>
+                                        <li class="dropdown-item" data-type=7>Action</li>
                                     </div>
                                 </ul>
                             </div>
@@ -58,7 +58,9 @@
                     <div id="#single-answer-question">
                         <div class="row justify-content-end">
                             <div class="col-5">
-                                <h6 class="text-gray my-2">Responden hanya dapat memilih 1 jawaban.</h6>
+                                <h6 class="text-start text-gray my-2" id="question-type-text-guide" style="font-size: 0.">
+                                    Responden hanya dapat memilih 1
+                                    jawaban.</h6>
                             </div>
                         </div>
                         <h6 class="text-start">Jawaban</h6>
@@ -77,14 +79,14 @@
                                     <div class="col-5 text-start d-flex align-items-center">
                                         <span class="fas fa-fw fa-trash-alt text-gray cursor-pointer fs-3"
                                             id="answer_delete{{ $loop->iteration }}"
-                                            onclick="deleteAnswer({{ $loop->iteration }});"></span>
+                                            onclick="deleteSingleAnswer({{ $loop->iteration }});"></span>
                                     </div>
                                 </div>
                             @endforeach
                         </div>
                         <div class="row">
                             <div class="col-7">
-                                <button class="btn btn-gawedata-2 font-lato w-100 py-2" onclick="addAnswer();">
+                                <button class="btn btn-gawedata-2 font-lato w-100 py-2" onclick="addSingleAnswer();">
                                     + Tambah Jawaban
                                 </button>
                             </div>
@@ -108,35 +110,47 @@
 
 @section('scripts')
     <script>
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var survey = @json($survey);
-        var questions = @json($survey['questions']);
+        var question = @json($survey['questions'][$i - 1]);
         var answers = @json($survey['questions'][$i - 1]['answer_choices']);
+    </script>
+    <script>
+        // answer templates
+        var new_answer_single = {
+            "text": "",
+        };
     </script>
     <script>
         $('#select-question-type').find('li').click(function() {
             $('#selected-question-type').html($(this).text() +
                 '<span class="fa fa-fw fa-chevron-down ms-auto"></span>');
-            $('#question-type').val($(this).text());
+            $('#question-type').val($(this).data("type"));
+            question['survey_question_type_id'] = $(this).data("type");
+            if ($(this).data("type") == 1 || $(this).data("type") == 2) {
+                answers = [new_answer_single];
+                refreshSingleAnswerAjax();
+            }
+            if ($(this).data("type") == 1) {
+                $('#question-type-text-guide').html('Responden hanya dapat memilih 1 jawaban.')
+            } else if ($(this).data("type") == 2) {
+                $('#question-type-text-guide').html('Responden dapat memilih lebih dari 1 jawaban.')
+            }
         });
     </script>
     <script>
         // single answer
-        var new_answer_single = {
-            "text": "",
-        };
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-
-        function addAnswer() {
+        function addSingleAnswer() {
             answers.push(new_answer_single);
-            refreshAnswerAjax();
+            refreshSingleAnswerAjax();
         }
 
-        function deleteAnswer(int) {
+        function deleteSingleAnswer(int) {
             answers.splice(int - 1, 1);
-            refreshAnswerAjax();
+            refreshSingleAnswerAjax();
         }
 
-        function refreshAnswerAjax() {
+        function refreshSingleAnswerAjax() {
             $.post("{{ config('app.url') }}" + "/survey/refreshanswer", {
                     _token: CSRF_TOKEN,
                     answers: answers
@@ -146,9 +160,6 @@
                 })
                 .fail(function() {
                     console.log("fail");
-                })
-                .always(function() {
-                    console.log("always");
                 });
         }
     </script>
