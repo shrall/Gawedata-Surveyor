@@ -60,7 +60,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'];
                         </div>
                     </div>
                     <div id="single-answer-question" class="@if ($question_type_id==1 ||
-                    $question_type_id==2) d-block @else d-none @endif">
+                    $question_type_id==2 || $question_type_id==5) d-block @else d-none @endif">
                         <div class="row justify-content-end">
                             <div class="col-5">
                                 <h6 class="question-type-text-guide text-start text-gray my-2" style="font-size: 0.875rem;">
@@ -68,6 +68,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'];
                                         Responden hanya dapat memilih 1 jawaban.
                                     @elseif ($question_type_id == 2)
                                         Responden dapat memilih lebih dari 1 jawaban.
+                                    @elseif ($question_type_id == 5)
+                                        Responden mengurutkan jawaban.
                                     @endif
                                 </h6>
                             </div>
@@ -136,8 +138,9 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'];
                         <div class="open-ended-answer">
                             <div class="row">
                                 <div class="col-12">
-                                    <input type="text" name="open_ended_answer" id="open_ended_answer" class="form-control input-text"
-                                        placeholder="Responden akan menjawab sendiri" disabled>
+                                    <input type="text" name="open_ended_answer" id="open_ended_answer"
+                                        class="form-control input-text" placeholder="Responden akan menjawab sendiri"
+                                        disabled>
                                 </div>
                             </div>
                         </div>
@@ -202,6 +205,11 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'];
             } else if ($(this).data("type") == 3) {
                 $('.question-type-text-guide').html('Responden mengurutkan jawaban berdasarkan peringkat.')
                 $('#scale-question').removeClass('d-none').addClass('d-block');
+            } else if ($(this).data("type") == 5) {
+                questions[question_index]['answer_choices'] = [new_answer_single];
+                refreshSingleAnswerAjax();
+                $('.question-type-text-guide').html('Responden mengurutkan jawaban.')
+                $('#single-answer-question').removeClass('d-none').addClass('d-block');
             } else if ($(this).data("type") == 6) {
                 $('.question-type-text-guide').html('Responden menjawab berupa opini atau penjelasan.')
                 $('#open-ended-question').removeClass('d-none').addClass('d-block');
@@ -226,7 +234,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'];
         }
 
         function refreshSingleAnswerAjax() {
-            $.post("{{ config('app.url') }}" + "/survey/refreshanswer", {
+            $.post("{{ config('app.url') }}" + "/survey/refreshsingleanswer", {
                     _token: CSRF_TOKEN,
                     answers: questions[question_index]['answer_choices']
                 })

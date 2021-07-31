@@ -37,5 +37,5 @@ Route::group(['middleware' => ['surveyor']], function () {
     Route::get('survey/{id}/submitted/{i}', [SurveyController::class, 'submitted'])->name('survey.submitted');
     Route::post('survey/getcity', [SurveyController::class, 'get_city'])->name('survey.getcity');
     Route::post('survey/{id}/addquestion', [SurveyController::class, 'add_question'])->name('survey.addquestion');
-    Route::post('survey/refreshanswer', [SurveyController::class, 'refresh_answer'])->name('survey.refreshanswer');
+    Route::post('survey/refreshsingleanswer', [SurveyController::class, 'refresh_single_answer'])->name('survey.refreshsingleanswer');
 });

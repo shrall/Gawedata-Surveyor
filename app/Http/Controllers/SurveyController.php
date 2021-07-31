@@ -204,11 +204,11 @@ class SurveyController extends Controller
         // ])->json();
         // dd($response);
     }
-    public function refresh_answer(Request $request)
+    public function refresh_single_answer(Request $request)
     {
-        if(count($request->answers)>0){
+        if (count($request->answers) > 0) {
             $answers = $request->answers;
-        }else {
+        } else {
             $answers = null;
         }
         return view('survey.inc.draft.single_answer', compact('answers'));
