@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@php
+$question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'];
+@endphp
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -24,17 +28,17 @@
                             <div class="dropdown" id="select-question-type">
                                 <span class="form-control input-text d-flex align-items-center" type="button"
                                     data-bs-toggle="dropdown" id="selected-question-type">
-                                    @if ($survey['questions'][$i - 1]['survey_question_type_id'] == 1)
+                                    @if ($question_type_id == 1)
                                         Single Answer
-                                    @elseif ($survey['questions'][$i-1]['survey_question_type_id'] == 2)
+                                    @elseif ($question_type_id == 2)
                                         Multiple Answer
-                                    @elseif ($survey['questions'][$i-1]['survey_question_type_id'] == 3)
+                                    @elseif ($question_type_id == 3)
                                         Scale Question
-                                    @elseif ($survey['questions'][$i-1]['survey_question_type_id'] == 4)
+                                    @elseif ($question_type_id == 4)
                                         Grid Question
-                                    @elseif ($survey['questions'][$i-1]['survey_question_type_id'] == 5)
+                                    @elseif ($question_type_id == 5)
                                         Priority Question
-                                    @elseif ($survey['questions'][$i-1]['survey_question_type_id'] == 6)
+                                    @elseif ($question_type_id == 6)
                                         Open Ended Question
                                     @else
                                         Action
@@ -55,12 +59,17 @@
                             </div>
                         </div>
                     </div>
-                    <div id="#single-answer-question">
+                    <div id="single-answer-question" class="@if ($question_type_id==1 ||
+                    $question_type_id==2) d-block @else d-none @endif">
                         <div class="row justify-content-end">
                             <div class="col-5">
-                                <h6 class="text-start text-gray my-2" id="question-type-text-guide" style="font-size: 0.">
-                                    Responden hanya dapat memilih 1
-                                    jawaban.</h6>
+                                <h6 class="question-type-text-guide text-start text-gray my-2" style="font-size: 0.875rem;">
+                                    @if ($question_type_id == 1)
+                                        Responden hanya dapat memilih 1 jawaban.
+                                    @elseif ($question_type_id == 2)
+                                        Responden dapat memilih lebih dari 1 jawaban.
+                                    @endif
+                                </h6>
                             </div>
                         </div>
                         <h6 class="text-start">Jawaban</h6>
@@ -89,6 +98,25 @@
                                 <button class="btn btn-gawedata-2 font-lato w-100 py-2" onclick="addSingleAnswer();">
                                     + Tambah Jawaban
                                 </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="scale-question" class="@if ($question_type_id==3) d-block @else d-none @endif">
+                        <div class="row justify-content-end">
+                            <div class="col-5">
+                                <h6 class="question-type-text-guide text-start text-gray my-2" style="font-size: 0.875rem;">
+                                    Responden mengurutkan jawaban berdasarkan peringkat.
+                                </h6>
+                            </div>
+                        </div>
+                        <h6 class="text-start">Jawaban</h6>
+                        <div class="scale-answer">
+                            <div class="row">
+                                <div class="col-4 d-flex align-items-center">
+                                    <input type="number" name="minimal_scale" id="minimal_scale" value="{{$survey['questions'][$i - 1]['minimal_scale']}}" class="form-control input-text text-center">
+                                    <span class="mx-2">sampai</span>
+                                    <input type="number" name="maximal_scale" id="maximal_scale" value="{{$survey['questions'][$i - 1]['maximal_scale']}}" class="form-control input-text text-center">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -121,22 +149,36 @@
         };
     </script>
     <script>
+        function changeQuestionType() {
+            $('#single-answer-question').removeClass('d-block').addClass('d-none');
+            $('#scale-question').removeClass('d-block').addClass('d-none');
+            questions[question_index]['answer_choices'] = null;
+            questions[question_index]['minimal_scale'] = null;
+            questions[question_index]['maximal_scale'] = null;
+            $('#minimal_scale').val('');
+            $('#maximal_scale').val('');
+            $('#minimal_scale').removeAttr('value');
+            $('#maximal_scale').removeAttr('value');
+        }
         $('#select-question-type').find('li').click(function() {
             $('#selected-question-type').html($(this).text() +
                 '<span class="fa fa-fw fa-chevron-down ms-auto"></span>');
             $('#question-type').val($(this).data("type"));
             questions[question_index]['survey_question_type_id'] = $(this).data("type");
-            questions[question_index]['answer_choices'] = null;
-            questions[question_index]['minimal_scale'] = null;
-            questions[question_index]['maximal_scale'] = null;
-            if ($(this).data("type") == 1 || $(this).data("type") == 2) {
+            changeQuestionType();
+            if ($(this).data("type") == 1) {
                 questions[question_index]['answer_choices'] = [new_answer_single];
                 refreshSingleAnswerAjax();
-            }
-            if ($(this).data("type") == 1) {
-                $('#question-type-text-guide').html('Responden hanya dapat memilih 1 jawaban.')
+                $('.question-type-text-guide').html('Responden hanya dapat memilih 1 jawaban.')
+                $('#single-answer-question').removeClass('d-none').addClass('d-block');
             } else if ($(this).data("type") == 2) {
-                $('#question-type-text-guide').html('Responden dapat memilih lebih dari 1 jawaban.')
+                questions[question_index]['answer_choices'] = [new_answer_single];
+                refreshSingleAnswerAjax();
+                $('.question-type-text-guide').html('Responden dapat memilih lebih dari 1 jawaban.')
+                $('#single-answer-question').removeClass('d-none').addClass('d-block');
+            } else if ($(this).data("type") == 3) {
+                $('.question-type-text-guide').html('Responden mengurutkan jawaban berdasarkan peringkat.')
+                $('#scale-question').removeClass('d-none').addClass('d-block');
             }
         });
     </script>
