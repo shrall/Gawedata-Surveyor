@@ -185,19 +185,19 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'];
                                     </div>
                                 </div>
                                 <div class="col-7 @if ($question_type_id==7) d-block @else d-none @endif" id="input-url-video">
-                                    <input type="text" name="action_video_answer action_answer" id="action_video_answer"
-                                        class="form-control input-text" placeholder="Tuliskan URL Video Disini"
+                                    <input type="text" name="action_video_answer" id="action_video_answer"
+                                        class="form-control input-text action_answer" placeholder="Tuliskan URL Video Disini"
                                         value="{{ $survey['questions'][$i - 1]['youtube_url'] }}">
                                 </div>
                                 <div class="col-7 @if ($question_type_id==8) d-block @else d-none @endif" id="input-url-application">
-                                    <input type="text" name="action_application_answer action_answer"
-                                        id="action_application_answer" class="form-control input-text"
+                                    <input type="text" name="action_application_answer"
+                                        id="action_application_answer" class="form-control input-text action_answer"
                                         placeholder="Tuliskan URL Aplikasi Disini"
                                         value="{{ $survey['questions'][$i - 1]['android_app_url'] }}">
                                 </div>
                                 <div class="col-7 @if ($question_type_id==9) d-block @else d-none @endif" id="input-url-website">
-                                    <input type="text" name="action_website_answer action_answer" id="action_website_answer"
-                                        class="form-control input-text" placeholder="Tuliskan URL Website Disini"
+                                    <input type="text" name="action_website_answer" id="action_website_answer"
+                                        class="form-control input-text action_answer" placeholder="Tuliskan URL Website Disini"
                                         value="{{ $survey['questions'][$i - 1]['website_url'] }}">
                                 </div>
                             </div>
