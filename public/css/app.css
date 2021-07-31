@@ -106,6 +106,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background: #edf0ff;
     border-radius: 12px;
 }
+.btn-gawedata-danger {
+    color: #ff525d;
+    background: #ffeeef;
+    border-radius: 12px;
+}
 .btn-error {
     background-color: #ff525d;
     color: #fff;
@@ -230,10 +235,10 @@ input:focus {
 }
 
 /* create survey */
-#create-survey-modal .modal-content {
+#select-question-type .modal-content {
     min-height: 65vh;
 }
-#create-survey-modal .modal-content #create-survey-sidebar-col {
+#select-question-type .modal-content #create-survey-sidebar-col {
     min-height: 65vh;
 }
 /* sidebar steps menu */
@@ -245,15 +250,15 @@ input:focus {
 }
 
 /* dropdown */
-#create-survey-modal .dropdown-menu {
+#select-question-type .dropdown-menu {
     border-radius: 12px;
 }
 
-#create-survey-modal .dropdown-menu .dropdown-item {
+#select-question-type .dropdown-menu .dropdown-item {
     cursor: pointer;
 }
 
-#create-survey-modal .dropdown-menu .dropdown-item:hover {
+#select-question-type .dropdown-menu .dropdown-item:hover {
     color: #3f60f5;
     background-color: #edf0ff;
     border-radius: 8px;
@@ -365,7 +370,7 @@ ul.select2-results__options li:hover {
     border-radius: 14px;
 }
 
-/* survey detail sidebar */
+/* survey detail sidebar - published */
 
 .responden-quota-box {
     background: rgba(238, 240, 245, 0.14);
@@ -456,11 +461,11 @@ ul.select2-results__options li:hover {
 }
 .survey-result-image-nav-item:hover {
     border-radius: 12px;
-    border: 6px solid #3F60F5;
+    border: 6px solid #3f60f5;
 }
-.survey-result-image-nav.active .survey-result-image-nav-item{
+.survey-result-image-nav.active .survey-result-image-nav-item {
     border-radius: 12px;
-    border: 6px solid #3F60F5;
+    border: 6px solid #3f60f5;
 }
 
 /* survey detail - submitted */
@@ -470,5 +475,17 @@ ul.select2-results__options li:hover {
 .badge-pertanyaan {
     border-radius: 50%;
     color: #3f60f5;
-    background: #EDF0FF;
+    background: #edf0ff;
+}
+
+/* survey detail - draft */
+/* create question  */
+#select-question-type .dropdown-menu .dropdown-item {
+    cursor: pointer;
+}
+
+#select-question-type .dropdown-menu .dropdown-item:hover {
+    color: #3f60f5;
+    background-color: #edf0ff;
+    border-radius: 8px;
 }

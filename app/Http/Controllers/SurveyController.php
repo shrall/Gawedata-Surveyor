@@ -70,15 +70,10 @@ class SurveyController extends Controller
         ])->json();
 
         if ($response['success']) {
-            return redirect()->route('survey.show', $response['data']['id']);
+            return redirect()->route('survey.show', $response['data']['id'], 1);
         } else {
-            dd($response);
+            return redirect()->route('home');
         }
-        // if ($response['data'] != null) {
-        //     return redirect()->route('home');
-        // } else {
-        //     return redirect()->route('login')->withErrors(['msg', 'Error']);
-        // }
     }
 
     /**
@@ -189,5 +184,29 @@ class SurveyController extends Controller
             ->get(config('services.api.url') . '/survey/' . $id)
             ->json()['data'];
         return view('survey.submitted', compact('survey', 'i'));
+    }
+
+    public function add_question(Request $request, $id)
+    {
+        // $survey = Http::withHeaders([
+        //     'Authorization' => 'Bearer ' . session('token'),
+        //     'Content-Type' => 'application/json'
+        // ])
+        //     ->get(config('services.api.url') . '/survey/' . $id)
+        //     ->json()['data'];
+        // $questions = collect($survey['questions']);
+        // dd($questions);
+        // $response = Http::withHeaders([
+        //     'Authorization' => 'Bearer ' . session('token'),
+        // ])->post(config('services.api.url') . '/surveyQuestion', [
+        //     'survey_id' => $survey['id'],
+        //     'questions' => $questions
+        // ])->json();
+        // dd($response);
+    }
+    public function refresh_answer(Request $request)
+    {
+        $answers = $request->answers;
+        return view('survey.inc.draft.single_answer', compact('answers'));
     }
 }

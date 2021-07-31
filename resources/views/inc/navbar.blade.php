@@ -65,12 +65,12 @@
                         </li>
                     @elseif (Route::current()->getName() == 'survey.show')
                         <li class="nav-item mx-2">
-                            <a href="#" class="btn btn-gawedata font-lato">
+                            <a href="#" class="btn btn-gawedata-2 font-lato">
                                 Simpan (Draft)
                             </a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a href="#" class="btn btn-gawedata-2 font-lato font-weight-bold">
+                            <a href="#" class="btn btn-gawedata font-lato font-weight-bold">
                                 Submit Survei
                             </a>
                         </li>
