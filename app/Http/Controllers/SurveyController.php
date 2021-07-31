@@ -70,7 +70,7 @@ class SurveyController extends Controller
         ])->json();
 
         if ($response['success']) {
-            return redirect()->route('survey.show', $response['data']['id'], 1);
+            return redirect()->route('survey.show', ['id' => $response['data']['id'], 'i' => 1]);
         } else {
             return redirect()->route('home');
         }
