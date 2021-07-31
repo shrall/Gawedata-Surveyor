@@ -206,7 +206,11 @@ class SurveyController extends Controller
     }
     public function refresh_answer(Request $request)
     {
-        $answers = $request->answers;
+        if(count($request->answers)>0){
+            $answers = $request->answers;
+        }else {
+            $answers = null;
+        }
         return view('survey.inc.draft.single_answer', compact('answers'));
     }
 }

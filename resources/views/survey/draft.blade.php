@@ -111,9 +111,8 @@
 @section('scripts')
     <script>
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        var survey = @json($survey);
-        var question = @json($survey['questions'][$i - 1]);
-        var answers = @json($survey['questions'][$i - 1]['answer_choices']);
+        var questions = @json($survey['questions']);
+        var question_index = @json($i - 1);
     </script>
     <script>
         // answer templates
@@ -126,9 +125,12 @@
             $('#selected-question-type').html($(this).text() +
                 '<span class="fa fa-fw fa-chevron-down ms-auto"></span>');
             $('#question-type').val($(this).data("type"));
-            question['survey_question_type_id'] = $(this).data("type");
+            questions[question_index]['survey_question_type_id'] = $(this).data("type");
+            questions[question_index]['answer_choices'] = null;
+            questions[question_index]['minimal_scale'] = null;
+            questions[question_index]['maximal_scale'] = null;
             if ($(this).data("type") == 1 || $(this).data("type") == 2) {
-                answers = [new_answer_single];
+                questions[question_index]['answer_choices'] = [new_answer_single];
                 refreshSingleAnswerAjax();
             }
             if ($(this).data("type") == 1) {
@@ -141,19 +143,23 @@
     <script>
         // single answer
         function addSingleAnswer() {
-            answers.push(new_answer_single);
+            questions[question_index]['answer_choices'].push(new_answer_single);
             refreshSingleAnswerAjax();
         }
 
         function deleteSingleAnswer(int) {
-            answers.splice(int - 1, 1);
-            refreshSingleAnswerAjax();
+            questions[question_index]['answer_choices'].splice(int - 1, 1);
+            if (questions[question_index]['answer_choices'].length > 0) {
+                refreshSingleAnswerAjax();
+            } else {
+                $('#question-answer' + int).remove();
+            }
         }
 
         function refreshSingleAnswerAjax() {
             $.post("{{ config('app.url') }}" + "/survey/refreshanswer", {
                     _token: CSRF_TOKEN,
-                    answers: answers
+                    answers: questions[question_index]['answer_choices']
                 })
                 .done(function(data) {
                     $(".single-answer-list").html(data)
