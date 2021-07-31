@@ -145,14 +145,75 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'];
                             </div>
                         </div>
                     </div>
+                    <div id="action-question" class="@if ($question_type_id==7 || $question_type_id==8
+                    || $question_type_id==9 || $question_type_id==10) d-block @else d-none @endif">
+                        <div class="row justify-content-end">
+                            <div class="col-5">
+                                <h6 class="question-type-text-guide text-start text-gray my-2" style="font-size: 0.875rem;">
+                                    Responden melakukan sesuatu untuk menjawab.
+                                </h6>
+                            </div>
+                        </div>
+                        <h6 class="text-start">Jawaban</h6>
+                        <div class="open-ended-answer">
+                            <div class="row">
+                                <div class="col-5">
+                                    <div class="dropdown" id="select-action-type">
+                                        <span class="form-control input-text d-flex align-items-center" type="button"
+                                            data-bs-toggle="dropdown" id="selected-action-type">
+                                            @if ($question_type_id == 7)
+                                                Lihat Video
+                                            @elseif ($question_type_id == 8)
+                                                Install Aplikasi
+                                            @elseif ($question_type_id == 9)
+                                                Kunjungi Website
+                                            @elseif ($question_type_id == 10)
+                                                Unggah Foto
+                                            @else
+                                                Pilih Action
+                                            @endif
+                                            <span class="fa fa-fw fa-chevron-down ms-auto"></span>
+                                        </span>
+                                        <ul class="dropdown-menu w-100 px-2">
+                                            <div class="overflow-auto px-1" style="min-height:0;max-height: 30vh;">
+                                                <li class="dropdown-item" data-type=7>Lihat Video</li>
+                                                <li class="dropdown-item" data-type=8>Install Aplikasi</li>
+                                                <li class="dropdown-item" data-type=9>Kunjungi Website</li>
+                                                <li class="dropdown-item" data-type=10>Unggah Foto</li>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-7 @if ($question_type_id==7) d-block @else d-none @endif" id="input-url-video">
+                                    <input type="text" name="action_video_answer action_answer" id="action_video_answer"
+                                        class="form-control input-text" placeholder="Tuliskan URL Video Disini"
+                                        value="{{ $survey['questions'][$i - 1]['youtube_url'] }}">
+                                </div>
+                                <div class="col-7 @if ($question_type_id==8) d-block @else d-none @endif" id="input-url-application">
+                                    <input type="text" name="action_application_answer action_answer"
+                                        id="action_application_answer" class="form-control input-text"
+                                        placeholder="Tuliskan URL Aplikasi Disini"
+                                        value="{{ $survey['questions'][$i - 1]['android_app_url'] }}">
+                                </div>
+                                <div class="col-7 @if ($question_type_id==9) d-block @else d-none @endif" id="input-url-website">
+                                    <input type="text" name="action_website_answer action_answer" id="action_website_answer"
+                                        class="form-control input-text" placeholder="Tuliskan URL Website Disini"
+                                        value="{{ $survey['questions'][$i - 1]['website_url'] }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <hr>
                     <div class="row align-items-center justify-content-between">
                         <div class="col-3 text-start">
-                            <button class="btn btn-gawedata-danger"><span
-                                    class="fas fa-fw fa-trash-alt me-2"></span>Hapus</button>
+                            <button class="btn btn-gawedata-danger">
+                                <span class="fas fa-fw fa-trash-alt me-2"></span>Hapus
+                            </button>
                         </div>
                         <div class="col-3 text-end">
-                            <button class="btn btn-gawedata-3"><span class="fas fa-fw fa-image me-2"></span>Gambar</button>
+                            <button class="btn btn-gawedata-3">
+                                <span class="fas fa-fw fa-image me-2"></span>Gambar
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -178,13 +239,23 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'];
             $('#single-answer-question').removeClass('d-block').addClass('d-none');
             $('#scale-question').removeClass('d-block').addClass('d-none');
             $('#open-ended-question').removeClass('d-block').addClass('d-none');
+            $('#action-question').removeClass('d-block').addClass('d-none');
+            $('#input-url-video').removeClass('d-block').addClass('d-none');
+            $('#input-url-application').removeClass('d-block').addClass('d-none');
+            $('#input-url-website').removeClass('d-block').addClass('d-none');
             questions[question_index]['answer_choices'] = null;
             questions[question_index]['minimal_scale'] = null;
             questions[question_index]['maximal_scale'] = null;
+            questions[question_index]['youtube_url'] = null;
+            questions[question_index]['website_url'] = null;
+            questions[question_index]['android_app_url'] = null;
+            questions[question_index]['ios_app_url'] = null;
             $('#minimal_scale').val('');
             $('#maximal_scale').val('');
             $('#minimal_scale').removeAttr('value');
             $('#maximal_scale').removeAttr('value');
+            $('.action_answer').val('');
+            $('.action_answer').removeAttr('value');
         }
         $('#select-question-type').find('li').click(function() {
             $('#selected-question-type').html($(this).text() +
@@ -213,8 +284,10 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'];
             } else if ($(this).data("type") == 6) {
                 $('.question-type-text-guide').html('Responden menjawab berupa opini atau penjelasan.')
                 $('#open-ended-question').removeClass('d-none').addClass('d-block');
+            } else if ($(this).data("type") == 7) {
+                $('.question-type-text-guide').html('Responden melakukan sesuatu untuk menjawab.')
+                $('#action-question').removeClass('d-none').addClass('d-block');
             }
-
         });
     </script>
     <script>
@@ -245,5 +318,23 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'];
                     console.log("fail");
                 });
         }
+    </script>
+    <script>
+        //action question
+        $('#select-action-type').find('li').click(function() {
+            $('#selected-action-type').html($(this).text() +
+                '<span class="fa fa-fw fa-chevron-down ms-auto"></span>');
+            $('#question-type').val($(this).data("type"));
+            questions[question_index]['survey_question_type_id'] = $(this).data("type");
+            changeQuestionType();
+            $('#action-question').removeClass('d-none').addClass('d-block');
+            if ($(this).data("type") == 7) {
+                $('#input-url-video').removeClass('d-none').addClass('d-block');
+            } else if ($(this).data("type") == 8) {
+                $('#input-url-application').removeClass('d-none').addClass('d-block');
+            } else if ($(this).data("type") == 9) {
+                $('#input-url-website').removeClass('d-none').addClass('d-block');
+            }
+        });
     </script>
 @endsection
