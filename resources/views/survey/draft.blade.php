@@ -113,9 +113,31 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'];
                         <div class="scale-answer">
                             <div class="row">
                                 <div class="col-4 d-flex align-items-center">
-                                    <input type="number" name="minimal_scale" id="minimal_scale" value="{{$survey['questions'][$i - 1]['minimal_scale']}}" class="form-control input-text text-center">
+                                    <input type="number" name="minimal_scale" id="minimal_scale"
+                                        value="{{ $survey['questions'][$i - 1]['minimal_scale'] }}"
+                                        class="form-control input-text text-center">
                                     <span class="mx-2">sampai</span>
-                                    <input type="number" name="maximal_scale" id="maximal_scale" value="{{$survey['questions'][$i - 1]['maximal_scale']}}" class="form-control input-text text-center">
+                                    <input type="number" name="maximal_scale" id="maximal_scale"
+                                        value="{{ $survey['questions'][$i - 1]['maximal_scale'] }}"
+                                        class="form-control input-text text-center">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="open-ended-question" class="@if ($question_type_id==6) d-block @else d-none @endif">
+                        <div class="row justify-content-end">
+                            <div class="col-5">
+                                <h6 class="question-type-text-guide text-start text-gray my-2" style="font-size: 0.875rem;">
+                                    Responden menjawab berupa opini atau penjelasan.
+                                </h6>
+                            </div>
+                        </div>
+                        <h6 class="text-start">Jawaban</h6>
+                        <div class="open-ended-answer">
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="text" name="open_ended_answer" id="open_ended_answer" class="form-control input-text"
+                                        placeholder="Responden akan menjawab sendiri" disabled>
                                 </div>
                             </div>
                         </div>
@@ -152,6 +174,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'];
         function changeQuestionType() {
             $('#single-answer-question').removeClass('d-block').addClass('d-none');
             $('#scale-question').removeClass('d-block').addClass('d-none');
+            $('#open-ended-question').removeClass('d-block').addClass('d-none');
             questions[question_index]['answer_choices'] = null;
             questions[question_index]['minimal_scale'] = null;
             questions[question_index]['maximal_scale'] = null;
@@ -179,7 +202,11 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'];
             } else if ($(this).data("type") == 3) {
                 $('.question-type-text-guide').html('Responden mengurutkan jawaban berdasarkan peringkat.')
                 $('#scale-question').removeClass('d-none').addClass('d-block');
+            } else if ($(this).data("type") == 6) {
+                $('.question-type-text-guide').html('Responden menjawab berupa opini atau penjelasan.')
+                $('#open-ended-question').removeClass('d-none').addClass('d-block');
             }
+
         });
     </script>
     <script>
