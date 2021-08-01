@@ -92,7 +92,7 @@ class SurveyController extends Controller
         if ($survey['status_id'] == 6) {
             return redirect()->route('survey.hasil', $id);
         } else if ($survey['status_id'] == 5) {
-            return redirect()->route('survey.submitted', $id, $i);
+            return redirect()->route('survey.submitted', ['id' => $survey['id'], 'i' => 1]);
         } else {
             return view('survey.draft', compact('survey', 'i'));
         }
@@ -188,22 +188,44 @@ class SurveyController extends Controller
 
     public function add_question(Request $request, $id)
     {
-        // $survey = Http::withHeaders([
-        //     'Authorization' => 'Bearer ' . session('token'),
-        //     'Content-Type' => 'application/json'
-        // ])
-        //     ->get(config('services.api.url') . '/survey/' . $id)
-        //     ->json()['data'];
-        // $questions = collect($survey['questions']);
-        // dd($questions);
-        // $response = Http::withHeaders([
-        //     'Authorization' => 'Bearer ' . session('token'),
-        // ])->post(config('services.api.url') . '/surveyQuestion', [
-        //     'survey_id' => $survey['id'],
-        //     'questions' => $questions
-        // ])->json();
-        // dd($response);
+        $survey = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+            'Content-Type' => 'application/json'
+        ])
+            ->get(config('services.api.url') . '/survey/' . $id)
+            ->json()['data'];
+        $questions = $survey['questions'];
+        foreach ($questions as $index => $question) {
+            if ($question['survey_question_type_id'] == 1 || $question['survey_question_type_id'] == 2 || $question['survey_question_type_id'] == 5) {
+                foreach ($question['answer_choices'] as $i => $answer) {
+                    $questions[$index]['answer_choices'][$i] = $answer['text'];
+                }
+            } else if ($question['survey_question_type_id'] == 4) {
+                foreach ($question['sub_questions'] as $in => $sub) {
+                    foreach ($sub['answer_choices'] as $i => $answer) {
+                        $questions[$index]['sub_questions'][$in]['answer_choices'][$i] = $answer['text'];
+                    }
+                }
+            }
+        }
+        $new_question = [
+            "question" => "Pertanyaan baru",
+            "survey_question_type_id" => 1,
+            "is_other_option_enabled" => false,
+            "answer_choices" => [
+                "Jawaban",
+            ]
+        ];
+        array_push($questions, $new_question);
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])->post(config('services.api.url') . '/surveyQuestion', [
+            'survey_id' => $survey['id'],
+            'questions' => $questions
+        ])->json();
+        return redirect()->route('survey.show', ['id' => $id, 'i' => count($questions)]);
     }
+
     public function refresh_single_answer(Request $request)
     {
         if (count($request->answers) > 0) {
