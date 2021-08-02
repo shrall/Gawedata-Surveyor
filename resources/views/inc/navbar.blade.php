@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container justify-content-center">
         <a class="navbar-brand" href="{{ url('/') }}">
-            <img src="{{ asset('images/logo-with-text.png') }}" alt="" class="d-inline-block align-text-top">
+            <img src="{{ asset('images/logo-with-text.png') }}" width="125px" alt="" class="d-inline-block align-text-top">
         </a>
         @if (Route::current()->getName() != 'login')
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -26,7 +26,7 @@
                                     <div class="mt-3">
                                         <a href="#" onclick="event.preventDefault();
                                                     document.getElementById('survey-delete-form').submit();"
-                                            class="text-red text-decoration-none font-weight-bold">
+                                            class="text-red text-decoration-none font-weight-bold" id="survey-delete-button">
                                             Hapus Survei
                                         </a>
                                         <form id="survey-delete-form"
@@ -84,7 +84,7 @@
                         </li>
                     @endif
                     <li class="nav-item mx-4 position-relative">
-                        <img src="{{ asset('images/logo-with-text.png') }}" id="user-profile" class="rounded-circle"
+                        <img src="{{ asset('images/logo.png') }}" id="user-profile" class="rounded-circle"
                             width="50px" height="50px">
                         <div id="profile-menu-box">
                             <div id="profile-menu" class="p-4">

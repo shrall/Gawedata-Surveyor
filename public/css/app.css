@@ -95,6 +95,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: #fff;
     border-radius: 12px;
 }
+.btn-gawedata:hover {
+    background-color: #1936B8;
+    color: #fff !important;
+}
 .btn-gawedata-2 {
     background-color: #fff;
     color: #3f60f5;
@@ -481,6 +485,9 @@ ul.select2-results__options li:hover {
 /* survey detail - draft */
 #question-type-text-guide {
     font-size: 0.875rem !important;
+}
+#survey-delete-button:hover {
+    color:#ff525d;
 }
 /* create question  */
 #select-question-type .dropdown-menu .dropdown-item {
