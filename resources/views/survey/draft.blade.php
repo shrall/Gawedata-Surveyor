@@ -195,11 +195,25 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                             placeholder="Tuliskan URL Video Disini"
                                             value="{{ $survey['questions'][$i - 1]['youtube_url'] }}">
                                     </div>
-                                    <div class="col-7 @if ($question_type_id==8) d-block @else d-none @endif" id="input-url-application">
-                                        <input type="text" name="action_application_answer" id="action_application_answer"
+                                    <div class="col-7 input-url-application position-relative @if ($question_type_id==8) d-block @else d-none @endif mb-2">
+                                        <span
+                                            class="fab fa-fw fa-android position-absolute top-50 start-0 translate-middle-y ms-4 ps-2"></span>
+                                        <input type="text" name="action_android_answer" id="action_android_answer"
                                             class="form-control input-text action_answer"
-                                            placeholder="Tuliskan URL Aplikasi Disini"
+                                            placeholder="Tuliskan URL Aplikasi Android Disini"
+                                            style="padding-left:3.5rem !important;"
                                             value="{{ $survey['questions'][$i - 1]['android_app_url'] }}">
+                                    </div>
+                                    <div class="col-5 input-url-application @if ($question_type_id==8) d-block @else d-none @endif">
+                                    </div>
+                                    <div class="col-7 input-url-application position-relative @if ($question_type_id==8) d-block @else d-none @endif">
+                                        <span
+                                            class="fab fa-fw fa-apple position-absolute top-50 start-0 translate-middle-y ms-4 ps-2 fs-5"></span>
+                                        <input type="text" name="action_ios_answer" id="action_ios_answer"
+                                            class="form-control input-text action_answer"
+                                            placeholder="Tuliskan URL Aplikasi iOS Disini"
+                                            style="padding-left:3.5rem !important;"
+                                            value="{{ $survey['questions'][$i - 1]['ios_app_url'] }}">
                                     </div>
                                     <div class="col-7 @if ($question_type_id==9) d-block @else d-none @endif" id="input-url-website">
                                         <input type="text" name="action_website_answer" id="action_website_answer"
@@ -249,7 +263,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             $('#open-ended-question').removeClass('d-block').addClass('d-none');
             $('#action-question').removeClass('d-block').addClass('d-none');
             $('#input-url-video').removeClass('d-block').addClass('d-none');
-            $('#input-url-application').removeClass('d-block').addClass('d-none');
+            $('.input-url-application').removeClass('d-block').addClass('d-none');
             $('#input-url-website').removeClass('d-block').addClass('d-none');
             questions[question_index]['answer_choices'] = null;
             questions[question_index]['minimal_scale'] = null;
@@ -339,7 +353,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             if ($(this).data("type") == 7) {
                 $('#input-url-video').removeClass('d-none').addClass('d-block');
             } else if ($(this).data("type") == 8) {
-                $('#input-url-application').removeClass('d-none').addClass('d-block');
+                $('.input-url-application').removeClass('d-none').addClass('d-block');
             } else if ($(this).data("type") == 9) {
                 $('#input-url-website').removeClass('d-none').addClass('d-block');
             }
