@@ -87,7 +87,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                             <input type="text" name="answer{{ $loop->iteration }}"
                                                 id="answer{{ $loop->iteration }}" class="form-control input-text"
                                                 style="padding-left:3.5rem !important;"
-                                                placeholder="Tuliskan Jawaban Disini" value="{{ $answer['text'] }}" onkeyup="setNewSingleAnswer({{$loop->iteration}});">
+                                                placeholder="Tuliskan Jawaban Disini" value="{{ $answer['text'] }}"
+                                                onkeyup="setNewSingleAnswer({{ $loop->iteration }});">
                                         </div>
                                         <div class="col-5 text-start d-flex align-items-center">
                                             <span class="fas fa-fw fa-trash-alt text-gray cursor-pointer fs-3"
@@ -228,7 +229,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         <hr>
                         <div class="row align-items-center justify-content-between">
                             <div class="col-3 text-start">
-                                <button class="btn btn-gawedata-danger">
+                                <button class="btn btn-gawedata-danger" onclick="deleteQuestion({{$i}});">
                                     <span class="fas fa-fw fa-trash-alt me-2"></span>Hapus
                                 </button>
                             </div>
@@ -342,7 +343,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     </script>
     <script>
         // main question
-        function setQuestion(){
+        function setQuestion() {
             questions[question_index]['question'] = $('#input-question').val();
         }
     </script>
@@ -375,8 +376,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 });
         }
 
-        function setNewSingleAnswer(index){
-            questions[question_index]['answer_choices'][index-1] = $('#answer1').val();
+        function setNewSingleAnswer(index) {
+            questions[question_index]['answer_choices'][index - 1] = $('#answer1').val();
         }
     </script>
     <script>
@@ -404,6 +405,12 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             $('#input-question-index').val(index);
             console.log($('#input-questions').val())
             document.getElementById('question-form').submit();
+        }
+    </script>
+    <script>
+        function deleteQuestion(index) {
+            questions.splice(index, 1);
+            saveDraft(index);
         }
     </script>
 @endsection
