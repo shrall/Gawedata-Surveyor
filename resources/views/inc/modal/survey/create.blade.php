@@ -150,6 +150,7 @@
                                     <div class="mb-3">
                                         <select class="form-control input-text" id="survey-education" name="education[]"
                                             multiple="multiple">
+                                            <option value="selectall">Select All</option>
                                             @foreach ($educations as $education)
                                                 <option value="{{ $education['id'] }}">{{ $education['name'] }}
                                                 </option>
@@ -159,6 +160,7 @@
                                     <div class="mb-3">
                                         <select class="form-control input-text" id="survey-profession"
                                             name="profession[]" multiple="multiple">
+                                            <option value="selectall">Select All</option>
                                             @foreach ($professions as $profession)
                                                 <option value="{{ $profession['id'] }}">{{ $profession['name'] }}
                                                 </option>
@@ -168,6 +170,7 @@
                                     <div class="mb-3">
                                         <select class="form-control input-text" id="survey-expense" name="expense[]"
                                             multiple="multiple">
+                                            <option value="selectall">Select All</option>
                                             @foreach ($expenses as $expense)
                                                 <option value="{{ $expense['id'] }}">{{ $expense['name'] }}</option>
                                             @endforeach

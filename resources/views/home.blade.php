@@ -39,7 +39,8 @@
             <div class="d-block" id="survey-view-grid">
                 <div class="row gy-4 mb-4">
                     @foreach ($surveys as $survey)
-                        <a href="{{ route('survey.show', ['id' => $survey['id'], 'i' => 1]) }}" class="col-3 text-decoration-none">
+                        <a href="{{ route('survey.show', ['id' => $survey['id'], 'i' => 1]) }}"
+                            class="col-3 text-decoration-none">
                             <div class="card card-survey-grid px-1 py-3 text-gray">
                                 <div class="card-header d-flex align-items-center">
                                     @if ($survey['status_id'] == 4)
@@ -310,14 +311,62 @@
             enableSecondButton();
         });
         $('#survey-education').on('change', function(e) {
+            if ($(this).val()[0] == 'selectall') {
+                selectAllEducation();
+            }
             enableSecondButton();
         });
         $('#survey-profession').on('change', function(e) {
+            if ($(this).val()[0] == 'selectall') {
+                selectAllProfession();
+            }
             enableSecondButton();
         });
         $('#survey-expense').on('change', function(e) {
+            if ($(this).val()[0] == 'selectall') {
+                selectAllExpense();
+            }
             enableSecondButton();
         });
+    </script>
+    <script>
+        //second step update
+        //select all
+        var selectedEducations = [];
+        var allEducations = $("#survey-education option");
+
+        function selectAllEducation() {
+            allEducations.each(function() {
+                if ($(this).val() != 'selectall') {
+                    selectedEducations.push($(this).val());
+                }
+            });
+            $("#survey-education").val(selectedEducations).change();
+        }
+
+        var selectedProfessions = [];
+        var allProfessions = $("#survey-profession option");
+
+        function selectAllProfession() {
+            allProfessions.each(function() {
+                if ($(this).val() != 'selectall') {
+                    selectedProfessions.push($(this).val());
+                }
+            });
+            $("#survey-profession").val(selectedProfessions).change();
+        }
+
+        var selectedExpenses = [];
+        var allExpenses = $("#survey-expense option");
+
+        function selectAllExpense() {
+            allExpenses.each(function() {
+                if ($(this).val() != 'selectall') {
+                    selectedExpenses.push($(this).val());
+                }
+            });
+            $("#survey-expense").val(selectedExpenses).change();
+        }
     </script>
     <script>
         //third step
