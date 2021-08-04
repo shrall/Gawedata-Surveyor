@@ -22,7 +22,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                     style="color: #3f60f5 !important;">P{{ $i }}</span>
                                 <input type="text" name="question" id="input-question" class="form-control input-text"
                                     style="padding-left:3.5rem !important;" placeholder="Tuliskan Pertanyaan Disini"
-                                    value="{{ $survey['questions'][$i - 1]['question'] }}">
+                                    value="{{ $survey['questions'][$i - 1]['question'] }}" onkeyup="setQuestion()">
                             </div>
                             <div class="col-5">
                                 <input type="hidden" name="question-type">
@@ -87,7 +87,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                             <input type="text" name="answer{{ $loop->iteration }}"
                                                 id="answer{{ $loop->iteration }}" class="form-control input-text"
                                                 style="padding-left:3.5rem !important;"
-                                                placeholder="Tuliskan Jawaban Disini" value="{{ $answer['text'] }}">
+                                                placeholder="Tuliskan Jawaban Disini" value="{{ $answer['text'] }}" onkeyup="setNewSingleAnswer({{$loop->iteration}});">
                                         </div>
                                         <div class="col-5 text-start d-flex align-items-center">
                                             <span class="fas fa-fw fa-trash-alt text-gray cursor-pointer fs-3"
@@ -195,7 +195,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                             placeholder="Tuliskan URL Video Disini"
                                             value="{{ $survey['questions'][$i - 1]['youtube_url'] }}">
                                     </div>
-                                    <div class="col-7 input-url-application position-relative @if ($question_type_id==8) d-block @else d-none @endif mb-2">
+                                    <div class="col-7 input-url-application position-relative @if ($question_type_id==8) d-block @else d-none @endif
+                                        mb-2">
                                         <span
                                             class="fab fa-fw fa-android position-absolute top-50 start-0 translate-middle-y ms-4 ps-2"></span>
                                         <input type="text" name="action_android_answer" id="action_android_answer"
@@ -242,6 +243,12 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             </div>
         </div>
     </div>
+    <form action="{{ route('survey.update', $survey['id']) }}" method="post" class="d-none" id="question-form">
+        @csrf
+        <input name="_method" type="hidden" value="PUT">
+        <input type="text" name="questions" id="input-questions">
+        <input type="text" name="question_index" id="input-question-index">
+    </form>
 @endsection
 
 @section('scripts')
@@ -252,9 +259,30 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     </script>
     <script>
         // answer templates
-        var new_answer_single = {
-            "text": "",
-        };
+        var new_answer_single = "Jawaban Baru";
+    </script>
+    <script>
+        $(window).on("load", function() {
+            questions.forEach(function(question, index) {
+                if (question.survey_question_type_id == 1 || question.survey_question_type_id == 2 ||
+                    question
+                    .survey_question_type_id == 5) {
+                    question.answer_choices.forEach(function(answer, i) {
+                        questions[index].answer_choices[i] = answer.text;
+                    })
+                } else if (question.survey_question_type_id == 4) {
+                    question.sub_questions.forEach(function(subs, ind) {
+                        subs.answer_choices.forEach(function(answer, i) {
+                            questions[index].sub_questions[ind].answer_choices[i] = answer
+                                .text;
+                        });
+                    })
+                }
+            })
+        });
+        $('#survey-setting-button').click(function() {
+            console.log(questions)
+        });
     </script>
     <script>
         function changeQuestionType() {
@@ -313,6 +341,12 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         });
     </script>
     <script>
+        // main question
+        function setQuestion(){
+            questions[question_index]['question'] = $('#input-question').val();
+        }
+    </script>
+    <script>
         // single answer
         function addSingleAnswer() {
             questions[question_index]['answer_choices'].push(new_answer_single);
@@ -340,6 +374,10 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                     console.log("fail");
                 });
         }
+
+        function setNewSingleAnswer(index){
+            questions[question_index]['answer_choices'][index-1] = $('#answer1').val();
+        }
     </script>
     <script>
         //action question
@@ -358,5 +396,14 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 $('#input-url-website').removeClass('d-none').addClass('d-block');
             }
         });
+    </script>
+    <script>
+        function saveDraft(index) {
+            event.preventDefault();
+            $('#input-questions').val(JSON.stringify(questions));
+            $('#input-question-index').val(index);
+            console.log($('#input-questions').val())
+            document.getElementById('question-form').submit();
+        }
     </script>
 @endsection

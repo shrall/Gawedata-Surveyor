@@ -118,7 +118,13 @@ class SurveyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])->post(config('services.api.url') . '/surveyQuestion', [
+            'survey_id' => $id,
+            'questions' => json_decode($request->questions)
+        ])->json();
+        return redirect()->route('survey.show', ['id' => $id, 'i' => $request->question_index]);
     }
 
     /**
@@ -186,7 +192,7 @@ class SurveyController extends Controller
         return view('survey.submitted', compact('survey', 'i'));
     }
 
-    public function add_question(Request $request, $id)
+    public function add_question($id)
     {
         $survey = Http::withHeaders([
             'Authorization' => 'Bearer ' . session('token'),
@@ -234,5 +240,11 @@ class SurveyController extends Controller
             $answers = null;
         }
         return view('survey.inc.draft.single_answer', compact('answers'));
+    }
+
+    public function delete_question(Request $request)
+    {
+        dd($request);
+        // return redirect()->route('survey.show', ['id' => $id, 'i' => count($questions)]);
     }
 }

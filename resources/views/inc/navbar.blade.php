@@ -10,14 +10,15 @@
                 @if (Route::current()->getName() == 'survey.hasil' || Route::current()->getName() == 'survey.analisa' || Route::current()->getName() == 'survey.detail' || Route::current()->getName() == 'survey.show' || Route::current()->getName() == 'survey.submitted')
                     <ul class="navbar-nav position-absolute top-50 start-50 translate-middle" style="z-index: 100;">
                         <h4 class="font-lato font-weight-bold mb-0">{{ $survey['title'] }}
-                            <img src="{{asset('images/survey-menu-button.svg')}}" width="21px" class="far fa-fw fa-comment-dots text-gawedata cursor-pointer ms-2"
+                            <img src="{{ asset('images/survey-menu-button.svg') }}" width="21px"
+                                class="far fa-fw fa-comment-dots text-gawedata cursor-pointer ms-2"
                                 id="survey-menu-button">
                             <div class="fs-6" id="survey-menu-box">
                                 @if (Route::current()->getName() == 'survey.hasil' || Route::current()->getName() == 'survey.analisa' || Route::current()->getName() == 'survey.detail')
                                     <div id="survey-menu" class="p-4">
                                         <div>
-                                            <span class="fa fa-fw fa-circle text-green me-2"></span><span
-                                                class="text-green">Published</span>
+                                            <span class="fa fa-fw fa-circle text-green me-2"></span>
+                                            <span class="text-green">Published</span>
                                         </div>
                                         <hr>
                                         <div class="mt-3">
@@ -30,26 +31,27 @@
                                 @elseif (Route::current()->getName() == 'survey.submitted')
                                     <div id="survey-menu" class="p-4">
                                         <div>
-                                            <span class="fa fa-fw fa-circle text-gawedata me-2"></span><span
-                                                class="text-gawedata">Submitted</span>
+                                            <span class="fa fa-fw fa-circle text-gawedata me-2"></span>
+                                            <span class="text-gawedata">Submitted</span>
                                         </div>
                                         <hr>
                                         <div class="mt-3">
                                             <div class="text-red-disabled text-decoration-none font-weight-bold"
                                                 id="survey-delete-button">
                                                 Hapus Survei
-                                        </div>
+                                            </div>
                                         </div>
                                     </div>
                                 @elseif (Route::current()->getName() == 'survey.show')
                                     <div id="survey-menu" class="p-4">
                                         <div>
-                                            <span class="fa fa-fw fa-circle text-yellow me-2"></span><span
-                                                class="text-gray">Draft</span>
+                                            <span class="fa fa-fw fa-circle text-yellow me-2"></span>
+                                            <span class="text-gray">Draft</span>
                                         </div>
                                         <hr>
                                         <div class="my-3">
-                                            <a href="#" class="text-dark text-decoration-none font-weight-bold">
+                                            <a href="#" class="text-dark text-decoration-none font-weight-bold"
+                                                id="survey-setting-button">
                                                 Pengaturan Survei
                                             </a>
                                         </div>
@@ -97,7 +99,7 @@
                         </li>
                     @elseif (Route::current()->getName() == 'survey.show')
                         <li class="nav-item mx-2">
-                            <a href="#" class="btn btn-gawedata-2 font-lato">
+                            <a href="#" class="btn btn-gawedata-2 font-lato" onclick="saveDraft({{$i}});">
                                 Simpan (Draft)
                             </a>
                         </li>

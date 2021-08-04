@@ -6,7 +6,7 @@
                     id="answer-order{{ $loop->iteration }}">{{ $loop->iteration }}.</span>
                 <input type="text" name="answer{{ $loop->iteration }}" id="answer{{ $loop->iteration }}"
                     class="form-control input-text" style="padding-left:3.5rem !important;"
-                    placeholder="Tuliskan Jawaban Disini" value="{{ $answer['text'] }}">
+                    placeholder="Tuliskan Jawaban Disini" value="{{ $answer }}" onkeyup="setNewSingleAnswer({{$loop->iteration}});">
             </div>
             <div class="col-5 text-start d-flex align-items-center">
                 <span class="fas fa-fw fa-trash-alt text-gray cursor-pointer fs-3"
