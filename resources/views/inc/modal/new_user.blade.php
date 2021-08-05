@@ -18,9 +18,17 @@
 </div>
 <script type="text/javascript">
     $(window).on('load', function() {
-        if (!localStorage['start-modal']) {
+        @if ($user['is_first_login'] == true)
             $('#start-modal').modal('show');
-            localStorage["start-modal"] = true;
-        }
+            $.ajax({
+            url: '{{ config('services.api.url') }}' + "/turnOffIsFirstLogin",
+            headers: {
+            "Authorization":"Bearer {{ session('token') }}",
+            },
+            success: function(data) {
+            console.log(data)
+            }
+            });
+        @endif
     });
 </script>

@@ -41,7 +41,7 @@
                                             name="description" required placeholder="Deskripsi Survei">
                                     </div>
                                     <div class="mb-3">
-                                        <input id="survey-category" type="hidden" name="survey-category">
+                                        <input id="survey-category" type="hidden" name="survey_category">
                                         <div class="dropdown" id="select-survey-category">
                                             <span class="form-control input-text d-flex align-items-center"
                                                 type="button" data-bs-toggle="dropdown" id="selected-survey-category">
@@ -51,19 +51,10 @@
                                             <ul class="dropdown-menu w-100 px-2">
                                                 <div class="overflow-auto ps-2 pe-5"
                                                     style="min-height:0;max-height: 30vh;">
-                                                    <li class="dropdown-item">Action</li>
-                                                    <li class="dropdown-item">Action</li>
-                                                    <li class="dropdown-item">Action</li>
-                                                    <li class="dropdown-item">Action</li>
-                                                    <li class="dropdown-item">Action</li>
-                                                    <li class="dropdown-item">Action</li>
-                                                    <li class="dropdown-item">Action</li>
-                                                    <li class="dropdown-item">Action</li>
-                                                    <li class="dropdown-item">Action</li>
-                                                    <li class="dropdown-item">Action</li>
-                                                    <li class="dropdown-item">Action</li>
-                                                    <li class="dropdown-item">Action</li>
-                                                    <li class="dropdown-item">Action</li>
+                                                    @foreach ($categories as $category)
+                                                        <li class="dropdown-item" data-id={{ $category['id'] }}>
+                                                            {{ $category['name'] }}</li>
+                                                    @endforeach
                                                 </div>
                                             </ul>
                                         </div>
@@ -172,7 +163,8 @@
                                             multiple="multiple">
                                             <option value="selectall">Select All</option>
                                             @foreach ($expenses as $expense)
-                                                <option value="{{ $expense['id'] }}">{{ $expense['name'] }}</option>
+                                                <option value="{{ $expense['id'] }}">{{ $expense['name'] }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>

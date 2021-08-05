@@ -54,7 +54,7 @@ class SurveyController extends Controller
         ])->post(config('services.api.url') . '/survey', [
             'title' => $request->title,
             'description' => $request->description,
-            'survey_category_id' => 1,
+            'survey_category_id' => $request->survey_category,
             'respondent_quota' => $request->survey_respondent,
             'is_private' => $is_private,
             'survey_type' => 'General',
@@ -68,7 +68,6 @@ class SurveyController extends Controller
             'profession_id' => $request->profession,
             'household_expense_id' => $request->expense
         ])->json();
-
         if ($response['success']) {
             return redirect()->route('survey.show', ['id' => $response['data']['id'], 'i' => 1]);
         } else {

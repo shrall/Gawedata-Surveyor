@@ -138,6 +138,20 @@
 @endsection
 
 @section('scripts')
+    <script>
+        $(window).on('load', function() {
+            $(".user-quota").html(@json($user['respondent_quota']))
+            var quota_percentage = @json($user['respondent_quota']) / 150 * 100
+            $(".profile-quota").css('width', quota_percentage)
+            if (quota_percentage > 75) {
+                $(".profile-quota").css('background-color', '#49d479')
+            } else if (quota_percentage > 30) {
+                $(".profile-quota").css('background-color', '#ffd54f')
+            } else{
+                $(".profile-quota").css('background-color', '#ff525d')
+            }
+        });
+    </script>
     {{-- to survey detail --}}
     <script>
         $(".survey-row").click(function() {
@@ -198,7 +212,7 @@
             $('#select-survey-category').find('li').click(function() {
                 $('#selected-survey-category').html($(this).text() +
                     '<span class="fa fa-fw fa-chevron-down ms-auto"></span>');
-                $('#survey-category').val($(this).text());
+                $('#survey-category').val($(this).data("id"));
                 enableFirstButton();
             });
             $('#select-survey-type').find('li').click(function() {
