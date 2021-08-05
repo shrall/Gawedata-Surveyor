@@ -157,7 +157,7 @@ class SurveyController extends Controller
         $survey = Http::withHeaders([
             'Authorization' => 'Bearer ' . session('token'),
         ])
-            ->get(config('services.api.url') . '/survey/' . $id)
+            ->get(config('services.api.url') . '/surveyResult/' . $id)
             ->json()['data'];
         return view('survey.hasil', compact('survey'));
     }
