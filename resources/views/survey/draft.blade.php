@@ -112,7 +112,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                     <h6 class="text-start">Jawaban<span class="text-gray ms-2">(Kolom)</span></h6>
                                     <div class="grid-answer-list">
                                         @foreach ($survey['questions'][$i - 1]['sub_questions'][0]['answer_choices'] as $answer)
-                                            <div class="row mb-3" id="grid-answerLIT">
+                                            <div class="row mb-3" id="grid-answer{{ $loop->iteration }}">
                                                 <div class="col-10 position-relative">
                                                     <span
                                                         class="position-absolute top-50 start-0 translate-middle-y font-weight-bold ms-4 px-2 py-1"
@@ -120,19 +120,22 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                                     <input type="text" name="answer{{ $loop->iteration }}"
                                                         id="answer{{ $loop->iteration }}" class="form-control input-text"
                                                         style="padding-left:3.5rem !important;"
-                                                        placeholder="Tuliskan Jawaban Disini" onkeyup=""
-                                                        value="{{ $answer['text'] }}">
+                                                        placeholder="Tuliskan Jawaban Disini"
+                                                        value="{{ $answer['text'] }}"
+                                                        onkeyup="setNewGridAnswer({{ $loop->iteration }});">
                                                 </div>
                                                 <div class="col-1 text-start d-flex align-items-center ps-0">
                                                     <span class="fas fa-fw fa-trash-alt text-gray cursor-pointer fs-4"
-                                                        id="answer_delete{{ $loop->iteration }}" onclick=""></span>
+                                                        id="answer_delete{{ $loop->iteration }}"
+                                                        onclick="deleteGridAnswer({{ $loop->iteration }});"></span>
                                                 </div>
                                             </div>
                                         @endforeach
                                     </div>
                                     <div class="row">
                                         <div class="col-10">
-                                            <button class="btn btn-gawedata-2 font-lato w-100 py-2" onclick="">
+                                            <button class="btn btn-gawedata-2 font-lato w-100 py-2"
+                                                onclick="addGridAnswer();">
                                                 + Tambah Jawaban
                                             </button>
                                         </div>
@@ -472,12 +475,30 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             refreshGridQuestionAjax();
         }
 
+        function addGridAnswer() {
+            questions[question_index]['sub_questions'].forEach(element => {
+                element['answer_choices'].push(new_answer_single);
+            });
+            refreshGridAnswerAjax();
+        }
+
         function deleteGridQuestion(int) {
             questions[question_index]['sub_questions'].splice(int - 1, 1);
             if (questions[question_index]['sub_questions'].length > 0) {
                 refreshGridQuestionAjax();
             } else {
                 $('#grid-question' + int).remove();
+            }
+        }
+
+        function deleteGridAnswer(int) {
+            questions[question_index]['sub_questions'].forEach(element => {
+                element['answer_choices'].splice(int - 1, 1);
+            });
+            if (questions[question_index]['sub_questions'][0]['answer_choices'].length > 0) {
+                refreshGridAnswerAjax();
+            } else {
+                $('#grid-answer' + int).remove();
             }
         }
 
@@ -494,8 +515,29 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 });
         }
 
+        function refreshGridAnswerAjax() {
+            $.post("{{ config('app.url') }}" + "/survey/refreshgridanswer", {
+                    _token: CSRF_TOKEN,
+                    answers: questions[question_index]['sub_questions'][0]['answer_choices']
+                })
+                .done(function(data) {
+                    $(".grid-answer-list").html(data)
+                })
+                .fail(function() {
+                    console.log("fail");
+                });
+        }
+
         function setNewGridQuestion(index) {
             questions[question_index]['sub_questions'][index - 1]['question'] = $('#question' + index).val();
+        }
+
+        function setNewGridAnswer(index) {
+            questions[question_index]['sub_questions'][index - 1]['question'] = $('#question' + index).val();
+
+            questions[question_index]['sub_questions'].forEach(element => {
+                element['answer_choices'][index - 1] = $('#answer' + index).val();
+            });
         }
     </script>
     <script>
