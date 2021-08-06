@@ -241,6 +241,16 @@ class SurveyController extends Controller
         return view('survey.inc.draft.single_answer', compact('answers'));
     }
 
+    public function refresh_grid_question(Request $request)
+    {
+        if (count($request->questions) > 0) {
+            $questions = $request->questions;
+        } else {
+            $questions = null;
+        }
+        return view('survey.inc.draft.grid_question', compact('questions'));
+    }
+
     public function delete_question(Request $request)
     {
         dd($request);

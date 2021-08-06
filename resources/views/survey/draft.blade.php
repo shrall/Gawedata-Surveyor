@@ -60,6 +60,86 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                 </div>
                             </div>
                         </div>
+                        <div id="grid-question" class="@if ($question_type_id==4) d-block @else d-none @endif">
+                            <div class="row justify-content-end">
+                                <div class="col-5">
+                                    <h6 class="question-type-text-guide text-start text-gray my-2"
+                                        style="font-size: 0.875rem;">
+                                        Responden mengurutkan jawaban berdasarkan peringkat.
+                                    </h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <h6 class="text-start">Grid Pertanyaan<span class="text-gray ms-2">(Baris)</span></h6>
+                                    <div class="grid-question-list">
+                                        @foreach ($survey['questions'][$i - 1]['sub_questions'] as $question)
+                                            <div class="row mb-3" id="grid-question{{ $loop->iteration }}">
+                                                <div class="col-10 position-relative">
+                                                    <span
+                                                        class="position-absolute top-50 start-0 translate-middle-y font-weight-bold ms-4 px-2 py-1"
+                                                        id="question-order{{ $loop->iteration }}">{{ $loop->iteration }}.</span>
+                                                    <input type="text" name="question{{ $loop->iteration }}"
+                                                        id="question{{ $loop->iteration }}"
+                                                        class="form-control input-text"
+                                                        style="padding-left:3.5rem !important;"
+                                                        placeholder="Tuliskan Jawaban Disini"
+                                                        value="{{ $question['question'] }}"
+                                                        onkeyup="setNewGridQuestion({{ $loop->iteration }});">
+                                                </div>
+                                                <div class="col-1 text-start d-flex align-items-center ps-0">
+                                                    <span class="fas fa-fw fa-image text-gray cursor-pointer fs-4"
+                                                        id="question_image{{ $loop->iteration }}"></span>
+                                                </div>
+                                                <div class="col-1 text-start d-flex align-items-center ps-0">
+                                                    <span class="fas fa-fw fa-trash-alt text-gray cursor-pointer fs-4"
+                                                        id="question_delete{{ $loop->iteration }}"
+                                                        onclick="deleteGridQuestion({{ $loop->iteration }});"></span>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <button class="btn btn-gawedata-2 font-lato w-100 py-2"
+                                                onclick="addGridQuestion();">
+                                                + Tambah Pertanyaan
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <h6 class="text-start">Jawaban<span class="text-gray ms-2">(Kolom)</span></h6>
+                                    <div class="grid-answer-list">
+                                        @foreach ($survey['questions'][$i - 1]['sub_questions'][0]['answer_choices'] as $answer)
+                                            <div class="row mb-3" id="grid-answerLIT">
+                                                <div class="col-10 position-relative">
+                                                    <span
+                                                        class="position-absolute top-50 start-0 translate-middle-y font-weight-bold ms-4 px-2 py-1"
+                                                        id="answer-order{{ $loop->iteration }}">{{ $loop->iteration }}.</span>
+                                                    <input type="text" name="answer{{ $loop->iteration }}"
+                                                        id="answer{{ $loop->iteration }}" class="form-control input-text"
+                                                        style="padding-left:3.5rem !important;"
+                                                        placeholder="Tuliskan Jawaban Disini" onkeyup=""
+                                                        value="{{ $answer['text'] }}">
+                                                </div>
+                                                <div class="col-1 text-start d-flex align-items-center ps-0">
+                                                    <span class="fas fa-fw fa-trash-alt text-gray cursor-pointer fs-4"
+                                                        id="answer_delete{{ $loop->iteration }}" onclick=""></span>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <button class="btn btn-gawedata-2 font-lato w-100 py-2" onclick="">
+                                                + Tambah Jawaban
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div id="single-answer-question" class="@if ($question_type_id==1 ||
                         $question_type_id==2 || $question_type_id==5) d-block @else d-none @endif">
                             <div class="row justify-content-end">
@@ -229,7 +309,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         <hr>
                         <div class="row align-items-center justify-content-between">
                             <div class="col-3 text-start">
-                                <button class="btn btn-gawedata-danger" onclick="deleteQuestion({{$i}});">
+                                <button class="btn btn-gawedata-danger" onclick="deleteQuestion({{ $i }});">
                                     <span class="fas fa-fw fa-trash-alt me-2"></span>Hapus
                                 </button>
                             </div>
@@ -261,6 +341,10 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     <script>
         // answer templates
         var new_answer_single = "Jawaban Baru";
+        var new_question_grid = {
+            "question": "Pertanyaan Baru",
+            "answer_choices": []
+        }
     </script>
     <script>
         $(window).on("load", function() {
@@ -377,7 +461,41 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         }
 
         function setNewSingleAnswer(index) {
-            questions[question_index]['answer_choices'][index - 1] = $('#answer1').val();
+            questions[question_index]['answer_choices'][index - 1] = $('#answer' + index).val();
+        }
+    </script>
+    <script>
+        // grid question
+        function addGridQuestion() {
+            new_question_grid['answer_choices'] = questions[question_index]['sub_questions'][0]['answer_choices'];
+            questions[question_index]['sub_questions'].push(new_question_grid);
+            refreshGridQuestionAjax();
+        }
+
+        function deleteGridQuestion(int) {
+            questions[question_index]['sub_questions'].splice(int - 1, 1);
+            if (questions[question_index]['sub_questions'].length > 0) {
+                refreshGridQuestionAjax();
+            } else {
+                $('#grid-question' + int).remove();
+            }
+        }
+
+        function refreshGridQuestionAjax() {
+            $.post("{{ config('app.url') }}" + "/survey/refreshgridquestion", {
+                    _token: CSRF_TOKEN,
+                    questions: questions[question_index]['sub_questions']
+                })
+                .done(function(data) {
+                    $(".grid-question-list").html(data)
+                })
+                .fail(function() {
+                    console.log("fail");
+                });
+        }
+
+        function setNewGridQuestion(index) {
+            questions[question_index]['sub_questions'][index - 1]['question'] = $('#question' + index).val();
         }
     </script>
     <script>
