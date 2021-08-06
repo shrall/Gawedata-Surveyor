@@ -208,13 +208,13 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                             <div class="scale-answer">
                                 <div class="row">
                                     <div class="col-4 d-flex align-items-center">
-                                        <input type="number" name="minimal_scale" id="minimal_scale"
+                                        <input type="number" name="minimal_scale" id="minimal-scale"
                                             value="{{ $survey['questions'][$i - 1]['minimal_scale'] }}"
-                                            class="form-control input-text text-center">
+                                            class="form-control input-text text-center" onkeyup="setMinimalScale();">
                                         <span class="mx-2">sampai</span>
-                                        <input type="number" name="maximal_scale" id="maximal_scale"
+                                        <input type="number" name="maximal_scale" id="maximal-scale"
                                             value="{{ $survey['questions'][$i - 1]['maximal_scale'] }}"
-                                            class="form-control input-text text-center">
+                                            class="form-control input-text text-center" onkeyup="setMaximalScale();">
                                     </div>
                                 </div>
                             </div>
@@ -483,10 +483,20 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         }
     </script>
     <script>
+        function setMinimalScale() {
+            console.log(questions[question_index]['minimal_scale'])
+            console.log($('#minimal-scale').val())
+            questions[question_index]['minimal_scale'] = $('#minimal-scale').val();
+        }
+        function setMaximalScale() {
+            questions[question_index]['maximal_scale'] = $('#maximal-scale').val();
+        }
+    </script>
+    <script>
         // grid question
         function addGridQuestion() {
-            if(questions[question_index]['sub_questions'].length > 0){
-            new_question_grid['answer_choices'] = questions[question_index]['sub_questions'][0]['answer_choices'];
+            if (questions[question_index]['sub_questions'].length > 0) {
+                new_question_grid['answer_choices'] = questions[question_index]['sub_questions'][0]['answer_choices'];
             }
             questions[question_index]['sub_questions'].push(new_question_grid);
             refreshGridQuestionAjax();
