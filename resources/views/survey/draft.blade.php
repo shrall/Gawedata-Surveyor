@@ -283,7 +283,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                         <input type="text" name="action_video_answer" id="action_video_answer"
                                             class="form-control input-text action_answer"
                                             placeholder="Tuliskan URL Video Disini"
-                                            value="{{ $survey['questions'][$i - 1]['youtube_url'] }}" onkeyup="setVideoURL();">
+                                            value="{{ $survey['questions'][$i - 1]['youtube_url'] }}"
+                                            onkeyup="setVideoURL();">
                                     </div>
                                     <div class="col-7 input-url-application position-relative @if ($question_type_id==8) d-block @else d-none @endif
                                         mb-2">
@@ -293,7 +294,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                             class="form-control input-text action_answer"
                                             placeholder="Tuliskan URL Aplikasi Android Disini"
                                             style="padding-left:3.5rem !important;"
-                                            value="{{ $survey['questions'][$i - 1]['android_app_url'] }}" onkeyup="setAndroidURL();">
+                                            value="{{ $survey['questions'][$i - 1]['android_app_url'] }}"
+                                            onkeyup="setAndroidURL();">
                                     </div>
                                     <div class="col-5 input-url-application @if ($question_type_id==8) d-block @else d-none @endif">
                                     </div>
@@ -304,13 +306,15 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                             class="form-control input-text action_answer"
                                             placeholder="Tuliskan URL Aplikasi iOS Disini"
                                             style="padding-left:3.5rem !important;"
-                                            value="{{ $survey['questions'][$i - 1]['ios_app_url'] }}" onkeyup="setiOSURL();">
+                                            value="{{ $survey['questions'][$i - 1]['ios_app_url'] }}"
+                                            onkeyup="setiOSURL();">
                                     </div>
                                     <div class="col-7 @if ($question_type_id==9) d-block @else d-none @endif" id="input-url-website">
                                         <input type="text" name="action_website_answer" id="action_website_answer"
                                             class="form-control input-text action_answer"
                                             placeholder="Tuliskan URL Website Disini"
-                                            value="{{ $survey['questions'][$i - 1]['website_url'] }}" onkeyup="setWebsiteURL();">
+                                            value="{{ $survey['questions'][$i - 1]['website_url'] }}"
+                                            onkeyup="setWebsiteURL();">
                                     </div>
                                 </div>
                             </div>
@@ -486,6 +490,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         function setMinimalScale() {
             questions[question_index]['minimal_scale'] = $('#minimal-scale').val();
         }
+
         function setMaximalScale() {
             questions[question_index]['maximal_scale'] = $('#maximal-scale').val();
         }
@@ -580,15 +585,19 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 $('#input-url-website').removeClass('d-none').addClass('d-block');
             }
         });
+
         function setVideoURL() {
             questions[question_index]['youtube_url'] = $('#action_video_answer').val();
         }
+
         function setAndroidURL() {
             questions[question_index]['android_app_url'] = $('#action_android_answer').val();
         }
+
         function setiOSURL() {
             questions[question_index]['ios_app_url'] = $('#action_ios_answer').val();
         }
+
         function setWebsiteURL() {
             questions[question_index]['website_url'] = $('#action_website_answer').val();
         }
@@ -604,7 +613,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     </script>
     <script>
         function deleteQuestion(index) {
-            questions.splice(index, 1);
+            questions.splice(index - 1, 1);
             saveDraft(index);
         }
     </script>
