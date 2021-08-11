@@ -266,4 +266,13 @@ class SurveyController extends Controller
         dd($request);
         // return redirect()->route('survey.show', ['id' => $id, 'i' => count($questions)]);
     }
+
+    public function submit($id)
+    {
+        $survey = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->patch(config('services.api.url') . '/submitSurvey/' . $id)->json();
+        return $survey;
+    }
 }

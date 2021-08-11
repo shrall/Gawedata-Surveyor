@@ -506,8 +506,10 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         }
 
         function addGridAnswer() {
-            questions[question_index]['sub_questions'].forEach(element => {
-                element['answer_choices'].push(new_answer_single);
+            questions[question_index]['sub_questions'].forEach((element, index) => {
+                if (index < 1) {
+                    element['answer_choices'].push(new_answer_single);
+                }
             });
             refreshGridAnswerAjax();
         }
@@ -615,6 +617,23 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         function deleteQuestion(index) {
             questions.splice(index - 1, 1);
             saveDraft(index);
+        }
+    </script>
+    <script>
+        function submitSurvey() {
+            $.post("{{ config('app.url') }}" + "/survey/" + @json($survey['id']) + "/submit", {
+                    _token: CSRF_TOKEN,
+                })
+                .done(function(data) {
+                    console.log(data)
+                    $('#submit-modal-content').removeClass('d-block').addClass('d-none');
+                    $('#submitted-modal-content').removeClass('d-none').addClass('d-block');
+                })
+                .fail(function(error) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                });
         }
     </script>
 @endsection

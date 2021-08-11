@@ -34,6 +34,7 @@ Route::group(['middleware' => ['surveyor']], function () {
     Route::get('survey/{id}/analisa', [SurveyController::class, 'analisa'])->name('survey.analisa');
     Route::get('survey/{id}/detail', [SurveyController::class, 'detail'])->name('survey.detail');
     Route::get('survey/{id}/{i}', [SurveyController::class, 'show'])->name('survey.show');
+    Route::post('survey/{id}/submit', [SurveyController::class, 'submit'])->name('survey.submit');
     Route::get('survey/{id}/submitted/{i}', [SurveyController::class, 'submitted'])->name('survey.submitted');
     Route::post('survey/getcity', [SurveyController::class, 'get_city'])->name('survey.getcity');
     Route::post('survey/{id}/addquestion', [SurveyController::class, 'add_question'])->name('survey.addquestion');

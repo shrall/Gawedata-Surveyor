@@ -103,8 +103,9 @@
                                 Simpan (Draft)
                             </a>
                         </li>
+                        @include('inc.modal.survey.submit')
                         <li class="nav-item mx-2">
-                            <a href="#" class="btn btn-gawedata font-lato font-weight-bold">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#submit-modal" class="btn btn-gawedata font-lato font-weight-bold">
                                 Submit Survei
                             </a>
                         </li>
