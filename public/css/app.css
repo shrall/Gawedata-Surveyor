@@ -499,3 +499,7 @@ ul.select2-results__options li:hover {
     background-color: #edf0ff;
     border-radius: 8px;
 }
+
+.survey-question-image-preview{
+    border-radius:12px;
+}

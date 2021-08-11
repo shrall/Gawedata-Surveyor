@@ -61,7 +61,10 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                             </div>
                         </div>
                         <div id="grid-question" class="@if ($question_type_id==4) d-block @else d-none @endif">
-                            <div class="row justify-content-end">
+                            <div class="row">
+                                <div class="col-7">
+                                    <img src="{{$survey['questions'][$i-1]['image_path']}}" class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                                </div>
                                 <div class="col-5">
                                     <h6 class="question-type-text-guide text-start text-gray my-2"
                                         style="font-size: 0.875rem;">
@@ -151,7 +154,10 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         </div>
                         <div id="single-answer-question" class="@if ($question_type_id==1 ||
                         $question_type_id==2 || $question_type_id==5) d-block @else d-none @endif">
-                            <div class="row justify-content-end">
+                            <div class="row">
+                                <div class="col-7">
+                                    <img src="{{$survey['questions'][$i-1]['image_path']}}" class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                                </div>
                                 <div class="col-5">
                                     <h6 class="question-type-text-guide text-start text-gray my-2"
                                         style="font-size: 0.875rem;">
@@ -196,7 +202,10 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                             </div>
                         </div>
                         <div id="scale-question" class="@if ($question_type_id==3) d-block @else d-none @endif">
-                            <div class="row justify-content-end">
+                            <div class="row">
+                                <div class="col-7">
+                                    <img src="{{$survey['questions'][$i-1]['image_path']}}" class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                                </div>
                                 <div class="col-5">
                                     <h6 class="question-type-text-guide text-start text-gray my-2"
                                         style="font-size: 0.875rem;">
@@ -220,7 +229,10 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                             </div>
                         </div>
                         <div id="open-ended-question" class="@if ($question_type_id==6) d-block @else d-none @endif">
-                            <div class="row justify-content-end">
+                            <div class="row">
+                                <div class="col-7">
+                                    <img src="{{$survey['questions'][$i-1]['image_path']}}" class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                                </div>
                                 <div class="col-5">
                                     <h6 class="question-type-text-guide text-start text-gray my-2"
                                         style="font-size: 0.875rem;">
@@ -241,7 +253,10 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         </div>
                         <div id="action-question" class="@if ($question_type_id==7 ||
                         $question_type_id==8 || $question_type_id==9 || $question_type_id==10) d-block @else d-none @endif">
-                            <div class="row justify-content-end">
+                            <div class="row">
+                                <div class="col-7">
+                                    <img src="{{$survey['questions'][$i-1]['image_path']}}" class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                                </div>
                                 <div class="col-5">
                                     <h6 class="question-type-text-guide text-start text-gray my-2"
                                         style="font-size: 0.875rem;">
@@ -328,7 +343,10 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                             </div>
                             <div class="col-3 text-end">
                                 <button class="btn btn-gawedata-3">
-                                    <span class="fas fa-fw fa-image me-2"></span>Gambar
+                                    <label for="photo" class="font-lato cursor-pointer"><span
+                                            class="fas fa-fw fa-image me-2"></span>Gambar</label>
+                                    <input type="file" name="photo" id="photo" class="d-none" accept="image/*"
+                                        onchange="loadFile(event)">
                                 </button>
                             </div>
                         </div>
@@ -635,5 +653,28 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                     console.log(error.response.headers);
                 });
         }
+    </script>
+    <script>
+        var loadFile = function(event) {
+            $('.survey-question-image-preview').attr('src', URL.createObjectURL(event.target.files[0]));
+            var formData = new FormData();
+            formData.append('_token', CSRF_TOKEN);
+            formData.append('photo', $('#photo')[0].files[0]);
+            $.ajax({
+                url: "{{ config('app.url') }}" + "/survey/" + @json($survey['id']) + "/uploadphoto",
+                type: 'POST',
+                data: formData,
+                processData: false, // tell jQuery not to process the data
+                contentType: false, // tell jQuery not to set contentType
+                success: function(data) {
+                    console.log(data);
+                    questions[question_index]['image_path'] = @json(asset('/survey/images/')) + '/' + data
+                },
+            }).fail(function(error) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            });
+        };
     </script>
 @endsection

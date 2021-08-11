@@ -275,4 +275,15 @@ class SurveyController extends Controller
             ->patch(config('services.api.url') . '/submitSurvey/' . $id)->json();
         return $survey;
     }
+
+    public function upload_photo(Request $request, $id)
+    {
+        if ($request->has('photo')) {
+            $photo = 'survey-' . $id . '-' . time() . '-' . $request['photo']->getClientOriginalName();
+            $request->photo->move(public_path('survey/images'), $photo);
+        } else {
+            $photo = null;
+        }
+        return $photo;
+    }
 }
