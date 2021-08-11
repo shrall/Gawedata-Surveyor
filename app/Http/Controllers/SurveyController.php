@@ -286,4 +286,15 @@ class SurveyController extends Controller
         }
         return $photo;
     }
+
+    public function grid_upload_photo(Request $request, $id)
+    {
+        if ($request->has('photo')) {
+            $photo = 'survey-' . $id . '-' . time() . '-' . $request['photo']->getClientOriginalName();
+            $request->photo->move(public_path('survey/grid'), $photo);
+        } else {
+            $photo = null;
+        }
+        return $photo;
+    }
 }

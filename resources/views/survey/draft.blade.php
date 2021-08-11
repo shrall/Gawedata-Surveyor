@@ -63,7 +63,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         <div id="grid-question" class="@if ($question_type_id==4) d-block @else d-none @endif">
                             <div class="row">
                                 <div class="col-7">
-                                    <img src="{{$survey['questions'][$i-1]['image_path']}}" class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                                    <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
+                                        class="survey-question-image-preview w-100 my-2" alt="" srcset="">
                                 </div>
                                 <div class="col-5">
                                     <h6 class="question-type-text-guide text-start text-gray my-2"
@@ -91,8 +92,14 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                                         onkeyup="setNewGridQuestion({{ $loop->iteration }});">
                                                 </div>
                                                 <div class="col-1 text-start d-flex align-items-center ps-0">
-                                                    <span class="fas fa-fw fa-image text-gray cursor-pointer fs-4"
-                                                        id="question_image{{ $loop->iteration }}"></span>
+                                                    <label for="question_image{{ $loop->iteration }}"
+                                                        class="font-lato cursor-pointer"><span
+                                                            class="fas fa-fw fa-image text-gray cursor-pointer fs-4"></span></label>
+                                                    <input type="file" name="photo_grid"
+                                                        id="question_image{{ $loop->iteration }}" class="d-none"
+                                                        accept="image/*"
+                                                        onchange="gridLoadFile(event,{{ $loop->iteration }})">
+
                                                 </div>
                                                 <div class="col-1 text-start d-flex align-items-center ps-0">
                                                     <span class="fas fa-fw fa-trash-alt text-gray cursor-pointer fs-4"
@@ -156,7 +163,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         $question_type_id==2 || $question_type_id==5) d-block @else d-none @endif">
                             <div class="row">
                                 <div class="col-7">
-                                    <img src="{{$survey['questions'][$i-1]['image_path']}}" class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                                    <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
+                                        class="survey-question-image-preview w-100 my-2" alt="" srcset="">
                                 </div>
                                 <div class="col-5">
                                     <h6 class="question-type-text-guide text-start text-gray my-2"
@@ -204,7 +212,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         <div id="scale-question" class="@if ($question_type_id==3) d-block @else d-none @endif">
                             <div class="row">
                                 <div class="col-7">
-                                    <img src="{{$survey['questions'][$i-1]['image_path']}}" class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                                    <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
+                                        class="survey-question-image-preview w-100 my-2" alt="" srcset="">
                                 </div>
                                 <div class="col-5">
                                     <h6 class="question-type-text-guide text-start text-gray my-2"
@@ -231,7 +240,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         <div id="open-ended-question" class="@if ($question_type_id==6) d-block @else d-none @endif">
                             <div class="row">
                                 <div class="col-7">
-                                    <img src="{{$survey['questions'][$i-1]['image_path']}}" class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                                    <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
+                                        class="survey-question-image-preview w-100 my-2" alt="" srcset="">
                                 </div>
                                 <div class="col-5">
                                     <h6 class="question-type-text-guide text-start text-gray my-2"
@@ -255,7 +265,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         $question_type_id==8 || $question_type_id==9 || $question_type_id==10) d-block @else d-none @endif">
                             <div class="row">
                                 <div class="col-7">
-                                    <img src="{{$survey['questions'][$i-1]['image_path']}}" class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                                    <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
+                                        class="survey-question-image-preview w-100 my-2" alt="" srcset="">
                                 </div>
                                 <div class="col-5">
                                     <h6 class="question-type-text-guide text-start text-gray my-2"
@@ -669,6 +680,30 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 success: function(data) {
                     console.log(data);
                     questions[question_index]['image_path'] = @json(asset('/survey/images/')) + '/' + data
+                },
+            }).fail(function(error) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            });
+        };
+    </script>
+    <script>
+        var gridLoadFile = function(event, index) {
+            var formData = new FormData();
+            formData.append('_token', CSRF_TOKEN);
+            console.log('#question_image' + index);
+            formData.append('photo', $('#question_image' + index)[0].files[0]);
+            $.ajax({
+                url: "{{ config('app.url') }}" + "/survey/" + @json($survey['id']) + "/uploadphoto/grid",
+                type: 'POST',
+                data: formData,
+                processData: false, // tell jQuery not to process the data
+                contentType: false, // tell jQuery not to set contentType
+                success: function(data) {
+                    console.log(data);
+                    questions[question_index]['sub_questions'][index - 1]['image_path'] =
+                        @json(asset('/survey/grid/')) + '/' + data
                 },
             }).fail(function(error) {
                 console.log(error.response.data);
