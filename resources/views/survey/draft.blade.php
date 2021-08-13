@@ -679,7 +679,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 contentType: false, // tell jQuery not to set contentType
                 success: function(data) {
                     console.log(data);
-                    questions[question_index]['image_path'] = @json(asset('/survey/images/')) + '/' + data
+                    questions[question_index]['image_path'] = @json(asset('/uploads/images/')) + '/' + data
                 },
             }).fail(function(error) {
                 console.log(error.response.data);
@@ -703,7 +703,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 success: function(data) {
                     console.log(data);
                     questions[question_index]['sub_questions'][index - 1]['image_path'] =
-                        @json(asset('/survey/grid/')) + '/' + data
+                        @json(asset('/uploads/grid/')) + '/' + data
                 },
             }).fail(function(error) {
                 console.log(error.response.data);

@@ -280,7 +280,7 @@ class SurveyController extends Controller
     {
         if ($request->has('photo')) {
             $photo = 'survey-' . $id . '-' . time() . '-' . $request['photo']->getClientOriginalName();
-            $request->photo->move(public_path('survey/images'), $photo);
+            $request->photo->move(public_path('uploads/images'), $photo);
         } else {
             $photo = null;
         }
@@ -291,7 +291,7 @@ class SurveyController extends Controller
     {
         if ($request->has('photo')) {
             $photo = 'survey-' . $id . '-' . time() . '-' . $request['photo']->getClientOriginalName();
-            $request->photo->move(public_path('survey/grid'), $photo);
+            $request->photo->move(public_path('uploads/grid'), $photo);
         } else {
             $photo = null;
         }

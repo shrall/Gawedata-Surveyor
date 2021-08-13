@@ -62,7 +62,7 @@
                                     <div class="mb-3">
                                         <input id="survey-type" type="hidden" name="survey-type">
                                         <div class="dropdown" id="select-survey-type">
-                                            <span class="form-control input-text d-flex align-items-center"
+                                            <span class="form-control input-text d-flex align-items-center text-start"
                                                 type="button" data-bs-toggle="dropdown" id="selected-survey-type">
                                                 Jenis Survei
                                                 <span class="fa fa-fw fa-chevron-down ms-auto"></span>
@@ -73,7 +73,7 @@
                                                     <li class="dropdown-item" data-type="public">Public (Semua responden
                                                         dapat melihat dan
                                                         mengisi survei)</li>
-                                                    <li class="dropdown-item" data-type="private">Private (Hanya
+                                                    <li class="dropdown-item text-start" data-type="private">Private (Hanya
                                                         responden
                                                         terpilih dapat
                                                         melihat dan mengisi survei)</li>
