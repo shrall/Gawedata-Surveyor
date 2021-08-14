@@ -485,6 +485,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     <script>
         // single answer
         function addSingleAnswer() {
+            $('#input-question').val('');
+            setQuestion();
             questions[question_index]['answer_choices'].push(new_answer_single);
             refreshSingleAnswerAjax();
         }
