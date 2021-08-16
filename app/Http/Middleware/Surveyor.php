@@ -20,6 +20,7 @@ class Surveyor
         if (!Session::has('token')) {
             return redirect()->route('login');
         }
-        return $next($request);
+        return $next($request)->header('Access-Control-Allow-Origin', '*')
+        ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');;
     }
 }
