@@ -35,6 +35,12 @@ class SurveyController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->cities[0] == null) {
+            $city_criteria = $request->city;
+        } else {
+            $city_criteria = explode(",", $request->cities[0]);
+        }
+
         if ($request->survey_type == 'Public') {
             $is_private = false;
         } else {
@@ -63,7 +69,7 @@ class SurveyController extends Controller
             'max_age_criteria' => $request->age_end,
             'estimate_time' => '5 menit',
             'gender_id' => $gender,
-            'city_id' => $request->city,
+            'city_id' => $city_criteria,
             'education_id' => $request->education,
             'profession_id' => $request->profession,
             'household_expense_id' => $request->expense
@@ -147,8 +153,11 @@ class SurveyController extends Controller
         ])
             ->get(config('services.api.url') . '/location')
             ->json()['data'];
-        collect($locations)->whereIn('id', $request->data)->all();
-        return collect($locations)->whereIn('id', $request->data)->all();
+        if ($request->has('data')) {
+            return collect($locations)->whereIn('id', $request->data)->all();
+        } else {
+            return collect($locations)->all();
+        }
     }
 
     public function hasil($id)

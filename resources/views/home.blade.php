@@ -147,7 +147,7 @@
                 $(".profile-quota").css('background-color', '#49d479')
             } else if (quota_percentage > 30) {
                 $(".profile-quota").css('background-color', '#ffd54f')
-            } else{
+            } else {
                 $(".profile-quota").css('background-color', '#ff525d')
             }
         });
@@ -286,28 +286,56 @@
         //get city list
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $('#survey-province').on('change', function(e) {
-            $.post('{{ config('app.url') }}' + "/survey/getcity", {
-                    _token: CSRF_TOKEN,
-                    data: $('#survey-province').val(),
-                })
-                .done(function(data) {
-                    $('#survey-city').html('');
-                    $('#survey-city').val(null).trigger('change');
-                    if (data.length == 0) {
-                        $('#survey-city').prop("disabled", true);
-                    } else {
-                        $('#survey-city').prop("disabled", false);
-                        Object.values(data).forEach(element => {
-                            element.cities.forEach(element => {
-                                $('#survey-city').append('<option value="' + element.id + '">' +
-                                    element.city_name + '</option>')
+            if ($('#survey-province').val()[0] == 'all') {
+                $.post('{{ config('app.url') }}' + "/survey/getcity", {
+                        _token: CSRF_TOKEN,
+                    })
+                    .done(function(data) {
+                        $('#survey-city').html('');
+                        $('#survey-city').val(null).trigger('change');
+                        if (data.length == 0) {
+                            $('#survey-city').prop("disabled", true);
+                        } else {
+                            $('#survey-city').prop("disabled", false);
+                            $('#survey-city').append('<option value="all">Semua Kota</option>')
+                            Object.values(data).forEach(element => {
+                                element.cities.forEach(element => {
+                                    $('#survey-city').append('<option value="' + element.id +
+                                        '">' +
+                                        element.city_name + '</option>')
+                                });
                             });
-                        });
-                    }
-                })
-                .fail(function() {
-                    console.log('fail');
-                });
+                        }
+                    })
+                    .fail(function() {
+                        console.log('fail');
+                    });
+            } else {
+                $.post('{{ config('app.url') }}' + "/survey/getcity", {
+                        _token: CSRF_TOKEN,
+                        data: $('#survey-province').val(),
+                    })
+                    .done(function(data) {
+                        $('#survey-city').html('');
+                        $('#survey-city').val(null).trigger('change');
+                        if (data.length == 0) {
+                            $('#survey-city').prop("disabled", true);
+                        } else {
+                            $('#survey-city').prop("disabled", false);
+                            $('#survey-city').append('<option value="all">Semua Kota</option>')
+                            Object.values(data).forEach(element => {
+                                element.cities.forEach(element => {
+                                    $('#survey-city').append('<option value="' + element.id +
+                                        '">' +
+                                        element.city_name + '</option>')
+                                });
+                            });
+                        }
+                    })
+                    .fail(function() {
+                        console.log('fail');
+                    });
+            }
         });
         $("#check-pria").click(function() {
             enableSecondButton();
@@ -322,6 +350,16 @@
             enableSecondButton();
         });
         $('#survey-city').on('change', function(e) {
+            $('#survey-city-all').val(null);
+            if ($('#survey-city').val()[0] == 'all') {
+                var selectedCities = [];
+                $("#survey-city option").each(function() {
+                    if ($(this).val() != 'all') {
+                        selectedCities.push($(this).val());
+                    }
+                });
+                $("#survey-city-all").val(selectedCities);
+            }
             enableSecondButton();
         });
         $('#survey-education').on('change', function(e) {

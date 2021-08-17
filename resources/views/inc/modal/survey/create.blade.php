@@ -73,7 +73,8 @@
                                                     <li class="dropdown-item" data-type="public">Public (Semua responden
                                                         dapat melihat dan
                                                         mengisi survei)</li>
-                                                    <li class="dropdown-item text-start" data-type="private">Private (Hanya
+                                                    <li class="dropdown-item text-start" data-type="private">Private
+                                                        (Hanya
                                                         responden
                                                         terpilih dapat
                                                         melihat dan mengisi survei)</li>
@@ -126,6 +127,7 @@
                                     <div class="mb-3">
                                         <select class="form-control input-text" id="survey-province" name="province[]"
                                             multiple="multiple">
+                                            <option value="all">Semua Provinsi</option>
                                             @foreach ($locations as $location)
                                                 <option value="{{ $location['id'] }}">
                                                     {{ $location['province_name'] }}
@@ -134,6 +136,7 @@
                                         </select>
                                     </div>
                                     <div class="mb-3">
+                                        <input type="hidden" name="cities[]" id="survey-city-all" >
                                         <select class="form-control input-text" id="survey-city" name="city[]"
                                             multiple="multiple">
                                         </select>
