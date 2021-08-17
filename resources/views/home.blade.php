@@ -289,7 +289,6 @@
                         '">' +
                         element.province_name + '</option>')
                 });
-                console.log('triggerred')
             }
             if ($('#survey-province').val()[0] == 'all') {
                 $('#survey-province').html('<option value="all" selected>Semua Provinsi</option>')
@@ -374,62 +373,71 @@
             enableSecondButton();
         });
         $('#survey-education').on('change', function(e) {
-            if ($(this).val()[0] == 'selectall') {
-                selectAllEducation();
+            $('#survey-education-all').val(null);
+            if ($('#survey-education').val().length == 0) {
+                $('#survey-education').html('<option value="all">Semua Pendidikan</option>')
+                Object.values(@json($educations)).forEach(element => {
+                    $('#survey-education').append('<option value="' + element.id +
+                        '">' +
+                        element.name + '</option>')
+                });
+            }
+            if ($(this).val()[0] == 'all') {
+                var selectedEducations = [];
+                $("#survey-education option").each(function() {
+                    if ($(this).val() != 'all') {
+                        selectedEducations.push($(this).val());
+                    }
+                });
+                $("#survey-education-all").val(selectedEducations);
+                $('#survey-education').html('<option value="all" selected>Semua Pendidikan</option>')
             }
             enableSecondButton();
         });
         $('#survey-profession').on('change', function(e) {
-            if ($(this).val()[0] == 'selectall') {
-                selectAllProfession();
+            $('#survey-profession-all').val(null);
+            if ($('#survey-profession').val().length == 0) {
+                $('#survey-profession').html('<option value="all">Semua Profesi</option>')
+                Object.values(@json($professions)).forEach(element => {
+                    $('#survey-profession').append('<option value="' + element.id +
+                        '">' +
+                        element.name + '</option>')
+                });
+            }
+            if ($(this).val()[0] == 'all') {
+                var selectedProfessions = [];
+                $("#survey-profession option").each(function() {
+                    if ($(this).val() != 'all') {
+                        selectedProfessions.push($(this).val());
+                    }
+                });
+                $("#survey-profession-all").val(selectedProfessions);
+                $('#survey-profession').html('<option value="all" selected>Semua Profesi</option>')
             }
             enableSecondButton();
         });
         $('#survey-expense').on('change', function(e) {
-            if ($(this).val()[0] == 'selectall') {
-                selectAllExpense();
+            $('#survey-expense-all').val(null);
+            if ($('#survey-expense').val().length == 0) {
+                $('#survey-expense').html('<option value="all">Semua Pengeluaran</option>')
+                Object.values(@json($expenses)).forEach(element => {
+                    $('#survey-expense').append('<option value="' + element.id +
+                        '">' +
+                        element.name + '</option>')
+                });
+            }
+            if ($(this).val()[0] == 'all') {
+                var selectedExpenses = [];
+                $("#survey-expense option").each(function() {
+                    if ($(this).val() != 'all') {
+                        selectedExpenses.push($(this).val());
+                    }
+                });
+                $("#survey-expense-all").val(selectedExpenses);
+                $('#survey-expense').html('<option value="all" selected>Semua Pengeluaran</option>')
             }
             enableSecondButton();
         });
-    </script>
-    <script>
-        //second step update
-        //select all
-        var selectedEducations = [];
-        var allEducations = $("#survey-education option");
-
-        function selectAllEducation() {
-            allEducations.each(function() {
-                if ($(this).val() != 'selectall') {
-                    selectedEducations.push($(this).val());
-                }
-            });
-            $("#survey-education").val(selectedEducations).change();
-        }
-
-        var selectedProfessions = [];
-        var allProfessions = $("#survey-profession option");
-
-        function selectAllProfession() {
-            allProfessions.each(function() {
-                if ($(this).val() != 'selectall') {
-                    selectedProfessions.push($(this).val());
-                }
-            });
-            $("#survey-profession").val(selectedProfessions).change();
-        }
-
-        var selectedExpenses = [];
-        var allExpenses = $("#survey-expense option");
-
-        function selectAllExpense() {
-            allExpenses.each(function() {
-                if ($(this).val() != 'selectall') {
-                    selectedExpenses.push($(this).val());
-                }
-            });
-            $("#survey-expense").val(selectedExpenses).change();
-        }
     </script>
     <script>
         //third step

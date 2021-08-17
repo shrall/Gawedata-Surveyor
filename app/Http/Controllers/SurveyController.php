@@ -40,6 +40,21 @@ class SurveyController extends Controller
         } else {
             $city_criteria = explode(",", $request->cities[0]);
         }
+        if ($request->educations[0] == null) {
+            $education_criteria = $request->education;
+        } else {
+            $education_criteria = explode(",", $request->educations[0]);
+        }
+        if ($request->professions[0] == null) {
+            $profession_criteria = $request->profession;
+        } else {
+            $profession_criteria = explode(",", $request->professions[0]);
+        }
+        if ($request->expenses[0] == null) {
+            $expense_criteria = $request->expense;
+        } else {
+            $expense_criteria = explode(",", $request->expenses[0]);
+        }
 
         if ($request->survey_type == 'Public') {
             $is_private = false;
@@ -70,9 +85,9 @@ class SurveyController extends Controller
             'estimate_time' => '5 menit',
             'gender_id' => $gender,
             'city_id' => $city_criteria,
-            'education_id' => $request->education,
-            'profession_id' => $request->profession,
-            'household_expense_id' => $request->expense
+            'education_id' => $education_criteria,
+            'profession_id' => $profession_criteria,
+            'household_expense_id' => $expense_criteria
         ])->json();
         if ($response['success']) {
             return redirect()->route('survey.show', ['id' => $response['data']['id'], 'i' => 1]);

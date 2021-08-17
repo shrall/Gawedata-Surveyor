@@ -136,15 +136,16 @@
                                         </select>
                                     </div>
                                     <div class="mb-3">
-                                        <input type="hidden" name="cities[]" id="survey-city-all" >
+                                        <input type="hidden" name="cities[]" id="survey-city-all">
                                         <select class="form-control input-text" id="survey-city" name="city[]"
                                             multiple="multiple">
                                         </select>
                                     </div>
                                     <div class="mb-3">
+                                        <input type="hidden" name="educations[]" id="survey-education-all">
                                         <select class="form-control input-text" id="survey-education" name="education[]"
                                             multiple="multiple">
-                                            <option value="selectall">Select All</option>
+                                            <option value="all">Semua Pendidikan</option>
                                             @foreach ($educations as $education)
                                                 <option value="{{ $education['id'] }}">{{ $education['name'] }}
                                                 </option>
@@ -152,9 +153,10 @@
                                         </select>
                                     </div>
                                     <div class="mb-3">
+                                        <input type="hidden" name="professions[]" id="survey-profession-all">
                                         <select class="form-control input-text" id="survey-profession"
                                             name="profession[]" multiple="multiple">
-                                            <option value="selectall">Select All</option>
+                                            <option value="all">Semua Profesi</option>
                                             @foreach ($professions as $profession)
                                                 <option value="{{ $profession['id'] }}">{{ $profession['name'] }}
                                                 </option>
@@ -162,9 +164,10 @@
                                         </select>
                                     </div>
                                     <div class="mb-3">
+                                        <input type="hidden" name="expenses[]" id="survey-expense-all">
                                         <select class="form-control input-text" id="survey-expense" name="expense[]"
                                             multiple="multiple">
-                                            <option value="selectall">Select All</option>
+                                            <option value="all">Semua Pengeluaran</option>
                                             @foreach ($expenses as $expense)
                                                 <option value="{{ $expense['id'] }}">{{ $expense['name'] }}
                                                 </option>
