@@ -34,7 +34,13 @@
 
     @yield('head')
 </head>
-
+@php
+$user = Http::withHeaders([
+    'Authorization' => 'Bearer ' . session('token'),
+])
+    ->get(config('services.api.url') . '/details')
+    ->json()['data'];
+@endphp
 <body>
     <div id="app" class="font-nexa">
         @include('inc.navbar')
@@ -50,10 +56,24 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     @yield('scripts')
-
     @if (Route::current()->getName() == 'home')
         @include('inc.modal.new_user')
     @endif
+
+    <script>
+        $(window).on('load', function() {
+            $(".user-quota").html(@json($user['respondent_quota']))
+            // var quota_percentage = @json($user['respondent_quota']) / 150 * 100
+            // $(".profile-quota").css('width', quota_percentage)
+            // if (quota_percentage > 75) {
+            //     $(".profile-quota").css('background-color', '#49d479')
+            // } else if (quota_percentage > 30) {
+            //     $(".profile-quota").css('background-color', '#ffd54f')
+            // } else {
+            //     $(".profile-quota").css('background-color', '#ff525d')
+            // }
+        });
+    </script>
 </body>
 
 </html>

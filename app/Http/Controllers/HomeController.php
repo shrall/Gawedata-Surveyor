@@ -50,16 +50,11 @@ class HomeController extends Controller
         ])
             ->get(config('services.api.url') . '/householdExpensesPerMonth')
             ->json()['data'];
-            $categories = Http::withHeaders([
-                'Authorization' => 'Bearer ' . session('token'),
-            ])
-                ->get(config('services.api.url') . '/surveyCategory')
-                ->json()['data'];
-        $user = Http::withHeaders([
+        $categories = Http::withHeaders([
             'Authorization' => 'Bearer ' . session('token'),
         ])
-            ->get(config('services.api.url') . '/details')
+            ->get(config('services.api.url') . '/surveyCategory')
             ->json()['data'];
-        return view('home', compact('surveys', 'categories', 'locations', 'educations', 'professions', 'expenses', 'user'));
+        return view('home', compact('surveys', 'categories', 'locations', 'educations', 'professions', 'expenses'));
     }
 }

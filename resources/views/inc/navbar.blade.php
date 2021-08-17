@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container justify-content-center">
         <a class="navbar-brand" href="{{ url('/') }}">
@@ -129,7 +130,7 @@
                                 <div class="profile-quota-box mb-1">
                                     <div class="profile-quota" style="width: 30%;"></div>
                                 </div>
-                                <p class="my-0 text-secondary">Tersisa <span class="user-quota">40</span>/150 kuota
+                                <p class="my-0 text-secondary">Tersisa 0/<span class="user-quota">150</span> kuota
                                     responden</p>
                                 <div class="my-3">
                                     <a href="#" class="text-gawedata text-decoration-none font-weight-bold">
