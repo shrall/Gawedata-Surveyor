@@ -486,8 +486,10 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         // single answer
         function addSingleAnswer() {
             $('#input-question').val('');
-            setQuestion();
             questions[question_index]['answer_choices'].push(new_answer_single);
+            questions[question_index]['answer_choices'].forEach((element, i) => {
+                questions[question_index]['answer_choices'][i] = ""
+            });
             refreshSingleAnswerAjax();
         }
 
@@ -529,17 +531,26 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     <script>
         // grid question
         function addGridQuestion() {
+            $('#input-question').val('');
             if (questions[question_index]['sub_questions'].length > 0) {
                 new_question_grid['answer_choices'] = questions[question_index]['sub_questions'][0]['answer_choices'];
             }
             questions[question_index]['sub_questions'].push(new_question_grid);
+            questions[question_index]['sub_questions'].forEach((element, index) => {
+                questions[question_index]['sub_questions'][index]['question'] = ""
+            });
             refreshGridQuestionAjax();
         }
 
         function addGridAnswer() {
+            $('#input-question').val('');
             questions[question_index]['sub_questions'].forEach((element, index) => {
                 if (index < 1) {
                     element['answer_choices'].push(new_answer_single);
+                    element['answer_choices'].forEach((element, i) => {
+                        questions[question_index]['sub_questions'][index]['answer_choices'][i] =
+                            ""
+                    });
                 }
             });
             refreshGridAnswerAjax();
