@@ -243,17 +243,13 @@
                 $("#survey-education").val() != "" &&
                 $("#survey-profession").val() != "" &&
                 $("#survey-expense").val() != "") {
-                console.log('first if')
                 if ($("#check-pria").prop("checked") == true ||
                     $("#check-wanita").prop("checked") == true) {
-                    console.log('second if')
                     $("#create-survey-next-button-2-public").prop("disabled", false);
                 } else {
-                    console.log('second if fail')
                     $("#create-survey-next-button-2-public").prop("disabled", true);
                 }
             } else {
-                console.log('first if fail')
                 $("#create-survey-next-button-2-public").prop("disabled", true);
             }
         }
@@ -286,13 +282,23 @@
         //get city list
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $('#survey-province').on('change', function(e) {
+            if ($('#survey-province').val().length == 0) {
+                $('#survey-province').html('<option value="all">Semua Provinsi</option>')
+                Object.values(@json($locations)).forEach(element => {
+                    $('#survey-province').append('<option value="' + element.id +
+                        '">' +
+                        element.province_name + '</option>')
+                });
+                console.log('triggerred')
+            }
             if ($('#survey-province').val()[0] == 'all') {
+                $('#survey-province').html('<option value="all" selected>Semua Provinsi</option>')
                 $.post('{{ config('app.url') }}' + "/survey/getcity", {
                         _token: CSRF_TOKEN,
                     })
                     .done(function(data) {
                         $('#survey-city').html('');
-                        $('#survey-city').val(null).trigger('change');
+                        $('#survey-city').val(null);
                         if (data.length == 0) {
                             $('#survey-city').prop("disabled", true);
                         } else {
@@ -317,7 +323,7 @@
                     })
                     .done(function(data) {
                         $('#survey-city').html('');
-                        $('#survey-city').val(null).trigger('change');
+                        $('#survey-city').val(null);
                         if (data.length == 0) {
                             $('#survey-city').prop("disabled", true);
                         } else {
@@ -351,6 +357,10 @@
         });
         $('#survey-city').on('change', function(e) {
             $('#survey-city-all').val(null);
+            if ($('#survey-city').val().length == 0) {
+                $('#survey-city').html('<option value="all">Semua Kota</option>')
+                $('#survey-province').trigger('change')
+            }
             if ($('#survey-city').val()[0] == 'all') {
                 var selectedCities = [];
                 $("#survey-city option").each(function() {
@@ -358,6 +368,7 @@
                         selectedCities.push($(this).val());
                     }
                 });
+                $('#survey-city').html('<option value="all" selected>Semua Kota</option>')
                 $("#survey-city-all").val(selectedCities);
             }
             enableSecondButton();
