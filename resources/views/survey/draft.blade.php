@@ -651,14 +651,13 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             event.preventDefault();
             $('#input-questions').val(JSON.stringify(questions));
             $('#input-question-index').val(index);
-            console.log($('#input-questions').val())
             document.getElementById('question-form').submit();
         }
     </script>
     <script>
         function deleteQuestion(index) {
             questions.splice(index - 1, 1);
-            saveDraft(index);
+            saveDraft(index-1);
         }
     </script>
     <script>
