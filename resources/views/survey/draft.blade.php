@@ -445,11 +445,13 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             changeQuestionType();
             if ($(this).data("type") == 1) {
                 questions[question_index]['answer_choices'] = [new_answer_single];
+                questions[question_index]['answer_choices'][0] = "";
                 refreshSingleAnswerAjax();
                 $('.question-type-text-guide').html('Responden hanya dapat memilih 1 jawaban.')
                 $('#single-answer-question').removeClass('d-none').addClass('d-block');
             } else if ($(this).data("type") == 2) {
                 questions[question_index]['answer_choices'] = [new_answer_single];
+                questions[question_index]['answer_choices'][0] = "";
                 refreshSingleAnswerAjax();
                 $('.question-type-text-guide').html('Responden dapat memilih lebih dari 1 jawaban.')
                 $('#single-answer-question').removeClass('d-none').addClass('d-block');
@@ -458,13 +460,16 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 $('#scale-question').removeClass('d-none').addClass('d-block');
             } else if ($(this).data("type") == 4) {
                 questions[question_index]['sub_questions'] = [new_question_grid];
+                questions[question_index]['sub_questions'][0]['question'] = "";
                 questions[question_index]['sub_questions'][0]['answer_choices'] = [new_answer_single];
+                questions[question_index]['sub_questions'][0]['answer_choices'][0] = "";
                 refreshGridQuestionAjax();
                 refreshGridAnswerAjax();
                 $('.question-type-text-guide').html('Responden mengurutkan jawaban berdasarkan peringkat.')
                 $('#grid-question').removeClass('d-none').addClass('d-block');
             } else if ($(this).data("type") == 5) {
                 questions[question_index]['answer_choices'] = [new_answer_single];
+                questions[question_index]['answer_choices'][0] = "";
                 refreshSingleAnswerAjax();
                 $('.question-type-text-guide').html('Responden mengurutkan jawaban.')
                 $('#single-answer-question').removeClass('d-none').addClass('d-block');
