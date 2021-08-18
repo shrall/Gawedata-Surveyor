@@ -39,7 +39,7 @@
             <div class="d-block" id="survey-view-grid">
                 <div class="row gy-4 mb-4">
                     @foreach ($surveys as $survey)
-                        <a href="{{ route('survey.show', ['id' => $survey['id'], 'i' => 1]) }}"
+                        <a href="{{ route('survey.show', ['id' => $survey['id'], 'i' => 1, 'new' => 'false']) }}"
                             class="col-3 text-decoration-none">
                             <div class="card card-survey-grid px-1 py-3 text-gray">
                                 <div class="card-header d-flex align-items-center">
@@ -84,7 +84,7 @@
                     <tbody class="text-gray">
                         @foreach ($surveys as $survey)
                             <tr class="survey-row cursor-pointer @if ($loop->iteration > 1) border-top @endif"
-                                data-href="{{ route('survey.show', ['id' => $survey['id'], 'i' => 1]) }}">
+                                data-href="{{ route('survey.show', ['id' => $survey['id'], 'i' => 1, 'new' => 'false']) }}">
                                 <th class="py-4 text-dark fs-5" scope="row">{{ $survey['title'] }}</th>
                                 @if ($survey['status_id'] == 4)
                                     <td class="py-4">

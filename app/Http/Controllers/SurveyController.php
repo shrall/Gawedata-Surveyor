@@ -90,7 +90,7 @@ class SurveyController extends Controller
             'household_expense_id' => $expense_criteria
         ])->json();
         if ($response['success']) {
-            return redirect()->route('survey.show', ['id' => $response['data']['id'], 'i' => 1]);
+            return redirect()->route('survey.show', ['id' => $response['data']['id'], 'i' => 1, 'new' => 'false']);
         } else {
             return redirect()->route('home');
         }
@@ -102,13 +102,17 @@ class SurveyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, $i)
+    public function show($id, $i, $new)
     {
         $survey = Http::withHeaders([
             'Authorization' => 'Bearer ' . session('token'),
         ])
             ->get(config('services.api.url') . '/survey/' . $id)
             ->json()['data'];
+        if ($new == 'true') {
+            $survey['questions'][count($survey['questions']) - 1]['question'] = "";
+            $survey['questions'][count($survey['questions']) - 1]['answer_choices'][0] = "";
+        }
         if ($survey['status_id'] == 6) {
             return redirect()->route('survey.hasil', $id);
         } else if ($survey['status_id'] == 5) {
@@ -138,13 +142,29 @@ class SurveyController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $questions = json_decode($request->questions);
+        if ($request->new_question != null) {
+            $new_question = [
+                "question" => "Pertanyaan Baru",
+                "survey_question_type_id" => 1,
+                "is_other_option_enabled" => false,
+                "answer_choices" => [
+                    "Jawaban",
+                ]
+            ];
+            array_push($questions, $new_question);
+        }
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . session('token'),
         ])->post(config('services.api.url') . '/surveyQuestion', [
             'survey_id' => $id,
-            'questions' => json_decode($request->questions)
+            'questions' => $questions
         ])->json();
-        return redirect()->route('survey.show', ['id' => $id, 'i' => $request->question_index]);
+        if ($request->new_question != null) {
+            return redirect()->route('survey.show', ['id' => $id, 'i' => count($questions), 'new' => 'true']);
+        } else {
+            return redirect()->route('survey.show', ['id' => $id, 'i' => $request->question_index, 'new' => 'false']);
+        }
     }
 
     /**
@@ -215,46 +235,6 @@ class SurveyController extends Controller
         return view('survey.submitted', compact('survey', 'i'));
     }
 
-    public function add_question($id)
-    {
-        $survey = Http::withHeaders([
-            'Authorization' => 'Bearer ' . session('token'),
-            'Content-Type' => 'application/json'
-        ])
-            ->get(config('services.api.url') . '/survey/' . $id)
-            ->json()['data'];
-        $questions = $survey['questions'];
-        foreach ($questions as $index => $question) {
-            if ($question['survey_question_type_id'] == 1 || $question['survey_question_type_id'] == 2 || $question['survey_question_type_id'] == 5) {
-                foreach ($question['answer_choices'] as $i => $answer) {
-                    $questions[$index]['answer_choices'][$i] = $answer['text'];
-                }
-            } else if ($question['survey_question_type_id'] == 4) {
-                foreach ($question['sub_questions'] as $in => $sub) {
-                    foreach ($sub['answer_choices'] as $i => $answer) {
-                        $questions[$index]['sub_questions'][$in]['answer_choices'][$i] = $answer['text'];
-                    }
-                }
-            }
-        }
-        $new_question = [
-            "question" => "Pertanyaan baru",
-            "survey_question_type_id" => 1,
-            "is_other_option_enabled" => false,
-            "answer_choices" => [
-                "Jawaban",
-            ]
-        ];
-        array_push($questions, $new_question);
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . session('token'),
-        ])->post(config('services.api.url') . '/surveyQuestion', [
-            'survey_id' => $survey['id'],
-            'questions' => $questions
-        ])->json();
-        return redirect()->route('survey.show', ['id' => $id, 'i' => count($questions)]);
-    }
-
     public function refresh_single_answer(Request $request)
     {
         if (count($request->answers) > 0) {
@@ -283,12 +263,6 @@ class SurveyController extends Controller
             $answers = null;
         }
         return view('survey.inc.draft.grid_answer', compact('answers'));
-    }
-
-    public function delete_question(Request $request)
-    {
-        dd($request);
-        // return redirect()->route('survey.show', ['id' => $id, 'i' => count($questions)]);
     }
 
     public function submit($id)

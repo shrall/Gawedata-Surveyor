@@ -190,7 +190,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                             <input type="text" name="answer{{ $loop->iteration }}"
                                                 id="answer{{ $loop->iteration }}" class="form-control input-text"
                                                 style="padding-left:3.5rem !important;"
-                                                placeholder="Tuliskan Jawaban Disini" value="{{ $answer['text'] }}"
+                                                placeholder="Tuliskan Jawaban Disini" value="{{ $answer['text'] ?? '' }}"
                                                 onkeyup="setNewSingleAnswer({{ $loop->iteration }});">
                                         </div>
                                         <div class="col-5 text-start d-flex align-items-center">
@@ -371,6 +371,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         <input name="_method" type="hidden" value="PUT">
         <input type="text" name="questions" id="input-questions">
         <input type="text" name="question_index" id="input-question-index">
+        <input type="text" name="new_question" id="new-question">
     </form>
 @endsection
 
@@ -485,7 +486,6 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     <script>
         // single answer
         function addSingleAnswer() {
-            $('#input-question').val('');
             questions[question_index]['answer_choices'].push(new_answer_single);
             questions[question_index]['answer_choices'].forEach((element, i) => {
                 questions[question_index]['answer_choices'][i] = ""
@@ -531,7 +531,6 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     <script>
         // grid question
         function addGridQuestion() {
-            $('#input-question').val('');
             if (questions[question_index]['sub_questions'].length > 0) {
                 new_question_grid['answer_choices'] = questions[question_index]['sub_questions'][0]['answer_choices'];
             }
@@ -543,7 +542,6 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         }
 
         function addGridAnswer() {
-            $('#input-question').val('');
             questions[question_index]['sub_questions'].forEach((element, index) => {
                 if (index < 1) {
                     element['answer_choices'].push(new_answer_single);
@@ -647,8 +645,11 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         }
     </script>
     <script>
-        function saveDraft(index) {
+        function saveDraft(index, new_bool) {
             event.preventDefault();
+            if (new_bool) {
+                $('#new-question').val(1);
+            }
             $('#input-questions').val(JSON.stringify(questions));
             $('#input-question-index').val(index);
             document.getElementById('question-form').submit();
@@ -657,7 +658,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     <script>
         function deleteQuestion(index) {
             questions.splice(index - 1, 1);
-            saveDraft(index-1);
+            saveDraft(index - 1, false);
         }
     </script>
     <script>

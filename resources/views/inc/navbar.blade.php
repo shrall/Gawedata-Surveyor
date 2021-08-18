@@ -100,7 +100,7 @@
                         </li>
                     @elseif (Route::current()->getName() == 'survey.show')
                         <li class="nav-item mx-2">
-                            <a href="#" class="btn btn-gawedata-2 font-lato" onclick="saveDraft({{$i}});">
+                            <a href="#" class="btn btn-gawedata-2 font-lato" onclick="saveDraft({{$i}}, false);">
                                 Simpan (Draft)
                             </a>
                         </li>
