@@ -109,7 +109,7 @@ class SurveyController extends Controller
         ])
             ->get(config('services.api.url') . '/survey/' . $id)
             ->json()['data'];
-        if ($new == 'true') {
+        if ($new == 'true' && count($survey['questions']) > 0) {
             $survey['questions'][count($survey['questions']) - 1]['question'] = "";
             $survey['questions'][count($survey['questions']) - 1]['answer_choices'][0] = "";
         }

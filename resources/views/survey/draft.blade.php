@@ -658,7 +658,11 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     <script>
         function deleteQuestion(index) {
             questions.splice(index - 1, 1);
-            saveDraft(index - 1, false);
+            if (index == 1) {
+                saveDraft(index, false);
+            } else {
+                saveDraft(index - 1, false);
+            }
         }
     </script>
     <script>
