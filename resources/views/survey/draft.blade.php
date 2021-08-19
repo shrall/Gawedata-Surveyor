@@ -59,6 +59,23 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                         </div>
                                     </ul>
                                 </div>
+                                <h6 class="question-type-text-guide text-start text-gray my-2" style="font-size: 0.875rem;">
+                                    @if ($question_type_id == 1)
+                                        Responden hanya dapat memilih 1 jawaban.
+                                    @elseif ($question_type_id == 2)
+                                        Responden dapat memilih lebih dari 1 jawaban.
+                                    @elseif ($question_type_id == 3)
+                                        Responden mengurutkan jawaban berdasarkan peringkat.
+                                    @elseif ($question_type_id == 4)
+                                        Responden mengurutkan jawaban berdasarkan peringkat.
+                                    @elseif ($question_type_id == 5)
+                                        Responden mengurutkan jawaban.
+                                    @elseif ($question_type_id == 6)
+                                        Responden menjawab berupa opini atau penjelasan.
+                                    @elseif ($question_type_id == 7)
+                                        Responden melakukan sesuatu untuk menjawab.
+                                    @endif
+                                </h6>
                             </div>
                         </div>
                         <div id="grid-question" class="@if ($question_type_id==4) d-block @else d-none @endif">
@@ -68,10 +85,6 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                         class="survey-question-image-preview w-100 my-2" alt="" srcset="">
                                 </div>
                                 <div class="col-5">
-                                    <h6 class="question-type-text-guide text-start text-gray my-2"
-                                        style="font-size: 0.875rem;">
-                                        Responden mengurutkan jawaban berdasarkan peringkat.
-                                    </h6>
                                 </div>
                             </div>
                             <div class="row">
@@ -168,16 +181,6 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                         class="survey-question-image-preview w-100 my-2" alt="" srcset="">
                                 </div>
                                 <div class="col-5">
-                                    <h6 class="question-type-text-guide text-start text-gray my-2"
-                                        style="font-size: 0.875rem;">
-                                        @if ($question_type_id == 1)
-                                            Responden hanya dapat memilih 1 jawaban.
-                                        @elseif ($question_type_id == 2)
-                                            Responden dapat memilih lebih dari 1 jawaban.
-                                        @elseif ($question_type_id == 5)
-                                            Responden mengurutkan jawaban.
-                                        @endif
-                                    </h6>
                                 </div>
                             </div>
                             <h6 class="text-start">Jawaban</h6>
@@ -221,7 +224,23 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                             title="Lorem Ipsum dolor sit amet"></span>
                                         <div class="form-check form-switch ms-auto mb-0">
                                             <input class="form-check-input cursour-pointer" type="checkbox"
-                                                id="input-lainnya">
+                                                id="input-lainnya" @if ($survey['questions'][$i - 1]['is_other_option_enabled']) checked @endif >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4 mb-2 @if ($question_type_id==1 ||
+                            $question_type_id==2) d-block @else d-none @endif"
+                                id="input-none-container">
+                                <div class="col-7">
+                                    <div class="d-flex align-items-center">
+                                        <h6 class="text-start mt-2 mb-0">Aktifkan Jawaban 'None of the Above'</h6>
+                                        <span
+                                            class="badge-lainnya fas fa-fw fa-info-circle text-gray ms-2 mt-2 cursor-pointer"
+                                            data-toggle="tooltip" data-placement="bottom"
+                                            title="Lorem Ipsum dolor sit amet"></span>
+                                        <div class="form-check form-switch ms-auto mb-0">
+                                            <input class="form-check-input cursour-pointer" type="checkbox" id="input-none" @if ($survey['questions'][$i - 1]['is_no_answer_enabled']) checked @endif >
                                         </div>
                                     </div>
                                 </div>
@@ -234,10 +253,6 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                         class="survey-question-image-preview w-100 my-2" alt="" srcset="">
                                 </div>
                                 <div class="col-5">
-                                    <h6 class="question-type-text-guide text-start text-gray my-2"
-                                        style="font-size: 0.875rem;">
-                                        Responden mengurutkan jawaban berdasarkan peringkat.
-                                    </h6>
                                 </div>
                             </div>
                             <h6 class="text-start">Jawaban</h6>
@@ -262,10 +277,6 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                         class="survey-question-image-preview w-100 my-2" alt="" srcset="">
                                 </div>
                                 <div class="col-5">
-                                    <h6 class="question-type-text-guide text-start text-gray my-2"
-                                        style="font-size: 0.875rem;">
-                                        Responden menjawab berupa opini atau penjelasan.
-                                    </h6>
                                 </div>
                             </div>
                             <h6 class="text-start">Jawaban</h6>
@@ -287,10 +298,6 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                         class="survey-question-image-preview w-100 my-2" alt="" srcset="">
                                 </div>
                                 <div class="col-5">
-                                    <h6 class="question-type-text-guide text-start text-gray my-2"
-                                        style="font-size: 0.875rem;">
-                                        Responden melakukan sesuatu untuk menjawab.
-                                    </h6>
                                 </div>
                             </div>
                             <h6 class="text-start">Jawaban</h6>
@@ -441,6 +448,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             $('.input-url-application').removeClass('d-block').addClass('d-none');
             $('#input-url-website').removeClass('d-block').addClass('d-none');
             $('#input-lainnya-container').removeClass('d-block').addClass('d-none');
+            $('#input-none-container').removeClass('d-block').addClass('d-none');
             questions[question_index]['answer_choices'] = null;
             questions[question_index]['sub_questions'] = null;
             questions[question_index]['minimal_scale'] = null;
@@ -469,6 +477,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 $('.question-type-text-guide').html('Responden hanya dapat memilih 1 jawaban.')
                 $('#single-answer-question').removeClass('d-none').addClass('d-block');
                 $('#input-lainnya-container').removeClass('d-none').addClass('d-block');
+                $('#input-none-container').removeClass('d-none').addClass('d-block');
             } else if ($(this).data("type") == 2) {
                 questions[question_index]['answer_choices'] = [new_answer_single];
                 questions[question_index]['answer_choices'][0] = "";
@@ -476,6 +485,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 $('.question-type-text-guide').html('Responden dapat memilih lebih dari 1 jawaban.')
                 $('#single-answer-question').removeClass('d-none').addClass('d-block');
                 $('#input-lainnya-container').removeClass('d-none').addClass('d-block');
+                $('#input-none-container').removeClass('d-none').addClass('d-block');
             } else if ($(this).data("type") == 3) {
                 $('.question-type-text-guide').html('Responden mengurutkan jawaban berdasarkan peringkat.')
                 $('#scale-question').removeClass('d-none').addClass('d-block');
@@ -566,7 +576,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                     "answer_choices": []
                 });
             }
-            questions[question_index]['sub_questions'][questions[question_index]['sub_questions'].length - 1]['question'] = ""
+            questions[question_index]['sub_questions'][questions[question_index]['sub_questions'].length - 1]['question'] =
+                ""
             refreshGridQuestionAjax();
         }
 
@@ -762,5 +773,23 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         $(function() {
             $('[data-toggle="tooltip"]').tooltip()
         })
+    </script>
+    <script>
+        $("#input-lainnya").on('change', function() {
+            if ($(this).is(':checked')) {
+                questions[question_index]['is_other_option_enabled'] = true;
+            } else {
+                questions[question_index]['is_other_option_enabled'] = false;
+            }
+        });
+    </script>
+    <script>
+        $("#input-none").on('change', function() {
+            if ($(this).is(':checked')) {
+                questions[question_index]['is_no_answer_enabled'] = true;
+            } else {
+                questions[question_index]['is_no_answer_enabled'] = false;
+            }
+        });
     </script>
 @endsection
