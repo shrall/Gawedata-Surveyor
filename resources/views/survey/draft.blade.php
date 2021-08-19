@@ -21,7 +21,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                     class="badge-pertanyaan position-absolute start-0 translate-middle-y font-weight-bold ms-4 px-2 py-1"
                                     style="color: #3f60f5 !important; top:1.75rem;">P{{ $i }}</span>
                                 <textarea type="text" name="question" id="input-question" class="form-control input-text"
-                                    style="padding-left:3.5rem !important;resize: none; height:8rem;" placeholder="Tuliskan Pertanyaan Disini"
+                                    style="padding-left:3.5rem !important;resize: none; height:8rem;"
+                                    placeholder="Tuliskan Pertanyaan Disini"
                                     onkeyup="setQuestion()">{{ $survey['questions'][$i - 1]['question'] }}</textarea>
                             </div>
                             <div class="col-5">
@@ -206,6 +207,21 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                     <button class="btn btn-gawedata-2 font-lato w-100 py-2" onclick="addSingleAnswer();">
                                         + Tambah Jawaban
                                     </button>
+                                </div>
+                            </div>
+                            <div class="row mt-4 mb-2">
+                                <div class="col-7">
+                                    <div class="d-flex align-items-center">
+                                        <h6 class="text-start mt-2 mb-0">Aktifkan Jawaban 'Lainnya'</h6>
+                                        <span
+                                            class="badge-lainnya fas fa-fw fa-info-circle text-gray ms-2 mt-2 cursor-pointer"
+                                            data-toggle="tooltip" data-placement="bottom"
+                                            title="Lorem Ipsum dolor sit amet"></span>
+                                        <div class="form-check form-switch ms-auto mb-0">
+                                            <input class="form-check-input cursour-pointer" type="checkbox"
+                                                id="input-lainnya">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -729,5 +745,10 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 console.log(error.response.headers);
             });
         };
+    </script>
+    <script>
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
     </script>
 @endsection
