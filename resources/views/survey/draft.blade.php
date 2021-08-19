@@ -492,9 +492,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         // single answer
         function addSingleAnswer() {
             questions[question_index]['answer_choices'].push(new_answer_single);
-            questions[question_index]['answer_choices'].forEach((element, i) => {
-                questions[question_index]['answer_choices'][i] = ""
-            });
+            questions[question_index]['answer_choices'][questions[question_index]['answer_choices'].length - 1] = ""
             refreshSingleAnswerAjax();
         }
 
@@ -540,9 +538,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 new_question_grid['answer_choices'] = questions[question_index]['sub_questions'][0]['answer_choices'];
             }
             questions[question_index]['sub_questions'].push(new_question_grid);
-            questions[question_index]['sub_questions'].forEach((element, index) => {
-                questions[question_index]['sub_questions'][index]['question'] = ""
-            });
+            questions[question_index]['sub_questions'][questions[question_index]['sub_questions'].length]['question'] = ""
             refreshGridQuestionAjax();
         }
 
@@ -550,10 +546,10 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             questions[question_index]['sub_questions'].forEach((element, index) => {
                 if (index < 1) {
                     element['answer_choices'].push(new_answer_single);
-                    element['answer_choices'].forEach((element, i) => {
-                        questions[question_index]['sub_questions'][index]['answer_choices'][i] =
-                            ""
-                    });
+                    questions[question_index]['sub_questions'][index]['answer_choices'][questions[question_index][
+                            'sub_questions'
+                        ][index]['answer_choices'].length] =
+                        ""
                 }
             });
             refreshGridAnswerAjax();
