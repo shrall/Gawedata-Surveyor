@@ -10,8 +10,11 @@
                     onkeyup="setNewGridQuestion({{ $loop->iteration }});">
             </div>
             <div class="col-1 text-start d-flex align-items-center ps-0">
-                <span class="fas fa-fw fa-image text-gray cursor-pointer fs-4"
-                    id="question_image{{ $loop->iteration }}"></span>
+                <label for="question_image{{ $loop->iteration }}" class="font-lato cursor-pointer"><span
+                        class="fas fa-fw fa-image text-gray cursor-pointer fs-4"></span></label>
+                <input type="file" name="photo_grid" id="question_image{{ $loop->iteration }}" class="d-none"
+                    accept="image/*" onchange="gridLoadFile(event,{{ $loop->iteration }})">
+
             </div>
             <div class="col-1 text-start d-flex align-items-center ps-0">
                 <span class="fas fa-fw fa-trash-alt text-gray cursor-pointer fs-4"

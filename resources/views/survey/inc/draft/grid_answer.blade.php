@@ -4,7 +4,7 @@
             <div class="col-10 position-relative">
                 <span class="position-absolute top-50 start-0 translate-middle-y font-weight-bold ms-4 px-2 py-1"
                     id="answer-order{{ $loop->iteration }}">{{ $loop->iteration }}.</span>
-                <input type="text" name="answer{{ $loop->iteration }}" id="answer{{ $loop->iteration }}"
+                <input type="text" name="answer{{ $loop->iteration }}" id="answer-grid{{ $loop->iteration }}"
                     class="form-control input-text" style="padding-left:3.5rem !important;"
                     placeholder="Tuliskan Jawaban Disini" value="{{ $answer }}"
                     onkeyup="setNewGridAnswer({{ $loop->iteration }});">

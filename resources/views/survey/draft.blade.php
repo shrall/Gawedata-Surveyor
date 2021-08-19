@@ -131,7 +131,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                                                 class="position-absolute top-50 start-0 translate-middle-y font-weight-bold ms-4 px-2 py-1"
                                                                 id="answer-order{{ $loop->iteration }}">{{ $loop->iteration }}.</span>
                                                             <input type="text" name="answer{{ $loop->iteration }}"
-                                                                id="answer{{ $loop->iteration }}"
+                                                                id="answer-grid{{ $loop->iteration }}"
                                                                 class="form-control input-text"
                                                                 style="padding-left:3.5rem !important;"
                                                                 placeholder="Tuliskan Jawaban Disini"
@@ -189,7 +189,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                                 class="position-absolute top-50 start-0 translate-middle-y font-weight-bold ms-4 px-2 py-1"
                                                 id="answer-order{{ $loop->iteration }}">{{ $loop->iteration }}.</span>
                                             <input type="text" name="answer{{ $loop->iteration }}"
-                                                id="answer{{ $loop->iteration }}" class="form-control input-text"
+                                                id="answer-single{{ $loop->iteration }}" class="form-control input-text"
                                                 style="padding-left:3.5rem !important;"
                                                 placeholder="Tuliskan Jawaban Disini" value="{{ $answer['text'] ?? '' }}"
                                                 onkeyup="setNewSingleAnswer({{ $loop->iteration }});">
@@ -540,7 +540,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         }
 
         function setNewSingleAnswer(index) {
-            questions[question_index]['answer_choices'][index - 1] = $('#answer' + index).val();
+            questions[question_index]['answer_choices'][index - 1] = $('#answer-single' + index).val();
         }
     </script>
     <script>
@@ -555,11 +555,18 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     <script>
         // grid question
         function addGridQuestion() {
-            if (questions[question_index]['sub_questions'].length > 0) {
-                new_question_grid['answer_choices'] = questions[question_index]['sub_questions'][0]['answer_choices'];
+            if (questions[question_index]['sub_questions'][0]['answer_choices'].length > 0) {
+                questions[question_index]['sub_questions'].push({
+                    "question": "Pertanyaan Baru",
+                    "answer_choices": questions[question_index]['sub_questions'][0]['answer_choices']
+                });
+            } else {
+                questions[question_index]['sub_questions'].push({
+                    "question": "Pertanyaan Baru",
+                    "answer_choices": []
+                });
             }
-            questions[question_index]['sub_questions'].push(new_question_grid);
-            questions[question_index]['sub_questions'][questions[question_index]['sub_questions'].length]['question'] = ""
+            questions[question_index]['sub_questions'][questions[question_index]['sub_questions'].length - 1]['question'] = ""
             refreshGridQuestionAjax();
         }
 
@@ -569,7 +576,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                     element['answer_choices'].push(new_answer_single);
                     questions[question_index]['sub_questions'][index]['answer_choices'][questions[question_index][
                             'sub_questions'
-                        ][index]['answer_choices'].length] =
+                        ][index]['answer_choices'].length - 1] =
                         ""
                 }
             });
@@ -628,7 +635,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
 
         function setNewGridAnswer(index) {
             questions[question_index]['sub_questions'].forEach(element => {
-                element['answer_choices'][index - 1] = $('#answer' + index).val();
+                element['answer_choices'][index - 1] = $('#answer-grid' + index).val();
             });
         }
     </script>
