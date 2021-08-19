@@ -9,8 +9,7 @@
             <div class="modal-body text-center">
                 <img src="{{ asset('images/start-modal.png') }}" width="135px" height="145px">
                 <h3 class="font-weight-bold">Selamat datang di Gawedata</h3>
-                <p class="my-0 font-lato">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
-                    molestie quam aenean eget mi sagittis eleifend iaculis. Quis tortor vitae augue eu, amet.
+                <p class="my-0 font-lato">Buat survei lebih cepat, mudah dan efektif sesuai kriteria respondenmu.
                 </p>
             </div>
         </div>
