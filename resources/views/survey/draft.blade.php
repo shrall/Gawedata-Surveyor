@@ -18,11 +18,11 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         <div class="row">
                             <div class="col-7 position-relative">
                                 <span
-                                    class="badge-pertanyaan position-absolute top-50 start-0 translate-middle-y font-weight-bold ms-4 px-2 py-1"
-                                    style="color: #3f60f5 !important;">P{{ $i }}</span>
-                                <input type="text" name="question" id="input-question" class="form-control input-text"
-                                    style="padding-left:3.5rem !important;" placeholder="Tuliskan Pertanyaan Disini"
-                                    value="{{ $survey['questions'][$i - 1]['question'] }}" onkeyup="setQuestion()">
+                                    class="badge-pertanyaan position-absolute start-0 translate-middle-y font-weight-bold ms-4 px-2 py-1"
+                                    style="color: #3f60f5 !important; top:1.75rem;">P{{ $i }}</span>
+                                <textarea type="text" name="question" id="input-question" class="form-control input-text"
+                                    style="padding-left:3.5rem !important;resize: none; height:8rem;" placeholder="Tuliskan Pertanyaan Disini"
+                                    onkeyup="setQuestion()">{{ $survey['questions'][$i - 1]['question'] }}</textarea>
                             </div>
                             <div class="col-5">
                                 <input type="hidden" name="question-type">
