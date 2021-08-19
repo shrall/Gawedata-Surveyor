@@ -209,7 +209,9 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                     </button>
                                 </div>
                             </div>
-                            <div class="row mt-4 mb-2">
+                            <div class="row mt-4 mb-2 @if ($question_type_id==1 ||
+                            $question_type_id==2) d-block @else d-none @endif"
+                                id="input-lainnya-container">
                                 <div class="col-7">
                                     <div class="d-flex align-items-center">
                                         <h6 class="text-start mt-2 mb-0">Aktifkan Jawaban 'Lainnya'</h6>
@@ -438,6 +440,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             $('#input-url-video').removeClass('d-block').addClass('d-none');
             $('.input-url-application').removeClass('d-block').addClass('d-none');
             $('#input-url-website').removeClass('d-block').addClass('d-none');
+            $('#input-lainnya-container').removeClass('d-block').addClass('d-none');
             questions[question_index]['answer_choices'] = null;
             questions[question_index]['sub_questions'] = null;
             questions[question_index]['minimal_scale'] = null;
@@ -465,12 +468,14 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 refreshSingleAnswerAjax();
                 $('.question-type-text-guide').html('Responden hanya dapat memilih 1 jawaban.')
                 $('#single-answer-question').removeClass('d-none').addClass('d-block');
+                $('#input-lainnya-container').removeClass('d-none').addClass('d-block');
             } else if ($(this).data("type") == 2) {
                 questions[question_index]['answer_choices'] = [new_answer_single];
                 questions[question_index]['answer_choices'][0] = "";
                 refreshSingleAnswerAjax();
                 $('.question-type-text-guide').html('Responden dapat memilih lebih dari 1 jawaban.')
                 $('#single-answer-question').removeClass('d-none').addClass('d-block');
+                $('#input-lainnya-container').removeClass('d-none').addClass('d-block');
             } else if ($(this).data("type") == 3) {
                 $('.question-type-text-guide').html('Responden mengurutkan jawaban berdasarkan peringkat.')
                 $('#scale-question').removeClass('d-none').addClass('d-block');
