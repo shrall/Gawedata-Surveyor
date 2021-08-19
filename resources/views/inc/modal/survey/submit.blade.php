@@ -29,7 +29,7 @@
                 </p>
             </div>
             <div class="modal-footer text-right border-0">
-                <a href="{{ route('survey.submit', ['id' => $survey['id'], 'i' => 1]) }}" class="btn btn-gawedata font-lato font-weight-bold">
+                <a href="{{ route('survey.submitted', ['id' => $survey['id'], 'i' => 1]) }}" class="btn btn-gawedata font-lato font-weight-bold">
                     Oke
                 </a>
             </div>

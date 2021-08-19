@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container justify-content-center">
         <a class="navbar-brand" href="{{ url('/') }}">
@@ -10,7 +9,8 @@
                 <!-- Left Side Of Navbar -->
                 @if (Route::current()->getName() == 'survey.hasil' || Route::current()->getName() == 'survey.analisa' || Route::current()->getName() == 'survey.detail' || Route::current()->getName() == 'survey.show' || Route::current()->getName() == 'survey.submitted')
                     <ul class="navbar-nav position-absolute top-50 start-50 translate-middle" style="z-index: 100;">
-                        <h4 class="font-lato font-weight-bold mb-0">{{ $survey['title'] }}
+                        <h4 class="font-lato font-weight-bold mb-0">
+                            {{ strlen($survey['title']) > 25 ? substr($survey['title'], 0, 23) . '...' : $survey['title'] }}
                             <img src="{{ asset('images/survey-menu-button.svg') }}" width="21px"
                                 class="far fa-fw fa-comment-dots text-gawedata cursor-pointer ms-2"
                                 id="survey-menu-button">
@@ -100,13 +100,15 @@
                         </li>
                     @elseif (Route::current()->getName() == 'survey.show')
                         <li class="nav-item mx-2">
-                            <a href="#" class="btn btn-gawedata-2 font-lato" onclick="saveDraft({{$i}}, false);">
+                            <a href="#" class="btn btn-gawedata-2 font-lato"
+                                onclick="saveDraft({{ $i }}, false);">
                                 Simpan (Draft)
                             </a>
                         </li>
                         @include('inc.modal.survey.submit')
                         <li class="nav-item mx-2">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#submit-modal" class="btn btn-gawedata font-lato font-weight-bold">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#submit-modal"
+                                class="btn btn-gawedata font-lato font-weight-bold">
                                 Submit Survei
                             </a>
                         </li>
