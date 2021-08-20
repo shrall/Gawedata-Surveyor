@@ -1,10 +1,11 @@
 <!-- Modal -->
-<div class="modal fade font-lato" id="create-survey-modal" data-bs-backdrop="static">
+<div class="modal fade font-lato" id="update-survey-modal" data-bs-backdrop="static">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content ps-4 py-0" style="border-radius: 18px !important;">
             <div class="modal-body py-0">
-                <form action="{{ route('survey.store') }}" method="post">
+                <form action="{{ route('survey.changesettings', $survey['id']) }}" method="post">
                     @csrf
+                    <input type="hidden" name="_method" value="PUT">
                     <div class="row">
                         <div class="col-5 text-start border-end pt-5 pe-0" id="create-survey-sidebar-col">
                             <ul class="list-unstyled font-weight-bold my-5" id="create-survey-sidebar">
@@ -59,7 +60,7 @@
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <input id="survey-type" type="hidden" name="survey_type">
+                                        <input id="survey-type" type="hidden" name="survey-type">
                                         <div class="dropdown" id="select-survey-type">
                                             <span class="form-control input-text d-flex align-items-center text-start"
                                                 type="button" data-bs-toggle="dropdown" id="selected-survey-type">

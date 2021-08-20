@@ -46,4 +46,5 @@ Route::group(['middleware' => ['surveyor']], function () {
     Route::post('survey/refreshsingleanswer', [SurveyController::class, 'refresh_single_answer'])->name('survey.refreshsingleanswer');
     Route::post('survey/refreshgridquestion', [SurveyController::class, 'refresh_grid_question'])->name('survey.refreshgridquestion');
     Route::post('survey/refreshgridanswer', [SurveyController::class, 'refresh_grid_answer'])->name('survey.refreshgridanswer');
+    Route::put('survey/{survey}/changesettings', [SurveyController::class, 'change_settings'])->name('survey.changesettings');
 });

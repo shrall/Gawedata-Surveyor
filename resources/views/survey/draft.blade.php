@@ -792,4 +792,313 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             }
         });
     </script>
+    {{-- update survey --}}
+    <script>
+        //first step
+        function enableFirstButton() {
+            if ($("#survey-title").val() != "" &&
+                $("#survey-description").val() != "" &&
+                $("#survey-category").val() != "" &&
+                $("#survey-type").val() != "") {
+                $("#create-survey-next-button-1").prop("disabled", false);
+            } else {
+                $("#create-survey-next-button-1").prop("disabled", true);
+            }
+        }
+        $(function() {
+            $('#select-survey-category').find('li').click(function() {
+                $('#selected-survey-category').html($(this).text() +
+                    '<span class="fa fa-fw fa-chevron-down ms-auto"></span>');
+                $('#survey-category').val($(this).data("id"));
+                enableFirstButton();
+            });
+            $('#select-survey-type').find('li').click(function() {
+                $('#selected-survey-type').html($(this).text() +
+                    '<span class="fa fa-fw fa-chevron-down ms-auto"></span>');
+                if ($(this).data("type") == 'public') {
+                    $('#survey-type').val('Public');
+                } else {
+                    $('#survey-type').val('Private');
+                }
+                enableFirstButton();
+            });
+        });
+        $("#survey-title").keyup(function() {
+            enableFirstButton();
+        });
+        $("#survey-description").keyup(function() {
+            enableFirstButton();
+        });
+    </script>
+    <script>
+        //second step public
+        function enableSecondButton() {
+            if ($("#age-start").val() != "" &&
+                $("#age-end").val() != "" &&
+                $("#survey-province").val() != "" &&
+                $("#survey-city").val() != "" &&
+                $("#survey-education").val() != "" &&
+                $("#survey-profession").val() != "" &&
+                $("#survey-expense").val() != "") {
+                if ($("#check-pria").prop("checked") == true ||
+                    $("#check-wanita").prop("checked") == true) {
+                    $("#create-survey-next-button-2-public").prop("disabled", false);
+                } else {
+                    $("#create-survey-next-button-2-public").prop("disabled", true);
+                }
+            } else {
+                $("#create-survey-next-button-2-public").prop("disabled", true);
+            }
+        }
+        $("#age-start").change(function() {
+            $("#age-end").attr('min', $("#age-start").val());
+        });
+        $(document).ready(function() {
+            $('#survey-province').select2({
+                dropdownParent: $('#update-survey-modal'),
+                placeholder: 'Domisili (Provinsi)'
+            });
+            $('#survey-city').select2({
+                dropdownParent: $('#update-survey-modal'),
+                placeholder: 'Domisili (Kota)',
+                disabled: true
+            });
+            $('#survey-education').select2({
+                dropdownParent: $('#update-survey-modal'),
+                placeholder: 'Latar Belakang Pendidikan'
+            });
+            $('#survey-profession').select2({
+                dropdownParent: $('#update-survey-modal'),
+                placeholder: 'Profesi'
+            });
+            $('#survey-expense').select2({
+                dropdownParent: $('#update-survey-modal'),
+                placeholder: 'Pengeluaran Rumah Tangga Per-Bulan'
+            });
+        });
+        //get city list
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $('#survey-province').on('change', function(e) {
+            if ($('#survey-province').val().length == 0) {
+                $('#survey-province').html('<option value="all">Semua Provinsi</option>')
+                Object.values(@json($locations)).forEach(element => {
+                    $('#survey-province').append('<option value="' + element.id +
+                        '">' +
+                        element.province_name + '</option>')
+                });
+            }
+            if ($('#survey-province').val()[0] == 'all') {
+                $('#survey-province').html('<option value="all" selected>Semua Provinsi</option>')
+                $.post('{{ config('app.url') }}' + "/survey/getcity", {
+                        _token: CSRF_TOKEN,
+                    })
+                    .done(function(data) {
+                        $('#survey-city').html('');
+                        $('#survey-city').val(null);
+                        if (data.length == 0) {
+                            $('#survey-city').prop("disabled", true);
+                        } else {
+                            $('#survey-city').prop("disabled", false);
+                            $('#survey-city').append('<option value="all">Semua Kota</option>')
+                            Object.values(data).forEach(element => {
+                                element.cities.forEach(element => {
+                                    $('#survey-city').append('<option value="' + element.id +
+                                        '">' +
+                                        element.city_name + '</option>')
+                                });
+                            });
+                        }
+                    })
+                    .fail(function() {
+                        console.log('fail');
+                    });
+            } else {
+                $.post('{{ config('app.url') }}' + "/survey/getcity", {
+                        _token: CSRF_TOKEN,
+                        data: $('#survey-province').val(),
+                    })
+                    .done(function(data) {
+                        $('#survey-city').html('');
+                        $('#survey-city').val(null);
+                        if (data.length == 0) {
+                            $('#survey-city').prop("disabled", true);
+                        } else {
+                            $('#survey-city').prop("disabled", false);
+                            $('#survey-city').append('<option value="all">Semua Kota</option>')
+                            Object.values(data).forEach(element => {
+                                element.cities.forEach(element => {
+                                    $('#survey-city').append('<option value="' + element.id +
+                                        '">' +
+                                        element.city_name + '</option>')
+                                });
+                            });
+                        }
+                    })
+                    .fail(function() {
+                        console.log('fail');
+                    });
+            }
+        });
+        $("#check-pria").click(function() {
+            enableSecondButton();
+        });
+        $("#check-wanita").click(function() {
+            enableSecondButton();
+        });
+        $("#age-start").keyup(function() {
+            enableSecondButton();
+        });
+        $("#age-end").keyup(function() {
+            enableSecondButton();
+        });
+        $('#survey-city').on('change', function(e) {
+            $('#survey-city-all').val(null);
+            if ($('#survey-city').val().length == 0) {
+                $('#survey-city').html('<option value="all">Semua Kota</option>')
+                $('#survey-province').trigger('change')
+            }
+            if ($('#survey-city').val()[0] == 'all') {
+                var selectedCities = [];
+                $("#survey-city option").each(function() {
+                    if ($(this).val() != 'all') {
+                        selectedCities.push($(this).val());
+                    }
+                });
+                $('#survey-city').html('<option value="all" selected>Semua Kota</option>')
+                $("#survey-city-all").val(selectedCities);
+            }
+            enableSecondButton();
+        });
+        $('#survey-education').on('change', function(e) {
+            $('#survey-education-all').val(null);
+            if ($('#survey-education').val().length == 0) {
+                $('#survey-education').html('<option value="all">Semua Pendidikan</option>')
+                Object.values(@json($educations)).forEach(element => {
+                    $('#survey-education').append('<option value="' + element.id +
+                        '">' +
+                        element.name + '</option>')
+                });
+            }
+            if ($(this).val()[0] == 'all') {
+                var selectedEducations = [];
+                $("#survey-education option").each(function() {
+                    if ($(this).val() != 'all') {
+                        selectedEducations.push($(this).val());
+                    }
+                });
+                $("#survey-education-all").val(selectedEducations);
+                $('#survey-education').html('<option value="all" selected>Semua Pendidikan</option>')
+            }
+            enableSecondButton();
+        });
+        $('#survey-profession').on('change', function(e) {
+            $('#survey-profession-all').val(null);
+            if ($('#survey-profession').val().length == 0) {
+                $('#survey-profession').html('<option value="all">Semua Profesi</option>')
+                Object.values(@json($professions)).forEach(element => {
+                    $('#survey-profession').append('<option value="' + element.id +
+                        '">' +
+                        element.name + '</option>')
+                });
+            }
+            if ($(this).val()[0] == 'all') {
+                var selectedProfessions = [];
+                $("#survey-profession option").each(function() {
+                    if ($(this).val() != 'all') {
+                        selectedProfessions.push($(this).val());
+                    }
+                });
+                $("#survey-profession-all").val(selectedProfessions);
+                $('#survey-profession').html('<option value="all" selected>Semua Profesi</option>')
+            }
+            enableSecondButton();
+        });
+        $('#survey-expense').on('change', function(e) {
+            $('#survey-expense-all').val(null);
+            if ($('#survey-expense').val().length == 0) {
+                $('#survey-expense').html('<option value="all">Semua Pengeluaran</option>')
+                Object.values(@json($expenses)).forEach(element => {
+                    $('#survey-expense').append('<option value="' + element.id +
+                        '">' +
+                        element.name + '</option>')
+                });
+            }
+            if ($(this).val()[0] == 'all') {
+                var selectedExpenses = [];
+                $("#survey-expense option").each(function() {
+                    if ($(this).val() != 'all') {
+                        selectedExpenses.push($(this).val());
+                    }
+                });
+                $("#survey-expense-all").val(selectedExpenses);
+                $('#survey-expense').html('<option value="all" selected>Semua Pengeluaran</option>')
+            }
+            enableSecondButton();
+        });
+    </script>
+    <script>
+        //third step
+        $(function() {
+            $("#survey-deadline").datepicker();
+        });
+
+        function enableThirdButton() {
+            if ($("#survey-deadline").val() != "" &&
+                parseInt($("#survey-respondent").val()) <= parseInt($(".user-quota").html())) {
+                $("#create-survey-next-button-3").prop("disabled", false);
+            } else {
+                $("#create-survey-next-button-3").prop("disabled", true);
+            }
+        }
+        $("#survey-respondent").keyup(function() {
+            if (parseInt($("#survey-respondent").val()) <= parseInt($(".user-quota").html())) {
+                $('#survey-respondent').removeClass('is-invalid');
+            } else {
+                $('#survey-respondent').addClass('is-invalid');
+            }
+            enableThirdButton();
+        });
+        $("#survey-deadline").change(function() {
+            enableThirdButton();
+        });
+    </script>
+    <script>
+        //change step
+        function changeStep(beforeStep, afterStep, beforeSidebar, afterSidebar) {
+            $(beforeStep).addClass('d-none');
+            $(afterStep).removeClass('d-none');
+            $('#create-survey-sidebar').find('li:nth-child(' + beforeSidebar + ')').removeClass('active');
+            $('#create-survey-sidebar').find('li:nth-child(' + afterSidebar + ')').addClass('active');
+            $('#create-survey-sidebar').find('li:nth-child(' + beforeSidebar + ')').find('div').removeClass('d-inline');
+            $('#create-survey-sidebar').find('li:nth-child(' + beforeSidebar + ')').find('div').addClass('d-none');
+            $('#create-survey-sidebar').find('li:nth-child(' + afterSidebar + ')').find('div').removeClass('d-none');
+            $('#create-survey-sidebar').find('li:nth-child(' + afterSidebar + ')').find('div').addClass('d-inline');
+        }
+        $('#create-survey-next-button-1').click(function() {
+            if ($('#survey-type').val() == 'Private') {
+                changeStep('#first-step', '#second-step-private', 1, 2);
+            } else {
+                changeStep('#first-step', '#second-step-public', 1, 2);
+            }
+        })
+        $('#create-survey-next-button-2-private').click(function() {
+            changeStep('#second-step-private', '#third-step', 2, 3);
+        })
+        $('#create-survey-next-button-2-public').click(function() {
+            changeStep('#second-step-public', '#third-step', 2, 3);
+        })
+        $('#create-survey-back-button-2-public').click(function() {
+            changeStep('#second-step-public', '#first-step', 2, 1);
+        })
+        $('#create-survey-back-button-2-private').click(function() {
+            changeStep('#second-step-private', '#first-step', 2, 1);
+        })
+        $('#create-survey-back-button-3').click(function() {
+            if ($('#survey-type').val() == 'Private') {
+                changeStep('#third-step', '#second-step-private', 3, 2);
+            } else {
+                changeStep('#third-step', '#second-step-public', 3, 2);
+            }
+        })
+    </script>
 @endsection

@@ -51,7 +51,7 @@
                                         </div>
                                         <hr>
                                         <div class="my-3">
-                                            <a href="#" class="text-dark text-decoration-none font-weight-bold"
+                                            <a href="#" class="text-dark text-decoration-none font-weight-bold" data-bs-toggle="modal" data-bs-target="#update-survey-modal"
                                                 id="survey-setting-button">
                                                 Pengaturan Survei
                                             </a>
@@ -105,6 +105,7 @@
                                 Simpan (Draft)
                             </a>
                         </li>
+                        @include('inc.modal.survey.update')
                         @include('inc.modal.survey.submit')
                         <li class="nav-item mx-2">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#submit-modal"

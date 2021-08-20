@@ -69,7 +69,6 @@ class SurveyController extends Controller
         if ($request->has('check-wanita')) {
             array_push($gender, 2);
         }
-
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . session('token'),
         ])->post(config('services.api.url') . '/survey', [
@@ -104,11 +103,37 @@ class SurveyController extends Controller
      */
     public function show($id, $i, $new)
     {
+        $locations = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/location')
+            ->json()['data'];
+        $educations = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/education')
+            ->json()['data'];
+        $professions = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/profession')
+            ->json()['data'];
+        $expenses = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/householdExpensesPerMonth')
+            ->json()['data'];
+        $categories = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/surveyCategory')
+            ->json()['data'];
         $survey = Http::withHeaders([
             'Authorization' => 'Bearer ' . session('token'),
         ])
             ->get(config('services.api.url') . '/survey/' . $id)
             ->json()['data'];
+            dd($survey);
         if ($new == 'true' && count($survey['questions']) > 0) {
             $survey['questions'][count($survey['questions']) - 1]['question'] = "";
             $survey['questions'][count($survey['questions']) - 1]['answer_choices'][0] = "";
@@ -118,7 +143,7 @@ class SurveyController extends Controller
         } else if ($survey['status_id'] == 5) {
             return redirect()->route('survey.submitted', ['id' => $survey['id'], 'i' => 1]);
         } else {
-            return view('survey.draft', compact('survey', 'i'));
+            return view('survey.draft', compact('survey', 'i', 'categories', 'locations', 'educations', 'professions', 'expenses'));
         }
     }
 
@@ -165,6 +190,11 @@ class SurveyController extends Controller
         } else {
             return redirect()->route('survey.show', ['id' => $id, 'i' => $request->question_index, 'new' => 'false']);
         }
+    }
+
+    public function change_settings(Request $request, $id)
+    {
+        dd($request);
     }
 
     /**
