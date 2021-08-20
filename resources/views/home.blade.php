@@ -56,10 +56,10 @@
                                             <span class="fa fa-fw fa-circle text-green me-2"></span>Published
                                         </div>
                                     @endif
-                                    <div class="ms-auto">Hari ini 13.00 WIB</div>
+                                    <div class="ms-auto">{{ date('d-m-y, H:i', strtotime($survey['created_at']))}} WIB</div>
                                 </div>
                                 <div class="card-body mt-4 pb-0">
-                                    <h5 class="font-weight-bold text-dark">{{ $survey['title'] }}</h5>
+                                    <h5 class="font-weight-bold text-dark">{{ strlen($survey['title']) > 25 ? substr($survey['title'], 0, 20) . '...' : $survey['title'] }}</h5>
                                 </div>
                                 <div class="card-footer pt-0">
                                     <span class="fa fa-fw fa-users me-2"></span> 0/{{ $survey['respondent_quota'] }}
@@ -85,7 +85,7 @@
                         @foreach ($surveys as $survey)
                             <tr class="survey-row cursor-pointer @if ($loop->iteration > 1) border-top @endif"
                                 data-href="{{ route('survey.show', ['id' => $survey['id'], 'i' => 1, 'new' => 'false']) }}">
-                                <th class="py-4 text-dark fs-5" scope="row">{{ $survey['title'] }}</th>
+                                <th class="py-4 text-dark fs-5" scope="row">{{ strlen($survey['title']) > 25 ? substr($survey['title'], 0, 33) . '...' : $survey['title'] }}</th>
                                 @if ($survey['status_id'] == 4)
                                     <td class="py-4">
                                         <div>
@@ -120,7 +120,7 @@
                                 @endif
                                 <td class="py-4"><span class="fa fa-fw fa-users me-2"></span>
                                     0/{{ $survey['respondent_quota'] }} Responden</td>
-                                <td class="py-4">Hari ini 13.00 WIB</td>
+                                <td class="py-4">{{ date('d-m-y, H:i', strtotime($survey['created_at']))}} WIB</td>
                             </tr>
                         @endforeach
                     </tbody>
