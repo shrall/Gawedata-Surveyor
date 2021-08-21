@@ -78,7 +78,7 @@ class SurveyController extends Controller
             'respondent_quota' => $request->survey_respondent,
             'is_private' => $is_private,
             'survey_type' => 'General',
-            'general_expired_date' => date('y-m-d', strtotime($request->survey_deadline)),
+            'general_expired_date' => date('Y-m-d', strtotime($request->survey_deadline)),
             'min_age_criteria' => $request->age_start,
             'max_age_criteria' => $request->age_end,
             'estimate_time' => '5 menit',
@@ -133,7 +133,6 @@ class SurveyController extends Controller
         ])
             ->get(config('services.api.url') . '/survey/' . $id)
             ->json()['data'];
-            dd($survey);
         if ($new == 'true' && count($survey['questions']) > 0) {
             $survey['questions'][count($survey['questions']) - 1]['question'] = "";
             $survey['questions'][count($survey['questions']) - 1]['answer_choices'][0] = "";
@@ -173,6 +172,7 @@ class SurveyController extends Controller
                 "question" => "Pertanyaan Baru",
                 "survey_question_type_id" => 1,
                 "is_other_option_enabled" => false,
+                "is_no_answer_enabled" => false,
                 "answer_choices" => [
                     "Jawaban",
                 ]

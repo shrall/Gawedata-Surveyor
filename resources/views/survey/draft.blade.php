@@ -224,7 +224,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                             title="Lorem Ipsum dolor sit amet"></span>
                                         <div class="form-check form-switch ms-auto mb-0">
                                             <input class="form-check-input cursour-pointer" type="checkbox"
-                                                id="input-lainnya" @if ($survey['questions'][$i - 1]['is_other_option_enabled']) checked @endif >
+                                                id="input-lainnya" @if ($survey['questions'][$i - 1]['is_other_option_enabled']) checked @endif>
                                         </div>
                                     </div>
                                 </div>
@@ -240,7 +240,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                             data-toggle="tooltip" data-placement="bottom"
                                             title="Lorem Ipsum dolor sit amet"></span>
                                         <div class="form-check form-switch ms-auto mb-0">
-                                            <input class="form-check-input cursour-pointer" type="checkbox" id="input-none" @if ($survey['questions'][$i - 1]['is_no_answer_enabled']) checked @endif >
+                                            <input class="form-check-input cursour-pointer" type="checkbox" id="input-none"
+                                                @if ($survey['questions'][$i - 1]['is_no_answer_enabled']) checked @endif>
                                         </div>
                                     </div>
                                 </div>
