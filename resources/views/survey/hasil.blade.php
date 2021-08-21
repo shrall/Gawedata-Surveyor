@@ -184,7 +184,8 @@
                                         <div id="action-image-carousel" class="carousel slide" data-bs-interval="false">
                                             <div class="carousel-inner">
                                                 @foreach ($question['results'] as $result)
-                                                    <div class="carousel-item @if ($loop->iteration == 1) active @endif">
+                                                    <div class="carousel-item @if ($loop->iteration ==
+                                                        1) active @endif">
                                                         <img src="https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg"
                                                             class="d-block mx-auto">
                                                     </div>
@@ -204,11 +205,12 @@
                                         <div class="d-flex align-items-center my-2 pb-2"
                                             style="overflow: auto; white-space: nowrap;">
                                             @foreach ($question['results'] as $result)
-                                            <div class="survey-result-image-nav me-2"
-                                                data-bs-target="#action-image-carousel" data-bs-slide-to="{{$loop->iteration-1}}">
-                                                <img src="https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg"
-                                                    class="survey-result-image-nav-item d-block mx-auto">
-                                            </div>
+                                                <div class="survey-result-image-nav me-2"
+                                                    data-bs-target="#action-image-carousel"
+                                                    data-bs-slide-to="{{ $loop->iteration - 1 }}">
+                                                    <img src="https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg"
+                                                        class="survey-result-image-nav-item d-block mx-auto">
+                                                </div>
                                             @endforeach
                                         </div>
                                     </div>
@@ -762,6 +764,19 @@
                 innerSize: '75%',
             }]
         });
+    </script>
+    <script>
+    function copyToClipboard() {
+        /* Get the text field */
+        var copyText = document.getElementById("survey-link");
+
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+         /* Copy the text inside the text field */
+        navigator.clipboard.writeText(copyText.value);
+      }
     </script>
 @endsection
 

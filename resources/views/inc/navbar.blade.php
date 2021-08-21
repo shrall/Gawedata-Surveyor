@@ -115,8 +115,9 @@
                         </li>
                     @elseif (Route::current()->getName() == 'survey.hasil' || Route::current()->getName() ==
                         'survey.analisa' || Route::current()->getName() == 'survey.detail')
+                        @include('inc.modal.survey.share')
                         <li class="nav-item mx-4">
-                            <a href="#" class="btn btn-gawedata-2 font-lato font-weight-bold">
+                            <a href="#" class="btn btn-gawedata-2 font-lato font-weight-bold" data-bs-toggle="modal" data-bs-target="#share-modal">
                                 <span class="far fa-fw fa-paper-plane"></span>
                                 Bagikan Survei
                             </a>
