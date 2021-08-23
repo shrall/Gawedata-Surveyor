@@ -141,7 +141,7 @@
                                         <div class="overflow-auto pe-4" style="min-height:0;max-height: 30vh;">
                                             @foreach ($question['results'] as $result)
                                                 <div class="card-open-ended text-start mb-2 px-3 py-2">
-                                                    <h6>{{ $result }}</h6>
+                                                    <h6>{{ $result['answer'] }}</h6>
                                                 </div>
                                             @endforeach
                                         </div>
