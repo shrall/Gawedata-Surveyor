@@ -10,18 +10,40 @@
                 <a href="#" class="text-decoration-none cursor-pointer"
                     onclick="saveDraft({{ $loop->iteration }}, false);">
                     <li class="font-lato my-4 pe-4 py-3 @if ($loop->iteration == $i) active @endif position-relative">
-                        <div class="active-border py-1 top-50 start-0 translate-middle-y d-inline @if ($loop->iteration != $i) invisible @endif"> 
+                        <div class="active-border py-1 top-50 start-0 translate-middle-y d-inline position-absolute @if ($loop->iteration != $i) invisible @endif"> 
                         </div>
-                        <span class="badge-pertanyaan font-weight-bold ms-4 p-2"
-                            style="color: #3f60f5 !important;">P{{ $loop->iteration }}</span>
-                        <span class="sidebar-question text-gray text-decoration-none ms-4 fs-6"
-                            style="color: #000 !important;">
-                            @if ($question['question'] != '')
-                                {{ strlen($question['question']) > 25 ? substr($question['question'], 0, 23) . '...' : $question['question'] }}
-                            @else
-                                Pertanyaan Baru
-                            @endif
-                        </span>
+                        <div class="d-flex align-items-center justify-content-end ms-4">
+                            <div class="d-flex flex-column me-auto">
+                                <span class="badge-pertanyaan-new font-weight-bold px-2 py-1" style="color: #3f60f5 !important;">
+                                    P{{ $loop->iteration }} | @if ($question['survey_question_type_id'] == 1)
+                                    Single Answer
+                                @elseif ($question['survey_question_type_id'] == 2)
+                                    Multiple Answer
+                                @elseif ($question['survey_question_type_id'] == 3)
+                                    Scale Question
+                                @elseif ($question['survey_question_type_id'] == 4)
+                                    Grid Question
+                                @elseif ($question['survey_question_type_id'] == 5)
+                                    Priority Question
+                                @elseif ($question['survey_question_type_id'] == 6)
+                                    Open Ended Question
+                                @else
+                                    Action
+                                @endif
+                                </span>
+                                <span class="sidebar-question text-gray text-decoration-none ms-1 fs-6"
+                                    style="color: #000 !important;">
+                                    @if ($question['question'] != '')
+                                        {{ strlen($question['question']) > 25 ? substr($question['question'], 0, 23) . '...' : $question['question'] }}
+                                    @else
+                                        Pertanyaan Baru
+                                    @endif
+                                </span>
+                            </div>
+                            <div class="d-flex cursor-grab">
+                            <span class="fas  fa-ellipsis-v" style="color: #adb3bc !important;"></span>
+                            <span class="fas  fa-ellipsis-v" style="color: #adb3bc !important;"></span></div>
+                        </div>
                     </li>
                 </a>
             @endforeach

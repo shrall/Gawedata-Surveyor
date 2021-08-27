@@ -178,6 +178,9 @@ input:focus {
 .cursor-pointer {
   cursor: pointer;
 }
+.cursor-grab {
+  cursor: grab;
+}
 
 /* navbar settings */
 #profile-menu-box {
@@ -481,6 +484,11 @@ ul.select2-results__options li:hover {
 }
 .badge-pertanyaan {
   border-radius: 50%;
+  color: #3f60f5;
+  background: #edf0ff;
+}
+.badge-pertanyaan-new {
+  border-radius: 500px;
   color: #3f60f5;
   background: #edf0ff;
 }
