@@ -78,7 +78,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                 </h6>
                             </div>
                         </div>
-                        <div id="grid-question" class="@if ($question_type_id==4) d-block @else d-none @endif">
+                        <div id="grid-question" class="@if ($question_type_id == 4) d-block @else d-none @endif">
                             <div class="row">
                                 <div class="col-7">
                                     <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
@@ -173,8 +173,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                 </div>
                             </div>
                         </div>
-                        <div id="single-answer-question" class="@if ($question_type_id==1 ||
-                        $question_type_id==2 || $question_type_id==5) d-block @else d-none @endif">
+                        <div id="single-answer-question" class="@if ($question_type_id == 1 || $question_type_id == 2 || $question_type_id == 5) d-block @else d-none @endif">
                             <div class="row">
                                 <div class="col-7">
                                     <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
@@ -212,9 +211,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                     </button>
                                 </div>
                             </div>
-                            <div class="row mt-4 mb-2 @if ($question_type_id==1 ||
-                            $question_type_id==2) d-block @else d-none @endif"
-                                id="input-lainnya-container">
+                            <div class="row mt-4 mb-2 @if ($question_type_id == 1 || $question_type_id == 2) d-block @else d-none @endif" id="input-lainnya-container">
                                 <div class="col-7">
                                     <div class="d-flex align-items-center">
                                         <h6 class="text-start mt-2 mb-0">Aktifkan Jawaban 'Lainnya'</h6>
@@ -229,9 +226,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mt-4 mb-2 @if ($question_type_id==1 ||
-                            $question_type_id==2) d-block @else d-none @endif"
-                                id="input-none-container">
+                            <div class="row mt-4 mb-2 @if ($question_type_id == 1 || $question_type_id == 2) d-block @else d-none @endif" id="input-none-container">
                                 <div class="col-7">
                                     <div class="d-flex align-items-center">
                                         <h6 class="text-start mt-2 mb-0">Aktifkan Jawaban 'None of the Above'</h6>
@@ -247,7 +242,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                 </div>
                             </div>
                         </div>
-                        <div id="scale-question" class="@if ($question_type_id==3) d-block @else d-none @endif">
+                        <div id="scale-question" class="@if ($question_type_id == 3) d-block @else d-none @endif">
                             <div class="row">
                                 <div class="col-7">
                                     <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
@@ -271,7 +266,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                 </div>
                             </div>
                         </div>
-                        <div id="open-ended-question" class="@if ($question_type_id==6) d-block @else d-none @endif">
+                        <div id="open-ended-question" class="@if ($question_type_id == 6) d-block @else d-none @endif">
                             <div class="row">
                                 <div class="col-7">
                                     <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
@@ -291,8 +286,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                 </div>
                             </div>
                         </div>
-                        <div id="action-question" class="@if ($question_type_id==7 ||
-                        $question_type_id==8 || $question_type_id==9 || $question_type_id==10) d-block @else d-none @endif">
+                        <div id="action-question" class="@if ($question_type_id == 7 || $question_type_id == 8 || $question_type_id == 9 || $question_type_id == 10) d-block @else d-none @endif">
                             <div class="row">
                                 <div class="col-7">
                                     <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
@@ -331,15 +325,15 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-7 @if ($question_type_id==7) d-block @else d-none @endif" id="input-url-video">
+                                    <div class="col-7 @if ($question_type_id == 7) d-block @else d-none @endif" id="input-url-video">
                                         <input type="text" name="action_video_answer" id="action_video_answer"
                                             class="form-control input-text action_answer"
                                             placeholder="Tuliskan URL Video Disini"
                                             value="{{ $survey['questions'][$i - 1]['youtube_url'] }}"
                                             onkeyup="setVideoURL();">
                                     </div>
-                                    <div class="col-7 input-url-application position-relative @if ($question_type_id==8) d-block @else d-none @endif
-                                        mb-2">
+                                    <div class="col-7 input-url-application position-relative @if ($question_type_id == 8) d-block @else d-none @endif
+                                                mb-2">
                                         <span
                                             class="fab fa-fw fa-android position-absolute top-50 start-0 translate-middle-y ms-4 ps-2"></span>
                                         <input type="text" name="action_android_answer" id="action_android_answer"
@@ -349,9 +343,9 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                             value="{{ $survey['questions'][$i - 1]['android_app_url'] }}"
                                             onkeyup="setAndroidURL();">
                                     </div>
-                                    <div class="col-5 input-url-application @if ($question_type_id==8) d-block @else d-none @endif">
+                                    <div class="col-5 input-url-application @if ($question_type_id == 8) d-block @else d-none @endif">
                                     </div>
-                                    <div class="col-7 input-url-application position-relative @if ($question_type_id==8) d-block @else d-none @endif">
+                                    <div class="col-7 input-url-application position-relative @if ($question_type_id == 8) d-block @else d-none @endif">
                                         <span
                                             class="fab fa-fw fa-apple position-absolute top-50 start-0 translate-middle-y ms-4 ps-2 fs-5"></span>
                                         <input type="text" name="action_ios_answer" id="action_ios_answer"
@@ -361,7 +355,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                             value="{{ $survey['questions'][$i - 1]['ios_app_url'] }}"
                                             onkeyup="setiOSURL();">
                                     </div>
-                                    <div class="col-7 @if ($question_type_id==9) d-block @else d-none @endif" id="input-url-website">
+                                    <div class="col-7 @if ($question_type_id == 9) d-block @else d-none @endif" id="input-url-website">
                                         <input type="text" name="action_website_answer" id="action_website_answer"
                                             class="form-control input-text action_answer"
                                             placeholder="Tuliskan URL Website Disini"
@@ -372,13 +366,20 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                             </div>
                         </div>
                         <hr>
-                        <div class="row align-items-center justify-content-between">
-                            <div class="col-3 text-start">
+                        <div class="d-flex align-items-center justify-content-end">
+                            <div class="text-start me-auto">
                                 <button class="btn btn-gawedata-danger" onclick="deleteQuestion({{ $i }});">
                                     <span class="fas fa-fw fa-trash-alt me-2"></span>Hapus
                                 </button>
                             </div>
-                            <div class="col-3 text-end">
+                            <div class="text-end me-2">
+                                <button class="btn btn-gawedata-3" onclick="copyQuestion({{ $i }});">
+                                    <label class="font-lato cursor-pointer">
+                                        <span class="fas fa-fw fa-copy me-2"></span>Duplikat
+                                    </label>
+                                </button>
+                            </div>
+                            <div class="text-end">
                                 <button class="btn btn-gawedata-3">
                                     <label for="photo" class="font-lato cursor-pointer"><span
                                             class="fas fa-fw fa-image me-2"></span>Gambar</label>
@@ -704,6 +705,15 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             } else {
                 saveDraft(index - 1, false);
             }
+        }
+    </script>
+    <script>
+        function copyQuestion(index) {
+            var copied_question = questions[index - 1];
+            console.log(questions)
+            questions.push(copied_question);
+            console.log(questions)
+            saveDraft(questions.length, false);
         }
     </script>
     <script>
