@@ -34,18 +34,21 @@
                                 <div class="col-10">
                                     <div class="mb-3">
                                         <input id="survey-title" type="text" class="form-control input-text"
-                                            name="title" required placeholder="Judul Survei">
+                                            name="title" required placeholder="Judul Survei"
+                                            value="{{ $survey['title'] }}">
                                     </div>
                                     <div class="mb-3">
                                         <input id="survey-description" type="text" class="form-control input-text"
-                                            name="description" required placeholder="Deskripsi Survei">
+                                            name="description" required placeholder="Deskripsi Survei"
+                                            value="{{ $survey['description'] }}">
                                     </div>
                                     <div class="mb-3">
-                                        <input id="survey-category" type="hidden" name="survey_category">
+                                        <input id="survey-category" type="hidden" name="survey_category"
+                                            value="{{ $survey['survey_category_id'] }}">
                                         <div class="dropdown" id="select-survey-category">
                                             <span class="form-control input-text d-flex align-items-center"
                                                 type="button" data-bs-toggle="dropdown" id="selected-survey-category">
-                                                Kategori Survei
+                                                {{ $survey['category']['name'] }}
                                                 <span class="fa fa-fw fa-chevron-down ms-auto"></span>
                                             </span>
                                             <ul class="dropdown-menu w-100 px-2">
@@ -60,11 +63,16 @@
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <input id="survey-type" type="hidden" name="survey-type">
+                                        <input id="survey-type" type="hidden" name="survey_type"
+                                            @if ($survey['is_private']) value="Private" @else value="Public" @endif>
                                         <div class="dropdown" id="select-survey-type">
                                             <span class="form-control input-text d-flex align-items-center text-start"
                                                 type="button" data-bs-toggle="dropdown" id="selected-survey-type">
-                                                Jenis Survei
+                                                @if ($survey['is_private'])
+                                                    Private (Hanya responden terpilih dapat melihat dan mengisi survei)
+                                                @else
+                                                    Public (Semua responden dapat melihat dan mengisi survei)
+                                                @endif
                                                 <span class="fa fa-fw fa-chevron-down ms-auto"></span>
                                             </span>
                                             <ul class="dropdown-menu w-100 px-2">
@@ -83,7 +91,7 @@
                                         </div>
                                     </div>
                                     <div class="row justify-content-end px-2 mb-2">
-                                        <button type="submit" class="btn btn-gawedata col-4 py-2" disabled
+                                        <button type="submit" class="btn btn-gawedata col-4 py-2"
                                             id="create-survey-next-button-1" onclick="event.preventDefault()">
                                             Selanjutnya
                                         </button>
@@ -103,13 +111,20 @@
                                         <div class="col-4 text-start">Jenis Kelamin</div>
                                         <div class="col-6 text-end">
                                             <input type="checkbox" class="btn-check" id="check-pria" name="check-pria"
-                                                autocomplete="off">
-                                            <label class="btn btn-checkbox-gawedata px-4 me-2"
-                                                for="check-pria">Pria</label>
-                                            <input type="checkbox" class="btn-check" id="check-wanita"
-                                                name="check-wanita" autocomplete="off">
-                                            <label class="btn btn-checkbox-gawedata px-4 ms-2"
-                                                for="check-wanita">Wanita</label>
+                                                @if ($survey['gender_criteria'][0]['gender_id'] == 1) checked @endif @if (count($survey['gender_criteria']) > 1)
+                                            @if ($survey['gender_criteria'][1]['gender_id'] == 1)
+                                                checked @endif @endif autocomplete="off">
+                                                <label class="btn btn-checkbox-gawedata px-4 me-2"
+                                                    for="check-pria">Pria</label>
+                                                <input type="checkbox" class="btn-check" id="check-wanita"
+                                                    name="check-wanita" @if (count($survey['gender_criteria']) > 1)
+                                                @if ($survey['gender_criteria'][1]['gender_id'] == 2)
+                                                    checked @endif
+                                            @endif
+                                            @if ($survey['gender_criteria'][0]['gender_id'] == 2) checked
+                                                @endif autocomplete="off">
+                                                <label class="btn btn-checkbox-gawedata px-4 ms-2"
+                                                    for="check-wanita">Wanita</label>
                                         </div>
                                     </div>
                                     <div class="row justify-content-between align-items-center mb-3">
@@ -117,61 +132,89 @@
                                         <div class="col-5 text-end">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <input type="number" name="age_start" id="age-start"
-                                                    class="form-control input-text text-center" min="0">
+                                                    class="form-control input-text text-center" min="0"
+                                                    value="{{ $survey['min_age_criteria'] }}">
                                                 <span class="mx-2">sampai</span>
                                                 <input type="number" name="age_end" id="age-end"
-                                                    class="form-control input-text text-center" max="1000">
+                                                    class="form-control input-text text-center" max="1000"
+                                                    value="{{ $survey['max_age_criteria'] }}">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <select class="form-control input-text" id="survey-province" name="province[]"
                                             multiple="multiple">
-                                            <option value="all">Semua Provinsi</option>
-                                            @foreach ($locations as $location)
-                                                <option value="{{ $location['id'] }}">
-                                                    {{ $location['province_name'] }}
-                                                </option>
-                                            @endforeach
+                                            @if (count($provinces) >= 34)
+                                                <option value="all" selected>Semua Provinsi</option>
+                                            @else
+                                                @foreach ($provinces as $province)
+                                                    <option value="{{ $province['id'] }}" selected>
+                                                        {{ $province['province_name'] }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="mb-3">
                                         <input type="hidden" name="cities[]" id="survey-city-all">
                                         <select class="form-control input-text" id="survey-city" name="city[]"
                                             multiple="multiple">
+                                            @if (count($cities) >= 501)
+                                                <option value="all" selected>Semua Kota</option>
+                                            @else
+                                                @foreach ($cities as $city)
+                                                    <option value="{{ $city['id'] }}" selected>
+                                                        {{ $city['city_name'] }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="mb-3">
                                         <input type="hidden" name="educations[]" id="survey-education-all">
                                         <select class="form-control input-text" id="survey-education" name="education[]"
                                             multiple="multiple">
-                                            <option value="all">Semua Pendidikan</option>
-                                            @foreach ($educations as $education)
-                                                <option value="{{ $education['id'] }}">{{ $education['name'] }}
-                                                </option>
-                                            @endforeach
+                                            @if (count($survey['education_criteria']) >= 9)
+                                                <option value="all" selected>Semua Pendidikan</option>
+                                            @else
+                                                @foreach ($survey['education_criteria'] as $education)
+                                                    <option value="{{ $education['education']['id'] }}" selected>
+                                                        {{ $education['education']['name'] }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="mb-3">
                                         <input type="hidden" name="professions[]" id="survey-profession-all">
                                         <select class="form-control input-text" id="survey-profession"
                                             name="profession[]" multiple="multiple">
-                                            <option value="all">Semua Profesi</option>
-                                            @foreach ($professions as $profession)
-                                                <option value="{{ $profession['id'] }}">{{ $profession['name'] }}
-                                                </option>
-                                            @endforeach
+                                            @if (count($survey['profession_criteria']) >= 11)
+                                                <option value="all" selected>Semua Profesi</option>
+                                            @else
+                                                @foreach ($survey['profession_criteria'] as $profession)
+                                                    <option value="{{ $profession['profession']['id'] }}" selected>
+                                                        {{ $profession['profession']['name'] }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="mb-3">
                                         <input type="hidden" name="expenses[]" id="survey-expense-all">
                                         <select class="form-control input-text" id="survey-expense" name="expense[]"
                                             multiple="multiple">
-                                            <option value="all">Semua Pengeluaran</option>
-                                            @foreach ($expenses as $expense)
-                                                <option value="{{ $expense['id'] }}">{{ $expense['name'] }}
-                                                </option>
-                                            @endforeach
+                                            @if (count($survey['household_expense_criteria']) >= 18)
+                                                <option value="all" selected>Semua Pengeluaran</option>
+                                            @else
+                                                @foreach ($survey['household_expense_criteria'] as $household_expense)
+                                                    <option
+                                                        value="{{ $household_expense['household_expense']['id'] }}"
+                                                        selected>
+                                                        {{ $household_expense['household_expense']['name'] }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="row justify-content-between align-items-center px-2 mb-2">
@@ -180,8 +223,7 @@
                                             <span class="fa fa-fw fa-arrow-left me-2"></span>Sebelumnya
                                         </span>
                                         <button type="submit" class="btn btn-gawedata col-4 py-2"
-                                            id="create-survey-next-button-2-public" disabled
-                                            onclick="event.preventDefault()">
+                                            id="create-survey-next-button-2-public" onclick="event.preventDefault()">
                                             Selanjutnya
                                         </button>
                                     </div>
@@ -228,7 +270,8 @@
                                             <div
                                                 class="d-flex justify-content-between align-items-center position-relative">
                                                 <input type="text" name="survey-deadline" id="survey-deadline"
-                                                    class="form-control input-text" required>
+                                                    class="form-control input-text" required
+                                                    value="{{ $survey['general_expired_date'] }}" disabled>
                                                 <span
                                                     class="fa fa-fw fa-calendar-day position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6 text-gawedata"></span>
                                             </div>
@@ -251,7 +294,7 @@
                                         <div class="col-12">
                                             <input type="number" name="survey_respondent" id="survey-respondent"
                                                 class="form-control input-text" placeholder="Jumlah Responden" min="0"
-                                                required>
+                                                required value="{{ $survey['respondent_quota'] }}">
                                             <span class="invalid-feedback text-end">
                                                 <strong>Kuota anda tidak mencukupi, silahkan hubungi admin.</strong>
                                             </span>
@@ -264,7 +307,7 @@
                                             id="create-survey-back-button-3">
                                             <span class="fa fa-fw fa-arrow-left me-2"></span>Sebelumnya
                                         </span>
-                                        <button type="submit" class="btn btn-gawedata col-4 py-2" disabled
+                                        <button type="submit" class="btn btn-gawedata col-4 py-2"
                                             id="create-survey-next-button-3">
                                             Selanjutnya
                                         </button>

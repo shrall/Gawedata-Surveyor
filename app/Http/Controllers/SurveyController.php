@@ -137,12 +137,21 @@ class SurveyController extends Controller
             $survey['questions'][count($survey['questions']) - 1]['question'] = "";
             $survey['questions'][count($survey['questions']) - 1]['answer_choices'][0] = "";
         }
+        $provinces = array();
+        foreach ($survey['city_criteria'] as $city) {
+            array_push($provinces, $city['city']['province']);
+        }
+        $provinces = array_unique($provinces, SORT_REGULAR);
+        $cities = array();
+        foreach ($survey['city_criteria'] as $city) {
+            array_push($cities, $city['city']);
+        }
         if ($survey['status_id'] == 6) {
             return redirect()->route('survey.hasil', $id);
         } else if ($survey['status_id'] == 5) {
             return redirect()->route('survey.submitted', ['id' => $survey['id'], 'i' => 1]);
         } else {
-            return view('survey.draft', compact('survey', 'i', 'categories', 'locations', 'educations', 'professions', 'expenses'));
+            return view('survey.draft', compact('survey', 'i', 'categories', 'locations', 'educations', 'professions', 'expenses', 'provinces', 'cities'));
         }
     }
 
@@ -194,7 +203,70 @@ class SurveyController extends Controller
 
     public function change_settings(Request $request, $id)
     {
-        dd($request);
+        // dd($request);
+        if ($request->cities[0] == null) {
+            $city_criteria = $request->city;
+        } else {
+            $city_criteria = explode(",", $request->cities[0]);
+        }
+        if ($request->educations[0] == null) {
+            $education_criteria = $request->education;
+        } else {
+            $education_criteria = explode(",", $request->educations[0]);
+        }
+        if ($request->professions[0] == null) {
+            $profession_criteria = $request->profession;
+        } else {
+            $profession_criteria = explode(",", $request->professions[0]);
+        }
+        if ($request->expenses[0] == null) {
+            $expense_criteria = $request->expense;
+        } else {
+            $expense_criteria = explode(",", $request->expenses[0]);
+        }
+        if ($request->survey_type == 'Public') {
+            $is_private = false;
+        } else {
+            $is_private = true;
+        }
+        $genders = array();
+        if ($request->has('check-pria')) {
+            array_push($genders, 1);
+        }
+        if ($request->has('check-wanita')) {
+            array_push($genders, 2);
+        }
+        $query = "";
+        $query = $query . config('services.api.url') . '/survey/' . $id;
+        $query = $query . '?title=' . $request->title;
+        $query = $query . '&description=' . $request->description;
+        $query = $query . '&survey_category_id=' . $request->survey_category;
+        $query = $query . '&respondent_quota=' . $request->survey_respondent;
+        $query = $query . '&is_private=' . $is_private;
+        $query = $query . '&min_age_criteria=' . $request->age_start;
+        $query = $query . '&max_age_criteria=' . $request->age_end;
+        $query = $query . '&estimate_time=5 menit';
+        foreach ($genders as $gender) {
+            $query = $query . '&gender_id[]=' . $gender;
+        }
+        foreach ($city_criteria as $city) {
+            $query = $query . '&city_id[]=' . $city;
+        }
+        foreach ($education_criteria as $education) {
+            $query = $query . '&education_id[]=' . $education;
+        }
+        foreach ($profession_criteria as $profession) {
+            $query = $query . '&profession_id[]=' . $profession;
+        }
+        foreach ($expense_criteria as $expense) {
+            $query = $query . '&household_expense_id[]=' . $expense;
+        }
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->patch($query);
+        return redirect()->route('survey.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
+        // {{surveyor_base_url}}/survey/:id?title=Update Survey&description=Ini adalah contoh update survei&survey_category_id=1&respondent_quota=5&is_private=false&min_age_criteria=5&max_age_criteria=100&estimate_time=5 menit&gender_id[0]=1&gender_id[1]=2&city_id[0]=1&city_id[1]=2&education_id[0]=1&education_id[1]=2&profession_id[0]=1&profession_id[1]=2&household_expense_id[0]=1&household_expense_id[1]=2
     }
 
     /**

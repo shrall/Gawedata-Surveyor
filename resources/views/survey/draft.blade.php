@@ -333,7 +333,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                             onkeyup="setVideoURL();">
                                     </div>
                                     <div class="col-7 input-url-application position-relative @if ($question_type_id == 8) d-block @else d-none @endif
-                                                mb-2">
+                                                            mb-2">
                                         <span
                                             class="fab fa-fw fa-android position-absolute top-50 start-0 translate-middle-y ms-4 ps-2"></span>
                                         <input type="text" name="action_android_answer" id="action_android_answer"
@@ -872,7 +872,6 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             $('#survey-city').select2({
                 dropdownParent: $('#update-survey-modal'),
                 placeholder: 'Domisili (Kota)',
-                disabled: true
             });
             $('#survey-education').select2({
                 dropdownParent: $('#update-survey-modal'),
@@ -1020,7 +1019,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                     }
                 });
                 $("#survey-profession-all").val(selectedProfessions);
-                $('#survey-profession').html('<option value="all" selected>Semua Profesi</option>')
+                $('#survey-profession').html('<option value="all" selected>Semua Pengeluaran</option>')
             }
             enableSecondButton();
         });
@@ -1111,5 +1110,55 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 changeStep('#third-step', '#second-step-public', 3, 2);
             }
         })
+    </script>
+    <script>
+        var the_cities = @json($survey['city_criteria']);
+        var selected_cities = [];
+        $("#survey-city option").each(function() {
+            if ($(this).val() != 'all') {
+                selected_cities.push($(this).val());
+            } else {
+                the_cities.forEach(element => {
+                    selected_cities.push(element.city_id)
+                });
+            }
+        });
+        $("#survey-city-all").val(selected_cities);
+        var the_educations = @json($survey['education_criteria']);
+        var selected_educations = [];
+        $("#survey-education option").each(function() {
+            if ($(this).val() != 'all') {
+                selected_educations.push($(this).val());
+            } else {
+                the_educations.forEach(element => {
+                    selected_educations.push(element.education_id)
+                });
+            }
+        });
+        $("#survey-education-all").val(selected_educations);
+        var the_professions = @json($survey['profession_criteria']);
+        var selected_professions = [];
+        $("#survey-profession option").each(function() {
+            if ($(this).val() != 'all') {
+                selected_professions.push($(this).val());
+            } else {
+                the_professions.forEach(element => {
+                    selected_professions.push(element.profession_id)
+                });
+            }
+        });
+        $("#survey-profession-all").val(selected_professions);
+        var the_expenses = @json($survey['household_expense_criteria']);
+        var selected_expenses = [];
+        $("#survey-expense option").each(function() {
+            if ($(this).val() != 'all') {
+                selected_expenses.push($(this).val());
+            } else {
+                the_expenses.forEach(element => {
+                    selected_expenses.push(element.household_expense_id)
+                });
+            }
+        });
+        $("#survey-expense-all").val(selected_expenses);
     </script>
 @endsection
