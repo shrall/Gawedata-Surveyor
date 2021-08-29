@@ -333,7 +333,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                             onkeyup="setVideoURL();">
                                     </div>
                                     <div class="col-7 input-url-application position-relative @if ($question_type_id == 8) d-block @else d-none @endif
-                                                            mb-2">
+                                                                                    mb-2">
                                         <span
                                             class="fab fa-fw fa-android position-absolute top-50 start-0 translate-middle-y ms-4 ps-2"></span>
                                         <input type="text" name="action_android_answer" id="action_android_answer"
@@ -1160,5 +1160,29 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             }
         });
         $("#survey-expense-all").val(selected_expenses);
+    </script>
+    <!-- Latest Sortable -->
+    <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
+    <script>
+        Sortable.create(simpleList, {
+            handle: '.drag-handle',
+            animation: 150,
+            direction: 'vertical',
+            onEnd: function(evt) {
+                var element = questions[evt.oldIndex];
+                questions.splice(evt.oldIndex, 1);
+                questions.splice(evt.newIndex, 0, element);
+                $('#save-draft-button').attr("onclick", "saveDraft(" + (evt.newIndex + 1) + ", false);");
+                reorder_question_link();
+            },
+        });
+    </script>
+    <script>
+        function reorder_question_link() {
+            $(".survey-question-card").each(function(index) {
+                // console.log(index);
+                $(this).attr("onclick", "saveDraft(" + (index + 1) + ", false);");
+            });
+        };
     </script>
 @endsection

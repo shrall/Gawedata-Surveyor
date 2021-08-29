@@ -6,8 +6,9 @@
     </div>
     <div id="survey-detail-sidebar" class="mx-3">
         @if (count($survey['questions']) > 0)
+        <div id="simpleList" class="list-group">
             @foreach ($survey['questions'] as $question)
-                <a href="#" class="text-decoration-none cursor-pointer"
+                <a href="#" class="text-decoration-none cursor-pointer survey-question-card"
                     onclick="saveDraft({{ $loop->iteration }}, false);">
                     <li class="font-lato my-4 pe-4 py-3 @if ($loop->iteration == $i) active @endif position-relative">
                         <div class="active-border py-1 top-50 start-0 translate-middle-y d-inline position-absolute @if ($loop->iteration != $i) invisible @endif"> 
@@ -40,13 +41,15 @@
                                     @endif
                                 </span>
                             </div>
-                            <div class="d-flex cursor-grab">
+                            <div class="d-flex cursor-grab drag-handle">
                             <span class="fas  fa-ellipsis-v" style="color: #adb3bc !important;"></span>
-                            <span class="fas  fa-ellipsis-v" style="color: #adb3bc !important;"></span></div>
+                            <span class="fas  fa-ellipsis-v" style="color: #adb3bc !important;"></span>
+                        </div>
                         </div>
                     </li>
                 </a>
             @endforeach
+        </div>
         @endif
     </div>
 </ul>
