@@ -333,7 +333,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                             onkeyup="setVideoURL();">
                                     </div>
                                     <div class="col-7 input-url-application position-relative @if ($question_type_id == 8) d-block @else d-none @endif
-                                                                                    mb-2">
+                                                                                                mb-2">
                                         <span
                                             class="fab fa-fw fa-android position-absolute top-50 start-0 translate-middle-y ms-4 ps-2"></span>
                                         <input type="text" name="action_android_answer" id="action_android_answer"
@@ -399,6 +399,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         <input type="text" name="questions" id="input-questions">
         <input type="text" name="question_index" id="input-question-index">
         <input type="text" name="new_question" id="new-question">
+        <input type="text" name="submit_question" id="submit-question">
     </form>
 @endsection
 
@@ -718,19 +719,9 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     </script>
     <script>
         function submitSurvey() {
-            $.post("{{ config('app.url') }}" + "/survey/" + @json($survey['id']) + "/submit", {
-                    _token: CSRF_TOKEN,
-                })
-                .done(function(data) {
-                    console.log(data)
-                    $('#submit-modal-content').removeClass('d-block').addClass('d-none');
-                    $('#submitted-modal-content').removeClass('d-none').addClass('d-block');
-                })
-                .fail(function(error) {
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
-                });
+            $('#submit-question').val(1);
+            $('#submit-modal-content').removeClass('d-block').addClass('d-none');
+            $('#submitted-modal-content').removeClass('d-none').addClass('d-block');
         }
     </script>
     <script>

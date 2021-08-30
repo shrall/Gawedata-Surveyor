@@ -194,7 +194,9 @@ class SurveyController extends Controller
             'survey_id' => $id,
             'questions' => $questions
         ])->json();
-        if ($request->new_question != null) {
+        if($request->submit_question){
+            return redirect()->route('survey.submit', ['id' => $id]);
+        }else if ($request->new_question) {
             return redirect()->route('survey.show', ['id' => $id, 'i' => count($questions), 'new' => 'true']);
         } else {
             return redirect()->route('survey.show', ['id' => $id, 'i' => $request->question_index, 'new' => 'false']);
@@ -263,10 +265,8 @@ class SurveyController extends Controller
         }
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . session('token'),
-        ])
-            ->patch($query);
+        ])->patch($query);
         return redirect()->route('survey.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
-        // {{surveyor_base_url}}/survey/:id?title=Update Survey&description=Ini adalah contoh update survei&survey_category_id=1&respondent_quota=5&is_private=false&min_age_criteria=5&max_age_criteria=100&estimate_time=5 menit&gender_id[0]=1&gender_id[1]=2&city_id[0]=1&city_id[1]=2&education_id[0]=1&education_id[1]=2&profession_id[0]=1&profession_id[1]=2&household_expense_id[0]=1&household_expense_id[1]=2
     }
 
     /**
@@ -373,7 +373,7 @@ class SurveyController extends Controller
             'Authorization' => 'Bearer ' . session('token'),
         ])
             ->patch(config('services.api.url') . '/submitSurvey/' . $id)->json();
-        return $survey;
+            return redirect()->route('survey.submitted', ['id' => $id, 'i' => 1]);
     }
 
     public function upload_photo(Request $request, $id)

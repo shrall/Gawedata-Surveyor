@@ -37,7 +37,7 @@ Route::group(['middleware' => ['surveyor']], function () {
     Route::get('survey/{id}/analisa', [SurveyController::class, 'analisa'])->name('survey.analisa');
     Route::get('survey/{id}/detail', [SurveyController::class, 'detail'])->name('survey.detail');
     Route::get('survey/{id}/{i}/{new}', [SurveyController::class, 'show'])->name('survey.show');
-    Route::post('survey/{id}/submit', [SurveyController::class, 'submit'])->name('survey.submit');
+    Route::get('survey/{id}/submit', [SurveyController::class, 'submit'])->name('survey.submit');
     Route::post('survey/{id}/uploadphoto', [SurveyController::class, 'upload_photo'])->name('survey.uploadphoto');
     Route::post('survey/{id}/uploadphoto/grid', [SurveyController::class, 'grid_upload_photo'])->name('survey.griduploadphoto');
     Route::get('survey/{id}/submitted/question/{i}', [SurveyController::class, 'submitted'])->name('survey.submitted');
