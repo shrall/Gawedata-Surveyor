@@ -205,7 +205,6 @@ class SurveyController extends Controller
 
     public function change_settings(Request $request, $id)
     {
-        // dd($request);
         if ($request->cities[0] == null) {
             $city_criteria = $request->city;
         } else {
@@ -270,6 +269,16 @@ class SurveyController extends Controller
             'Authorization' => 'Bearer ' . session('token'),
         ])->delete(config('services.api.url') . '/survey/' . $id)->json();
         return redirect()->route('home');
+    }
+
+    public function filter_sort(Request $request)
+    {
+        $surveys = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/survey?filter=' . $request->filter . '&sort=' . $request->sort)
+            ->json()['data']['data'];
+        return view('inc.survey_list', compact('surveys'));
     }
 
     public function get_city(Request $request)
