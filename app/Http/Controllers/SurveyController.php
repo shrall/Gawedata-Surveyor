@@ -194,9 +194,9 @@ class SurveyController extends Controller
             'survey_id' => $id,
             'questions' => $questions
         ])->json();
-        if($request->submit_question){
+        if ($request->submit_question) {
             return redirect()->route('survey.submit', ['id' => $id]);
-        }else if ($request->new_question) {
+        } else if ($request->new_question) {
             return redirect()->route('survey.show', ['id' => $id, 'i' => count($questions), 'new' => 'true']);
         } else {
             return redirect()->route('survey.show', ['id' => $id, 'i' => $request->question_index, 'new' => 'false']);
@@ -238,34 +238,23 @@ class SurveyController extends Controller
         if ($request->has('check-wanita')) {
             array_push($genders, 2);
         }
-        $query = "";
-        $query = $query . config('services.api.url') . '/survey/' . $id;
-        $query = $query . '?title=' . $request->title;
-        $query = $query . '&description=' . $request->description;
-        $query = $query . '&survey_category_id=' . $request->survey_category;
-        $query = $query . '&respondent_quota=' . $request->survey_respondent;
-        $query = $query . '&is_private=' . $is_private;
-        $query = $query . '&min_age_criteria=' . $request->age_start;
-        $query = $query . '&max_age_criteria=' . $request->age_end;
-        $query = $query . '&estimate_time=5 menit';
-        foreach ($genders as $gender) {
-            $query = $query . '&gender_id[]=' . $gender;
-        }
-        foreach ($city_criteria as $city) {
-            $query = $query . '&city_id[]=' . $city;
-        }
-        foreach ($education_criteria as $education) {
-            $query = $query . '&education_id[]=' . $education;
-        }
-        foreach ($profession_criteria as $profession) {
-            $query = $query . '&profession_id[]=' . $profession;
-        }
-        foreach ($expense_criteria as $expense) {
-            $query = $query . '&household_expense_id[]=' . $expense;
-        }
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . session('token'),
-        ])->patch($query);
+        ])->post(config('services.api.url') . '/survey/' . $id, [
+            'title' => $request->title,
+            'description' => $request->description,
+            'survey_category_id' => $request->survey_category,
+            'respondent_quota' => $request->survey_respondent,
+            'is_private' => $is_private,
+            'min_age_criteria' => $request->age_start,
+            'max_age_criteria' => $request->age_end,
+            'estimate_time' => '5 menit',
+            'gender_id' => $genders,
+            'city_id' => $city_criteria,
+            'education_id' => $education_criteria,
+            'profession_id' => $profession_criteria,
+            'household_expense_id' => $expense_criteria
+        ])->json();
         return redirect()->route('survey.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
     }
 
@@ -373,7 +362,7 @@ class SurveyController extends Controller
             'Authorization' => 'Bearer ' . session('token'),
         ])
             ->patch(config('services.api.url') . '/submitSurvey/' . $id)->json();
-            return redirect()->route('survey.submitted', ['id' => $id, 'i' => 1]);
+        return redirect()->route('survey.submitted', ['id' => $id, 'i' => 1]);
     }
 
     public function upload_photo(Request $request, $id)
