@@ -265,6 +265,15 @@
                             <div class="row justify-content-center my-5 text-start">
                                 <div class="col-10">
                                     <div class="row justify-content-between align-items-center mb-3">
+                                        <div class="col-5 text-start">Estimasi Waktu Pengerjaan</div>
+                                        <div class="col-3 text-end">
+                                            <div class="input-group mb-3">
+                                              <input type="number" class="form-control input-text" name="estimate_time" value="{{ $survey['estimate_time'] }}">
+                                              <span class="input-group-text input-text text-gray" style="padding-left: 0.75rem !important; padding-right: 0.75rem !important;">Menit</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-between align-items-center mb-3">
                                         <div class="col-5 text-start">Deadline Pengisian Survei</div>
                                         <div class="col-7 text-end">
                                             <div
