@@ -72,6 +72,8 @@
                                     <span class="fa fa-fw fa-circle text-green me-2"></span>Published
                                 </div>
                             </td>
+                        @else
+                            <td class="py-4"></td>
                         @endif
                         @if ($survey['is_private'])
                             <td class="py-4">

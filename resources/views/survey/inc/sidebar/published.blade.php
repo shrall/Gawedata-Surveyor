@@ -6,7 +6,7 @@
                 <div class="responden-quota" style="width: 30%;"></div>
             </div>
             <div class="d-flex justify-content-between font-nexa font-weight-regular">
-                <span>40 Mengisi</span>
+                <span>{{$survey['total_respondent']}} Mengisi</span>
                 <span>{{$survey['respondent_quota']}}</span>
             </div>
         </div>

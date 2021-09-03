@@ -220,7 +220,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                             data-toggle="tooltip" data-placement="bottom"
                                             title="Lorem Ipsum dolor sit amet"></span>
                                         <div class="form-check form-switch ms-auto mb-0">
-                                            <input class="form-check-input cursour-pointer" type="checkbox"
+                                            <input class="form-check-input cursor-pointer" type="checkbox"
                                                 id="input-lainnya" @if ($survey['questions'][$i - 1]['is_other_option_enabled']) checked @endif>
                                         </div>
                                     </div>
@@ -235,8 +235,23 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                             data-toggle="tooltip" data-placement="bottom"
                                             title="Lorem Ipsum dolor sit amet"></span>
                                         <div class="form-check form-switch ms-auto mb-0">
-                                            <input class="form-check-input cursour-pointer" type="checkbox" id="input-none"
+                                            <input class="form-check-input cursor-pointer" type="checkbox" id="input-none"
                                                 @if ($survey['questions'][$i - 1]['is_no_answer_enabled']) checked @endif>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4 mb-2 d-block" id="input-mandatory-container">
+                                <div class="col-7">
+                                    <div class="d-flex align-items-center">
+                                        <h6 class="text-start mt-2 mb-0">Pertanyaan Mandatory</h6>
+                                        <span
+                                            class="badge-lainnya fas fa-fw fa-info-circle text-gray ms-2 mt-2 cursor-pointer"
+                                            data-toggle="tooltip" data-placement="bottom"
+                                            title="Lorem Ipsum dolor sit amet"></span>
+                                        <div class="form-check form-switch ms-auto mb-0">
+                                            <input class="form-check-input cursor-pointer" type="checkbox" id="input-mandatory"
+                                                @if ($survey['questions'][$i - 1]['is_mandatory']) checked @endif>
                                         </div>
                                     </div>
                                 </div>
@@ -791,6 +806,15 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 questions[question_index]['is_no_answer_enabled'] = true;
             } else {
                 questions[question_index]['is_no_answer_enabled'] = false;
+            }
+        });
+    </script>
+    <script>
+        $("#input-mandatory").on('change', function() {
+            if ($(this).is(':checked')) {
+                questions[question_index]['is_mandatory'] = true;
+            } else {
+                questions[question_index]['is_mandatory'] = false;
             }
         });
     </script>

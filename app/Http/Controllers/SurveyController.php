@@ -180,6 +180,7 @@ class SurveyController extends Controller
             $new_question = [
                 "question" => "Pertanyaan Baru",
                 "survey_question_type_id" => 1,
+                'is_mandatory' => true,
                 "is_other_option_enabled" => false,
                 "is_no_answer_enabled" => false,
                 "answer_choices" => [
@@ -278,6 +279,7 @@ class SurveyController extends Controller
         ])
             ->get(config('services.api.url') . '/survey?filter=' . $request->filter . '&sort=' . $request->sort)
             ->json()['data']['data'];
+        $surveys = collect($surveys)->where('survey_type_id', $request->type);
         return view('inc.survey_list', compact('surveys'));
     }
 

@@ -55,6 +55,7 @@ class HomeController extends Controller
         ])
             ->get(config('services.api.url') . '/surveyCategory')
             ->json()['data'];
+        $surveys = collect($surveys)->where('survey_type_id', 2);
         return view('home', compact('surveys', 'categories', 'locations', 'educations', 'professions', 'expenses'));
     }
 }

@@ -248,7 +248,7 @@
                                     <div class="profile-quota-box mb-1">
                                         <div class="profile-quota" style="width: 30%;"></div>
                                     </div>
-                                    <p class="my-0 text-secondary">Tersisa 0/<span class="user-quota">150</span> kuota
+                                    <p class="my-0 text-secondary">Tersisa <span class="used-quota">0</span>/<span class="user-quota">150</span> kuota
                                         responden</p>
                                     <div class="my-3">
                                         <a href="#" class="text-gawedata text-decoration-none font-weight-bold">

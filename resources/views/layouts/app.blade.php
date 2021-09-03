@@ -68,16 +68,20 @@
     @if (Route::current()->getName() != 'login')
         <script>
             $(window).on('load', function() {
-                $(".user-quota").html(@json($user['respondent_quota']))
-                // var quota_percentage = @json($user['respondent_quota']) / 150 * 100
-                // $(".profile-quota").css('width', quota_percentage)
-                // if (quota_percentage > 75) {
-                //     $(".profile-quota").css('background-color', '#49d479')
-                // } else if (quota_percentage > 30) {
-                //     $(".profile-quota").css('background-color', '#ffd54f')
-                // } else {
-                //     $(".profile-quota").css('background-color', '#ff525d')
-                // }
+                console.log(@json($user));
+                var total_quota = @json($user['respondent_quota'])+@json($user['quota_of_respondent_used']);
+                $(".used-quota").html(@json($user['respondent_quota']))
+                $(".user-quota").html(total_quota)
+                var quota_percentage = @json($user['respondent_quota']) / total_quota * 100
+                $(".profile-quota").css('width', quota_percentage)
+                console.log(quota_percentage);
+                if (quota_percentage > 75) {
+                    $(".profile-quota").css('background-color', '#49d479')
+                } else if (quota_percentage > 30) {
+                    $(".profile-quota").css('background-color', '#ffd54f')
+                } else {
+                    $(".profile-quota").css('background-color', '#ff525d')
+                }
             });
         </script>
     @endif

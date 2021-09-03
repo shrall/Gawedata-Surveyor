@@ -1,8 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+    @php
+    $user = Http::withHeaders([
+        'Authorization' => 'Bearer ' . session('token'),
+    ])
+        ->get(config('services.api.url') . '/details')
+        ->json()['data'];
+    @endphp
     <div class="container">
-        <div class="d-flex align-items-center gx-3 my-5 font-lato">
+        <div class="d-flex align-items-center gx-3 mt-5 mb-3 font-lato">
             <div class="mx-2">
                 <h2>Daftar Survei</h2>
             </div>
@@ -42,6 +49,12 @@
                 </div>
             </div>
         </div>
+        @if ($user['is_admin'])
+            <div class="d-flex align-items-center gx-3 mb-5 px-2 font-nexa">
+                <div class="tab-gawedata-active px-2 py-1" id="tab-general" onclick="changeType(2)">Survei Umum</div>
+                <div class="tab-gawedata px-2 py-1" id="tab-daily" onclick="changeType(1)">Daily Survei</div>
+            </div>
+        @endif
         <div id="survey-container">
             @if (count($surveys) > 0)
                 <div class="d-block" id="survey-view-grid">
@@ -118,6 +131,8 @@
                                                 <span class="fa fa-fw fa-circle text-green me-2"></span>Published
                                             </div>
                                         </td>
+                                    @else
+                                        <td class="py-4"></td>
                                     @endif
                                     @if ($survey['is_private'])
                                         <td class="py-4">
@@ -191,6 +206,7 @@
                     _token: CSRF_TOKEN,
                     filter: filter,
                     sort: sort,
+                    type: survey_type
                 })
                 .done(function(data) {
                     $('#survey-container').html(data);
@@ -534,5 +550,43 @@
                 changeStep('#third-step', '#second-step-public', 3, 2);
             }
         })
+    </script>
+    <script>
+        //create daily survey
+        $(function() {
+            $("#survey-deadline-daily").datepicker();
+        });
+
+        function changePointValue(type) {
+            if (type == "+") {
+                $('#survey-points-daily').val(+$('#survey-points-daily').val() + 1);
+            } else {
+                if ($('#survey-points-daily').val() > 0) {
+                    $('#survey-points-daily').val(+$('#survey-points-daily').val() - 1);
+                }
+            }
+        }
+    </script>
+    {{-- daily survey tabs --}}
+    <script>
+        var survey_type = 2;
+
+        function changeType(type) {
+            survey_type = type;
+            if (type == 1) {
+                //ke daily
+                $('#tab-general').removeClass('tab-gawedata-active').addClass('tab-gawedata');
+                $('#tab-daily').removeClass('tab-gawedata').addClass('tab-gawedata-active');
+                $('#create-survey-daily').removeClass('d-none').addClass('d-block');
+                $('#create-survey-general').removeClass('d-block').addClass('d-none');
+            } else {
+                //ke general
+                $('#tab-general').removeClass('tab-gawedata').addClass('tab-gawedata-active');
+                $('#tab-daily').removeClass('tab-gawedata-active').addClass('tab-gawedata');
+                $('#create-survey-daily').removeClass('d-block').addClass('d-none');
+                $('#create-survey-general').removeClass('d-none').addClass('d-block');
+            }
+            changeSortFilter(survey_filter, survey_sort);
+        }
     </script>
 @endsection

@@ -138,6 +138,20 @@ input[type='date']::-webkit-calendar-picker-indicator {
   border-color: #3f60f5;
 }
 
+/* tabs */
+.tab-gawedata {
+  color: #000;
+  background: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.tab-gawedata-active {
+  color: #3f60f5;
+  background: #edf0ff;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
 /* error handling */
 .form-control.is-invalid,
 .was-validated .form-control:invalid {
@@ -522,18 +536,18 @@ ul.select2-results__options li:hover {
 
 /* Tooltip */
 .tooltip-inner {
-    background-color: #707070 !important;
-    color: #ffffff;
+  background-color: #707070 !important;
+  color: #ffffff;
 }
 .tooltip.bs-tooltip-right .tooltip-arrow:before {
-    border-right-color: #707070 !important;
+  border-right-color: #707070 !important;
 }
 .tooltip.bs-tooltip-left .tooltip-arrow:before {
-    border-left-color: #707070 !important;
+  border-left-color: #707070 !important;
 }
 .tooltip.bs-tooltip-bottom .tooltip-arrow:before {
-    border-bottom-color: #707070 !important;
+  border-bottom-color: #707070 !important;
 }
 .tooltip.bs-tooltip-top .tooltip-arrow:before {
-    border-top-color: #707070 !important;
+  border-top-color: #707070 !important;
 }

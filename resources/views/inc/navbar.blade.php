@@ -80,12 +80,17 @@
                 <ul class="navbar-nav ms-auto align-items-center">
                     @if (Route::current()->getName() == 'home')
                         <li class="nav-item mx-4">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#create-survey-modal"
-                                class="btn btn-gawedata font-lato">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#create-survey-modal" id="create-survey-general"
+                                class="btn btn-gawedata font-lato d-block">
+                                Buat Survei
+                            </a>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#create-survey-modal-daily" id="create-survey-daily"
+                                class="btn btn-gawedata font-lato d-none">
                                 Buat Survei
                             </a>
                         </li>
                         @include('inc.modal.survey.create')
+                        @include('inc.modal.survey.create_daily')
                         <li class="nav-item mx-2 ">
                             <a href="#" class="text-gawedata text-decoration-none font-weight-bold cursor-pointer"
                                 id="survey-button-grid" onclick="toggleSurveyViewGrid()">
@@ -134,7 +139,7 @@
                                 <div class="profile-quota-box mb-1">
                                     <div class="profile-quota" style="width: 30%;"></div>
                                 </div>
-                                <p class="my-0 text-secondary">Tersisa 0/<span class="user-quota">150</span> kuota
+                                <p class="my-0 text-secondary">Tersisa <span class="used-quota">0</span>/<span class="user-quota">150</span> kuota
                                     responden</p>
                                 <div class="my-3">
                                     <a href="#" class="text-gawedata text-decoration-none font-weight-bold">
