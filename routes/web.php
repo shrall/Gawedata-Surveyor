@@ -45,6 +45,7 @@ Route::group(['middleware' => ['surveyor']], function () {
     Route::post('survey/getcity', [SurveyController::class, 'get_city'])->name('survey.getcity');
     Route::post('survey/{id}/addquestion', [SurveyController::class, 'add_question'])->name('survey.addquestion');
     Route::post('survey/refreshsingleanswer', [SurveyController::class, 'refresh_single_answer'])->name('survey.refreshsingleanswer');
+    Route::post('survey/refreshsingleanswerskiplogic', [SurveyController::class, 'refresh_single_answer_skip_logic'])->name('survey.refreshsingleanswerskiplogic');
     Route::post('survey/refreshgridquestion', [SurveyController::class, 'refresh_grid_question'])->name('survey.refreshgridquestion');
     Route::post('survey/refreshgridanswer', [SurveyController::class, 'refresh_grid_answer'])->name('survey.refreshgridanswer');
     Route::put('survey/{survey}/changesettings', [SurveyController::class, 'change_settings'])->name('survey.changesettings');

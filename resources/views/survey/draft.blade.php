@@ -89,7 +89,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <h6 class="text-start">Grid Pertanyaan<span class="text-gray ms-2">(Baris)</span></h6>
+                                    <h6 class="text-start">Grid Pertanyaan<span class="text-gray ms-2">(Baris)</span>
+                                    </h6>
                                     <div class="grid-question-list">
                                         @foreach ($survey['questions'][$i - 1]['sub_questions'] as $question)
                                             <div class="row mb-3" id="grid-question{{ $loop->iteration }}">
@@ -194,219 +195,209 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                                 id="answer-single{{ $loop->iteration }}" class="form-control input-text"
                                                 style="padding-left:3.5rem !important;"
                                                 placeholder="Tuliskan Jawaban Disini" value="{{ $answer['text'] ?? '' }}"
-                                                onkeyup="setNewSingleAnswer({{ $loop->iteration }});">
-                                        </div>
-                                        <div class="col-5 text-start d-flex align-items-center">
-                                            <span class="fas fa-fw fa-trash-alt text-gray cursor-pointer fs-3"
-                                                id="answer_delete{{ $loop->iteration }}"
-                                                onclick="deleteSingleAnswer({{ $loop->iteration }});"></span>
-                                        </div>
-                                    </div>
-                                @endforeach
+                                                @if ($question_type_id == 1)
+                                            onkeyup="setNewSingleAnswerSkipLogic({{ $loop->iteration }});"
+                                        @else
+                                            onkeyup="setNewSingleAnswer({{ $loop->iteration }});"
+                                @endif>
                             </div>
-                            <div class="row">
-                                <div class="col-7">
-                                    <button class="btn btn-gawedata-2 font-lato w-100 py-2" onclick="addSingleAnswer();">
-                                        + Tambah Jawaban
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="row mt-4 mb-2 @if ($question_type_id == 1 || $question_type_id == 2) d-block @else d-none @endif" id="input-lainnya-container">
-                                <div class="col-7">
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="text-start mt-2 mb-0">Aktifkan Jawaban 'Lainnya'</h6>
-                                        <span
-                                            class="badge-lainnya fas fa-fw fa-info-circle text-gray ms-2 mt-2 cursor-pointer"
-                                            data-toggle="tooltip" data-placement="bottom"
-                                            title="Lorem Ipsum dolor sit amet"></span>
-                                        <div class="form-check form-switch ms-auto mb-0">
-                                            <input class="form-check-input cursor-pointer" type="checkbox"
-                                                id="input-lainnya" @if ($survey['questions'][$i - 1]['is_other_option_enabled']) checked @endif>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-4 mb-2 @if ($question_type_id == 1 || $question_type_id == 2) d-block @else d-none @endif" id="input-none-container">
-                                <div class="col-7">
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="text-start mt-2 mb-0">Aktifkan Jawaban 'None of the Above'</h6>
-                                        <span
-                                            class="badge-lainnya fas fa-fw fa-info-circle text-gray ms-2 mt-2 cursor-pointer"
-                                            data-toggle="tooltip" data-placement="bottom"
-                                            title="Lorem Ipsum dolor sit amet"></span>
-                                        <div class="form-check form-switch ms-auto mb-0">
-                                            <input class="form-check-input cursor-pointer" type="checkbox" id="input-none"
-                                                @if ($survey['questions'][$i - 1]['is_no_answer_enabled']) checked @endif>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-4 mb-2 d-block" id="input-mandatory-container">
-                                <div class="col-7">
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="text-start mt-2 mb-0">Pertanyaan Mandatory</h6>
-                                        <span
-                                            class="badge-lainnya fas fa-fw fa-info-circle text-gray ms-2 mt-2 cursor-pointer"
-                                            data-toggle="tooltip" data-placement="bottom"
-                                            title="Lorem Ipsum dolor sit amet"></span>
-                                        <div class="form-check form-switch ms-auto mb-0">
-                                            <input class="form-check-input cursor-pointer" type="checkbox" id="input-mandatory"
-                                                @if ($survey['questions'][$i - 1]['is_mandatory']) checked @endif>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-5 text-start d-flex align-items-center">
+                                <span class="fas fa-fw fa-trash-alt text-gray cursor-pointer fs-3"
+                                    id="answer_delete{{ $loop->iteration }}"
+                                    onclick="deleteSingleAnswer({{ $loop->iteration }});"></span>
                             </div>
                         </div>
-                        <div id="scale-question" class="@if ($question_type_id == 3) d-block @else d-none @endif">
-                            <div class="row">
-                                <div class="col-7">
-                                    <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
-                                        class="survey-question-image-preview w-100 my-2" alt="" srcset="">
-                                </div>
-                                <div class="col-5">
-                                </div>
-                            </div>
-                            <h6 class="text-start">Jawaban</h6>
-                            <div class="scale-answer">
-                                <div class="row">
-                                    <div class="col-4 d-flex align-items-center">
-                                        <input type="number" name="minimal_scale" id="minimal-scale"
-                                            value="{{ $survey['questions'][$i - 1]['minimal_scale'] }}"
-                                            class="form-control input-text text-center" onkeyup="setMinimalScale();">
-                                        <span class="mx-2">sampai</span>
-                                        <input type="number" name="maximal_scale" id="maximal-scale"
-                                            value="{{ $survey['questions'][$i - 1]['maximal_scale'] }}"
-                                            class="form-control input-text text-center" onkeyup="setMaximalScale();">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="open-ended-question" class="@if ($question_type_id == 6) d-block @else d-none @endif">
-                            <div class="row">
-                                <div class="col-7">
-                                    <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
-                                        class="survey-question-image-preview w-100 my-2" alt="" srcset="">
-                                </div>
-                                <div class="col-5">
-                                </div>
-                            </div>
-                            <h6 class="text-start">Jawaban</h6>
-                            <div class="open-ended-answer">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <input type="text" name="open_ended_answer" id="open_ended_answer"
-                                            class="form-control input-text" placeholder="Responden akan menjawab sendiri"
-                                            disabled>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="action-question" class="@if ($question_type_id == 7 || $question_type_id == 8 || $question_type_id == 9 || $question_type_id == 10) d-block @else d-none @endif">
-                            <div class="row">
-                                <div class="col-7">
-                                    <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
-                                        class="survey-question-image-preview w-100 my-2" alt="" srcset="">
-                                </div>
-                                <div class="col-5">
-                                </div>
-                            </div>
-                            <h6 class="text-start">Jawaban</h6>
-                            <div class="open-ended-answer">
-                                <div class="row">
-                                    <div class="col-5">
-                                        <div class="dropdown" id="select-action-type">
-                                            <span class="form-control input-text d-flex align-items-center" type="button"
-                                                data-bs-toggle="dropdown" id="selected-action-type">
-                                                @if ($question_type_id == 7)
-                                                    Lihat Video
-                                                @elseif ($question_type_id == 8)
-                                                    Install Aplikasi
-                                                @elseif ($question_type_id == 9)
-                                                    Kunjungi Website
-                                                @elseif ($question_type_id == 10)
-                                                    Unggah Foto
-                                                @else
-                                                    Pilih Action
-                                                @endif
-                                                <span class="fa fa-fw fa-chevron-down ms-auto"></span>
-                                            </span>
-                                            <ul class="dropdown-menu w-100 px-2">
-                                                <div class="overflow-auto px-1" style="min-height:0;max-height: 30vh;">
-                                                    <li class="dropdown-item" data-type=7>Lihat Video</li>
-                                                    <li class="dropdown-item" data-type=8>Install Aplikasi</li>
-                                                    <li class="dropdown-item" data-type=9>Kunjungi Website</li>
-                                                    <li class="dropdown-item" data-type=10>Unggah Foto</li>
-                                                </div>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-7 @if ($question_type_id == 7) d-block @else d-none @endif" id="input-url-video">
-                                        <input type="text" name="action_video_answer" id="action_video_answer"
-                                            class="form-control input-text action_answer"
-                                            placeholder="Tuliskan URL Video Disini"
-                                            value="{{ $survey['questions'][$i - 1]['youtube_url'] }}"
-                                            onkeyup="setVideoURL();">
-                                    </div>
-                                    <div class="col-7 input-url-application position-relative @if ($question_type_id == 8) d-block @else d-none @endif
-                                                                                                mb-2">
-                                        <span
-                                            class="fab fa-fw fa-android position-absolute top-50 start-0 translate-middle-y ms-4 ps-2"></span>
-                                        <input type="text" name="action_android_answer" id="action_android_answer"
-                                            class="form-control input-text action_answer"
-                                            placeholder="Tuliskan URL Aplikasi Android Disini"
-                                            style="padding-left:3.5rem !important;"
-                                            value="{{ $survey['questions'][$i - 1]['android_app_url'] }}"
-                                            onkeyup="setAndroidURL();">
-                                    </div>
-                                    <div class="col-5 input-url-application @if ($question_type_id == 8) d-block @else d-none @endif">
-                                    </div>
-                                    <div class="col-7 input-url-application position-relative @if ($question_type_id == 8) d-block @else d-none @endif">
-                                        <span
-                                            class="fab fa-fw fa-apple position-absolute top-50 start-0 translate-middle-y ms-4 ps-2 fs-5"></span>
-                                        <input type="text" name="action_ios_answer" id="action_ios_answer"
-                                            class="form-control input-text action_answer"
-                                            placeholder="Tuliskan URL Aplikasi iOS Disini"
-                                            style="padding-left:3.5rem !important;"
-                                            value="{{ $survey['questions'][$i - 1]['ios_app_url'] }}"
-                                            onkeyup="setiOSURL();">
-                                    </div>
-                                    <div class="col-7 @if ($question_type_id == 9) d-block @else d-none @endif" id="input-url-website">
-                                        <input type="text" name="action_website_answer" id="action_website_answer"
-                                            class="form-control input-text action_answer"
-                                            placeholder="Tuliskan URL Website Disini"
-                                            value="{{ $survey['questions'][$i - 1]['website_url'] }}"
-                                            onkeyup="setWebsiteURL();">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="d-flex align-items-center justify-content-end">
-                            <div class="text-start me-auto">
-                                <button class="btn btn-gawedata-danger" onclick="deleteQuestion({{ $i }});">
-                                    <span class="fas fa-fw fa-trash-alt me-2"></span>Hapus
-                                </button>
-                            </div>
-                            <div class="text-end me-2">
-                                <button class="btn btn-gawedata-3" onclick="copyQuestion({{ $i }});">
-                                    <label class="font-lato cursor-pointer">
-                                        <span class="fas fa-fw fa-copy me-2"></span>Duplikat
-                                    </label>
-                                </button>
-                            </div>
-                            <div class="text-end">
-                                <button class="btn btn-gawedata-3">
-                                    <label for="photo" class="font-lato cursor-pointer"><span
-                                            class="fas fa-fw fa-image me-2"></span>Gambar</label>
-                                    <input type="file" name="photo" id="photo" class="d-none" accept="image/*"
-                                        onchange="loadFile(event)">
-                                </button>
-                            </div>
+                @endforeach
+            </div>
+            <div class="row">
+                <div class="col-7">
+                    <button class="btn btn-gawedata-2 font-lato w-100 py-2" onclick="addSingleAnswer();">
+                        + Tambah Jawaban
+                    </button>
+                </div>
+            </div>
+            <div class="row mt-4 mb-2 @if ($question_type_id == 1 || $question_type_id == 2) d-block @else d-none @endif" id="input-lainnya-container">
+                <div class="col-7">
+                    <div class="d-flex align-items-center">
+                        <h6 class="text-start mt-2 mb-0">Aktifkan Jawaban 'Lainnya'</h6>
+                        <span class="badge-lainnya fas fa-fw fa-info-circle text-gray ms-2 mt-2 cursor-pointer"
+                            data-toggle="tooltip" data-placement="bottom" title="Lorem Ipsum dolor sit amet"></span>
+                        <div class="form-check form-switch ms-auto mb-0">
+                            <input class="form-check-input cursor-pointer" type="checkbox" id="input-lainnya"
+                                @if ($survey['questions'][$i - 1]['is_other_option_enabled']) checked @endif>
                         </div>
                     </div>
-                @endif
+                </div>
+            </div>
+            <div class="row mt-4 mb-2 @if ($question_type_id == 1 || $question_type_id == 2) d-block @else d-none @endif" id="input-none-container">
+                <div class="col-7">
+                    <div class="d-flex align-items-center">
+                        <h6 class="text-start mt-2 mb-0">Aktifkan Jawaban 'None of the Above'</h6>
+                        <span class="badge-lainnya fas fa-fw fa-info-circle text-gray ms-2 mt-2 cursor-pointer"
+                            data-toggle="tooltip" data-placement="bottom" title="Lorem Ipsum dolor sit amet"></span>
+                        <div class="form-check form-switch ms-auto mb-0">
+                            <input class="form-check-input cursor-pointer" type="checkbox" id="input-none"
+                                @if ($survey['questions'][$i - 1]['is_no_answer_enabled']) checked @endif>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 mb-2 d-block" id="input-mandatory-container">
+                <div class="col-7">
+                    <div class="d-flex align-items-center">
+                        <h6 class="text-start mt-2 mb-0">Pertanyaan Mandatory</h6>
+                        <span class="badge-lainnya fas fa-fw fa-info-circle text-gray ms-2 mt-2 cursor-pointer"
+                            data-toggle="tooltip" data-placement="bottom" title="Lorem Ipsum dolor sit amet"></span>
+                        <div class="form-check form-switch ms-auto mb-0">
+                            <input class="form-check-input cursor-pointer" type="checkbox" id="input-mandatory"
+                                @if ($survey['questions'][$i - 1]['is_mandatory']) checked @endif>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        <div id="scale-question" class="@if ($question_type_id == 3) d-block @else d-none @endif">
+            <div class="row">
+                <div class="col-7">
+                    <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
+                        class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                </div>
+                <div class="col-5">
+                </div>
+            </div>
+            <h6 class="text-start">Jawaban</h6>
+            <div class="scale-answer">
+                <div class="row">
+                    <div class="col-4 d-flex align-items-center">
+                        <input type="number" name="minimal_scale" id="minimal-scale"
+                            value="{{ $survey['questions'][$i - 1]['minimal_scale'] }}"
+                            class="form-control input-text text-center" onkeyup="setMinimalScale();">
+                        <span class="mx-2">sampai</span>
+                        <input type="number" name="maximal_scale" id="maximal-scale"
+                            value="{{ $survey['questions'][$i - 1]['maximal_scale'] }}"
+                            class="form-control input-text text-center" onkeyup="setMaximalScale();">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="open-ended-question" class="@if ($question_type_id == 6) d-block @else d-none @endif">
+            <div class="row">
+                <div class="col-7">
+                    <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
+                        class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                </div>
+                <div class="col-5">
+                </div>
+            </div>
+            <h6 class="text-start">Jawaban</h6>
+            <div class="open-ended-answer">
+                <div class="row">
+                    <div class="col-12">
+                        <input type="text" name="open_ended_answer" id="open_ended_answer" class="form-control input-text"
+                            placeholder="Responden akan menjawab sendiri" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="action-question" class="@if ($question_type_id == 7 || $question_type_id == 8 || $question_type_id == 9 || $question_type_id == 10) d-block @else d-none @endif">
+            <div class="row">
+                <div class="col-7">
+                    <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
+                        class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                </div>
+                <div class="col-5">
+                </div>
+            </div>
+            <h6 class="text-start">Jawaban</h6>
+            <div class="open-ended-answer">
+                <div class="row">
+                    <div class="col-5">
+                        <div class="dropdown" id="select-action-type">
+                            <span class="form-control input-text d-flex align-items-center" type="button"
+                                data-bs-toggle="dropdown" id="selected-action-type">
+                                @if ($question_type_id == 7)
+                                    Lihat Video
+                                @elseif ($question_type_id == 8)
+                                    Install Aplikasi
+                                @elseif ($question_type_id == 9)
+                                    Kunjungi Website
+                                @elseif ($question_type_id == 10)
+                                    Unggah Foto
+                                @else
+                                    Pilih Action
+                                @endif
+                                <span class="fa fa-fw fa-chevron-down ms-auto"></span>
+                            </span>
+                            <ul class="dropdown-menu w-100 px-2">
+                                <div class="overflow-auto px-1" style="min-height:0;max-height: 30vh;">
+                                    <li class="dropdown-item" data-type=7>Lihat Video</li>
+                                    <li class="dropdown-item" data-type=8>Install Aplikasi</li>
+                                    <li class="dropdown-item" data-type=9>Kunjungi Website</li>
+                                    <li class="dropdown-item" data-type=10>Unggah Foto</li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-7 @if ($question_type_id == 7) d-block @else d-none @endif" id="input-url-video">
+                        <input type="text" name="action_video_answer" id="action_video_answer"
+                            class="form-control input-text action_answer" placeholder="Tuliskan URL Video Disini"
+                            value="{{ $survey['questions'][$i - 1]['youtube_url'] }}" onkeyup="setVideoURL();">
+                    </div>
+                    <div
+                        class="col-7 input-url-application position-relative @if ($question_type_id == 8) d-block @else d-none @endif
+                                                                                                mb-2">
+                        <span
+                            class="fab fa-fw fa-android position-absolute top-50 start-0 translate-middle-y ms-4 ps-2"></span>
+                        <input type="text" name="action_android_answer" id="action_android_answer"
+                            class="form-control input-text action_answer"
+                            placeholder="Tuliskan URL Aplikasi Android Disini" style="padding-left:3.5rem !important;"
+                            value="{{ $survey['questions'][$i - 1]['android_app_url'] }}" onkeyup="setAndroidURL();">
+                    </div>
+                    <div class="col-5 input-url-application @if ($question_type_id == 8) d-block @else d-none @endif">
+                    </div>
+                    <div class="col-7 input-url-application position-relative @if ($question_type_id == 8) d-block @else d-none @endif">
+                        <span
+                            class="fab fa-fw fa-apple position-absolute top-50 start-0 translate-middle-y ms-4 ps-2 fs-5"></span>
+                        <input type="text" name="action_ios_answer" id="action_ios_answer"
+                            class="form-control input-text action_answer" placeholder="Tuliskan URL Aplikasi iOS Disini"
+                            style="padding-left:3.5rem !important;"
+                            value="{{ $survey['questions'][$i - 1]['ios_app_url'] }}" onkeyup="setiOSURL();">
+                    </div>
+                    <div class="col-7 @if ($question_type_id == 9) d-block @else d-none @endif" id="input-url-website">
+                        <input type="text" name="action_website_answer" id="action_website_answer"
+                            class="form-control input-text action_answer" placeholder="Tuliskan URL Website Disini"
+                            value="{{ $survey['questions'][$i - 1]['website_url'] }}" onkeyup="setWebsiteURL();">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="d-flex align-items-center justify-content-end">
+            <div class="text-start me-auto">
+                <button class="btn btn-gawedata-danger" onclick="deleteQuestion({{ $i }});">
+                    <span class="fas fa-fw fa-trash-alt me-2"></span>Hapus
+                </button>
+            </div>
+            <div class="text-end me-2">
+                <button class="btn btn-gawedata-3" onclick="copyQuestion({{ $i }});">
+                    <label class="font-lato cursor-pointer">
+                        <span class="fas fa-fw fa-copy me-2"></span>Duplikat
+                    </label>
+                </button>
+            </div>
+            <div class="text-end">
+                <button class="btn btn-gawedata-3">
+                    <label for="photo" class="font-lato cursor-pointer"><span
+                            class="fas fa-fw fa-image me-2"></span>Gambar</label>
+                    <input type="file" name="photo" id="photo" class="d-none" accept="image/*"
+                        onchange="loadFile(event)">
+                </button>
+            </div>
+        </div>
+    </div>
+    @endif
+    </div>
+    </div>
     </div>
     <form action="{{ route('survey.update', $survey['id']) }}" method="post" class="d-none" id="question-form">
         @csrf
@@ -427,6 +418,10 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     <script>
         // answer templates
         var new_answer_single = "Jawaban Baru";
+        var new_answer_single_skip_logic = {
+            "answer": "Jawaban Baru",
+            "next_question": 0
+        };
         var new_question_grid = {
             "question": "Pertanyaan Baru",
             "answer_choices": []
@@ -435,9 +430,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     <script>
         $(window).on("load", function() {
             questions.forEach(function(question, index) {
-                if (question.survey_question_type_id == 1 || question.survey_question_type_id == 2 ||
-                    question
-                    .survey_question_type_id == 5) {
+                if (question.survey_question_type_id == 2 || question.survey_question_type_id == 5) {
                     question.answer_choices.forEach(function(answer, i) {
                         questions[index].answer_choices[i] = answer.text;
                     })
@@ -447,6 +440,11 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                             questions[index].sub_questions[ind].answer_choices[i] = answer
                                 .text;
                         });
+                    })
+                } else if (question.survey_question_type_id == 1) {
+                    question.answer_choices.forEach(function(answer, i) {
+                        questions[index].answer_choices[i]['answer'] = answer.text;
+                        questions[index].answer_choices[i]['next_question'] = 1;
                     })
                 }
             })
@@ -489,9 +487,9 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             questions[question_index]['survey_question_type_id'] = $(this).data("type");
             changeQuestionType();
             if ($(this).data("type") == 1) {
-                questions[question_index]['answer_choices'] = [new_answer_single];
-                questions[question_index]['answer_choices'][0] = "";
-                refreshSingleAnswerAjax();
+                questions[question_index]['answer_choices'] = [new_answer_single_skip_logic];
+                questions[question_index]['answer_choices'][0]['answer'] = "";
+                refreshSingleAnswerSkipLogicAjax();
                 $('.question-type-text-guide').html('Responden hanya dapat memilih 1 jawaban.')
                 $('#single-answer-question').removeClass('d-none').addClass('d-block');
                 $('#input-lainnya-container').removeClass('d-none').addClass('d-block');
@@ -540,15 +538,30 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     <script>
         // single answer
         function addSingleAnswer() {
-            questions[question_index]['answer_choices'].push(new_answer_single);
-            questions[question_index]['answer_choices'][questions[question_index]['answer_choices'].length - 1] = ""
-            refreshSingleAnswerAjax();
+            if (questions[question_index]['survey_question_type_id'] == 1) {
+                questions[question_index]['answer_choices'].push({
+                    "answer": "Jawaban Baru",
+                    "next_question": 0
+                });
+                questions[question_index]['answer_choices'][questions[question_index]['answer_choices'].length - 1][
+                    'answer'
+                ] = ""
+                refreshSingleAnswerSkipLogicAjax();
+            } else {
+                questions[question_index]['answer_choices'].push(new_answer_single);
+                questions[question_index]['answer_choices'][questions[question_index]['answer_choices'].length - 1] = ""
+                refreshSingleAnswerAjax();
+            }
         }
 
         function deleteSingleAnswer(int) {
             questions[question_index]['answer_choices'].splice(int - 1, 1);
             if (questions[question_index]['answer_choices'].length > 0) {
-                refreshSingleAnswerAjax();
+                if (questions[question_index]['survey_question_type_id'] == 1) {
+                    refreshSingleAnswerSkipLogicAjax();
+                } else {
+                    refreshSingleAnswerAjax();
+                }
             } else {
                 $('#question-answer' + int).remove();
             }
@@ -562,13 +575,31 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 .done(function(data) {
                     $(".single-answer-list").html(data)
                 })
-                .fail(function() {
-                    console.log("fail");
+                .fail(function(e) {
+                    console.log(e);
+                });
+        }
+
+        function refreshSingleAnswerSkipLogicAjax() {
+            console.log(questions[question_index]['answer_choices']);
+            $.post("{{ config('app.url') }}" + "/survey/refreshsingleanswerskiplogic", {
+                    _token: CSRF_TOKEN,
+                    answers: questions[question_index]['answer_choices']
+                })
+                .done(function(data) {
+                    $(".single-answer-list").html(data)
+                })
+                .fail(function(e) {
+                    console.log(e);
                 });
         }
 
         function setNewSingleAnswer(index) {
             questions[question_index]['answer_choices'][index - 1] = $('#answer-single' + index).val();
+        }
+
+        function setNewSingleAnswerSkipLogic(index) {
+            questions[question_index]['answer_choices'][index - 1]['answer'] = $('#answer-single' + index).val();
         }
     </script>
     <script>
@@ -640,8 +671,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 .done(function(data) {
                     $(".grid-question-list").html(data)
                 })
-                .fail(function() {
-                    console.log("fail");
+                .fail(function(e) {
+                    console.log(e);
                 });
         }
 
@@ -653,8 +684,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 .done(function(data) {
                     $(".grid-answer-list").html(data)
                 })
-                .fail(function() {
-                    console.log("fail");
+                .fail(function(e) {
+                    console.log(e);
                 });
         }
 
@@ -710,6 +741,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             }
             $('#input-questions').val(JSON.stringify(questions));
             $('#input-question-index').val(index);
+            console.log(questions);
             document.getElementById('question-form').submit();
         }
     </script>

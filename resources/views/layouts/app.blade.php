@@ -69,10 +69,10 @@
         <script>
             $(window).on('load', function() {
                 console.log(@json($user));
-                var total_quota = @json($user['respondent_quota'])+@json($user['quota_of_respondent_used']);
-                $(".used-quota").html(@json($user['respondent_quota']))
+                var total_quota = @json($user['available_respondent_quota'])+@json($user['used_respondent_quota']);
+                $(".used-quota").html(@json($user['available_respondent_quota']))
                 $(".user-quota").html(total_quota)
-                var quota_percentage = @json($user['respondent_quota']) / total_quota * 100
+                var quota_percentage = @json($user['available_respondent_quota']) / total_quota * 100
                 $(".profile-quota").css('width', quota_percentage)
                 console.log(quota_percentage);
                 if (quota_percentage > 75) {

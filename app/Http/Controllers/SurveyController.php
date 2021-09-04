@@ -135,7 +135,8 @@ class SurveyController extends Controller
             ->json()['data'];
         if ($new == 'true' && count($survey['questions']) > 0) {
             $survey['questions'][count($survey['questions']) - 1]['question'] = "";
-            $survey['questions'][count($survey['questions']) - 1]['answer_choices'][0] = "";
+            $survey['questions'][count($survey['questions']) - 1]['answer_choices'][0]['answer'] = "";
+            $survey['questions'][count($survey['questions']) - 1]['answer_choices'][0]['text'] = "";
         }
         $provinces = array();
         foreach ($survey['city_criteria'] as $city) {
@@ -184,7 +185,10 @@ class SurveyController extends Controller
                 "is_other_option_enabled" => false,
                 "is_no_answer_enabled" => false,
                 "answer_choices" => [
-                    "Jawaban",
+                    [
+                        "answer" => "Answer choice 1",
+                        "next_question" => 0
+                    ]
                 ]
             ];
             array_push($questions, $new_question);
@@ -355,6 +359,16 @@ class SurveyController extends Controller
             $answers = null;
         }
         return view('survey.inc.draft.single_answer', compact('answers'));
+    }
+
+    public function refresh_single_answer_skip_logic(Request $request)
+    {
+        if (count($request->answers) > 0) {
+            $answers = $request->answers;
+        } else {
+            $answers['answer'] = null;
+        }
+        return view('survey.inc.draft.single_answer_skip_logic', compact('answers'));
     }
 
     public function refresh_grid_question(Request $request)
