@@ -14,19 +14,22 @@
                             Download Hasil (.csv)
                         </a>
                     </div>
-                    @include('survey.inc.chart.analisa.gender')
-                    @include('survey.inc.chart.analisa.age')
-                    {{-- <div class="row">
-                        <div class="text-start">
-                            <h4 class="font-weight-bold">Provinsi</h4>
-                            <h6 class="text-gray">Belum ada respon</h6>
-                        </div>
+                    @if ($result['total_respondent'] > 0)
+                        @include('survey.inc.chart.analisa.gender')
+                        @include('survey.inc.chart.analisa.age')
+                    @else
                         <div class="row">
-                            <div class="col-12">
-                                <h6 class="text-gray">Grafik akan muncul setelah ada respon</h6>
+                            <div class="text-start">
+                                <h4 class="font-weight-bold">Provinsi</h4>
+                                <h6 class="text-gray">Belum ada respon</h6>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h6 class="text-gray">Grafik akan muncul setelah ada respon</h6>
+                                </div>
                             </div>
                         </div>
-                    </div> --}}
+                    @endif
                 </div>
             </div>
         </div>
@@ -55,6 +58,5 @@
         .highcharts-credits {
             display: none;
         }
-
     </style>
 @endsection

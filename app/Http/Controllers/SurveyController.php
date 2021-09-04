@@ -304,7 +304,12 @@ class SurveyController extends Controller
         ])
             ->get(config('services.api.url') . '/surveyResult/' . $id)
             ->json()['data'];
-        return view('survey.hasil', compact('survey'));
+        $result = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/surveyResult/' . $id)
+            ->json()['data'];
+        return view('survey.hasil', compact('survey', 'result'));
     }
 
     public function analisa($id)
@@ -314,7 +319,12 @@ class SurveyController extends Controller
         ])
             ->get(config('services.api.url') . '/survey/' . $id)
             ->json()['data'];
-        return view('survey.analisa', compact('survey'));
+        $result = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/surveyCriteriaResult/' . $id)
+            ->json()['data'];
+        return view('survey.analisa', compact('survey', 'result'));
     }
 
     public function detail($id)

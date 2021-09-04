@@ -1,27 +1,19 @@
 <script>
     var age = [{
-            y: 75,
-            name: "21"
+            y: {{ $result['age'][0]['child'] }},
+            name: "Child"
         },
         {
-            y: 5,
-            name: "22"
+            y: {{ $result['age'][1]['youth'] }},
+            name: "Youth"
         },
         {
-            y: 5,
-            name: "23"
+            y: {{ $result['age'][2]['adult'] }},
+            name: "Adult"
         },
         {
-            y: 5,
-            name: "24"
-        },
-        {
-            y: 5,
-            name: "25"
-        },
-        {
-            y: 5,
-            name: "26"
+            y: {{ $result['age'][3]['senior'] }},
+            name: "Senior"
         },
     ]
     $('#age-chart').highcharts({
@@ -30,6 +22,14 @@
             type: 'pie',
             backgroundColor: null,
             height: 250
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            labelFormatter: function() {
+                return this.name + ': ' + Math.round(this.percentage) + '%';
+            }
         },
         title: {
             text: null
@@ -49,7 +49,7 @@
             },
             formatter: function() {
                 return '<h5 style="color:#a4a4a4;font-size: 1.1rem;">' + this.key + '</h5><br><br><h6>' +
-                    this.y + ' Responden (' + this.percentage + '%)</h6>';
+                    this.y + ' Responden (' + Math.round(this.percentage) + '%)</h6>';
             }
         },
         plotOptions: {
@@ -63,6 +63,7 @@
             },
         },
         series: [{
+            showInLegend: true,
             data: age,
             size: '90%',
             innerSize: '75%',
