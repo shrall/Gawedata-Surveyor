@@ -1,19 +1,19 @@
 @if ($result['total_respondent'] > 0)
     <div class="row">
         <div class="text-start">
-            <h4 class="font-weight-bold">Jenis Kelamin</h4>
+            <h4 class="font-weight-bold">Edukasi</h4>
             <h6 class="text-gray">{{ $result['total_respondent'] }} Jawaban</h6>
         </div>
         <div class="row">
             <div class="col-12">
-                <div id="gender-chart"></div>
+                <div id="education-chart"></div>
             </div>
         </div>
     </div>
 @else
     <div class="row">
         <div class="text-start">
-            <h4 class="font-weight-bold">Jenis Kelamin</h4>
+            <h4 class="font-weight-bold">Edukasi</h4>
             <h6 class="text-gray">Belum ada respon</h6>
         </div>
         <div class="row">

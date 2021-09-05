@@ -14,22 +14,13 @@
                             Download Hasil (.csv)
                         </a>
                     </div>
-                    @if ($result['total_respondent'] > 0)
-                        @include('survey.inc.chart.analisa.gender')
-                        @include('survey.inc.chart.analisa.age')
-                    @else
-                        <div class="row">
-                            <div class="text-start">
-                                <h4 class="font-weight-bold">Provinsi</h4>
-                                <h6 class="text-gray">Belum ada respon</h6>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <h6 class="text-gray">Grafik akan muncul setelah ada respon</h6>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
+                    @include('survey.inc.chart.analisa.gender')
+                    @include('survey.inc.chart.analisa.age')
+                    @include('survey.inc.chart.analisa.city')
+                    @include('survey.inc.chart.analisa.province')
+                    @include('survey.inc.chart.analisa.education')
+                    @include('survey.inc.chart.analisa.profession')
+                    @include('survey.inc.chart.analisa.expense')
                 </div>
             </div>
         </div>
@@ -44,13 +35,13 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script>
-        Highcharts.setOptions({
-            colors: ['#3F60F5', '#46cb5a', '#b0744a', '#d5c64b', '#6bd5cf', '#d56bcb']
-        });
-    </script>
     @include('survey.inc.chart.analisa.script.gender')
     @include('survey.inc.chart.analisa.script.age')
+    @include('survey.inc.chart.analisa.script.city')
+    @include('survey.inc.chart.analisa.script.province')
+    @include('survey.inc.chart.analisa.script.education')
+    @include('survey.inc.chart.analisa.script.profession')
+    @include('survey.inc.chart.analisa.script.expense')
 @endsection
 
 @section('head')
@@ -58,5 +49,6 @@
         .highcharts-credits {
             display: none;
         }
+
     </style>
 @endsection
