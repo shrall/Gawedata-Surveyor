@@ -14,13 +14,14 @@
                             Download Hasil (.csv)
                         </a>
                     </div>
-                    @foreach ($survey['questions'] as $question)
+                    @foreach ($result['questions'] as $question)
                         @if ($question['survey_question_type_id'] == 1)
                             <div class="row">
                                 <div class="text-start">
                                     <h4 class="font-weight-bold">{{ $loop->iteration }}. {{ $question['question'] }}
                                     </h4>
-                                    <h6 class="text-gray">Single Answer - 100 Jawaban</h6>
+                                    <h6 class="text-gray">Single Answer - {{ $question['answers_count'] }} Jawaban
+                                    </h6>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
@@ -33,7 +34,8 @@
                                 <div class="text-start">
                                     <h4 class="font-weight-bold">{{ $loop->iteration }}. {{ $question['question'] }}
                                     </h4>
-                                    <h6 class="text-gray">Multi Answer - 100 Jawaban</h6>
+                                    <h6 class="text-gray">Multi Answer - {{ $question['answers_count'] }} Jawaban
+                                    </h6>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
@@ -46,7 +48,8 @@
                                 <div class="text-start">
                                     <h4 class="font-weight-bold">{{ $loop->iteration }}. {{ $question['question'] }}
                                     </h4>
-                                    <h6 class="text-gray">Scale Question - 100 Jawaban</h6>
+                                    <h6 class="text-gray">Scale Question - {{ $question['answers_count'] }} Jawaban
+                                    </h6>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
@@ -59,7 +62,8 @@
                                 <div class="text-start">
                                     <h4 class="font-weight-bold">{{ $loop->iteration }}. {{ $question['question'] }}
                                     </h4>
-                                    <h6 class="text-gray">Grid Question - 100 Jawaban</h6>
+                                    <h6 class="text-gray">Grid Question - {{ $question['answers_count'] }} Jawaban
+                                    </h6>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
@@ -72,14 +76,15 @@
                                 <div class="text-start">
                                     <h4 class="font-weight-bold">{{ $loop->iteration }}. {{ $question['question'] }}
                                     </h4>
-                                    <h6 class="text-gray">Open Ended Question - 100 Jawaban</h6>
+                                    <h6 class="text-gray">Open Ended Question - {{ $question['answers_count'] }}
+                                        Jawaban</h6>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="overflow-auto pe-4" style="min-height:0;max-height: 30vh;">
-                                            @foreach ($question['results'] as $result)
+                                            @foreach ($question['results'] as $resulta)
                                                 <div class="card-open-ended text-start mb-2 px-3 py-2">
-                                                    <h6>{{ $result['answer'] }}</h6>
+                                                    <h6>{{ $resulta['answer'] }}</h6>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -91,7 +96,8 @@
                                 <div class="text-start">
                                     <h4 class="font-weight-bold">{{ $loop->iteration }}. {{ $question['question'] }}
                                     </h4>
-                                    <h6 class="text-gray">Action Question (Video) - 135 Jawaban</h6>
+                                    <h6 class="text-gray">Action Question (Video) - {{ $question['answers_count'] }}
+                                        Jawaban</h6>
                                 </div>
                             </div>
                         @elseif ($question['survey_question_type_id'] == 8)
@@ -99,7 +105,8 @@
                                 <div class="text-start">
                                     <h4 class="font-weight-bold">{{ $loop->iteration }}. {{ $question['question'] }}
                                     </h4>
-                                    <h6 class="text-gray">Action Question (Install App) - 135 Jawaban</h6>
+                                    <h6 class="text-gray">Action Question (Install App) -
+                                        {{ $question['answers_count'] }} Jawaban</h6>
                                 </div>
                             </div>
                         @elseif ($question['survey_question_type_id'] == 9)
@@ -107,7 +114,8 @@
                                 <div class="text-start">
                                     <h4 class="font-weight-bold">{{ $loop->iteration }}. {{ $question['question'] }}
                                     </h4>
-                                    <h6 class="text-gray">Action Question (Kunjungi Website) - 135 Jawaban</h6>
+                                    <h6 class="text-gray">Action Question (Kunjungi Website) -
+                                        {{ $question['answers_count'] }} Jawaban</h6>
                                 </div>
                             </div>
                         @elseif ($question['survey_question_type_id'] == 9)
@@ -115,15 +123,15 @@
                                 <div class="text-start">
                                     <h4 class="font-weight-bold">{{ $loop->iteration }}.{{ $question['question'] }}
                                     </h4>
-                                    <h6 class="text-gray">Action Question (Upload Gambar) - 100 Jawaban</h6>
+                                    <h6 class="text-gray">Action Question (Upload Gambar) -
+                                        {{ $question['answers_count'] }} Jawaban</h6>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
                                         <div id="action-image-carousel" class="carousel slide" data-bs-interval="false">
                                             <div class="carousel-inner">
                                                 @foreach ($question['results'] as $result)
-                                                    <div class="carousel-item @if ($loop->iteration ==
-                                                        1) active @endif">
+                                                    <div class="carousel-item @if ($loop->iteration == 1) active @endif">
                                                         <img src="https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg"
                                                             class="d-block mx-auto">
                                                     </div>
@@ -156,10 +164,10 @@
                             </div>
                         @endif
                     @endforeach
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="text-start">
                             <h4 class="font-weight-bold">Pertanyaan Priority Answer</h4>
-                            <h6 class="text-gray">100 Jawaban</h6>
+                            <h6 class="text-gray"> Jawaban</h6>
                         </div>
                         <div class="row">
                             <div class="col-6">
@@ -169,7 +177,7 @@
                                 <div id="priority-chart-2"></div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -184,7 +192,7 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    @foreach ($survey['questions'] as $question)
+    @foreach ($result['questions'] as $question)
         @if ($question['survey_question_type_id'] == 1)
             <script>
                 var data{{ $loop->iteration }} = [
@@ -201,6 +209,14 @@
                         type: 'pie',
                         backgroundColor: null,
                         height: 250
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'middle',
+                        labelFormatter: function() {
+                            return this.name + ': ' + Math.round(this.percentage) + '%';
+                        }
                     },
                     exporting: {
                         enabled: false
@@ -234,6 +250,7 @@
                         },
                     },
                     series: [{
+                        showInLegend: true,
                         data: data{{ $loop->iteration }},
                         size: '90%',
                         innerSize: '75%',
@@ -384,6 +401,9 @@
                         }
                     },
                     plotOptions: {
+                        series: {
+                            pointStart: @json(array_keys($question['scales'])[0])
+                        },
                         column: {
                             dataLabels: {
                                 enabled: true,
@@ -496,7 +516,7 @@
             </script>
         @endif
     @endforeach
-    <script>
+    {{-- <script>
         var priority1 = [{
                 y: 75,
                 name: "Pria"
@@ -697,19 +717,19 @@
                 innerSize: '75%',
             }]
         });
-    </script>
+    </script> --}}
     <script>
-    function copyToClipboard() {
-        /* Get the text field */
-        var copyText = document.getElementById("survey-link");
+        function copyToClipboard() {
+            /* Get the text field */
+            var copyText = document.getElementById("survey-link");
 
-        /* Select the text field */
-        copyText.select();
-        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+            /* Select the text field */
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /* For mobile devices */
 
-         /* Copy the text inside the text field */
-        navigator.clipboard.writeText(copyText.value);
-      }
+            /* Copy the text inside the text field */
+            navigator.clipboard.writeText(copyText.value);
+        }
     </script>
 @endsection
 
