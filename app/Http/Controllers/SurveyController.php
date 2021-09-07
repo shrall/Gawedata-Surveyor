@@ -281,9 +281,14 @@ class SurveyController extends Controller
         $surveys = Http::withHeaders([
             'Authorization' => 'Bearer ' . session('token'),
         ])
-            ->get(config('services.api.url') . '/survey?filter=' . $request->filter . '&sort=' . $request->sort)
+            ->get(config('services.api.url') . '/survey?sort=' . $request->sort)
             ->json()['data']['data'];
         $surveys = collect($surveys)->where('survey_type_id', $request->type);
+        if($request->filter == 'public'){
+            $surveys = $surveys->where('is_private', false);
+        }else if ($request->filter == 'private'){
+            $surveys = $surveys->where('is_private', true);
+        }
         return view('inc.survey_list', compact('surveys'));
     }
 

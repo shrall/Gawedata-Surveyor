@@ -23,11 +23,11 @@
                     </span>
                     <ul class="dropdown-menu">
                         <li>
-                            <a class="dropdown-item" href="#" id="filter-general"
-                                onclick="changeFilter('general');">General</a>
+                            <a class="dropdown-item" href="#" id="filter-public"
+                                onclick="changeFilter('public');">Public</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#" id="filter-daily" onclick="changeFilter('daily');">Daily</a>
+                            <a class="dropdown-item" href="#" id="filter-private" onclick="changeFilter('private');">Private</a>
                         </li>
                     </ul>
                 </div>
