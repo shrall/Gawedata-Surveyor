@@ -259,7 +259,7 @@
             </script>
         @elseif ($question['survey_question_type_id'] == 2)
             <script>
-                var multi = [
+                var data{{ $loop->iteration }} = [
                     @foreach ($question['results'] as $answer)
                         {
                         y: @json($answer['count']),
@@ -267,9 +267,9 @@
                         },
                     @endforeach
                 ]
-                var multiTitle = []
-                multi.forEach(element => {
-                    multiTitle.push(element.name)
+                var multiTitle{{ $loop->iteration }} = []
+                data{{ $loop->iteration }}.forEach(element => {
+                    multiTitle{{ $loop->iteration }}.push(element.name)
                 });
                 $('#multi-chart-{{ $loop->iteration }}').highcharts({
                     chart: {
@@ -285,7 +285,7 @@
                         enabled: false
                     },
                     xAxis: {
-                        categories: multiTitle,
+                        categories: multiTitle{{ $loop->iteration }},
                     },
                     yAxis: [{
                         gridLineDashStyle: 'longdashdot',
@@ -340,7 +340,7 @@
                         },
                     },
                     series: [{
-                        data: multi,
+                        data: data{{ $loop->iteration }},
                         size: '90%',
                         innerSize: '75%',
                     }]
@@ -348,7 +348,7 @@
             </script>
         @elseif ($question['survey_question_type_id'] == 3)
             <script>
-                var scale = [
+                var data{{ $loop->iteration }} = [
                     @foreach ($question['scales'] as $key => $answer)
                         {
                         y: @json($answer),
@@ -427,7 +427,7 @@
                         },
                     },
                     series: [{
-                        data: scale,
+                        data: data{{ $loop->iteration }},
                         size: '90%',
                         innerSize: '75%',
                     }]
@@ -435,7 +435,7 @@
             </script>
         @elseif ($question['survey_question_type_id'] == 4)
             <script>
-                var grid = [
+                var data{{ $loop->iteration }} = [
                     @foreach ($question['result'] as $key => $result)
                         {
                         name: @json($result['question']),
@@ -447,9 +447,9 @@
                         },
                     @endforeach
                 ]
-                var gridTitle = []
-                grid.forEach(element => {
-                    gridTitle.push(element.name)
+                var gridTitle{{ $loop->iteration }} = []
+                data{{ $loop->iteration }}.forEach(element => {
+                    gridTitle{{ $loop->iteration }}.push(element.name)
                 });
                 $('#grid-chart-{{ $loop->iteration }}').highcharts({
                     chart: {
@@ -457,6 +457,13 @@
                         type: 'column',
                         backgroundColor: null,
                         height: 250
+                    },
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        labelFormatter: function() {
+                            return this.name;
+                        }
                     },
                     xAxis: {
                         categories: [
@@ -467,9 +474,6 @@
                         crosshair: true
                     },
                     exporting: {
-                        enabled: false
-                    },
-                    legend: {
                         enabled: false
                     },
                     yAxis: [{
@@ -511,7 +515,7 @@
                             }
                         },
                     },
-                    series: grid,
+                    series: data{{ $loop->iteration }},
                 });
             </script>
         @endif
