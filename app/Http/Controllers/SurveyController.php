@@ -306,13 +306,14 @@ class SurveyController extends Controller
         $survey = Http::withHeaders([
             'Authorization' => 'Bearer ' . session('token'),
         ])
-            ->get(config('services.api.url') . '/surveyResult/' . $id)
+            ->get(config('services.api.url') . '/survey/' . $id)
             ->json()['data'];
         $result = Http::withHeaders([
             'Authorization' => 'Bearer ' . session('token'),
         ])
             ->get(config('services.api.url') . '/surveyResult/' . $id)
             ->json()['data'];
+            // dd($result['questions']);
         return view('survey.hasil', compact('survey', 'result'));
     }
 
@@ -350,6 +351,7 @@ class SurveyController extends Controller
             ->json()['data'];
         return view('survey.submitted', compact('survey', 'i'));
     }
+
 
     public function refresh_single_answer(Request $request)
     {

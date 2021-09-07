@@ -183,7 +183,23 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                 <div class="col-5">
                                 </div>
                             </div>
-                            <h6 class="text-start">Jawaban</h6>
+                            <h6 class="text-start @if ($question_type_id == 1 || $question_type_id == 2) d-block @else d-none @endif" id="single-question-title">Jawaban</h6>
+                            <div class="row mb-2 @if ($question_type_id == 5) d-block @else d-none @endif" id="priority-question-title">
+                                <div class="col-8 row align-items-center pe-0">
+                                    <h6 class="text-start col-5 mt-2">Jawaban</h6>
+                                    <div class="col-7 d-flex align-items-center">
+                                        <div class="form-check p-0">
+                                            <input class="form-check-input" type="checkbox" value="" id="input-minimum" @if ($survey['questions'][$i - 1]['minimum_answer'] == 3) checked @endif>
+                                            <label class="form-check-label" for="priority-minimum-checkbox">
+                                                Pengguna dapat memilih TOP 3 saja
+                                            </label>
+                                        </div>
+                                        <span class="badge-lainnya ms-2 fas fa-fw fa-info-circle text-gray cursor-pointer"
+                                            data-toggle="tooltip" data-placement="bottom"
+                                            title="Lorem Ipsum dolor sit amet"></span>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="single-answer-list">
                                 @foreach ($survey['questions'][$i - 1]['answer_choices'] as $answer)
                                     <div class="row mb-3" id="question-answer{{ $loop->iteration }}">
@@ -223,8 +239,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         <span class="badge-lainnya fas fa-fw fa-info-circle text-gray ms-2 mt-2 cursor-pointer"
                             data-toggle="tooltip" data-placement="bottom" title="Lorem Ipsum dolor sit amet"></span>
                         <div class="form-check form-switch ms-auto mb-0">
-                            <input class="form-check-input cursor-pointer" type="checkbox" id="input-lainnya"
-                                @if ($survey['questions'][$i - 1]['is_other_option_enabled']) checked @endif>
+                            <input class="form-check-input form-check-input-switch cursor-pointer" type="checkbox"
+                                id="input-lainnya" @if ($survey['questions'][$i - 1]['is_other_option_enabled']) checked @endif>
                         </div>
                     </div>
                 </div>
@@ -236,8 +252,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         <span class="badge-lainnya fas fa-fw fa-info-circle text-gray ms-2 mt-2 cursor-pointer"
                             data-toggle="tooltip" data-placement="bottom" title="Lorem Ipsum dolor sit amet"></span>
                         <div class="form-check form-switch ms-auto mb-0">
-                            <input class="form-check-input cursor-pointer" type="checkbox" id="input-none"
-                                @if ($survey['questions'][$i - 1]['is_no_answer_enabled']) checked @endif>
+                            <input class="form-check-input form-check-input-switch cursor-pointer" type="checkbox"
+                                id="input-none" @if ($survey['questions'][$i - 1]['is_no_answer_enabled']) checked @endif>
                         </div>
                     </div>
                 </div>
@@ -249,8 +265,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         <span class="badge-lainnya fas fa-fw fa-info-circle text-gray ms-2 mt-2 cursor-pointer"
                             data-toggle="tooltip" data-placement="bottom" title="Lorem Ipsum dolor sit amet"></span>
                         <div class="form-check form-switch ms-auto mb-0">
-                            <input class="form-check-input cursor-pointer" type="checkbox" id="input-mandatory"
-                                @if ($survey['questions'][$i - 1]['is_mandatory']) checked @endif>
+                            <input class="form-check-input form-check-input-switch cursor-pointer" type="checkbox"
+                                id="input-mandatory" @if ($survey['questions'][$i - 1]['is_mandatory']) checked @endif>
                         </div>
                     </div>
                 </div>
@@ -462,6 +478,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             $('#action-question').removeClass('d-block').addClass('d-none');
             $('#input-url-video').removeClass('d-block').addClass('d-none');
             $('.input-url-application').removeClass('d-block').addClass('d-none');
+            $('#single-question-title').removeClass('d-block').addClass('d-none');
+            $('#priority-question-title').removeClass('d-block').addClass('d-none');
             $('#input-url-website').removeClass('d-block').addClass('d-none');
             $('#input-lainnya-container').removeClass('d-block').addClass('d-none');
             $('#input-none-container').removeClass('d-block').addClass('d-none');
@@ -492,6 +510,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 refreshSingleAnswerSkipLogicAjax();
                 $('.question-type-text-guide').html('Responden hanya dapat memilih 1 jawaban.')
                 $('#single-answer-question').removeClass('d-none').addClass('d-block');
+                $('#single-question-title').removeClass('d-none').addClass('d-block');
                 $('#input-lainnya-container').removeClass('d-none').addClass('d-block');
                 $('#input-none-container').removeClass('d-none').addClass('d-block');
             } else if ($(this).data("type") == 2) {
@@ -500,6 +519,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 refreshSingleAnswerAjax();
                 $('.question-type-text-guide').html('Responden dapat memilih lebih dari 1 jawaban.')
                 $('#single-answer-question').removeClass('d-none').addClass('d-block');
+                $('#single-question-title').removeClass('d-none').addClass('d-block');
                 $('#input-lainnya-container').removeClass('d-none').addClass('d-block');
                 $('#input-none-container').removeClass('d-none').addClass('d-block');
             } else if ($(this).data("type") == 3) {
@@ -515,6 +535,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 $('.question-type-text-guide').html('Responden mengurutkan jawaban berdasarkan peringkat.')
                 $('#grid-question').removeClass('d-none').addClass('d-block');
             } else if ($(this).data("type") == 5) {
+                $('#priority-question-title').removeClass('d-none').addClass('d-block');
                 questions[question_index]['answer_choices'] = [new_answer_single];
                 questions[question_index]['answer_choices'][0] = "";
                 refreshSingleAnswerAjax();
@@ -847,6 +868,16 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 questions[question_index]['is_mandatory'] = true;
             } else {
                 questions[question_index]['is_mandatory'] = false;
+            }
+        });
+    </script>
+    <script>
+        $("#input-minimum").on('change', function() {
+            if ($(this).is(':checked')) {
+                console.log(3);
+                questions[question_index]['minimum_answer'] = 3;
+            } else {
+                questions[question_index]['minimum_answer'] = 0;
             }
         });
     </script>

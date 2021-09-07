@@ -1,13 +1,11 @@
 <script>
     var gender = [
-        {
-            y: {{ $result['gender'][0]['Laki-laki'] }},
-            name: "Pria"
-        },
-        {
-            y: {{ $result['gender'][1]['Perempuan'] }},
-            name: "Wanita"
-        },
+        @foreach ($result['gender'] as $gender)
+            {
+            y: Object.values(@json($gender))[0],
+            name: Object.keys(@json($gender))[0]
+            },
+        @endforeach
     ]
 
     $('#gender-chart').highcharts({

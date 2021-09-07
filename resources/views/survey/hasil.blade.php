@@ -23,50 +23,8 @@
                                     <h6 class="text-gray">Single Answer - 100 Jawaban</h6>
                                 </div>
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-12">
                                         <div id="chart-{{ $loop->iteration }}"></div>
-                                    </div>
-                                    <div class="col-6 d-flex align-items-center"
-                                        style="overflow: auto; white-space: nowrap;">
-                                        <div class="d-flex flex-row">
-                                            <div class="col-12 d-flex flex-column h-100 justify-content-start">
-                                                @php
-                                                    $counter = 1;
-                                                @endphp
-                                                @foreach ($question['results'] as $answer)
-                                                    <div class="row my-2 justify-content-start">
-                                                        <div class="col-12 text-start">
-                                                            @if ($counter == 1)
-                                                                <span class="fa fa-fw fa-circle me-2 fs-6"
-                                                                    style="color:#3F60F5;"></span>
-                                                            @elseif ($counter == 2)
-                                                                <span class="fa fa-fw fa-circle me-2 fs-6"
-                                                                    style="color:#46cb5a;"></span>
-                                                            @elseif ($counter == 3)
-                                                                <span class="fa fa-fw fa-circle me-2 fs-6"
-                                                                    style="color:#b0744a;"></span>
-                                                            @elseif ($counter == 4)
-                                                                <span class="fa fa-fw fa-circle me-2 fs-6"
-                                                                    style="color:#d5c64b;"></span>
-                                                            @elseif ($counter == 5)
-                                                                <span class="fa fa-fw fa-circle me-2 fs-6"
-                                                                    style="color:#6bd5cf;"></span>
-                                                            @elseif ($counter == 6)
-                                                                <span class="fa fa-fw fa-circle me-2 fs-6"
-                                                                    style="color:#d56bcb;"></span>
-                                                                @php
-                                                                    $counter = 1;
-                                                                @endphp
-                                                            @endif
-                                                            @php
-                                                                $counter += 1;
-                                                            @endphp
-                                                            {{ $answer['text'] }}: 75%
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -102,26 +60,6 @@
                                     <h4 class="font-weight-bold">{{ $loop->iteration }}. {{ $question['question'] }}
                                     </h4>
                                     <h6 class="text-gray">Grid Question - 100 Jawaban</h6>
-                                </div>
-                                <div class="row text-start mb-2">
-                                    @php
-                                        $counter = 1;
-                                    @endphp
-                                    @foreach ($question['result'] as $result)
-                                        <div class="col-6">
-                                            <span class="fa fa-fw fa-circle me-2 fs-6" style="color:#3F60F5;"></span>
-                                            {{ $result['question'] }}: 25%
-                                        </div>
-                                    @endforeach
-                                    {{-- <div class="col-3">
-                                        <span class="fa fa-fw fa-circle me-2 fs-6" style="color:#46cb5a;"></span>Wanita: 25%
-                                    </div>
-                                    <div class="col-3">
-                                        <span class="fa fa-fw fa-circle me-2 fs-6" style="color:#b0744a;"></span>Wanita: 25%
-                                    </div>
-                                    <div class="col-3">
-                                        <span class="fa fa-fw fa-circle me-2 fs-6" style="color:#d5c64b;"></span>Wanita: 25%
-                                    </div> --}}
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
@@ -246,11 +184,6 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script>
-        Highcharts.setOptions({
-            colors: ['#3F60F5', '#46cb5a', '#b0744a', '#d5c64b', '#6bd5cf', '#d56bcb']
-        });
-    </script>
     @foreach ($survey['questions'] as $question)
         @if ($question['survey_question_type_id'] == 1)
             <script>

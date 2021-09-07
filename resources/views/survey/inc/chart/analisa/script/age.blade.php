@@ -1,20 +1,11 @@
 <script>
-    var age = [{
-            y: {{ $result['age'][0]['child'] }},
-            name: "Child"
-        },
-        {
-            y: {{ $result['age'][1]['youth'] }},
-            name: "Youth"
-        },
-        {
-            y: {{ $result['age'][2]['adult'] }},
-            name: "Adult"
-        },
-        {
-            y: {{ $result['age'][3]['senior'] }},
-            name: "Senior"
-        },
+    var age = [
+        @foreach ($result['age'] as $age)
+            {
+            y: Object.values(@json($age))[0],
+            name: Object.keys(@json($age))[0]
+            },
+        @endforeach
     ]
     $('#age-chart').highcharts({
         chart: {
