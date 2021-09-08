@@ -35,63 +35,81 @@ class SurveyController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->cities[0] == null) {
-            $city_criteria = $request->city;
+        if ($request->has('daily_date')) {
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . session('token'),
+            ])->post(config('services.api.url') . '/survey', [
+                'title' => $request->title,
+                'description' => $request->description,
+                'daily_date' => $request->daily_date,
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time,
+                'description' => $request->description,
+            ])->json();
+            if ($response['success']) {
+                return redirect()->route('survey.show', ['id' => $response['data']['id'], 'i' => 1, 'new' => 'false']);
+            } else {
+                return redirect()->route('home');
+            }
         } else {
-            $city_criteria = explode(",", $request->cities[0]);
-        }
-        if ($request->educations[0] == null) {
-            $education_criteria = $request->education;
-        } else {
-            $education_criteria = explode(",", $request->educations[0]);
-        }
-        if ($request->professions[0] == null) {
-            $profession_criteria = $request->profession;
-        } else {
-            $profession_criteria = explode(",", $request->professions[0]);
-        }
-        if ($request->expenses[0] == null) {
-            $expense_criteria = $request->expense;
-        } else {
-            $expense_criteria = explode(",", $request->expenses[0]);
-        }
+            if ($request->cities[0] == null) {
+                $city_criteria = $request->city;
+            } else {
+                $city_criteria = explode(",", $request->cities[0]);
+            }
+            if ($request->educations[0] == null) {
+                $education_criteria = $request->education;
+            } else {
+                $education_criteria = explode(",", $request->educations[0]);
+            }
+            if ($request->professions[0] == null) {
+                $profession_criteria = $request->profession;
+            } else {
+                $profession_criteria = explode(",", $request->professions[0]);
+            }
+            if ($request->expenses[0] == null) {
+                $expense_criteria = $request->expense;
+            } else {
+                $expense_criteria = explode(",", $request->expenses[0]);
+            }
 
-        if ($request->survey_type == 'Public') {
-            $is_private = false;
-        } else {
-            $is_private = true;
-        }
+            if ($request->survey_type == 'Public') {
+                $is_private = false;
+            } else {
+                $is_private = true;
+            }
 
-        $gender = array();
-        if ($request->has('check-pria')) {
-            array_push($gender, 1);
-        }
-        if ($request->has('check-wanita')) {
-            array_push($gender, 2);
-        }
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . session('token'),
-        ])->post(config('services.api.url') . '/survey', [
-            'title' => $request->title,
-            'description' => $request->description,
-            'survey_category_id' => $request->survey_category,
-            'respondent_quota' => $request->survey_respondent,
-            'is_private' => $is_private,
-            'survey_type' => 'General',
-            'general_expired_date' => date('Y-m-d', strtotime($request->survey_deadline)),
-            'min_age_criteria' => $request->age_start,
-            'max_age_criteria' => $request->age_end,
-            'estimate_time' => $request->estimate_time,
-            'gender_id' => $gender,
-            'city_id' => $city_criteria,
-            'education_id' => $education_criteria,
-            'profession_id' => $profession_criteria,
-            'household_expense_id' => $expense_criteria
-        ])->json();
-        if ($response['success']) {
-            return redirect()->route('survey.show', ['id' => $response['data']['id'], 'i' => 1, 'new' => 'false']);
-        } else {
-            return redirect()->route('home');
+            $gender = array();
+            if ($request->has('check-pria')) {
+                array_push($gender, 1);
+            }
+            if ($request->has('check-wanita')) {
+                array_push($gender, 2);
+            }
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . session('token'),
+            ])->post(config('services.api.url') . '/survey', [
+                'title' => $request->title,
+                'description' => $request->description,
+                'survey_category_id' => $request->survey_category,
+                'respondent_quota' => $request->survey_respondent,
+                'is_private' => $is_private,
+                'survey_type' => 'General',
+                'general_expired_date' => date('Y-m-d', strtotime($request->survey_deadline)),
+                'min_age_criteria' => $request->age_start,
+                'max_age_criteria' => $request->age_end,
+                'estimate_time' => $request->estimate_time,
+                'gender_id' => $gender,
+                'city_id' => $city_criteria,
+                'education_id' => $education_criteria,
+                'profession_id' => $profession_criteria,
+                'household_expense_id' => $expense_criteria
+            ])->json();
+            if ($response['success']) {
+                return redirect()->route('survey.show', ['id' => $response['data']['id'], 'i' => 1, 'new' => 'false']);
+            } else {
+                return redirect()->route('home');
+            }
         }
     }
 
@@ -284,9 +302,9 @@ class SurveyController extends Controller
             ->get(config('services.api.url') . '/survey?sort=' . $request->sort)
             ->json()['data']['data'];
         $surveys = collect($surveys)->where('survey_type_id', $request->type);
-        if($request->filter == 'public'){
+        if ($request->filter == 'public') {
             $surveys = $surveys->where('is_private', false);
-        }else if ($request->filter == 'private'){
+        } else if ($request->filter == 'private') {
             $surveys = $surveys->where('is_private', true);
         }
         return view('inc.survey_list', compact('surveys'));
@@ -318,7 +336,7 @@ class SurveyController extends Controller
         ])
             ->get(config('services.api.url') . '/surveyResult/' . $id)
             ->json()['data'];
-            // dd($result['questions']);
+        // dd($result['questions']);
         return view('survey.hasil', compact('survey', 'result'));
     }
 
@@ -344,7 +362,12 @@ class SurveyController extends Controller
         ])
             ->get(config('services.api.url') . '/survey/' . $id)
             ->json()['data'];
-        return view('survey.detail', compact('survey'));
+        $result = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/surveyCriteriaResult/' . $id)
+            ->json()['data'];
+        return view('survey.detail', compact('survey', 'result'));
     }
 
     public function submitted($id, $i)
