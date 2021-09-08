@@ -27,7 +27,8 @@
                                 onclick="changeFilter('public');">Public</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#" id="filter-private" onclick="changeFilter('private');">Private</a>
+                            <a class="dropdown-item" href="#" id="filter-private"
+                                onclick="changeFilter('private');">Private</a>
                         </li>
                     </ul>
                 </div>
@@ -87,7 +88,8 @@
                                         </h5>
                                     </div>
                                     <div class="card-footer pt-0">
-                                        <span class="fa fa-fw fa-users me-2"></span> {{$survey['respondents_answered_question_count']}}/{{ $survey['respondent_quota'] }}
+                                        <span class="fa fa-fw fa-users me-2"></span>
+                                        {{ $survey['respondents_answered_question_count'] }}/{{ $survey['respondent_quota'] }}
                                         Responden
                                     </div>
                                 </div>
@@ -148,7 +150,8 @@
                                         </td>
                                     @endif
                                     <td class="py-4"><span class="fa fa-fw fa-users me-2"></span>
-                                        {{$survey['respondents_answered_question_count']}}/{{ $survey['respondent_quota'] }} Responden</td>
+                                        {{ $survey['respondents_answered_question_count'] }}/{{ $survey['respondent_quota'] }}
+                                        Responden</td>
                                     <td class="py-4">{{ date('d-m-y, H:i', strtotime($survey['created_at'])) }}
                                         WIB
                                     </td>
@@ -551,10 +554,36 @@
             }
         })
     </script>
+    {{-- date range picker --}}
+    {{-- https://www.daterangepicker.com/ --}}
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <script>
         //create daily survey
         $(function() {
-            $("#survey-deadline-daily").datepicker();
+            $('input[name="daily_datepicker"]').daterangepicker({
+                singleDatePicker: true,
+                startDate: moment(),
+            }, function(start, end, label) {
+                console.log(start.format('YYYY-MM-DD'));
+                $('#input-daily-date').val(start.format('YYYY-MM-DD'));
+            });
+            $('input[name="daily_timepicker"]').daterangepicker({
+                timePicker: true,
+                timePicker24Hour: true,
+                timePickerIncrement: 1,
+                locale: {
+                    format: 'HH:mm'
+                }
+            }, function(start, end, label) {
+                console.log(start.format('HH:mm'));
+                $('#input-daily-start').val(start.format('HH:mm'));
+                $('#input-daily-end').val(end.format('HH:mm'));
+                console.log($('#input-daily-start').val());
+            }).on('show.daterangepicker', function(ev, picker) {
+                picker.container.find(".calendar-table").hide();
+            });
         });
 
         function changePointValue(type) {

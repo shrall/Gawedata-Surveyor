@@ -38,9 +38,11 @@
                                             value="{{ $survey['title'] }}">
                                     </div>
                                     <div class="mb-3">
-                                        <input id="survey-description" type="text" class="form-control input-text"
-                                            name="description" required placeholder="Deskripsi Survei"
-                                            value="{{ $survey['description'] }}">
+                                        <textarea id="survey-description" type="text"
+                                            class="survey-description form-control input-text"
+                                            style="resize: none; height:7rem;" name="description" required
+                                            placeholder="Deskripsi Survei"
+                                            value="{{ $survey['description'] }}"></textarea>
                                     </div>
                                     <div class="mb-3">
                                         <input id="survey-category" type="hidden" name="survey_category"
@@ -78,7 +80,8 @@
                                             <ul class="dropdown-menu w-100 px-2">
                                                 <div class="overflow-auto ps-2 pe-5"
                                                     style="min-height:0;max-height: 30vh;">
-                                                    <li class="dropdown-item" data-type="public">Public (Semua responden
+                                                    <li class="dropdown-item" data-type="public">Public (Semua
+                                                        responden
                                                         dapat melihat dan
                                                         mengisi survei)</li>
                                                     <li class="dropdown-item text-start" data-type="private">Private
@@ -110,8 +113,8 @@
                                     <div class="row justify-content-between align-items-center mb-3">
                                         <div class="col-4 text-start">Jenis Kelamin</div>
                                         <div class="col-6 text-end">
-                                            <input type="checkbox" class="btn-check" id="check-pria" name="check-pria"
-                                                @if ($survey['gender_criteria'][0]['gender_id'] == 1) checked @endif @if (count($survey['gender_criteria']) > 1)
+                                            <input type="checkbox" class="btn-check" id="check-pria"
+                                                name="check-pria" @if ($survey['gender_criteria'][0]['gender_id'] == 1) checked @endif @if (count($survey['gender_criteria']) > 1)
                                             @if ($survey['gender_criteria'][1]['gender_id'] == 1)
                                                 checked @endif @endif autocomplete="off">
                                                 <label class="btn btn-checkbox-gawedata px-4 me-2"
@@ -268,8 +271,10 @@
                                         <div class="col-5 text-start">Estimasi Waktu Pengerjaan</div>
                                         <div class="col-3 text-end">
                                             <div class="input-group mb-3">
-                                              <input type="number" class="form-control input-text" name="estimate_time" value="{{ $survey['estimate_time'] }}">
-                                              <span class="input-group-text input-text text-gray" style="padding-left: 0.75rem !important; padding-right: 0.75rem !important;">Menit</span>
+                                                <input type="number" class="form-control input-text"
+                                                    name="estimate_time" value="{{ $survey['estimate_time'] }}">
+                                                <span class="input-group-text input-text text-gray"
+                                                    style="padding-left: 0.75rem !important; padding-right: 0.75rem !important;">Menit</span>
                                             </div>
                                         </div>
                                     </div>
@@ -292,7 +297,8 @@
                                     <div class="profile-quota-box mb-1">
                                         <div class="profile-quota" style="width: 30%;"></div>
                                     </div>
-                                    <p class="my-0 text-secondary">Tersisa <span class="used-quota">0</span>/<span class="user-quota">150</span> kuota
+                                    <p class="my-0 text-secondary">Tersisa <span class="used-quota">0</span>/<span
+                                            class="user-quota">150</span> kuota
                                         responden</p>
                                     <div class="my-3">
                                         <a href="#" class="text-gawedata text-decoration-none font-weight-bold">

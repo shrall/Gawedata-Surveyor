@@ -36,8 +36,9 @@
                                             name="title" required placeholder="Judul Survei">
                                     </div>
                                     <div class="mb-3">
-                                        <input id="survey-description" type="text" class="form-control input-text"
-                                            name="description" required placeholder="Deskripsi Survei">
+                                        <textarea id="survey-description" type="text" class="survey-description form-control input-text"
+                                            style="resize: none; height:7rem;"
+                                            name="description" required placeholder="Deskripsi Survei"></textarea>
                                     </div>
                                     <div class="mb-3">
                                         <input id="survey-category" type="hidden" name="survey_category">
