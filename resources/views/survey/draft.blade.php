@@ -173,6 +173,38 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                     </div>
                                 </div>
                             </div>
+                            {{-- <div class="row mt-4 mb-2" id="input-lainnya-container">
+                                <div class="col-7">
+                                    <div class="d-flex align-items-center">
+                                        <h6 class="text-start mt-2 mb-0">Aktifkan Jawaban 'Lainnya'</h6>
+                                        <span
+                                            class="badge-lainnya fas fa-fw fa-info-circle text-gray ms-2 mt-2 cursor-pointer"
+                                            data-toggle="tooltip" data-placement="bottom"
+                                            title="Lorem Ipsum dolor sit amet"></span>
+                                        <div class="form-check form-switch ms-auto mb-0">
+                                            <input
+                                                class="form-check-input form-check-input-switch cursor-pointer input-lainnya"
+                                                type="checkbox" id="" @if ($survey['questions'][$i - 1]['is_other_option_enabled']) checked @endif>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
+                            <div class="row mt-4 mb-2 d-block">
+                                <div class="col-7">
+                                    <div class="d-flex align-items-center">
+                                        <h6 class="text-start mt-2 mb-0">Pertanyaan Mandatory</h6>
+                                        <span
+                                            class="badge-lainnya fas fa-fw fa-info-circle text-gray ms-2 mt-2 cursor-pointer"
+                                            data-toggle="tooltip" data-placement="bottom"
+                                            title="Lorem Ipsum dolor sit amet"></span>
+                                        <div class="form-check form-switch ms-auto mb-0">
+                                            <input
+                                                class="form-check-input form-check-input-switch cursor-pointer input-mandatory"
+                                                type="checkbox" @if ($survey['questions'][$i - 1]['is_mandatory']) checked @endif>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div id="single-answer-question" class="@if ($question_type_id == 1 || $question_type_id == 2 || $question_type_id == 5) d-block @else d-none @endif">
                             <div class="row">
@@ -186,10 +218,11 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                             <h6 class="text-start @if ($question_type_id == 1 || $question_type_id == 2) d-block @else d-none @endif" id="single-question-title">Jawaban</h6>
                             <div class="row mb-2 @if ($question_type_id == 5) d-block @else d-none @endif" id="priority-question-title">
                                 <div class="col-8 row align-items-center pe-0">
-                                    <h6 class="text-start col-5 mt-2">Jawaban</h6>
-                                    <div class="col-7 d-flex align-items-center">
+                                    <h6 class="text-start col-3 mt-2">Jawaban</h6>
+                                    <div class="col-9 d-flex align-items-center justify-content-end">
                                         <div class="form-check p-0">
-                                            <input class="form-check-input" type="checkbox" value="" id="input-minimum" @if ($survey['questions'][$i - 1]['minimum_answer'] == 3) checked @endif>
+                                            <input class="form-check-input" type="checkbox" value="" id="input-minimum"
+                                                @if ($survey['questions'][$i - 1]['minimum_answer'] == 3) checked @endif>
                                             <label class="form-check-label" for="priority-minimum-checkbox">
                                                 Pengguna dapat memilih TOP 3 saja
                                             </label>
@@ -239,8 +272,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         <span class="badge-lainnya fas fa-fw fa-info-circle text-gray ms-2 mt-2 cursor-pointer"
                             data-toggle="tooltip" data-placement="bottom" title="Lorem Ipsum dolor sit amet"></span>
                         <div class="form-check form-switch ms-auto mb-0">
-                            <input class="form-check-input form-check-input-switch cursor-pointer" type="checkbox"
-                                id="input-lainnya" @if ($survey['questions'][$i - 1]['is_other_option_enabled']) checked @endif>
+                            <input class="form-check-input form-check-input-switch cursor-pointer input-lainnya"
+                                type="checkbox" id="" @if ($survey['questions'][$i - 1]['is_other_option_enabled']) checked @endif>
                         </div>
                     </div>
                 </div>
@@ -252,21 +285,21 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         <span class="badge-lainnya fas fa-fw fa-info-circle text-gray ms-2 mt-2 cursor-pointer"
                             data-toggle="tooltip" data-placement="bottom" title="Lorem Ipsum dolor sit amet"></span>
                         <div class="form-check form-switch ms-auto mb-0">
-                            <input class="form-check-input form-check-input-switch cursor-pointer" type="checkbox"
-                                id="input-none" @if ($survey['questions'][$i - 1]['is_no_answer_enabled']) checked @endif>
+                            <input class="form-check-input form-check-input-switch cursor-pointer input-none"
+                                type="checkbox" id="" @if ($survey['questions'][$i - 1]['is_no_answer_enabled']) checked @endif>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row mt-4 mb-2 d-block" id="input-mandatory-container">
+            <div class="row mt-4 mb-2 d-block">
                 <div class="col-7">
                     <div class="d-flex align-items-center">
                         <h6 class="text-start mt-2 mb-0">Pertanyaan Mandatory</h6>
                         <span class="badge-lainnya fas fa-fw fa-info-circle text-gray ms-2 mt-2 cursor-pointer"
                             data-toggle="tooltip" data-placement="bottom" title="Lorem Ipsum dolor sit amet"></span>
                         <div class="form-check form-switch ms-auto mb-0">
-                            <input class="form-check-input form-check-input-switch cursor-pointer" type="checkbox"
-                                id="input-mandatory" @if ($survey['questions'][$i - 1]['is_mandatory']) checked @endif>
+                            <input class="form-check-input form-check-input-switch cursor-pointer input-mandatory"
+                                type="checkbox" id="" @if ($survey['questions'][$i - 1]['is_mandatory']) checked @endif>
                         </div>
                     </div>
                 </div>
@@ -295,6 +328,19 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                     </div>
                 </div>
             </div>
+            <div class="row mt-4 mb-2 d-block">
+                <div class="col-7">
+                    <div class="d-flex align-items-center">
+                        <h6 class="text-start mt-2 mb-0">Pertanyaan Mandatory</h6>
+                        <span class="badge-lainnya fas fa-fw fa-info-circle text-gray ms-2 mt-2 cursor-pointer"
+                            data-toggle="tooltip" data-placement="bottom" title="Lorem Ipsum dolor sit amet"></span>
+                        <div class="form-check form-switch ms-auto mb-0">
+                            <input class="form-check-input form-check-input-switch cursor-pointer input-mandatory"
+                                type="checkbox" id="" @if ($survey['questions'][$i - 1]['is_mandatory']) checked @endif>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="open-ended-question" class="@if ($question_type_id == 6) d-block @else d-none @endif">
             <div class="row">
@@ -311,6 +357,19 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                     <div class="col-12">
                         <input type="text" name="open_ended_answer" id="open_ended_answer" class="form-control input-text"
                             placeholder="Responden akan menjawab sendiri" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 mb-2 d-block">
+                <div class="col-7">
+                    <div class="d-flex align-items-center">
+                        <h6 class="text-start mt-2 mb-0">Pertanyaan Mandatory</h6>
+                        <span class="badge-lainnya fas fa-fw fa-info-circle text-gray ms-2 mt-2 cursor-pointer"
+                            data-toggle="tooltip" data-placement="bottom" title="Lorem Ipsum dolor sit amet"></span>
+                        <div class="form-check form-switch ms-auto mb-0">
+                            <input class="form-check-input form-check-input-switch cursor-pointer input-mandatory"
+                                type="checkbox" id="" @if ($survey['questions'][$i - 1]['is_mandatory']) checked @endif>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -383,6 +442,19 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         <input type="text" name="action_website_answer" id="action_website_answer"
                             class="form-control input-text action_answer" placeholder="Tuliskan URL Website Disini"
                             value="{{ $survey['questions'][$i - 1]['website_url'] }}" onkeyup="setWebsiteURL();">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 mb-2 d-block">
+                <div class="col-7">
+                    <div class="d-flex align-items-center">
+                        <h6 class="text-start mt-2 mb-0">Pertanyaan Mandatory</h6>
+                        <span class="badge-lainnya fas fa-fw fa-info-circle text-gray ms-2 mt-2 cursor-pointer"
+                            data-toggle="tooltip" data-placement="bottom" title="Lorem Ipsum dolor sit amet"></span>
+                        <div class="form-check form-switch ms-auto mb-0">
+                            <input class="form-check-input form-check-input-switch cursor-pointer input-mandatory"
+                                type="checkbox" id="" @if ($survey['questions'][$i - 1]['is_mandatory']) checked @endif>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -526,6 +598,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 $('.question-type-text-guide').html('Responden mengurutkan jawaban berdasarkan peringkat.')
                 $('#scale-question').removeClass('d-none').addClass('d-block');
             } else if ($(this).data("type") == 4) {
+                $('#input-lainnya-container').removeClass('d-none').addClass('d-block');
                 questions[question_index]['sub_questions'] = [new_question_grid];
                 questions[question_index]['sub_questions'][0]['question'] = "";
                 questions[question_index]['sub_questions'][0]['answer_choices'] = [new_answer_single];
@@ -636,16 +709,23 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     <script>
         // grid question
         function addGridQuestion() {
-            if (questions[question_index]['sub_questions'][0]['answer_choices'].length > 0) {
-                questions[question_index]['sub_questions'].push({
-                    "question": "Pertanyaan Baru",
-                    "answer_choices": questions[question_index]['sub_questions'][0]['answer_choices']
-                });
-            } else {
+            if (questions[question_index]['sub_questions'].length == 0) {
                 questions[question_index]['sub_questions'].push({
                     "question": "Pertanyaan Baru",
                     "answer_choices": []
                 });
+            } else {
+                if (questions[question_index]['sub_questions'][0]['answer_choices'].length > 0) {
+                    questions[question_index]['sub_questions'].push({
+                        "question": "Pertanyaan Baru",
+                        "answer_choices": questions[question_index]['sub_questions'][0]['answer_choices']
+                    });
+                } else {
+                    questions[question_index]['sub_questions'].push({
+                        "question": "Pertanyaan Baru",
+                        "answer_choices": []
+                    });
+                }
             }
             questions[question_index]['sub_questions'][questions[question_index]['sub_questions'].length - 1]['question'] =
                 ""
@@ -846,7 +926,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         })
     </script>
     <script>
-        $("#input-lainnya").on('change', function() {
+        $(".input-lainnya").on('change', function() {
             if ($(this).is(':checked')) {
                 questions[question_index]['is_other_option_enabled'] = true;
             } else {
@@ -855,7 +935,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         });
     </script>
     <script>
-        $("#input-none").on('change', function() {
+        $(".input-none").on('change', function() {
             if ($(this).is(':checked')) {
                 questions[question_index]['is_no_answer_enabled'] = true;
             } else {
@@ -864,7 +944,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         });
     </script>
     <script>
-        $("#input-mandatory").on('change', function() {
+        $(".input-mandatory").on('change', function() {
             if ($(this).is(':checked')) {
                 questions[question_index]['is_mandatory'] = true;
             } else {
@@ -873,7 +953,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         });
     </script>
     <script>
-        $("#input-minimum").on('change', function() {
+        $(".input-minimum").on('change', function() {
             if ($(this).is(':checked')) {
                 console.log(3);
                 questions[question_index]['minimum_answer'] = 3;
