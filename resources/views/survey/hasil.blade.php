@@ -18,8 +18,8 @@
                         @if ($question['survey_question_type_id'] == 1)
                             <div class="row">
                                 <div class="text-start">
-                                    <h4 class="font-weight-bold">{{ $loop->iteration }}. {{ $question['question'] }}
-                                    </h4>
+                                    <h5 class="line-height-2">{{ $loop->iteration }}. {{ $question['question'] }}
+                                    </h5>
                                     <h6 class="text-gray">Single Answer - {{ $question['answers_count'] }} Jawaban
                                     </h6>
                                 </div>
@@ -32,8 +32,8 @@
                         @elseif ($question['survey_question_type_id'] == 2)
                             <div class="row">
                                 <div class="text-start">
-                                    <h4 class="font-weight-bold">{{ $loop->iteration }}. {{ $question['question'] }}
-                                    </h4>
+                                    <h5 class="line-height-2">{{ $loop->iteration }}. {{ $question['question'] }}
+                                    </h5>
                                     <h6 class="text-gray">Multi Answer - {{ $question['answers_count'] }} Jawaban
                                     </h6>
                                 </div>
@@ -46,8 +46,8 @@
                         @elseif ($question['survey_question_type_id'] == 3)
                             <div class="row">
                                 <div class="text-start">
-                                    <h4 class="font-weight-bold">{{ $loop->iteration }}. {{ $question['question'] }}
-                                    </h4>
+                                    <h5 class="line-height-2">{{ $loop->iteration }}. {{ $question['question'] }}
+                                    </h5>
                                     <h6 class="text-gray">Scale Question - {{ $question['answers_count'] }} Jawaban
                                     </h6>
                                 </div>
@@ -60,8 +60,8 @@
                         @elseif ($question['survey_question_type_id'] == 4)
                             <div class="row">
                                 <div class="text-start">
-                                    <h4 class="font-weight-bold">{{ $loop->iteration }}. {{ $question['question'] }}
-                                    </h4>
+                                    <h5 class="line-height-2">{{ $loop->iteration }}. {{ $question['question'] }}
+                                    </h5>
                                     <h6 class="text-gray">Grid Question - {{ $question['answers_count'] }} Jawaban
                                     </h6>
                                 </div>
@@ -74,8 +74,8 @@
                         @elseif ($question['survey_question_type_id'] == 6)
                             <div class="row mb-3">
                                 <div class="text-start">
-                                    <h4 class="font-weight-bold">{{ $loop->iteration }}. {{ $question['question'] }}
-                                    </h4>
+                                    <h5 class="line-height-2">{{ $loop->iteration }}. {{ $question['question'] }}
+                                    </h5>
                                     <h6 class="text-gray">Open Ended Question - {{ $question['answers_count'] }}
                                         Jawaban</h6>
                                 </div>
@@ -94,8 +94,8 @@
                         @elseif ($question['survey_question_type_id'] == 7)
                             <div class="row mb-3">
                                 <div class="text-start">
-                                    <h4 class="font-weight-bold">{{ $loop->iteration }}. {{ $question['question'] }}
-                                    </h4>
+                                    <h5 class="line-height-2">{{ $loop->iteration }}. {{ $question['question'] }}
+                                    </h5>
                                     <h6 class="text-gray">Action Question (Video) - {{ $question['answers_count'] }}
                                         Jawaban</h6>
                                 </div>
@@ -103,8 +103,8 @@
                         @elseif ($question['survey_question_type_id'] == 8)
                             <div class="row mb-3">
                                 <div class="text-start">
-                                    <h4 class="font-weight-bold">{{ $loop->iteration }}. {{ $question['question'] }}
-                                    </h4>
+                                    <h5 class="line-height-2">{{ $loop->iteration }}. {{ $question['question'] }}
+                                    </h5>
                                     <h6 class="text-gray">Action Question (Install App) -
                                         {{ $question['answers_count'] }} Jawaban</h6>
                                 </div>
@@ -112,8 +112,8 @@
                         @elseif ($question['survey_question_type_id'] == 9)
                             <div class="row mb-3">
                                 <div class="text-start">
-                                    <h4 class="font-weight-bold">{{ $loop->iteration }}. {{ $question['question'] }}
-                                    </h4>
+                                    <h5 class="line-height-2">{{ $loop->iteration }}. {{ $question['question'] }}
+                                    </h5>
                                     <h6 class="text-gray">Action Question (Kunjungi Website) -
                                         {{ $question['answers_count'] }} Jawaban</h6>
                                 </div>
@@ -121,8 +121,8 @@
                         @elseif ($question['survey_question_type_id'] == 9)
                             <div class="row">
                                 <div class="text-start">
-                                    <h4 class="font-weight-bold">{{ $loop->iteration }}.{{ $question['question'] }}
-                                    </h4>
+                                    <h5 class="line-height-2">{{ $loop->iteration }}.{{ $question['question'] }}
+                                    </h5>
                                     <h6 class="text-gray">Action Question (Upload Gambar) -
                                         {{ $question['answers_count'] }} Jawaban</h6>
                                 </div>
