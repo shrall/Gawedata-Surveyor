@@ -234,7 +234,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                 </div>
                             </div>
                             <div class="single-answer-list">
-                                @foreach ($survey['questions'][$i - 1]['answer_choices'] as $answer)
+                                @foreach ($survey['questions'][$i - 1]['answer_choices'] as $key => $answer)
                                     <div class="row mb-3" id="question-answer{{ $loop->iteration }}">
                                         <div class="col-7 position-relative">
                                             <span
@@ -242,6 +242,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                                 id="answer-order{{ $loop->iteration }}">{{ $loop->iteration }}.</span>
                                             <input type="text" name="answer{{ $loop->iteration }}"
                                                 id="answer-single{{ $loop->iteration }}" class="form-control input-text"
+                                                onfocus="focusSkipMenu({{ $loop->iteration }});"
                                                 style="padding-left:3.5rem !important;"
                                                 placeholder="Tuliskan Jawaban Disini" value="{{ $answer['text'] ?? '' }}"
                                                 @if ($question_type_id == 1)
@@ -249,11 +250,102 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                         @else
                                             onkeyup="setNewSingleAnswer({{ $loop->iteration }});"
                                 @endif>
+                                @if ($answer['next_question_id'])
+                                    @php
+                                        $order = collect($survey['questions'])->where('id', $answer['next_question_id']);
+                                    @endphp
+                                    <span
+                                        class="position-absolute top-50 end-0 translate-middle-y font-weight-bold me-4 px-2 py-1 d-block skip-info-{{ $loop->iteration }}"
+                                        id="skip-info-{{ $key }}">Skip ke P{{ $order->keys()[0] + 1 }}
+                                        Aktif</span>
+                                @else
+                                    <span
+                                        class="position-absolute top-50 end-0 translate-middle-y font-weight-bold me-4 px-2 py-1 d-none skip-info-{{ $loop->iteration }}"
+                                        id="skip-info-{{ $key }}">Skip ke P1 Aktif</span>
+                                @endif
                             </div>
                             <div class="col-5 text-start d-flex align-items-center">
                                 <span class="fas fa-fw fa-trash-alt text-gray cursor-pointer fs-3"
                                     id="answer_delete{{ $loop->iteration }}"
                                     onclick="deleteSingleAnswer({{ $loop->iteration }});"></span>
+                            </div>
+                            @if ($answer['next_question_id'])
+                                <div id="input-skip-container-{{ $loop->iteration }}"
+                                    class="col-12 mt-1 mb-2 d-none input-skip-container">
+                                    <div class="d-flex align-items-center">
+                                        <div class="form-check">
+                                            <input class="form-check-input input-skip"
+                                                onchange="triggerSkipCheckbox({{ $loop->iteration }});" type="checkbox"
+                                                value="" id="input-skip-{{ $loop->iteration }}" checked>
+                                            <label class="form-check-label" for="input-skip-{{ $loop->iteration }}">
+                                                Skip ke pertanyaan tertentu jika memilih jawaban ini
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            @else
+                                <div id="input-skip-container-{{ $loop->iteration }}"
+                                    class="col-12 mt-1 mb-2 d-none input-skip-container">
+                                    <div class="d-flex align-items-center">
+                                        <div class="form-check">
+                                            <input class="form-check-input input-skip"
+                                                onchange="triggerSkipCheckbox({{ $loop->iteration }});" type="checkbox"
+                                                value="" data-id="{{ $loop->iteration }}"
+                                                id="input-skip-{{ $loop->iteration }}">
+                                            <label class="form-check-label" for="input-skip-{{ $loop->iteration }}">
+                                                Skip ke pertanyaan tertentu jika memilih jawaban ini
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                            <div class="input-skip-dropdown-container col-7 mt-1 d-none"
+                                id="input-skip-dropdown-container-{{ $loop->iteration }}">
+                                <div class="d-flex align-items-center">
+                                    <label class="form-check-label font-weight-bold me-2" style="width: 100px;">
+                                        Lompat ke
+                                    </label>
+                                    <div class="dropdown w-100 position-relative"
+                                        id="select-survey-skip-{{ $loop->iteration }}">
+                                        @if ($answer['next_question_id'])
+                                            @php
+                                                $order = collect($survey['questions'])->where('id', $answer['next_question_id']);
+                                            @endphp
+                                            <span class="form-control input-text d-flex align-items-center"
+                                                style="padding-left: 4rem !important;" type="button"
+                                                data-bs-toggle="dropdown" id="selected-survey-skip-{{ $key }}">
+                                                {{ strlen($order->first()['question']) > 25 ? substr($order->first()['question'], 0, 23) . '...' : $order->first()['question'] }}
+                                                <span class="fa fa-fw fa-chevron-down ms-auto"></span>
+                                            </span>
+                                            <span
+                                                class="badge-pertanyaan position-absolute top-50 translate-middle-y font-weight-bold p-2"
+                                                id="skip-badge-{{ $key }}"
+                                                style="color: #3f60f5 !important; left:1rem;">P{{ $order->keys()[0] + 1 }}</span>
+                                        @else
+                                            <span class="form-control input-text d-flex align-items-center"
+                                                style="padding-left: 4rem !important;" type="button"
+                                                data-bs-toggle="dropdown" id="selected-survey-skip-{{ $key }}">
+                                                {{ strlen($survey['questions'][0]['question']) > 25 ? substr($survey['questions'][0]['question'], 0, 23) . '...' : $survey['questions'][0]['question'] }}
+                                                <span class="fa fa-fw fa-chevron-down ms-auto"></span>
+                                            </span>
+                                            <span
+                                                class="badge-pertanyaan position-absolute top-50 translate-middle-y font-weight-bold p-2"
+                                                id="skip-badge-{{ $key }}"
+                                                style="color: #3f60f5 !important; left:1rem;">P1</span>
+                                        @endif
+                                        <ul class="dropdown-menu w-100 px-2">
+                                            <div class="overflow-auto px-1" style="min-height:0;max-height: 30vh;">
+                                                @foreach ($survey['questions'] as $question)
+                                                    <li class="dropdown-item cursor-pointer"
+                                                        onclick="changeSkipDropdown({{ $loop->iteration }}, {{ $key }}, {{ $question['id'] }});">
+                                                        P{{ $loop->iteration }} |
+                                                        {{ strlen($question['question']) > 25 ? substr($question['question'], 0, 23) . '...' : $question['question'] }}
+                                                    </li>
+                                                @endforeach
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                 @endforeach
@@ -508,7 +600,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         var new_answer_single = "Jawaban Baru";
         var new_answer_single_skip_logic = {
             "answer": "Jawaban Baru",
-            "next_question": 0
+            "next_question": ""
         };
         var new_question_grid = {
             "question": "Pertanyaan Baru",
@@ -532,7 +624,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 } else if (question.survey_question_type_id == 1) {
                     question.answer_choices.forEach(function(answer, i) {
                         questions[index].answer_choices[i]['answer'] = answer.text;
-                        questions[index].answer_choices[i]['next_question'] = 1;
+                        questions[index].answer_choices[i]['next_question'] = getQuestionIndex(
+                            questions[index].answer_choices[i]['next_question_id']);
                     })
                 }
             })
@@ -540,6 +633,17 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         $('#survey-setting-button').click(function() {
             console.log(questions)
         });
+    </script>
+    <script>
+        function getQuestionIndex(next_question_id) {
+            var the_index;
+            questions.forEach(function(question, index) {
+                if (question['id'] == next_question_id) {
+                    the_index = index;
+                }
+            })
+            return the_index;
+        }
     </script>
     <script>
         function changeQuestionType() {
@@ -636,7 +740,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             if (questions[question_index]['survey_question_type_id'] == 1) {
                 questions[question_index]['answer_choices'].push({
                     "answer": "Jawaban Baru",
-                    "next_question": 0
+                    "next_question": ""
                 });
                 questions[question_index]['answer_choices'][questions[question_index]['answer_choices'].length - 1][
                     'answer'
@@ -679,7 +783,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             console.log(questions[question_index]['answer_choices']);
             $.post("{{ config('app.url') }}" + "/survey/refreshsingleanswerskiplogic", {
                     _token: CSRF_TOKEN,
-                    answers: questions[question_index]['answer_choices']
+                    answers: questions[question_index]['answer_choices'],
+                    survey: @json($survey)
                 })
                 .done(function(data) {
                     $(".single-answer-list").html(data)
@@ -1339,9 +1444,47 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     <script>
         function reorder_question_link() {
             $(".survey-question-card").each(function(index) {
-                // console.log(index);
                 $(this).attr("onclick", "saveDraft(" + (index + 1) + ", false);");
             });
+        };
+    </script>
+    {{-- skip logic --}}
+    <script>
+        function focusSkipMenu(id) {
+            $('.input-skip-container').addClass('d-none').removeClass('d-block');
+            $('.input-skip-dropdown-container').addClass('d-none').removeClass('d-block');
+            $('#input-skip-container-' + id).addClass('d-block').removeClass('d-none');
+            if ($('#input-skip-' + id).is(':checked')) {
+                $('#input-skip-dropdown-container-' + id).addClass('d-block').removeClass('d-none');
+            }
+        }
+    </script>
+    <script>
+        function triggerSkipCheckbox(data_id) {
+            if ($('#input-skip-' + data_id).is(':checked')) {
+                $('#input-skip-dropdown-container-' + data_id).addClass('d-block').removeClass('d-none');
+                $('.skip-info-' + data_id).addClass('d-block').removeClass('d-none');
+                questions[question_index]['answer_choices'][data_id - 1]['next_question'] =
+                    questions[0]['id'];
+            } else {
+                $('#input-skip-dropdown-container-' + data_id).addClass('d-none').removeClass('d-block');
+                $('.skip-info-' + data_id).addClass('d-none').removeClass('d-block');
+                questions[question_index]['answer_choices'][data_id - 1]['next_question'] = "";
+                $('#selected-survey-skip-' + (data_id + 1)).html(questions[0]['question'] +
+                    '<span class="fa fa-fw fa-chevron-down ms-auto"></span>');
+                $('#skip-badge-' + (data_id - 1)).html('P1');
+                $('#skip-info-' + (data_id - 1)).html('Skip ke P1 aktif');
+            }
+        };
+    </script>
+    <script>
+        function changeSkipDropdown(order, key, id) {
+            $('#selected-survey-skip-' + key).html(questions[order - 1]['question'] +
+                '<span class="fa fa-fw fa-chevron-down ms-auto"></span>');
+            $('#skip-badge-' + key).html('P' + order);
+            $('#skip-info-' + key).html('Skip ke P' + order + ' aktif');
+            $('#skip-info-' + key).addClass('d-block').removeClass('d-none');
+            questions[question_index]['answer_choices'][key]['next_question'] = order - 1;
         };
     </script>
 @endsection

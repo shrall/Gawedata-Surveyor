@@ -35,7 +35,7 @@ class SurveyController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
         if ($request->has('daily_date')) {
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . session('token'),
@@ -308,7 +308,12 @@ class SurveyController extends Controller
         } else if ($request->filter == 'private') {
             $surveys = $surveys->where('is_private', true);
         }
-        return view('inc.survey_list', compact('surveys'));
+        $pagination = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/survey?sort=' . $request->sort)
+            ->json()['data'];
+        return view('inc.survey_list', compact('surveys', 'pagination'));
     }
 
     public function get_city(Request $request)
@@ -394,12 +399,13 @@ class SurveyController extends Controller
 
     public function refresh_single_answer_skip_logic(Request $request)
     {
+        $survey = $request->survey;
         if (count($request->answers) > 0) {
             $answers = $request->answers;
         } else {
             $answers['answer'] = null;
         }
-        return view('survey.inc.draft.single_answer_skip_logic', compact('answers'));
+        return view('survey.inc.draft.single_answer_skip_logic', compact('answers', 'survey'));
     }
 
     public function refresh_grid_question(Request $request)
