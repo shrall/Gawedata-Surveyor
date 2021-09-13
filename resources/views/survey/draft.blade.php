@@ -173,7 +173,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="row mt-4 mb-2" id="input-lainnya-container">
+                            <div class="row mt-4 mb-2" id="input-lainnya-container">
                                 <div class="col-7">
                                     <div class="d-flex align-items-center">
                                         <h6 class="text-start mt-2 mb-0">Aktifkan Jawaban 'Lainnya'</h6>
@@ -188,7 +188,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                         </div>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
                             <div class="row mt-4 mb-2 d-block">
                                 <div class="col-7">
                                     <div class="d-flex align-items-center">
