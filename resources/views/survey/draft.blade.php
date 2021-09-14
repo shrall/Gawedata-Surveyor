@@ -636,7 +636,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     </script>
     <script>
         function getQuestionIndex(next_question_id) {
-            var the_index;
+            var the_index = "";
             questions.forEach(function(question, index) {
                 if (question['id'] == next_question_id) {
                     the_index = index;
