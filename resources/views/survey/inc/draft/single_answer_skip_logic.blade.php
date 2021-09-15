@@ -62,7 +62,7 @@
                             <span class="form-control input-text d-flex align-items-center"
                                 style="padding-left: 4rem !important;" type="button" data-bs-toggle="dropdown"
                                 id="selected-survey-skip-{{ $key }}">
-                                {{ strlen($survey['questions'][$answer['next_question']]['question']) > 25 ? substr($survey['questions'][$answer['next_question']]['question'], 0, 23) . '...' : $survey['questions'][$answer['next_question']]['question'] }}
+                                {{ strlen($questions[$answer['next_question']]['question']) > 25 ? substr($questions[$answer['next_question']]['question'], 0, 23) . '...' : $questions[$answer['next_question']]['question'] }}
                                 <span class="fa fa-fw fa-chevron-down ms-auto"></span>
                             </span>
                             <span
@@ -73,7 +73,7 @@
                             <span class="form-control input-text d-flex align-items-center"
                                 style="padding-left: 4rem !important;" type="button" data-bs-toggle="dropdown"
                                 id="selected-survey-skip-{{ $key }}">
-                                {{ strlen($survey['questions'][0]['question']) > 25 ? substr($survey['questions'][0]['question'], 0, 23) . '...' : $survey['questions'][0]['question'] }}
+                                {{ strlen($questions[0]['question']) > 25 ? substr($questions[0]['question'], 0, 23) . '...' : $questions[0]['question'] }}
                                 <span class="fa fa-fw fa-chevron-down ms-auto"></span>
                             </span>
                             <span
@@ -83,7 +83,7 @@
                         @endif
                         <ul class="dropdown-menu w-100 px-2">
                             <div class="overflow-auto px-1" style="min-height:0;max-height: 30vh;">
-                                @foreach ($survey['questions'] as $question)
+                                @foreach ($questions as $question)
                                     <li class="dropdown-item cursor-pointer"
                                         onclick="changeSkipDropdown({{ $loop->iteration }}, {{ $key }}, {{ $question['id'] }});">
                                         P{{ $loop->iteration }} |

@@ -399,13 +399,13 @@ class SurveyController extends Controller
 
     public function refresh_single_answer_skip_logic(Request $request)
     {
-        $survey = $request->survey;
+        $questions = $request->questions;
         if (count($request->answers) > 0) {
             $answers = $request->answers;
         } else {
             $answers['answer'] = null;
         }
-        return view('survey.inc.draft.single_answer_skip_logic', compact('answers', 'survey'));
+        return view('survey.inc.draft.single_answer_skip_logic', compact('answers', 'questions'));
     }
 
     public function refresh_grid_question(Request $request)

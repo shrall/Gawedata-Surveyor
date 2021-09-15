@@ -784,13 +784,13 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             $.post("{{ config('app.url') }}" + "/survey/refreshsingleanswerskiplogic", {
                     _token: CSRF_TOKEN,
                     answers: questions[question_index]['answer_choices'],
-                    survey: @json($survey)
+                    questions: @json($survey['questions'])
                 })
                 .done(function(data) {
                     $(".single-answer-list").html(data)
                 })
                 .fail(function(e) {
-                    console.log(e);
+                    console.log(e.responseText);
                 });
         }
 
