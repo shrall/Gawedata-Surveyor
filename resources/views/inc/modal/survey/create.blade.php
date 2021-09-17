@@ -227,7 +227,7 @@
                                         <div class="col-3 text-end">
                                             <div class="input-group mb-3">
                                               <input type="number" class="form-control input-text" name="estimate_time">
-                                              <span class="input-group-text input-text text-gray" style="padding-left: 0.75rem !important; padding-right: 0.75rem !important;">Menit</span>
+                                              <span class="input-group-text input-text text-gray" style="padding-left: 0.65rem !important; padding-right: 0.65rem !important;">Menit</span>
                                             </div>
                                         </div>
                                     </div>

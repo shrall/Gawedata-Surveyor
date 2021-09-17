@@ -152,11 +152,6 @@ class SurveyController extends Controller
         ])
             ->get(config('services.api.url') . '/survey/' . $id)
             ->json()['data'];
-        if ($new == 'true' && count($survey['questions']) > 0) {
-            $survey['questions'][count($survey['questions']) - 1]['question'] = "";
-            $survey['questions'][count($survey['questions']) - 1]['answer_choices'][0]['answer'] = "";
-            $survey['questions'][count($survey['questions']) - 1]['answer_choices'][0]['text'] = "";
-        }
         $provinces = array();
         foreach ($survey['city_criteria'] as $city) {
             array_push($provinces, $city['city']['province']);
@@ -165,6 +160,13 @@ class SurveyController extends Controller
         $cities = array();
         foreach ($survey['city_criteria'] as $city) {
             array_push($cities, $city['city']);
+        }
+        if ($new == 'true' && count($survey['questions']) > 0) {
+            if ($i == count($survey['questions'])) {
+                $survey['questions'][$i - 1]['question'] = "";
+                $survey['questions'][$i - 1]['answer_choices'][0]['answer'] = "";
+                $survey['questions'][$i - 1]['answer_choices'][0]['text'] = "";
+            }
         }
         if ($survey['status_id'] == 6) {
             return redirect()->route('survey.hasil', $id);
