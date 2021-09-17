@@ -28,8 +28,8 @@ class HomeController extends Controller
         $surveys = Http::withHeaders([
             'Authorization' => 'Bearer ' . session('token'),
         ])
-            ->get(config('services.api.url') . '/survey')
-            ->json()['data']['data'];
+            ->get(config('services.api.url') . '/survey?paginate=16&filter=General')
+            ->json()['data'];
         $locations = Http::withHeaders([
             'Authorization' => 'Bearer ' . session('token'),
         ])
@@ -55,7 +55,6 @@ class HomeController extends Controller
         ])
             ->get(config('services.api.url') . '/surveyCategory')
             ->json()['data'];
-        $surveys = collect($surveys)->where('survey_type_id', 2);
         return view('home', compact('surveys', 'categories', 'locations', 'educations', 'professions', 'expenses'));
     }
 }

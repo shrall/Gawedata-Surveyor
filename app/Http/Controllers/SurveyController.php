@@ -302,20 +302,9 @@ class SurveyController extends Controller
         $surveys = Http::withHeaders([
             'Authorization' => 'Bearer ' . session('token'),
         ])
-            ->get(config('services.api.url') . '/survey?sort=' . $request->sort)
-            ->json()['data']['data'];
-        $surveys = collect($surveys)->where('survey_type_id', $request->type);
-        if ($request->filter == 'public') {
-            $surveys = $surveys->where('is_private', false);
-        } else if ($request->filter == 'private') {
-            $surveys = $surveys->where('is_private', true);
-        }
-        $pagination = Http::withHeaders([
-            'Authorization' => 'Bearer ' . session('token'),
-        ])
-            ->get(config('services.api.url') . '/survey?sort=' . $request->sort)
+            ->get(config('services.api.url') . '/survey?paginate=16&sort=' . $request->sort . '&page=' . $request->page . '&filter=' . $request->filter)
             ->json()['data'];
-        return view('inc.survey_list', compact('surveys', 'pagination'));
+        return view('inc.survey_list', compact('surveys'));
     }
 
     public function get_city(Request $request)

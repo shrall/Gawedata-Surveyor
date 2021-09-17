@@ -14,24 +14,6 @@
                 <h2>Daftar Survei</h2>
             </div>
             <div class="ms-auto">
-                <div class="dropdown d-inline-block mx-2" id="select-filter">
-                    <span class="input-select d-flex align-items-center" type="button" id="selected-filter"
-                        data-bs-toggle="dropdown">
-                        <span class="fa fa-fw fa-filter text-gawedata me-2"></span>
-                        Filter
-                        <span class="fa fa-fw fa-chevron-down ms-auto"></span>
-                    </span>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" href="#" id="filter-public"
-                                onclick="changeFilter('public');">Public</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#" id="filter-private"
-                                onclick="changeFilter('private');">Private</a>
-                        </li>
-                    </ul>
-                </div>
                 <div class="dropdown d-inline-block mx-2" id="select-sort">
                     <span class="input-select d-flex align-items-center" type="button" id="selected-sort"
                         data-bs-toggle="dropdown">
@@ -52,15 +34,15 @@
         </div>
         @if ($user['is_admin'])
             <div class="d-flex align-items-center gx-3 mb-5 px-2 font-nexa">
-                <div class="tab-gawedata-active px-2 py-1" id="tab-general" onclick="changeType(2)">Survei Umum</div>
-                <div class="tab-gawedata px-2 py-1" id="tab-daily" onclick="changeType(1)">Daily Survei</div>
+                <div class="tab-gawedata-active px-2 py-1" id="tab-general" onclick="changeType('General')">Survei Umum</div>
+                <div class="tab-gawedata px-2 py-1" id="tab-daily" onclick="changeType('Daily')">Daily Survei</div>
             </div>
         @endif
         <div id="survey-container">
-            @if (count($surveys) > 0)
+            @if (count($surveys['data']) > 0)
                 <div class="d-block" id="survey-view-grid">
                     <div class="row gy-4 mb-4" id="survey-view-grid-box">
-                        @foreach ($surveys as $survey)
+                        @foreach ($surveys['data'] as $survey)
                             <a href="{{ route('survey.show', ['id' => $survey['id'], 'i' => 1, 'new' => 'false']) }}"
                                 class="col-3 text-decoration-none">
                                 <div class="card card-survey-grid px-1 py-3 text-gray">
@@ -109,7 +91,7 @@
                             </tr>
                         </thead>
                         <tbody class="text-gray" id="survey-view-list-box">
-                            @foreach ($surveys as $survey)
+                            @foreach ($surveys['data'] as $survey)
                                 <tr class="survey-row cursor-pointer @if ($loop->iteration > 1) border-top @endif"
                                     data-href="{{ route('survey.show', ['id' => $survey['id'], 'i' => 1, 'new' => 'false']) }}">
                                     <th class="py-4 text-dark fs-5" scope="row">
@@ -168,6 +150,17 @@
                     </div>
                 </div>
             @endif
+            @if ($surveys['total'] > 0)
+                <nav id="survey-pagination">
+                    <ul class="pagination justify-content-center">
+                        @foreach ($surveys['links'] as $page)
+                            <li class="cursor-pointer page-item @if (!$page['url'])disabled @endif @if ($page['active'])active @endif">
+                                <a onclick="changePage({{ $page['label'] }});" class="page-link">{{ $page['label'] }}</a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </nav>
+            @endif
         </div>
     </div>
 @endsection
@@ -183,33 +176,36 @@
     <script>
         var survey_sort = "";
         var survey_filter = "";
+        var survey_page = 1;
         $(function() {
-            $('#select-filter').find('li').click(function() {
-                $('#selected-filter').html($(this).text() +
-                    '<span class="fa fa-fw fa-chevron-down ms-auto"></span>');
-            });
             $('#select-sort').find('li').click(function() {
                 $('#selected-sort').html($(this).text() +
                     '<span class="fa fa-fw fa-chevron-down ms-auto"></span>');
             });
         });
 
+        function changePage(page) {
+            survey_page = page;
+            changeSortFilter(survey_filter, survey_sort, survey_page);
+        };
+
         function changeFilter(filter) {
             survey_filter = filter;
-            changeSortFilter(survey_filter, survey_sort);
+            changeSortFilter(survey_filter, survey_sort, survey_page);
         }
 
         function changeSort(sort) {
             survey_sort = sort;
-            changeSortFilter(survey_filter, survey_sort);
+            changeSortFilter(survey_filter, survey_sort, survey_page);
         }
 
-        function changeSortFilter(filter, sort) {
+        function changeSortFilter(filter, sort, page) {
             $.post('{{ config('app.url') }}' + "/survey/filter_sort", {
                     _token: CSRF_TOKEN,
                     filter: filter,
                     sort: sort,
-                    type: survey_type
+                    filter: survey_type,
+                    page: page
                 })
                 .done(function(data) {
                     $('#survey-container').html(data);
@@ -598,11 +594,11 @@
     </script>
     {{-- daily survey tabs --}}
     <script>
-        var survey_type = 2;
+        var survey_type = 'General';
 
         function changeType(type) {
             survey_type = type;
-            if (type == 1) {
+            if (type == 'Daily') {
                 //ke daily
                 $('#tab-general').removeClass('tab-gawedata-active').addClass('tab-gawedata');
                 $('#tab-daily').removeClass('tab-gawedata').addClass('tab-gawedata-active');

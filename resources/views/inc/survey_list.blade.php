@@ -1,7 +1,7 @@
-@if (count($surveys) > 0)
+@if (count($surveys['data']) > 0)
     <div class="d-block" id="survey-view-grid">
         <div class="row gy-4 mb-4" id="survey-view-grid-box">
-            @foreach ($surveys as $survey)
+            @foreach ($surveys['data'] as $survey)
                 <a href="{{ route('survey.show', ['id' => $survey['id'], 'i' => 1, 'new' => 'false']) }}"
                     class="col-3 text-decoration-none">
                     <div class="card card-survey-grid px-1 py-3 text-gray">
@@ -48,7 +48,7 @@
                 </tr>
             </thead>
             <tbody class="text-gray" id="survey-view-list-box">
-                @foreach ($surveys as $survey)
+                @foreach ($surveys['data'] as $survey)
                     <tr class="survey-row cursor-pointer @if ($loop->iteration > 1) border-top @endif"
                         data-href="{{ route('survey.show', ['id' => $survey['id'], 'i' => 1, 'new' => 'false']) }}">
                         <th class="py-4 text-dark fs-5" scope="row">
@@ -104,4 +104,15 @@
             <h5>Yuk, mulai buat survey</h5>
         </div>
     </div>
+@endif
+@if ($surveys['total'] > 0)
+    <nav id="survey-pagination">
+        <ul class="pagination justify-content-center">
+            @foreach ($surveys['links'] as $page)
+                <li class="cursor-pointer page-item @if (!$page['url'])disabled @endif @if ($page['active'])active @endif">
+                    <a onclick="changePage({{ $page['label'] }});" class="page-link">{{ $page['label'] }}</a>
+                </li>
+            @endforeach
+        </ul>
+    </nav>
 @endif
