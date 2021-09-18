@@ -88,9 +88,14 @@
                                 class="btn btn-gawedata font-lato d-none">
                                 Buat Survei
                             </a>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#create-assessment-modal" id="create-assessment"
+                                class="btn btn-gawedata font-lato d-none">
+                                Buat Assessment
+                            </a>
                         </li>
                         @include('inc.modal.survey.create')
                         @include('inc.modal.survey.create_daily')
+                        @include('inc.modal.assessment.create')
                         <li class="nav-item mx-2 ">
                             <a href="#" class="text-gawedata text-decoration-none font-weight-bold cursor-pointer"
                                 id="survey-button-grid" onclick="toggleSurveyViewGrid()">

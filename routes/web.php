@@ -2,6 +2,8 @@
 header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization, Accept,charset,boundary,Content-Length');
 header('Access-Control-Allow-Origin: *');
+
+use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\UserController;
@@ -49,4 +51,7 @@ Route::group(['middleware' => ['surveyor']], function () {
     Route::post('survey/refreshgridquestion', [SurveyController::class, 'refresh_grid_question'])->name('survey.refreshgridquestion');
     Route::post('survey/refreshgridanswer', [SurveyController::class, 'refresh_grid_answer'])->name('survey.refreshgridanswer');
     Route::put('survey/{survey}/changesettings', [SurveyController::class, 'change_settings'])->name('survey.changesettings');
+    //assessment
+    Route::post('assessment/get_assessment', [AssessmentController::class, 'get_assessment'])->name('assessment.getassessment');
+    Route::get('assessment/{id}/{i}/{new}', [AssessmentController::class, 'show'])->name('assessment.show');
 });

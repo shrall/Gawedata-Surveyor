@@ -34,8 +34,10 @@
         </div>
         @if ($user['is_admin'])
             <div class="d-flex align-items-center gx-3 mb-5 px-2 font-nexa">
-                <div class="tab-gawedata-active px-2 py-1" id="tab-general" onclick="changeType('General')">Survei Umum</div>
+                <div class="tab-gawedata-active px-2 py-1" id="tab-general" onclick="changeType('General')">Survei Umum
+                </div>
                 <div class="tab-gawedata px-2 py-1" id="tab-daily" onclick="changeType('Daily')">Daily Survei</div>
+                <div class="tab-gawedata px-2 py-1" id="tab-assessment" onclick="changeType('Assessment')">Assessment</div>
             </div>
         @endif
         <div id="survey-container">
@@ -155,7 +157,19 @@
                     <ul class="pagination justify-content-center">
                         @foreach ($surveys['links'] as $page)
                             <li class="cursor-pointer page-item @if (!$page['url'])disabled @endif @if ($page['active'])active @endif">
-                                <a onclick="changePage({{ $page['label'] }});" class="page-link">{{ $page['label'] }}</a>
+                                @if ($loop->iteration == 1)
+                                    <a onclick="changePage({{ $surveys['current_page'] - 1 }});" class="page-link">
+                                        Previous
+                                    </a>
+                                @elseif ($loop->iteration == count($surveys['links']))
+                                    <a onclick="changePage({{ $surveys['current_page'] + 1 }});" class="page-link">
+                                        Next
+                                    </a>
+                                @else
+                                    <a onclick="changePage({{ $page['label'] }});" class="page-link">
+                                        {{ $page['label'] }}
+                                    </a>
+                                @endif
                             </li>
                         @endforeach
                     </ul>
@@ -186,7 +200,11 @@
 
         function changePage(page) {
             survey_page = page;
-            changeSortFilter(survey_filter, survey_sort, survey_page);
+            if (survey_type == 'Assessment') {
+                changeToAssessment(survey_sort, survey_page);
+            } else {
+                changeSortFilter(survey_filter, survey_sort, survey_page);
+            }
         };
 
         function changeFilter(filter) {
@@ -598,20 +616,50 @@
 
         function changeType(type) {
             survey_type = type;
-            if (type == 'Daily') {
-                //ke daily
-                $('#tab-general').removeClass('tab-gawedata-active').addClass('tab-gawedata');
-                $('#tab-daily').removeClass('tab-gawedata').addClass('tab-gawedata-active');
-                $('#create-survey-daily').removeClass('d-none').addClass('d-block');
-                $('#create-survey-general').removeClass('d-block').addClass('d-none');
+            if (type != 'Assessment') {
+                if (type == 'Daily') {
+                    //ke daily
+                    $('#tab-general').removeClass('tab-gawedata-active').addClass('tab-gawedata');
+                    $('#tab-assessment').removeClass('tab-gawedata-active').addClass('tab-gawedata');
+                    $('#tab-daily').removeClass('tab-gawedata').addClass('tab-gawedata-active');
+                    $('#create-survey-daily').removeClass('d-none').addClass('d-block');
+                    $('#create-survey-general').removeClass('d-block').addClass('d-none');
+                    $('#create-assessment').removeClass('d-block').addClass('d-none');
+                } else {
+                    //ke general
+                    $('#tab-general').removeClass('tab-gawedata').addClass('tab-gawedata-active');
+                    $('#tab-assessment').removeClass('tab-gawedata-active').addClass('tab-gawedata');
+                    $('#tab-daily').removeClass('tab-gawedata-active').addClass('tab-gawedata');
+                    $('#create-survey-daily').removeClass('d-block').addClass('d-none');
+                    $('#create-survey-general').removeClass('d-none').addClass('d-block');
+                    $('#create-assessment').removeClass('d-block').addClass('d-none');
+                }
+                changeSortFilter(survey_filter, survey_sort);
             } else {
-                //ke general
-                $('#tab-general').removeClass('tab-gawedata').addClass('tab-gawedata-active');
+                $('#tab-assessment').removeClass('tab-gawedata').addClass('tab-gawedata-active');
+                $('#tab-general').removeClass('tab-gawedata-active').addClass('tab-gawedata');
                 $('#tab-daily').removeClass('tab-gawedata-active').addClass('tab-gawedata');
+                $('#create-assessment').removeClass('d-none').addClass('d-block');
+                $('#create-survey-general').removeClass('d-block').addClass('d-none');
                 $('#create-survey-daily').removeClass('d-block').addClass('d-none');
-                $('#create-survey-general').removeClass('d-none').addClass('d-block');
+                changeToAssessment(survey_sort, 1);
             }
-            changeSortFilter(survey_filter, survey_sort);
+        }
+
+        function changeToAssessment(sort, page) {
+
+            $.post('{{ config('app.url') }}' + "/assessment/get_assessment", {
+                    _token: CSRF_TOKEN,
+                    sort: sort,
+                    page: page
+                })
+                .done(function(data) {
+                    console.log(data);
+                    $('#survey-container').html(data);
+                })
+                .fail(function(e) {
+                    console.log(e);
+                });
         }
     </script>
 @endsection

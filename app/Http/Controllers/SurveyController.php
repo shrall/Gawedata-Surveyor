@@ -333,7 +333,6 @@ class SurveyController extends Controller
         ])
             ->get(config('services.api.url') . '/surveyResult/' . $id)
             ->json()['data'];
-        // dd($result['questions']);
         return view('survey.hasil', compact('survey', 'result'));
     }
 
