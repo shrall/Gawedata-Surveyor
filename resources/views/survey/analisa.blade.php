@@ -1,5 +1,11 @@
 @extends('layouts.app')
-
+@php
+$user = Http::withHeaders([
+    'Authorization' => 'Bearer ' . session('token'),
+])
+    ->get(config('services.api.url') . '/details')
+    ->json()['data'];
+@endphp
 @section('content')
     <div class="container">
         <div class="row" style="height:90vh;">
@@ -9,7 +15,8 @@
             <div class="col-7 text-center my-4">
                 <div class="card card-survey-detail border-0 ms-4 p-4 font-lato">
                     <div class="row justify-content-end">
-                        <a href="#" class="col-3 btn btn-gawedata-3 font-lato font-weight-bold">
+                        <a href="{{ config('services.api.url') . '/downloadSurveyResultExcel/' . $survey['id'] . '/' . $user['id'] }}"
+                            class="col-3 btn btn-gawedata-3 font-lato font-weight-bold">
                             <span class="fa fa-fw fa-file-download"></span>
                             Download Hasil (.csv)
                         </a>
