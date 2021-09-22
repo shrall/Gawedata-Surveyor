@@ -41,8 +41,7 @@
                                         <textarea id="survey-description" type="text"
                                             class="survey-description form-control input-text"
                                             style="resize: none; height:7rem;" name="description" required
-                                            placeholder="Deskripsi Survei"
-                                            value="{{ $survey['description'] }}"></textarea>
+                                            placeholder="Deskripsi Survei">{{ $survey['description'] }}</textarea>
                                     </div>
                                     <div class="mb-3">
                                         <input id="survey-category" type="hidden" name="survey_category"
@@ -102,6 +101,34 @@
                                 </div>
                             </div>
                         </div>
+                        @if ($survey['is_private'])
+                        <div class="col-7 text-center my-4 d-none" id="second-step-private">
+                            <div class="d-flex">
+                                <span class="fa fa-fw fa-times-circle fs-5 text-gray cursor-pointer ms-auto"
+                                    data-bs-dismiss="modal" aria-label="Close"></span>
+                            </div>
+                            <h5 class="my-1">Pilih Kriteria Responden</h5>
+                            <div class="row justify-content-center my-5 text-start">
+                                <div class="col-10">
+                                    <p>Kamu telah memilih <b>jenis survei private</b>, admin Gawedata akan segera
+                                        menghubungimu untuk meminta daftar undangan responden survei.</p>
+                                    <p>Silahkan pilih jumlah responden untuk melanjutkan pembuatan survei.</p>
+                                </div>
+                                <div class="col-10">
+                                    <div class="row justify-content-between align-items-center px-2 mb-2">
+                                        <span class="col-4 text-gawedata text-start cursor-pointer ps-0"
+                                            id="create-survey-back-button-2-private">
+                                            <span class="fa fa-fw fa-arrow-left me-2"></span>Sebelumnya
+                                        </span>
+                                        <button type="submit" class="btn btn-gawedata col-4 py-2"
+                                            id="create-survey-next-button-2-private" onclick="event.preventDefault()">
+                                            Selanjutnya
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @else
                         <div class="col-7 text-center my-4 d-none" id="second-step-public">
                             <div class="d-flex">
                                 <span class="fa fa-fw fa-times-circle fs-5 text-gray cursor-pointer ms-auto"
@@ -233,32 +260,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-7 text-center my-4 d-none" id="second-step-private">
-                            <div class="d-flex">
-                                <span class="fa fa-fw fa-times-circle fs-5 text-gray cursor-pointer ms-auto"
-                                    data-bs-dismiss="modal" aria-label="Close"></span>
-                            </div>
-                            <h5 class="my-1">Pilih Kriteria Responden</h5>
-                            <div class="row justify-content-center my-5 text-start">
-                                <div class="col-10">
-                                    <p>Kamu telah memilih <b>jenis survei private</b>, admin Gawedata akan segera
-                                        menghubungimu untuk meminta daftar undangan responden survei.</p>
-                                    <p>Silahkan pilih jumlah responden untuk melanjutkan pembuatan survei.</p>
-                                </div>
-                                <div class="col-10">
-                                    <div class="row justify-content-between align-items-center px-2 mb-2">
-                                        <span class="col-4 text-gawedata text-start cursor-pointer ps-0"
-                                            id="create-survey-back-button-2-private">
-                                            <span class="fa fa-fw fa-arrow-left me-2"></span>Sebelumnya
-                                        </span>
-                                        <button type="submit" class="btn btn-gawedata col-4 py-2"
-                                            id="create-survey-next-button-2-private" onclick="event.preventDefault()">
-                                            Selanjutnya
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endif
                         <div class="col-7 text-center my-4 d-none" id="third-step">
                             <div class="d-flex">
                                 <span class="fa fa-fw fa-times-circle fs-5 text-gray cursor-pointer ms-auto"
