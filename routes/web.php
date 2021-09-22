@@ -52,6 +52,7 @@ Route::group(['middleware' => ['surveyor']], function () {
     Route::post('survey/refreshgridanswer', [SurveyController::class, 'refresh_grid_answer'])->name('survey.refreshgridanswer');
     Route::put('survey/{survey}/changesettings', [SurveyController::class, 'change_settings'])->name('survey.changesettings');
     //assessment
+    Route::resource('assessment', AssessmentController::class);
     Route::post('assessment/get_assessment', [AssessmentController::class, 'get_assessment'])->name('assessment.getassessment');
     Route::get('assessment/{id}/{i}/{new}', [AssessmentController::class, 'show'])->name('assessment.show');
 });

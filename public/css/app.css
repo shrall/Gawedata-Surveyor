@@ -281,12 +281,6 @@ input[type='date']::-webkit-calendar-picker-indicator {
 }
 
 /* create survey */
-#select-question-type .modal-content {
-  min-height: 65vh;
-}
-#select-question-type .modal-content #create-survey-sidebar-col {
-  min-height: 65vh;
-}
 /* sidebar steps menu */
 #create-survey-sidebar li span {
   color: #d2d2d2 !important;
@@ -572,4 +566,49 @@ ul.select2-results__options li:hover {
 }
 .tooltip.bs-tooltip-top .tooltip-arrow:before {
   border-top-color: #707070 !important;
+}
+
+/* assessment */
+/* create assessment */
+/* sidebar steps menu */
+.create-assessment-sidebar li span {
+  color: #d2d2d2 !important;
+}
+.create-assessment-sidebar li.active span {
+  color: #3f60f5 !important;
+}
+/* first step */
+.radio-card-assessment {
+  text-align: left !important;
+  border: 1px solid #d1d6eb;
+  box-sizing: border-box;
+  border-radius: 12px;
+}
+.radio-card-assessment.active {
+  color: #ffffff;
+  border: 0 !important;
+  background: #3f60f5;
+  border-radius: 12px;
+}
+.radio-card-assessment.active .card-header,
+.radio-card-assessment.active .card-footer {
+  border: 0 !important;
+  background-color: #3f60f5 !important;
+}
+.radio-card-assessment .card-header,
+.radio-card-assessment .card-footer {
+  border: 0 !important;
+  background-color: #fff;
+}
+.form-check-assessment:checked {
+    background-color: #49D579 !important;
+    border-color: #49D579 !important;
+}
+/* irt rs fourth step  */
+.assessment-point-buttons{
+    background-color: #FBFBFB !important;
+    cursor: pointer;
+}
+.assessment-point-buttons:hover{
+    background-color: #eee !important;
 }

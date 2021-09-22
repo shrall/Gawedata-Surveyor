@@ -7,7 +7,7 @@
                     @csrf
                     <input type="hidden" name="_method" value="PUT">
                     <div class="row">
-                        <div class="col-5 text-start border-end pt-5 pe-0" id="create-survey-sidebar-col">
+                        <div class="col-5 text-start border-end pt-5 pe-0">
                             <ul class="list-unstyled font-weight-bold my-5" id="create-survey-sidebar">
                                 <li class="my-4 active position-relative">
                                     <span class="text-gray text-decoration-none fs-6">1. Pilih Nama dan Kategori</span>
