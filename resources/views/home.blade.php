@@ -675,7 +675,7 @@
             $('.assessment-rs').removeClass('d-block').addClass('d-none');
             $('.assessment-sa').removeClass('d-block').addClass('d-none');
             $('.assessment-' + type).removeClass('d-none').addClass('d-block');
-            enableFirstAssessmentButton();
+            enableSecondAssessmentButton();
         }
         //change step
         function changeAssessmentStep(beforeStep, afterStep, beforeSidebar, afterSidebar) {
@@ -706,9 +706,9 @@
         })
         $('#create-assessment-next-button-5').click(function() {
             if (assessment_type != 'sa') {
-            changeAssessmentStep('#assessment-fifth-step', '#assessment-sixth-step', 5, 6);
+                changeAssessmentStep('#assessment-fifth-step', '#assessment-sixth-step', 5, 6);
             } else {
-            changeAssessmentStep('#assessment-fifth-step', '#assessment-sixth-step', 3, 4);
+                changeAssessmentStep('#assessment-fifth-step', '#assessment-sixth-step', 3, 4);
             }
         })
         $('#create-assessment-back-button-2').click(function() {

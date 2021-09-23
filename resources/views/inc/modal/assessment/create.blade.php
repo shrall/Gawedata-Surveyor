@@ -233,7 +233,8 @@
                                             <ul class="dropdown-menu w-100 px-2">
                                                 <div class="overflow-auto ps-2 pe-5"
                                                     style="min-height:0;max-height: 30vh;">
-                                                    <li class="dropdown-item" data-type="public">Public (Semua responden
+                                                    <li class="dropdown-item" data-type="public">Public (Semua
+                                                        responden
                                                         dapat melihat dan
                                                         mengisi tes)</li>
                                                     <li class="dropdown-item text-start" data-type="private">Private
@@ -419,8 +420,8 @@
                                     <div class="row justify-content-between align-items-center mb-3">
                                         <div class="col-4 text-start">Jenis Kelamin</div>
                                         <div class="col-6 text-end">
-                                            <input type="checkbox" class="btn-check" id="assessment-check-pria" name="check-pria"
-                                                autocomplete="off">
+                                            <input type="checkbox" class="btn-check" id="assessment-check-pria"
+                                                name="check-pria" autocomplete="off">
                                             <label class="btn btn-checkbox-gawedata px-4 me-2"
                                                 for="assessment-check-pria">Pria</label>
                                             <input type="checkbox" class="btn-check" id="assessment-check-wanita"
@@ -442,8 +443,8 @@
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <select class="form-control input-text" id="assessment-province" name="province[]"
-                                            multiple="multiple">
+                                        <select class="form-control input-text" id="assessment-province"
+                                            name="province[]" multiple="multiple">
                                             <option value="all">Semua Provinsi</option>
                                             @foreach ($locations as $location)
                                                 <option value="{{ $location['id'] }}">
@@ -460,8 +461,8 @@
                                     </div>
                                     <div class="mb-3">
                                         <input type="hidden" name="educations[]" id="assessment-education-all">
-                                        <select class="form-control input-text" id="assessment-education" name="education[]"
-                                            multiple="multiple">
+                                        <select class="form-control input-text" id="assessment-education"
+                                            name="education[]" multiple="multiple">
                                             <option value="all">Semua Pendidikan</option>
                                             @foreach ($educations as $education)
                                                 <option value="{{ $education['id'] }}">{{ $education['name'] }}
@@ -482,8 +483,8 @@
                                     </div>
                                     <div class="mb-3">
                                         <input type="hidden" name="expenses[]" id="assessment-expense-all">
-                                        <select class="form-control input-text" id="assessment-expense" name="expense[]"
-                                            multiple="multiple">
+                                        <select class="form-control input-text" id="assessment-expense"
+                                            name="expense[]" multiple="multiple">
                                             <option value="all">Semua Pengeluaran</option>
                                             @foreach ($expenses as $expense)
                                                 <option value="{{ $expense['id'] }}">{{ $expense['name'] }}
