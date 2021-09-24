@@ -200,6 +200,16 @@ class AssessmentController extends Controller
         return view('assessment.inc.draft.irt_answer', compact('answers'));
     }
 
+    public function refresh_rs_answer(Request $request)
+    {
+        if (count($request->answers) > 0) {
+            $answers = $request->answers;
+        } else {
+            $answers = null;
+        }
+        return view('assessment.inc.draft.rs_answer', compact('answers'));
+    }
+
     public function upload_photo(Request $request, $id)
     {
         if ($request->has('photo')) {

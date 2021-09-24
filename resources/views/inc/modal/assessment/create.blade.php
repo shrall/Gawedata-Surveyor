@@ -356,8 +356,7 @@
                                         <div class="input-group">
                                             <span class="input-group-text assessment-point-buttons"
                                                 onclick="subtractPoints('hard');">-</span>
-                                            <input type="text" class="form-control input-text text-center" value=0
-                                                min="0" id="assessment-hard-in-points" name="hard_in_points">
+                                            <input type="text" class="form-control input-text text-center" value=0 id="assessment-hard-in-points" name="hard_in_points">
                                             <span class="input-group-text assessment-point-buttons"
                                                 onclick="addPoints('hard');">+</span>
                                         </div>
@@ -371,8 +370,7 @@
                                         <div class="input-group">
                                             <span class="input-group-text assessment-point-buttons"
                                                 onclick="subtractPoints('medium');">-</span>
-                                            <input type="text" class="form-control input-text text-center" value=0
-                                                min="0" id="assessment-medium-in-points" name="medium_in_points">
+                                            <input type="text" class="form-control input-text text-center" value=0 id="assessment-medium-in-points" name="medium_in_points">
                                             <span class="input-group-text assessment-point-buttons"
                                                 onclick="addPoints('medium');">+</span>
                                         </div>
@@ -386,8 +384,7 @@
                                         <div class="input-group">
                                             <span class="input-group-text assessment-point-buttons"
                                                 onclick="subtractPoints('easy');">-</span>
-                                            <input type="text" class="form-control input-text text-center" value=0
-                                                min="0" id="assessment-easy-in-points" name="easy_in_points">
+                                            <input type="text" class="form-control input-text text-center" value=0 id="assessment-easy-in-points" name="easy_in_points">
                                             <span class="input-group-text assessment-point-buttons"
                                                 onclick="addPoints('easy');">+</span>
                                         </div>

@@ -825,9 +825,7 @@
         }
 
         function subtractPoints(difficulty) {
-            if ($('#assessment-' + difficulty + '-in-points').val() != 0) {
-                $('#assessment-' + difficulty + '-in-points').val($('#assessment-' + difficulty + '-in-points').val() - 1);
-            }
+            $('#assessment-' + difficulty + '-in-points').val(parseInt($('#assessment-' + difficulty + '-in-points').val()) - 1);
         }
     </script>
     <script>

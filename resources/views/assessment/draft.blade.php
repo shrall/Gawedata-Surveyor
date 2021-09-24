@@ -23,67 +23,146 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                                 <textarea type="text" name="question" id="input-question" class="form-control input-text"
                                     style="padding-left:3.5rem !important;resize: none; height:8rem;"
                                     placeholder="Tuliskan Pertanyaan Disini"
-                                    onkeyup="setQuestion()"
-                                    >{{ $assessment['questions'][$i - 1]['question'] }}</textarea>
+                                    onkeyup="setQuestion()">{{ $assessment['questions'][$i - 1]['question'] }}</textarea>
                             </div>
                         </div>
-                        <div id="irt-question" class="@if ($assessment_type_id == 1) d-block @else d-none @endif mb-3">
-                            <div class="row">
-                                <div class="col-7">
-                                    <img src="{{ $assessment['questions'][$i - 1]['image_path'] }}"
-                                        class="survey-question-image-preview w-100 my-2">
-                                </div>
-                                <div class="col-5">
-                                </div>
-                            </div>
-                            <h6 class="text-start" id="irt-question-title">Jawaban</h6>
-                            <div class="irt-answer-list">
-                                @foreach ($assessment['questions'][$i - 1]['answer_choices'] as $key => $answer)
-                                    <div class="row mb-3" id="question-answer{{ $loop->iteration }}">
-                                        <div class="col-1 text-start d-flex align-items-center">
-                                            @if ($answer['is_right_answer'])
-                                                <span
-                                                    class="fas fa-fw fa-check-circle text-gawedata cursor-pointer fs-3 assessment-correct-radio"
-                                                    onclick="changeCorrectAnswer({{ $loop->iteration }});"
-                                                    id="answer-radio-{{ $loop->iteration }}"></span>
-                                            @else
-                                                <span
-                                                    class="far fa-fw fa-circle text-gray cursor-pointer fs-3 assessment-correct-radio"
-                                                    onclick="changeCorrectAnswer({{ $loop->iteration }});"
-                                                    id="answer-radio-{{ $loop->iteration }}"></span>
-                                            @endif
-                                        </div>
-                                        <div class="col-10 position-relative">
-                                            <span
-                                                class="position-absolute top-50 start-0 translate-middle-y font-weight-bold ms-4 px-2 py-1"
-                                                id="answer-order{{ $loop->iteration }}">{{ $loop->iteration }}.</span>
-                                            <input type="text" name="answer{{ $loop->iteration }}"
-                                                id="answer-{{ $loop->iteration }}" class="form-control input-text"
-                                                style="padding-left:3.5rem !important;"
-                                                placeholder="Tuliskan Jawaban Disini" value="{{ $answer['text'] ?? '' }}"
-                                                onkeyup="setNewAnswer({{ $loop->iteration }});">
-                                        </div>
-                                        <div class="col-1 text-start d-flex align-items-center">
-                                            <span class="fas fa-fw fa-trash-alt text-gray cursor-pointer fs-3"
-                                                id="answer_delete{{ $loop->iteration }}"
-                                                onclick="deleteAnswer({{ $loop->iteration }});"></span>
-                                        </div>
+                        @if ($assessment_type_id == 1)
+                            <div id="irt-question" class="mb-3">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <img src="{{ $assessment['questions'][$i - 1]['image_path'] }}"
+                                            class="survey-question-image-preview w-100 my-2">
                                     </div>
-                                @endforeach
-                            </div>
-                            <div class="row">
-                                <div class="col-8">
-                                    <button class="btn btn-gawedata-2 font-lato w-100 py-2" onclick="addIRTAnswer();">
-                                        + Tambah Jawaban
-                                    </button>
+                                    <div class="col-5">
+                                    </div>
+                                </div>
+                                <h6 class="text-start" id="irt-question-title">Jawaban <span
+                                        class="font-weight-bold">(Pilih
+                                        satu yang benar)</span></h6>
+                                <div class="irt-answer-list">
+                                    @foreach ($assessment['questions'][$i - 1]['answer_choices'] as $key => $answer)
+                                        <div class="row mb-3" id="question-answer{{ $loop->iteration }}">
+                                            <div class="col-1 text-start d-flex align-items-center">
+                                                @if ($answer['is_right_answer'])
+                                                    <span
+                                                        class="fas fa-fw fa-check-circle text-gawedata cursor-pointer fs-3 assessment-correct-radio"
+                                                        onclick="changeCorrectAnswer({{ $loop->iteration }});"
+                                                        id="answer-radio-{{ $loop->iteration }}"></span>
+                                                @else
+                                                    <span
+                                                        class="far fa-fw fa-circle text-gray cursor-pointer fs-3 assessment-correct-radio"
+                                                        onclick="changeCorrectAnswer({{ $loop->iteration }});"
+                                                        id="answer-radio-{{ $loop->iteration }}"></span>
+                                                @endif
+                                            </div>
+                                            <div class="col-10 position-relative">
+                                                <span
+                                                    class="position-absolute top-50 start-0 translate-middle-y font-weight-bold ms-4 px-2 py-1"
+                                                    id="answer-order{{ $loop->iteration }}">{{ $loop->iteration }}.</span>
+                                                <input type="text" name="answer{{ $loop->iteration }}"
+                                                    id="answer-{{ $loop->iteration }}" class="form-control input-text"
+                                                    style="padding-left:3.5rem !important;"
+                                                    placeholder="Tuliskan Jawaban Disini"
+                                                    value="{{ $answer['text'] ?? '' }}"
+                                                    onkeyup="setNewAnswer({{ $loop->iteration }});">
+                                            </div>
+                                            <div class="col-1 text-start d-flex align-items-center">
+                                                <span class="fas fa-fw fa-trash-alt text-gray cursor-pointer fs-3"
+                                                    id="answer_delete{{ $loop->iteration }}"
+                                                    onclick="deleteAnswer({{ $loop->iteration }});"></span>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <button class="btn btn-gawedata-2 font-lato w-100 py-2" onclick="addAnswer();">
+                                            + Tambah Jawaban
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
+                        @if ($assessment_type_id == 2)
+                            <div id="rs-question" class="mb-3">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <img src="{{ $assessment['questions'][$i - 1]['image_path'] }}"
+                                            class="survey-question-image-preview w-100 my-2">
+                                    </div>
+                                    <div class="col-5">
+                                    </div>
+                                </div>
+                                <h6 class="text-start row" id="rs-question-title">
+                                    <div class="col-8">
+                                        Jawaban <span class="font-weight-bold">(Pilih satu yang benar)</span>
+                                    </div>
+                                    <div class="col-4">
+                                        Poin <span class="text-gray">(Positif (+) atau negatif (-))</span>
+                                    </div>
+                                </h6>
+                                <div class="rs-answer-list">
+                                    @foreach ($assessment['questions'][$i - 1]['answer_choices'] as $key => $answer)
+                                        <div class="row mb-3" id="question-answer{{ $loop->iteration }}">
+                                            <div class="col-1 text-start d-flex align-items-center">
+                                                @if ($answer['is_right_answer'])
+                                                    <span
+                                                        class="fas fa-fw fa-check-circle text-gawedata cursor-pointer fs-3 assessment-correct-radio"
+                                                        onclick="changeCorrectAnswer({{ $loop->iteration }});"
+                                                        id="answer-radio-{{ $loop->iteration }}"></span>
+                                                @else
+                                                    <span
+                                                        class="far fa-fw fa-circle text-gray cursor-pointer fs-3 assessment-correct-radio"
+                                                        onclick="changeCorrectAnswer({{ $loop->iteration }});"
+                                                        id="answer-radio-{{ $loop->iteration }}"></span>
+                                                @endif
+                                            </div>
+                                            <div class="col-7 position-relative">
+                                                <span
+                                                    class="position-absolute top-50 start-0 translate-middle-y font-weight-bold ms-4 px-2 py-1"
+                                                    id="answer-order{{ $loop->iteration }}">{{ $loop->iteration }}.</span>
+                                                <input type="text" name="answer{{ $loop->iteration }}"
+                                                    id="answer-{{ $loop->iteration }}" class="form-control input-text"
+                                                    style="padding-left:3.5rem !important;"
+                                                    placeholder="Tuliskan Jawaban Disini"
+                                                    value="{{ $answer['text'] ?? '' }}"
+                                                    onkeyup="setNewAnswer({{ $loop->iteration }});">
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="input-group">
+                                                    <span class="input-group-text assessment-point-buttons"
+                                                        onclick="subtractPoints({{ $loop->iteration }});">-</span>
+                                                    <input type="text" class="form-control input-text text-center"
+                                                        value={{ $answer['points'] }}
+                                                        onkeyup="setAnswerPoints({{ $loop->iteration }});"
+                                                        id="answer-points-{{ $loop->iteration }}">
+                                                    <span class="input-group-text assessment-point-buttons"
+                                                        onclick="addPoints({{ $loop->iteration }});">+</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-1 text-start d-flex align-items-center">
+                                                <span class="fas fa-fw fa-trash-alt text-gray cursor-pointer fs-3"
+                                                    id="answer_delete{{ $loop->iteration }}"
+                                                    onclick="deleteAnswer({{ $loop->iteration }});"></span>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <button class="btn btn-gawedata-2 font-lato w-100 py-2" onclick="addAnswer();">
+                                            + Tambah Jawaban
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                         <h6 class="text-start">Pembahasan</h6>
                         <div class="row">
                             <div class="col-12 position-relative">
                                 <textarea type="text" name="discussion" id="input-discussion"
-                                    class="form-control input-text" style="resize: none; height:8rem;">{{ $assessment['questions'][$i - 1]['discussion'] }}</textarea>
+                                    class="form-control input-text"
+                                    style="resize: none; height:8rem;">{{ $assessment['questions'][$i - 1]['discussion'] }}</textarea>
                             </div>
                         </div>
                         <hr>
@@ -94,7 +173,8 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                                 </button>
                             </div>
                             <div class="text-end me-2">
-                                <button class="btn btn-gawedata-3" {{-- onclick="copyQuestion({{ $i }});" --}}>
+                                <button class="btn btn-gawedata-3"
+                                onclick="copyQuestion({{ $i }});">
                                     <label class="font-lato cursor-pointer">
                                         <span class="fas fa-fw fa-copy me-2"></span>Duplikat
                                     </label>
@@ -155,7 +235,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
     </script>
     <script>
         // irt answer
-        function addIRTAnswer() {
+        function addAnswer() {
             questions[question_index]['answer_choices'].push({
                 "text": "Jawaban Baru",
                 "points": 0,
@@ -163,7 +243,11 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             });
             questions[question_index]['answer_choices'][questions[question_index]['answer_choices'].length - 1]['text'] =
                 "";
-            refreshIRTAnswer();
+            if ({{ $assessment_type_id }} == 1) {
+                refreshIRTAnswer();
+            } else if ({{ $assessment_type_id }} == 2) {
+                refreshRSAnswer();
+            }
         }
 
         function deleteAnswer(int) {
@@ -171,6 +255,8 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             if (questions[question_index]['answer_choices'].length > 0) {
                 if ({{ $assessment_type_id }} == 1) {
                     refreshIRTAnswer();
+                } else if ({{ $assessment_type_id }} == 2) {
+                    refreshRSAnswer();
                 }
             } else {
                 $('#question-answer' + int).remove();
@@ -185,6 +271,20 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                 .done(function(data) {
                     console.log(data);
                     $(".irt-answer-list").html(data)
+                })
+                .fail(function(e) {
+                    console.log(e);
+                });
+        }
+
+        function refreshRSAnswer() {
+            $.post("{{ config('app.url') }}" + "/assessment/refreshrsanswer", {
+                    _token: CSRF_TOKEN,
+                    answers: questions[question_index]['answer_choices']
+                })
+                .done(function(data) {
+                    console.log(data);
+                    $(".rs-answer-list").html(data)
                 })
                 .fail(function(e) {
                     console.log(e);
@@ -219,9 +319,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
     <script>
         function copyQuestion(index) {
             var copied_question = questions[index - 1];
-            console.log(questions)
             questions.push(copied_question);
-            console.log(questions)
             saveDraft(questions.length, false);
         }
     </script>
@@ -404,6 +502,20 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             });
     </script>
     <script>
-        //irt
+        function setAnswerPoints(index) {
+            questions[question_index]['answer_choices'][index - 1]['points'] = $('#answer-points-' + index).val();
+        }
+    </script>
+    <script>
+        //rs
+        function addPoints(order) {
+            $('#answer-points-' + order).val(parseInt($('#answer-points-' + order).val()) + 1);
+            setAnswerPoints(order);
+        }
+
+        function subtractPoints(order) {
+            $('#answer-points-' + order).val(parseInt($('#answer-points-' + order).val()) - 1);
+            setAnswerPoints(order);
+        }
     </script>
 @endsection

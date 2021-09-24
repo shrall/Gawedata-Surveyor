@@ -965,9 +965,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     <script>
         function copyQuestion(index) {
             var copied_question = questions[index - 1];
-            console.log(questions)
             questions.push(copied_question);
-            console.log(questions)
             saveDraft(questions.length, false);
         }
     </script>
