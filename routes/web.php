@@ -55,4 +55,9 @@ Route::group(['middleware' => ['surveyor']], function () {
     Route::resource('assessment', AssessmentController::class);
     Route::post('assessment/get_assessment', [AssessmentController::class, 'get_assessment'])->name('assessment.getassessment');
     Route::get('assessment/{id}/{i}/{new}', [AssessmentController::class, 'show'])->name('assessment.show');
+    Route::get('assessment/{id}/hasil', [AssessmentController::class, 'hasil'])->name('assessment.hasil');
+    Route::get('assessment/{id}/submitted/question/{i}', [AssessmentController::class, 'submitted'])->name('assessment.submitted');
+    Route::post('assessment/refreshirtanswer', [AssessmentController::class, 'refresh_irt_answer'])->name('assessment.refreshirtanswer');
+    Route::post('assessment/{id}/uploadphoto', [AssessmentController::class, 'upload_photo'])->name('assessment.uploadphoto');
+    Route::post('assessment/uploadphotodiscussion', [AssessmentController::class, 'upload_photo_discussion'])->name('assessment.uploadphotodiscussion');
 });
