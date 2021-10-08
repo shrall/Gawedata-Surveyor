@@ -77,15 +77,6 @@ class AssessmentController extends Controller
         ])
             ->get(config('services.api.url') . '/assessment/' . $id)
             ->json()['data'];
-        // $provinces = array();
-        // foreach ($survey['city_criteria'] as $city) {
-        //     array_push($provinces, $city['city']['province']);
-        // }
-        // $provinces = array_unique($provinces, SORT_REGULAR);
-        // $cities = array();
-        // foreach ($survey['city_criteria'] as $city) {
-        //     array_push($cities, $city['city']);
-        // }
         if ($new == 'true' && count($assessment['questions']) > 0) {
             if ($i == count($assessment['questions'])) {
                 $assessment['questions'][$i - 1]['question'] = "";
@@ -133,7 +124,7 @@ class AssessmentController extends Controller
                     [
                         "text" => "Answer Choice 1",
                         "points" => 0,
-                        "is_right_answer" => true
+                        "is_right_answer" => false
                     ],
                     [
                         "text" => "Answer Choice 2",
@@ -182,12 +173,12 @@ class AssessmentController extends Controller
 
     public function hasil($id)
     {
-        dd('hasil ' + $id);
+        dd('hasil ' . $id);
     }
 
     public function submitted($id, $i)
     {
-        dd('submitted ' + $id);
+        dd('submitted ' . $id);
     }
 
     public function refresh_irt_answer(Request $request)
@@ -208,6 +199,16 @@ class AssessmentController extends Controller
             $answers = null;
         }
         return view('assessment.inc.draft.rs_answer', compact('answers'));
+    }
+
+    public function refresh_sa_answer(Request $request)
+    {
+        if (count($request->answers) > 0) {
+            $answers = $request->answers;
+        } else {
+            $answers = null;
+        }
+        return view('assessment.inc.draft.sa_answer', compact('answers'));
     }
 
     public function upload_photo(Request $request, $id)
@@ -232,5 +233,105 @@ class AssessmentController extends Controller
         return response()->json([
             'url' => asset('/uploads/images') . '/' . $photo
         ]);
+    }
+    public function show_respondent($id, $i, $new)
+    {
+        $locations = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/location')
+            ->json()['data'];
+        $educations = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/education')
+            ->json()['data'];
+        $professions = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/profession')
+            ->json()['data'];
+        $expenses = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/householdExpensesPerMonth')
+            ->json()['data'];
+        $categories = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/surveyCategory')
+            ->json()['data'];
+
+        $assessment = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/assessment/' . $id)
+            ->json()['data'];
+        if ($assessment['status_id'] == 6) {
+            return redirect()->route('assessment.hasil', $id);
+        } else if ($assessment['status_id'] == 5) {
+            return redirect()->route('assessment.submitted', ['id' => $assessment['id'], 'i' => 1]);
+        } else {
+            return view('assessment.draft_respondent', compact('assessment', 'i', 'categories', 'locations', 'educations', 'professions', 'expenses', 'new'));
+        }
+    }
+
+    public function store_respondent_type(Request $request)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])->post(config('services.api.url') . '/respondentType/' . $request->assessment_id, [
+            'name' => $request->name,
+            'min_points' => $request->min_points,
+            'max_points' => $request->max_points,
+            'discussion' => $request->discussion,
+        ])->json();
+        if ($request->new_bool) {
+            $new = 'true';
+        } else {
+            $new = 'false';
+        }
+        if ($request->change_tab_bool) {
+            return redirect()->route('assessment.show', ['id' => $request->assessment_id, 'i' => 1, 'new' => 'false']);
+        } else {
+            return redirect()->route('assessment.showrespondent', ['id' => $request->assessment_id, 'i' => $request->next, 'new' => $new]);
+        }
+    }
+
+    public function update_respondent_type(Request $request)
+    {
+        $path = $request->respondent_type_id . "?name=" . $request->name . "&min_points=" . $request->min_points . "&max_points=" . $request->max_points . "&discussion=" . $request->discussion;
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->patch(config('services.api.url') . '/respondentType/' . $path)->json();
+        if ($request->new_bool || $request->respondent_type_count == 0) {
+            $new = 'true';
+        } else {
+            $new = 'false';
+        }
+        if ($request->change_tab_bool) {
+            return redirect()->route('assessment.show', ['id' => $request->assessment_id, 'i' => 1, 'new' => 'false']);
+        } else {
+            return redirect()->route('assessment.showrespondent', ['id' => $request->assessment_id, 'i' => $request->next, 'new' => $new]);
+        }
+    }
+
+    public function delete_respondent_type(Request $request)
+    {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->delete(config('services.api.url') . '/respondentType/' . $request->respondent_type_id)->json();
+        if ($request->respondent_type_count == 1) {
+            $new = 'true';
+        } else {
+            $new = 'false';
+        }
+        if ($request->change_tab_bool) {
+            return redirect()->route('assessment.show', ['id' => $request->assessment_id, 'i' => 1, 'new' => 'false']);
+        } else {
+            return redirect()->route('assessment.showrespondent', ['id' => $request->assessment_id, 'i' => $request->next, 'new' => $new]);
+        }
     }
 }

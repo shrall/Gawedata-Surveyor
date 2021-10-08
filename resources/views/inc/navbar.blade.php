@@ -76,7 +76,7 @@
                         </h4>
                     </ul>
                 @endif
-                @if (Route::current()->getName() == 'assessment.hasil' || Route::current()->getName() == 'assessment.analisa' || Route::current()->getName() == 'assessment.detail' || Route::current()->getName() == 'assessment.show' || Route::current()->getName() == 'assessment.submitted')
+                @if (Route::current()->getName() == 'assessment.hasil' || Route::current()->getName() == 'assessment.analisa' || Route::current()->getName() == 'assessment.detail' || Route::current()->getName() == 'assessment.show' || Route::current()->getName() == 'assessment.showrespondent' || Route::current()->getName() == 'assessment.submitted')
                     <ul class="navbar-nav position-absolute top-50 start-50 translate-middle" style="z-index: 100;">
                         <h4 class="font-lato font-weight-bold d-flex align-items-center mb-0">
                             {{ strlen($assessment['title']) > 25 ? substr($assessment['title'], 0, 23) . '...' : $assessment['title'] }}
@@ -119,7 +119,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                @elseif (Route::current()->getName() == 'assessment.show')
+                                @elseif (Route::current()->getName() == 'assessment.show' || Route::current()->getName() == 'assessment.showrespondent')
                                     <div id="survey-menu" class="p-4">
                                         <div>
                                             <span class="fa fa-fw fa-circle text-yellow me-2"></span>
@@ -199,7 +199,7 @@
                                 Submit Survei
                             </a>
                         </li>
-                    @elseif (Route::current()->getName() == 'assessment.show')
+                    @elseif (Route::current()->getName() == 'assessment.show' || Route::current()->getName() == 'assessment.showrespondent')
                         <li class="nav-item mx-2">
                             <a href="#" class="btn btn-gawedata-2 font-lato" id="save-draft-button"
                                 onclick="saveDraft({{ $i }}, false);"

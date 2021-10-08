@@ -157,6 +157,67 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                                 </div>
                             </div>
                         @endif
+                        @if ($assessment_type_id == 3)
+                            <div id="sa-question" class="mb-3">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <img src="{{ $assessment['questions'][$i - 1]['image_path'] }}"
+                                            class="survey-question-image-preview w-100 my-2">
+                                    </div>
+                                    <div class="col-5">
+                                    </div>
+                                </div>
+                                <h6 class="text-start row" id="sa-question-title">
+                                    <div class="col-8">
+                                        Jawaban
+                                    </div>
+                                    <div class="col-4">
+                                        Poin <span class="text-gray">(Positif (+) atau negatif (-))</span>
+                                    </div>
+                                </h6>
+                                <div class="sa-answer-list">
+                                    @foreach ($assessment['questions'][$i - 1]['answer_choices'] as $key => $answer)
+                                        <div class="row mb-3" id="question-answer{{ $loop->iteration }}">
+                                            <div class="col-8 position-relative">
+                                                <span
+                                                    class="position-absolute top-50 start-0 translate-middle-y font-weight-bold ms-4 px-2 py-1"
+                                                    id="answer-order{{ $loop->iteration }}">{{ $loop->iteration }}.</span>
+                                                <input type="text" name="answer{{ $loop->iteration }}"
+                                                    id="answer-{{ $loop->iteration }}" class="form-control input-text"
+                                                    style="padding-left:3.5rem !important;"
+                                                    placeholder="Tuliskan Jawaban Disini"
+                                                    value="{{ $answer['text'] ?? '' }}"
+                                                    onkeyup="setNewAnswer({{ $loop->iteration }});">
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="input-group">
+                                                    <span class="input-group-text assessment-point-buttons"
+                                                        onclick="subtractPoints({{ $loop->iteration }});">-</span>
+                                                    <input type="text" class="form-control input-text text-center"
+                                                        value={{ $answer['points'] }}
+                                                        onkeyup="setAnswerPoints({{ $loop->iteration }});"
+                                                        id="answer-points-{{ $loop->iteration }}">
+                                                    <span class="input-group-text assessment-point-buttons"
+                                                        onclick="addPoints({{ $loop->iteration }});">+</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-1 text-start d-flex align-items-center">
+                                                <span class="fas fa-fw fa-trash-alt text-gray cursor-pointer fs-3"
+                                                    id="answer_delete{{ $loop->iteration }}"
+                                                    onclick="deleteAnswer({{ $loop->iteration }});"></span>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <button class="btn btn-gawedata-2 font-lato w-100 py-2" onclick="addAnswer();">
+                                            + Tambah Jawaban
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                         <h6 class="text-start">Pembahasan</h6>
                         <div class="row">
                             <div class="col-12 position-relative">
@@ -173,8 +234,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                                 </button>
                             </div>
                             <div class="text-end me-2">
-                                <button class="btn btn-gawedata-3"
-                                onclick="copyQuestion({{ $i }});">
+                                <button class="btn btn-gawedata-3" onclick="copyQuestion({{ $i }});">
                                     <label class="font-lato cursor-pointer">
                                         <span class="fas fa-fw fa-copy me-2"></span>Duplikat
                                     </label>
@@ -247,6 +307,8 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                 refreshIRTAnswer();
             } else if ({{ $assessment_type_id }} == 2) {
                 refreshRSAnswer();
+            } else if ({{ $assessment_type_id }} == 3) {
+                refreshSAAnswer();
             }
         }
 
@@ -257,6 +319,8 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                     refreshIRTAnswer();
                 } else if ({{ $assessment_type_id }} == 2) {
                     refreshRSAnswer();
+                } else if ({{ $assessment_type_id }} == 3) {
+                    refreshSAAnswer();
                 }
             } else {
                 $('#question-answer' + int).remove();
@@ -269,7 +333,6 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                     answers: questions[question_index]['answer_choices']
                 })
                 .done(function(data) {
-                    console.log(data);
                     $(".irt-answer-list").html(data)
                 })
                 .fail(function(e) {
@@ -283,8 +346,20 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                     answers: questions[question_index]['answer_choices']
                 })
                 .done(function(data) {
-                    console.log(data);
                     $(".rs-answer-list").html(data)
+                })
+                .fail(function(e) {
+                    console.log(e);
+                });
+        }
+
+        function refreshSAAnswer() {
+            $.post("{{ config('app.url') }}" + "/assessment/refreshsaanswer", {
+                    _token: CSRF_TOKEN,
+                    answers: questions[question_index]['answer_choices']
+                })
+                .done(function(data) {
+                    $(".sa-answer-list").html(data)
                 })
                 .fail(function(e) {
                     console.log(e);
@@ -507,7 +582,6 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
         }
     </script>
     <script>
-        //rs
         function addPoints(order) {
             $('#answer-points-' + order).val(parseInt($('#answer-points-' + order).val()) + 1);
             setAnswerPoints(order);
@@ -517,5 +591,11 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             $('#answer-points-' + order).val(parseInt($('#answer-points-' + order).val()) - 1);
             setAnswerPoints(order);
         }
+    </script>
+    <script>
+        // function changeTab(type) {
+        //     $('.tab-type').removeClass('tab-gawedata-active').addClass('tab-gawedata');
+        //     $('#tab-' + type).removeClass('tab-gawedata').addClass('tab-gawedata-active');
+        // }
     </script>
 @endsection

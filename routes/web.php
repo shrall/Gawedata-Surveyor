@@ -59,6 +59,12 @@ Route::group(['middleware' => ['surveyor']], function () {
     Route::get('assessment/{id}/submitted/question/{i}', [AssessmentController::class, 'submitted'])->name('assessment.submitted');
     Route::post('assessment/refreshirtanswer', [AssessmentController::class, 'refresh_irt_answer'])->name('assessment.refreshirtanswer');
     Route::post('assessment/refreshrsanswer', [AssessmentController::class, 'refresh_rs_answer'])->name('assessment.refreshrsanswer');
+    Route::post('assessment/refreshsaanswer', [AssessmentController::class, 'refresh_sa_answer'])->name('assessment.refreshsaanswer');
     Route::post('assessment/{id}/uploadphoto', [AssessmentController::class, 'upload_photo'])->name('assessment.uploadphoto');
     Route::post('assessment/uploadphotodiscussion', [AssessmentController::class, 'upload_photo_discussion'])->name('assessment.uploadphotodiscussion');
+    //assessment - responden type
+    Route::get('assessmentrespondent/{id}/{i}/{new}', [AssessmentController::class, 'show_respondent'])->name('assessment.showrespondent');
+    Route::post('assessment/createrespondenttype', [AssessmentController::class, 'store_respondent_type'])->name('assessment.createrespondenttype');
+    Route::post('assessment/updaterespondenttype', [AssessmentController::class, 'update_respondent_type'])->name('assessment.updaterespondenttype');
+    Route::post('assessment/deleterespondenttype', [AssessmentController::class, 'delete_respondent_type'])->name('assessment.deleterespondenttype');
 });
