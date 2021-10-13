@@ -51,221 +51,231 @@
                                         </div>
                                         <hr>
                                         <div class="my-3">
-                                            <a href="#" class="text-dark text-decoration-none font-weight-bold" data-bs-toggle="modal" data-bs-target="#update-survey-modal"
-                                                id="survey-setting-button">
-                                                Pengaturan Survei
-                                            </a>
-                                        </div>
-                                        <div class="mt-3">
-                                            <a href="#" onclick="event.preventDefault();
+                                            <a href="#" class="text-dark text-decoration-none font-weight-bold"
+                                                data-bs-toggle="modal" @if ($survey['daily_date'])
+                                                data-bs-target="#update-survey-modal-daily"
+                                            @else
+                                                data-bs-target="#update-survey-modal"
+                                @endif
+                                id="survey-setting-button">
+                                Pengaturan Survei
+                                </a>
+                            </div>
+                            <div class="mt-3">
+                                <a href="#" onclick="event.preventDefault();
                                                     document.getElementById('survey-delete-form').submit();"
-                                                class="text-red text-decoration-none font-weight-bold"
-                                                id="survey-delete-button">
-                                                Hapus Survei
-                                            </a>
-                                            <form id="survey-delete-form"
-                                                action="{{ route('survey.destroy', $survey['id']) }}" method="POST"
-                                                style="display: none;">
-                                                @csrf
-                                                <input name="_method" type="hidden" value="DELETE">
-                                            </form>
-                                        </div>
-                                    </div>
-                                @endif
+                                    class="text-red text-decoration-none font-weight-bold" id="survey-delete-button">
+                                    Hapus Survei
+                                </a>
+                                <form id="survey-delete-form" action="{{ route('survey.destroy', $survey['id']) }}"
+                                    method="POST" style="display: none;">
+                                    @csrf
+                                    <input name="_method" type="hidden" value="DELETE">
+                                </form>
                             </div>
-                        </h4>
-                    </ul>
+            </div>
+        @endif
+    </div>
+    </h4>
+    </ul>
+    @endif
+    @if (Route::current()->getName() == 'assessment.hasil' || Route::current()->getName() == 'assessment.analisa' || Route::current()->getName() == 'assessment.detail' || Route::current()->getName() == 'assessment.show' || Route::current()->getName() == 'assessment.showrespondent' || Route::current()->getName() == 'assessment.submitted')
+        <ul class="navbar-nav position-absolute top-50 start-50 translate-middle" style="z-index: 100;">
+            <h4 class="font-lato font-weight-bold d-flex align-items-center mb-0">
+                {{ strlen($assessment['title']) > 25 ? substr($assessment['title'], 0, 23) . '...' : $assessment['title'] }}
+                @if ($assessment['assessment_type_id'] == 1)
+                    <span class="px-2 py-1 assessment-status-irt font-nexa font-weight-regular fs-6 ms-2">IRT</span>
+                @elseif ($assessment['assessment_type_id'] == 2)
+                    <span class="px-2 py-1 assessment-status-rs font-nexa font-weight-regular fs-6 ms-2">Regular
+                        Scoring</span>
+                @elseif ($assessment['assessment_type_id'] == 3)
+                    <span
+                        class="px-2 py-1 assessment-status-sa font-nexa font-weight-regular fs-6 ms-2">Self-Assessment</span>
                 @endif
-                @if (Route::current()->getName() == 'assessment.hasil' || Route::current()->getName() == 'assessment.analisa' || Route::current()->getName() == 'assessment.detail' || Route::current()->getName() == 'assessment.show' || Route::current()->getName() == 'assessment.showrespondent' || Route::current()->getName() == 'assessment.submitted')
-                    <ul class="navbar-nav position-absolute top-50 start-50 translate-middle" style="z-index: 100;">
-                        <h4 class="font-lato font-weight-bold d-flex align-items-center mb-0">
-                            {{ strlen($assessment['title']) > 25 ? substr($assessment['title'], 0, 23) . '...' : $assessment['title'] }}
-                            @if ($assessment['assessment_type_id'] == 1)
-                                <span class="px-2 py-1 assessment-status-irt font-nexa font-weight-regular fs-6 ms-2">IRT</span>
-                            @elseif ($assessment['assessment_type_id'] == 2)
-                                <span class="px-2 py-1 assessment-status-rs font-nexa font-weight-regular fs-6 ms-2">Regular Scoring</span>
-                            @elseif ($assessment['assessment_type_id'] == 3)
-                                <span class="px-2 py-1 assessment-status-sa font-nexa font-weight-regular fs-6 ms-2">Self-Assessment</span>
-                            @endif
-                            <img src="{{ asset('images/survey-menu-button.svg') }}" width="21px"
-                                class="far fa-fw fa-comment-dots text-gawedata cursor-pointer ms-2"
-                                id="survey-menu-button">
-                            <div class="fs-6" id="survey-menu-box">
-                                @if (Route::current()->getName() == 'assessment.hasil' || Route::current()->getName() == 'assessment.analisa' || Route::current()->getName() == 'assessment.detail')
-                                    <div id="survey-menu" class="p-4">
-                                        <div>
-                                            <span class="fa fa-fw fa-circle text-green me-2"></span>
-                                            <span class="text-green">Published</span>
-                                        </div>
-                                        <hr>
-                                        <div class="mt-3">
-                                            <div class="text-red-disabled text-decoration-none font-weight-bold"
-                                                id="survey-delete-button">
-                                                Hapus Survei
-                                            </div>
-                                        </div>
-                                    </div>
-                                @elseif (Route::current()->getName() == 'assessment.submitted')
-                                    <div id="survey-menu" class="p-4">
-                                        <div>
-                                            <span class="fa fa-fw fa-circle text-gawedata me-2"></span>
-                                            <span class="text-gawedata">Submitted</span>
-                                        </div>
-                                        <hr>
-                                        <div class="mt-3">
-                                            <div class="text-red-disabled text-decoration-none font-weight-bold"
-                                                id="survey-delete-button">
-                                                Hapus Survei
-                                            </div>
-                                        </div>
-                                    </div>
-                                @elseif (Route::current()->getName() == 'assessment.show' || Route::current()->getName() == 'assessment.showrespondent')
-                                    <div id="survey-menu" class="p-4">
-                                        <div>
-                                            <span class="fa fa-fw fa-circle text-yellow me-2"></span>
-                                            <span class="text-gray">Draft</span>
-                                        </div>
-                                        <hr>
-                                        <div class="my-3">
-                                            <a href="#" class="text-dark text-decoration-none font-weight-bold" data-bs-toggle="modal" data-bs-target="#update-assessment-modal"
-                                                id="survey-setting-button">
-                                                Pengaturan Survei
-                                            </a>
-                                        </div>
-                                        <div class="mt-3">
-                                            <a href="#" onclick="event.preventDefault();
-                                                    document.getElementById('assessment-delete-form').submit();"
-                                                class="text-red text-decoration-none font-weight-bold"
-                                                id="survey-delete-button">
-                                                Hapus Survei
-                                            </a>
-                                            <form id="assessment-delete-form"
-                                                action="{{ route('assessment.destroy', $assessment['id']) }}" method="POST"
-                                                style="display: none;">
-                                                @csrf
-                                                <input name="_method" type="hidden" value="DELETE">
-                                            </form>
-                                        </div>
-                                    </div>
-                                @endif
+                <img src="{{ asset('images/survey-menu-button.svg') }}" width="21px"
+                    class="far fa-fw fa-comment-dots text-gawedata cursor-pointer ms-2" id="survey-menu-button">
+                <div class="fs-6" id="survey-menu-box">
+                    @if (Route::current()->getName() == 'assessment.hasil' || Route::current()->getName() == 'assessment.analisa' || Route::current()->getName() == 'assessment.detail')
+                        <div id="survey-menu" class="p-4">
+                            <div>
+                                <span class="fa fa-fw fa-circle text-green me-2"></span>
+                                <span class="text-green">Published</span>
                             </div>
-                        </h4>
-                    </ul>
-                @endif
-                <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ms-auto align-items-center">
-                    @if (Route::current()->getName() == 'home')
-                        <li class="nav-item mx-4">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#create-survey-modal" id="create-survey-general"
-                                class="btn btn-gawedata font-lato d-block">
-                                Buat Survei
-                            </a>
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#create-survey-modal-daily" id="create-survey-daily"
-                                class="btn btn-gawedata font-lato d-none">
-                                Buat Survei
-                            </a>
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#create-assessment-modal" id="create-assessment"
-                                class="btn btn-gawedata font-lato d-none">
-                                Buat Assessment
-                            </a>
-                        </li>
-                        @include('inc.modal.survey.create')
-                        @include('inc.modal.survey.create_daily')
-                        @include('inc.modal.assessment.create')
-                        <li class="nav-item mx-2 ">
-                            <a href="#" class="text-gawedata text-decoration-none font-weight-bold cursor-pointer"
-                                id="survey-button-grid" onclick="toggleSurveyViewGrid()">
-                                <span class="fa fa-fw fa-th-large"></span>
-                            </a>
-                        </li>
-                        <li class="nav-item mx-2 ">
-                            <a href="#" class="text-secondary text-decoration-none font-weight-bold cursor-pointer"
-                                id="survey-button-list" onclick="toggleSurveyViewList()">
-                                <span class="fa fa-fw fa-bars"></span>
-                            </a>
-                        </li>
-                    @elseif (Route::current()->getName() == 'survey.show')
-                        <li class="nav-item mx-2">
-                            <a href="#" class="btn btn-gawedata-2 font-lato" id="save-draft-button"
-                                onclick="saveDraft({{ $i }}, false);">
-                                Simpan (Draft)
-                            </a>
-                        </li>
-                        @include('inc.modal.survey.update')
-                        @include('inc.modal.survey.submit')
-                        <li class="nav-item mx-2">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#submit-modal"
-                                class="btn btn-gawedata font-lato font-weight-bold">
-                                Submit Survei
-                            </a>
-                        </li>
-                    @elseif (Route::current()->getName() == 'assessment.show' || Route::current()->getName() == 'assessment.showrespondent')
-                        <li class="nav-item mx-2">
-                            <a href="#" class="btn btn-gawedata-2 font-lato" id="save-draft-button"
-                                onclick="saveDraft({{ $i }}, false);"
-                                >
-                                Simpan (Draft)
-                            </a>
-                        </li>
-                        {{-- @include('inc.modal.survey.update') --}}
-                        {{-- @include('inc.modal.survey.submit') --}}
-                        <li class="nav-item mx-2">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#submit-modal"
-                                class="btn btn-gawedata font-lato font-weight-bold">
-                                Submit
-                            </a>
-                        </li>
-                    @elseif (Route::current()->getName() == 'survey.hasil' || Route::current()->getName() ==
-                        'survey.analisa' || Route::current()->getName() == 'survey.detail')
-                        @include('inc.modal.survey.share')
-                        <li class="nav-item mx-4">
-                            <a href="#" class="btn btn-gawedata-2 font-lato font-weight-bold" data-bs-toggle="modal" data-bs-target="#share-modal">
-                                <span class="far fa-fw fa-paper-plane"></span>
-                                Bagikan Survei
-                            </a>
-                        </li>
-                    @endif
-                    <li class="nav-item mx-4 position-relative">
-                        <img src="{{ asset('images/logo.png') }}" id="user-profile" class="rounded-circle"
-                            width="50px" height="50px">
-                        <div id="profile-menu-box">
-                            <div id="profile-menu" class="p-4">
-                                <p class="mt-0 mb-2 font-weight-bold">Kuota Responden
-                                    <span class="fa fa-fw fa-info-circle text-secondary"></span>
-                                </p>
-                                <div class="profile-quota-box mb-1">
-                                    <div class="profile-quota" style="width: 30%;"></div>
-                                </div>
-                                <p class="my-0 text-secondary">Tersisa <span class="used-quota">0</span>/<span class="user-quota">150</span> kuota
-                                    responden</p>
-                                <div class="my-3">
-                                    <a href="#" class="text-gawedata text-decoration-none font-weight-bold">
-                                        <span class="fa fa-fw fa-phone-alt me-2"></span>Hubungi Admin Via Whatsapp
-                                    </a>
-                                </div>
-                                <hr>
-                                <div class="my-3">
-                                    <a href="{{ route('user.editprofile') }}"
-                                        class="text-dark text-decoration-none font-weight-bold">
-                                        Account
-                                    </a>
-                                </div>
-                                <div class="mt-3">
-                                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();"
-                                        class="text-dark text-decoration-none font-weight-bold">
-                                        Logout
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                        style="display: none;">
-                                        @csrf
-                                    </form>
+                            <hr>
+                            <div class="mt-3">
+                                <div class="text-red-disabled text-decoration-none font-weight-bold"
+                                    id="survey-delete-button">
+                                    Hapus Survei
                                 </div>
                             </div>
                         </div>
-                    </li>
-                </ul>
-            </div>
+                    @elseif (Route::current()->getName() == 'assessment.submitted')
+                        <div id="survey-menu" class="p-4">
+                            <div>
+                                <span class="fa fa-fw fa-circle text-gawedata me-2"></span>
+                                <span class="text-gawedata">Submitted</span>
+                            </div>
+                            <hr>
+                            <div class="mt-3">
+                                <div class="text-red-disabled text-decoration-none font-weight-bold"
+                                    id="survey-delete-button">
+                                    Hapus Survei
+                                </div>
+                            </div>
+                        </div>
+                    @elseif (Route::current()->getName() == 'assessment.show' || Route::current()->getName() ==
+                        'assessment.showrespondent')
+                        <div id="survey-menu" class="p-4">
+                            <div>
+                                <span class="fa fa-fw fa-circle text-yellow me-2"></span>
+                                <span class="text-gray">Draft</span>
+                            </div>
+                            <hr>
+                            <div class="my-3">
+                                <a href="#" class="text-dark text-decoration-none font-weight-bold"
+                                    data-bs-toggle="modal" data-bs-target="#update-assessment-modal"
+                                    id="survey-setting-button">
+                                    Pengaturan Survei
+                                </a>
+                            </div>
+                            <div class="mt-3">
+                                <a href="#" onclick="event.preventDefault();
+                                                    document.getElementById('assessment-delete-form').submit();"
+                                    class="text-red text-decoration-none font-weight-bold" id="survey-delete-button">
+                                    Hapus Survei
+                                </a>
+                                <form id="assessment-delete-form"
+                                    action="{{ route('assessment.destroy', $assessment['id']) }}" method="POST"
+                                    style="display: none;">
+                                    @csrf
+                                    <input name="_method" type="hidden" value="DELETE">
+                                </form>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </h4>
+        </ul>
+    @endif
+    <!-- Right Side Of Navbar -->
+    <ul class="navbar-nav ms-auto align-items-center">
+        @if (Route::current()->getName() == 'home')
+            <li class="nav-item mx-4">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#create-survey-modal" id="create-survey-general"
+                    class="btn btn-gawedata font-lato d-block">
+                    Buat Survei
+                </a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#create-survey-modal-daily" id="create-survey-daily"
+                    class="btn btn-gawedata font-lato d-none">
+                    Buat Survei
+                </a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#create-assessment-modal" id="create-assessment"
+                    class="btn btn-gawedata font-lato d-none">
+                    Buat Assessment
+                </a>
+            </li>
+            @include('inc.modal.survey.create')
+            @include('inc.modal.survey.create_daily')
+            @include('inc.modal.assessment.create')
+            <li class="nav-item mx-2 ">
+                <a href="#" class="text-gawedata text-decoration-none font-weight-bold cursor-pointer"
+                    id="survey-button-grid" onclick="toggleSurveyViewGrid()">
+                    <span class="fa fa-fw fa-th-large"></span>
+                </a>
+            </li>
+            <li class="nav-item mx-2 ">
+                <a href="#" class="text-secondary text-decoration-none font-weight-bold cursor-pointer"
+                    id="survey-button-list" onclick="toggleSurveyViewList()">
+                    <span class="fa fa-fw fa-bars"></span>
+                </a>
+            </li>
+        @elseif (Route::current()->getName() == 'survey.show')
+            <li class="nav-item mx-2">
+                <a href="#" class="btn btn-gawedata-2 font-lato" id="save-draft-button"
+                    onclick="saveDraft({{ $i }}, false);">
+                    Simpan (Draft)
+                </a>
+            </li>
+            @if ($survey['daily_date'])
+                @include('inc.modal.survey.update_daily')
+            @else
+                @include('inc.modal.survey.update')
+            @endif
+            @include('inc.modal.survey.submit')
+            <li class="nav-item mx-2">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#submit-modal"
+                    class="btn btn-gawedata font-lato font-weight-bold">
+                    Submit Survei
+                </a>
+            </li>
+        @elseif (Route::current()->getName() == 'assessment.show' || Route::current()->getName() ==
+            'assessment.showrespondent')
+            <li class="nav-item mx-2">
+                <a href="#" class="btn btn-gawedata-2 font-lato" id="save-draft-button"
+                    onclick="saveDraft({{ $i }}, false);">
+                    Simpan (Draft)
+                </a>
+            </li>
+            {{-- @include('inc.modal.survey.update') --}}
+            {{-- @include('inc.modal.survey.submit') --}}
+            <li class="nav-item mx-2">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#submit-modal"
+                    class="btn btn-gawedata font-lato font-weight-bold">
+                    Submit
+                </a>
+            </li>
+        @elseif (Route::current()->getName() == 'survey.hasil' || Route::current()->getName() ==
+            'survey.analisa' || Route::current()->getName() == 'survey.detail')
+            @include('inc.modal.survey.share')
+            <li class="nav-item mx-4">
+                <a href="#" class="btn btn-gawedata-2 font-lato font-weight-bold" data-bs-toggle="modal"
+                    data-bs-target="#share-modal">
+                    <span class="far fa-fw fa-paper-plane"></span>
+                    Bagikan Survei
+                </a>
+            </li>
         @endif
+        <li class="nav-item mx-4 position-relative">
+            <img src="{{ asset('images/logo.png') }}" id="user-profile" class="rounded-circle" width="50px"
+                height="50px">
+            <div id="profile-menu-box">
+                <div id="profile-menu" class="p-4">
+                    <p class="mt-0 mb-2 font-weight-bold">Kuota Responden
+                        <span class="fa fa-fw fa-info-circle text-secondary"></span>
+                    </p>
+                    <div class="profile-quota-box mb-1">
+                        <div class="profile-quota" style="width: 30%;"></div>
+                    </div>
+                    <p class="my-0 text-secondary">Tersisa <span class="used-quota">0</span>/<span
+                            class="user-quota">150</span> kuota
+                        responden</p>
+                    <div class="my-3">
+                        <a href="#" class="text-gawedata text-decoration-none font-weight-bold">
+                            <span class="fa fa-fw fa-phone-alt me-2"></span>Hubungi Admin Via Whatsapp
+                        </a>
+                    </div>
+                    <hr>
+                    <div class="my-3">
+                        <a href="{{ route('user.editprofile') }}"
+                            class="text-dark text-decoration-none font-weight-bold">
+                            Account
+                        </a>
+                    </div>
+                    <div class="mt-3">
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();"
+                            class="text-dark text-decoration-none font-weight-bold">
+                            Logout
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    </div>
+    @endif
     </div>
 </nav>

@@ -1485,4 +1485,53 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             questions[question_index]['answer_choices'][key]['next_question'] = order - 1;
         };
     </script>
+    @if ($survey['daily_date'])
+        {{-- date range picker --}}
+        {{-- https://www.daterangepicker.com/ --}}
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+        <script>
+            //update daily survey
+            $(function() {
+                $('input[name="daily_datepicker"]').daterangepicker({
+                    locale: {
+                        format: 'YYYY-MM-DD',
+                    },
+                    singleDatePicker: true,
+                    startDate: {{ $survey['daily_date'] }},
+                }, function(start, end, label) {
+                    console.log(start.format('YYYY-MM-DD'));
+                    $('#input-daily-date').val(start.format('YYYY-MM-DD'));
+                });
+                $('input[name="daily_timepicker"]').daterangepicker({
+                    timePicker: true,
+                    timePicker24Hour: true,
+                    timePickerIncrement: 1,
+                    locale: {
+                        format: 'HH:mm'
+                    },
+                    startDate: "{{ $survey['start_time'] }}",
+                    endDate: "{{ $survey['end_time'] }}",
+                }, function(start, end, label) {
+                    console.log(start.format('HH:mm'));
+                    $('#input-daily-start').val(start.format('HH:mm'));
+                    $('#input-daily-end').val(end.format('HH:mm'));
+                    console.log($('#input-daily-start').val());
+                }).on('show.daterangepicker', function(ev, picker) {
+                    picker.container.find(".calendar-table").hide();
+                });
+            });
+
+            function changePointValue(type) {
+                if (type == "+") {
+                    $('#survey-points-daily').val(+$('#survey-points-daily').val() + 1);
+                } else {
+                    if ($('#survey-points-daily').val() > 0) {
+                        $('#survey-points-daily').val(+$('#survey-points-daily').val() - 1);
+                    }
+                }
+            }
+        </script>
+    @endif
 @endsection
