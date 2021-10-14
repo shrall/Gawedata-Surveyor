@@ -217,7 +217,7 @@
                 </a>
             </li>
             {{-- @include('inc.modal.survey.update') --}}
-            {{-- @include('inc.modal.survey.submit') --}}
+            @include('inc.modal.assessment.submit')
             <li class="nav-item mx-2">
                 <a href="#" data-bs-toggle="modal" data-bs-target="#submit-modal"
                     class="btn btn-gawedata font-lato font-weight-bold">

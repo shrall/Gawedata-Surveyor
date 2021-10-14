@@ -383,4 +383,13 @@ class AssessmentController extends Controller
             return redirect()->route('assessment.showrespondent', ['id' => $request->assessment_id, 'i' => $request->next, 'new' => $new]);
         }
     }
+
+    public function submit($id)
+    {
+        $assessment = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])->patch(config('services.api.url') . '/submitAssessment/' . $id)->json();
+        dd($assessment);
+        return redirect()->route('assessment.submitted', ['id' => $id, 'i' => 1]);
+    }
 }
