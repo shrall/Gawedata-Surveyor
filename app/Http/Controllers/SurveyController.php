@@ -35,7 +35,6 @@ class SurveyController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         if ($request->has('daily_date')) {
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . session('token'),

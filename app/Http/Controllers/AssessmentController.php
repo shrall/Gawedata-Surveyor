@@ -35,7 +35,56 @@ class AssessmentController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        if ($request->assessment_method == 'irt') {
+            $method = 1;
+            $test_date = $request->start_time;
+        } else if ($request->assessment_method == 'rs') {
+            $method = 2;
+            $test_date = $request->start_time;
+        } else {
+            $method = 3;
+            $test_date = $request->end_time;
+        }
+        if ($request->assessment_serentak == 'true') {
+            $serentak = true;
+        } else {
+            $serentak = false;
+        }
+        if ($request->assessment_type == 'Public') {
+            $private = false;
+        } else {
+            $private = true;
+        }
+        if ($request->with_discussion) {
+            $discussion = true;
+        } else {
+            $discussion = false;
+        }
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])->post(config('services.api.url') . '/assessment', [
+            'assessment_type_id' => $method,
+            'title' => $request->title,
+            'description' => $request->description,
+            'duration' => $request->duration,
+            'test_date' => $test_date,
+            'start_time' => $request->start_time,
+            'end_time' => $request->end_time,
+            'is_simultaneously' => $serentak,
+            'is_private' => $private,
+            'with_discussion' => $discussion,
+            'easy_in_percent' => $request->easy_in_percent,
+            'medium_in_percent' => $request->medium_in_percent,
+            'hard_in_percent' => $request->hard_in_percent,
+            'easy_in_points' => $request->easy_in_points,
+            'medium_in_points' => $request->medium_in_points,
+            'hard_in_points' => $request->hard_in_points,
+        ])->json();
+        if ($response['success']) {
+            return redirect()->route('assessment.show', ['id' => $response['data']['id'], 'i' => 1, 'new' => 'false']);
+        } else {
+            return redirect()->route('home');
+        }
     }
 
     /**

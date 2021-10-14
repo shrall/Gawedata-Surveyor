@@ -3,12 +3,14 @@
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content ps-4 py-0" style="border-radius: 18px !important;">
             <div class="modal-body py-0">
-                <form action="{{ route('assessment.store') }}" method="post">
+                <form action="{{ route('assessment.store') }}" method="post" id="create-assessment-form">
                     @csrf
+                    <input type="hidden" id="assessment-method" name="assessment_method" value="irt">
+                    <input type="hidden" id="assessment-serentak" name="assessment_serentak" value="false">
                     <div class="row">
                         <div class="col-5 text-start border-end pt-5 pe-0">
                             <ul
-                                class="list-unstyled font-weight-bold my-5 create-assessment-sidebar assessment-sa d-none">
+                                class="list-unstyled font-weight-bold my-5 create-assessment-sidebar assessment-rs assessment-sa assessment-irt-serentak d-none">
                                 <li class="my-4 active position-relative">
                                     <span class="text-gray text-decoration-none fs-6">1. Pilih Jenis Tes</span>
                                     <div class="active-border py-1 position-absolute end-0 d-inline"> </div>
@@ -17,17 +19,9 @@
                                     <span class="text-gray text-decoration-none fs-6">2. Detail Tes</span>
                                     <div class="active-border py-1 position-absolute end-0 d-none"> </div>
                                 </li>
-                                <li class="my-4 position-relative">
-                                    <span class="text-gray text-decoration-none fs-6">3. Pilih Kriteria Responden</span>
-                                    <div class="active-border py-1 position-absolute end-0 d-none"> </div>
-                                </li>
-                                <li class="my-4 position-relative">
-                                    <span class="text-gray text-decoration-none fs-6">4. Pilih Jumlah Responden</span>
-                                    <div class="active-border py-1 position-absolute end-0 d-none"> </div>
-                                </li>
                             </ul>
                             <ul
-                                class="list-unstyled font-weight-bold my-5 create-assessment-sidebar assessment-irt assessment-rs">
+                                class="list-unstyled font-weight-bold my-5 create-assessment-sidebar assessment-irt-non-serentak">
                                 <li class="my-4 active position-relative">
                                     <span class="text-gray text-decoration-none fs-6">1. Pilih Jenis Tes</span>
                                     <div class="active-border py-1 position-absolute end-0 d-inline"> </div>
@@ -42,14 +36,6 @@
                                 </li>
                                 <li class="my-4 position-relative">
                                     <span class="text-gray text-decoration-none fs-6">4. Pemberian Bobot Nilai</span>
-                                    <div class="active-border py-1 position-absolute end-0 d-none"> </div>
-                                </li>
-                                <li class="my-4 position-relative">
-                                    <span class="text-gray text-decoration-none fs-6">5. Pilih Kriteria Responden</span>
-                                    <div class="active-border py-1 position-absolute end-0 d-none"> </div>
-                                </li>
-                                <li class="my-4 position-relative">
-                                    <span class="text-gray text-decoration-none fs-6">6. Pilih Jumlah Responden</span>
                                     <div class="active-border py-1 position-absolute end-0 d-none"> </div>
                                 </li>
                             </ul>
@@ -86,18 +72,19 @@
                                                     <div class="card-footer d-flex align-items-center assessment-irt">
                                                         <div
                                                             class="form-check d-flex align-items-center form-switch mb-0 ps-0">
-                                                            <label for="with_ranking">Dengan ranking</label>
-                                                            <input name="with_ranking_irt" id="with_ranking_irt"
+                                                            <label for="with_discussion_irt">Dengan pembahasan</label>
+                                                            <input name="with_discussion" id="with_discussion_irt"
                                                                 class="form-check-input form-check-input-switch  form-check-assessment
                                                                 cursor-pointer ms-3"
                                                                 type="checkbox">
                                                         </div>
                                                         <div
                                                             class="form-check d-flex align-items-center form-switch mb-0 ms-2 ps-0">
-                                                            <label for="with_discussion_irt">Dengan pembahasan</label>
-                                                            <input name="with_discussion" id="with_discussion_irt"
+                                                            <label for="with_ranking">Serentak (dengan ranking)</label>
+                                                            <input name="with_ranking_irt" id="with_ranking_irt"
                                                                 class="form-check-input form-check-input-switch  form-check-assessment
                                                                 cursor-pointer ms-3"
+                                                                onclick="toggleIRTSerentak();"
                                                                 type="checkbox">
                                                         </div>
                                                     </div>
@@ -126,18 +113,19 @@
                                                         class="card-footer d-flex align-items-center assessment-rs d-none">
                                                         <div
                                                             class="form-check d-flex align-items-center form-switch mb-0 ps-0">
-                                                            <label for="with_ranking_rs">Dengan ranking</label>
-                                                            <input name="with_ranking" id="with_ranking_rs"
+                                                            <label for="with_discussion_rs">Dengan pembahasan</label>
+                                                            <input name="with_discussion" id="with_discussion_rs"
                                                                 class="form-check-input form-check-input-switch form-check-assessment
                                                                 cursor-pointer ms-3"
                                                                 type="checkbox">
                                                         </div>
                                                         <div
                                                             class="form-check d-flex align-items-center form-switch mb-0 ms-2 ps-0">
-                                                            <label for="with_discussion_rs">Dengan pembahasan</label>
-                                                            <input name="with_discussion" id="with_discussion_rs"
+                                                            <label for="with_ranking_rs">Serentak (dengan ranking)</label>
+                                                            <input name="with_ranking" id="with_ranking_rs"
                                                                 class="form-check-input form-check-input-switch form-check-assessment
                                                                 cursor-pointer ms-3"
+                                                                onclick="toggleSerentak();"
                                                                 type="checkbox">
                                                         </div>
                                                     </div>
@@ -204,20 +192,52 @@
                                             style="resize: none; height:7rem;" name="description" required
                                             placeholder="Deskripsi Assessment"></textarea>
                                     </div>
-                                    <div class="mb-3">
+                                    <div class="mb-3 assessment-irt assessment-rs">
                                         <div
                                             class="d-flex justify-content-between align-items-center position-relative">
                                             <input type="number" name="duration" id="assessment-duration"
+                                                placeholder="Durasi tes"
                                                 class="form-control input-text" required>
                                             <span
                                                 class="position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6 text-gray">menit</span>
                                         </div>
                                     </div>
-                                    <div class="mb-3 assessment-irt assessment-rs">
+                                    <div class="mb-3 assessment-irt assessment-rs non-serentak">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div
+                                                    class="d-flex justify-content-between align-items-center position-relative">
+                                                    <input type="text" name="start_time" id="assessment-start-time-non-serentak"
+                                                        class="form-control input-text" placeholder="Tanggal/Waktu Mulai Tes" required>
+                                                    <span
+                                                        class="fa fa-fw fa-calendar-day position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6 text-gawedata"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div
+                                                    class="d-flex justify-content-between align-items-center position-relative">
+                                                    <input type="text" name="end_time" id="assessment-end-time-non-serentak"
+                                                        class="form-control input-text" placeholder="Tanggal/Waktu Berakhir Tes" required>
+                                                    <span
+                                                        class="fa fa-fw fa-calendar-day position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6 text-gawedata"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 assessment-irt assessment-rs serentak d-none">
                                         <div
                                             class="d-flex justify-content-between align-items-center position-relative">
-                                            <input type="text" name="test_date" id="assessment-date"
-                                                class="form-control input-text" required>
+                                            <input type="text" name="start_time" id="assessment-start-time"
+                                                class="form-control input-text" placeholder="Tanggal/Waktu Mulai Tes" required>
+                                            <span
+                                                class="fa fa-fw fa-calendar-day position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6 text-gawedata"></span>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 assessment-sa d-none">
+                                        <div
+                                            class="d-flex justify-content-between align-items-center position-relative">
+                                            <input type="text" name="end_time" id="assessment-end-time"
+                                                class="form-control input-text" placeholder="Tanggal Berakhir Pengisian" required>
                                             <span
                                                 class="fa fa-fw fa-calendar-day position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6 text-gawedata"></span>
                                         </div>
@@ -259,20 +279,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-7 text-center my-4 d-none" id="assessment-third-step-irt-rs">
+                        <div class="col-7 text-center my-4 d-none" id="assessment-third-step-irt-non-serentak">
                             <div class="d-flex">
                                 <span class="fa fa-fw fa-times-circle fs-5 text-gray cursor-pointer ms-auto"
                                     data-bs-dismiss="modal" aria-label="Close"></span>
                             </div>
                             <h5 class="my-1">Tingkat Kesulitan</h5>
                             <div class="row justify-content-center my-5">
-                                <div class="col-10 text-center text-gray">
+                                <div class="col-11 text-center text-gray">
                                     <p>Tingkat kesulitan dalam IRT dan Regular Scoring dapat membantu menentukan
                                         kemampuan para peserta
                                         secara keseluruhan dalam menjawab soal - soal dalam ujian yang dilaksanakan.
                                         Terdapat 3 Kategori, Sulit, sedang dan Mudah</p>
                                 </div>
-                                <div class="col-10 row justify-content-center align-items-center mb-3">
+                                <div class="col-11 row justify-content-center align-items-center mb-3">
                                     <div class="col-5 text-end">Soal dikatakan <span
                                             class="text-danger">SULIT</span> apabila</div>
                                     <div class="col-3">
@@ -286,9 +306,9 @@
                                     </div>
                                     <div class="col-4 text-start">peserta menjawab benar</div>
                                 </div>
-                                <div class="col-10 row justify-content-center align-items-center mb-3">
+                                <div class="col-11 row justify-content-center align-items-center mb-3">
                                     <div class="col-5 text-end">Soal dikatakan <span
-                                            class="text-warning">SEDANG</span> apabila</div>
+                                            class="text-warning">SEDANG</span> apabila minimal</div>
                                     <div class="col-3">
                                         <div
                                             class="d-flex justify-content-between align-items-center position-relative">
@@ -301,9 +321,9 @@
                                     </div>
                                     <div class="col-4 text-start">peserta menjawab benar</div>
                                 </div>
-                                <div class="col-10 row justify-content-center align-items-center mb-3">
+                                <div class="col-11 row justify-content-center align-items-center mb-3">
                                     <div class="col-5 text-end">Soal dikatakan <span
-                                            class="text-success">MUDAH</span> apabila</div>
+                                            class="text-success">MUDAH</span> apabila minimal</div>
                                     <div class="col-3">
                                         <div
                                             class="d-flex justify-content-between align-items-center position-relative">
@@ -315,20 +335,14 @@
                                     </div>
                                     <div class="col-4 text-start">peserta menjawab benar</div>
                                 </div>
-                                <div class="col-10 row justify-content-center align-items-center mb-3">
-                                    <div class="col-5 text-end">Total</div>
-                                    <div class="col-3 text-center font-weight-bold"
-                                        id="assessment-difficulty-percentage">0%</div>
-                                    <div class="col-4 text-start"></div>
-                                </div>
-                                <div class="col-10">
+                                <div class="col-11">
                                     <div class="row justify-content-between align-items-center px-2 mb-2">
                                         <span class="col-4 text-gawedata text-start cursor-pointer ps-0"
-                                            id="create-assessment-back-button-3-irt-rs">
+                                            id="create-assessment-back-button-3-irt-non-serentak">
                                             <span class="fa fa-fw fa-arrow-left me-2"></span>Sebelumnya
                                         </span>
-                                        <button type="submit" class="btn btn-gawedata col-4 py-2" disabled
-                                            id="create-assessment-next-button-3-irt-rs"
+                                        <button type="submit" class="btn btn-gawedata col-4 py-2"
+                                            id="create-assessment-next-button-3-irt-non-serentak"
                                             onclick="event.preventDefault()">
                                             Selanjutnya
                                         </button>
@@ -336,7 +350,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-7 text-center my-4 d-none" id="assessment-fourth-step-irt-rs">
+                        <div class="col-7 text-center my-4 d-none" id="assessment-fourth-step-irt-non-serentak">
                             <div class="d-flex">
                                 <span class="fa fa-fw fa-times-circle fs-5 text-gray cursor-pointer ms-auto"
                                     data-bs-dismiss="modal" aria-label="Close"></span>
@@ -394,156 +408,11 @@
                                 <div class="col-10">
                                     <div class="row justify-content-between align-items-center px-2 mb-2">
                                         <span class="col-4 text-gawedata text-start cursor-pointer ps-0"
-                                            id="create-assessment-back-button-4-irt-rs">
+                                            id="create-assessment-back-button-4-irt-non-serentak">
                                             <span class="fa fa-fw fa-arrow-left me-2"></span>Sebelumnya
                                         </span>
                                         <button type="submit" class="btn btn-gawedata col-4 py-2"
-                                            id="create-assessment-next-button-4-irt-rs"
-                                            onclick="event.preventDefault()">
-                                            Selanjutnya
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-7 text-center my-4 d-none" id="assessment-fifth-step">
-                            <div class="d-flex">
-                                <span class="fa fa-fw fa-times-circle fs-5 text-gray cursor-pointer ms-auto"
-                                    data-bs-dismiss="modal" aria-label="Close"></span>
-                            </div>
-                            <h5 class="my-1">Detail Tes</h5>
-                            <div class="row justify-content-center my-5">
-                                <div class="col-10">
-                                    <div class="row justify-content-between align-items-center mb-3">
-                                        <div class="col-4 text-start">Jenis Kelamin</div>
-                                        <div class="col-6 text-end">
-                                            <input type="checkbox" class="btn-check" id="assessment-check-pria"
-                                                name="check-pria" autocomplete="off">
-                                            <label class="btn btn-checkbox-gawedata px-4 me-2"
-                                                for="assessment-check-pria">Pria</label>
-                                            <input type="checkbox" class="btn-check" id="assessment-check-wanita"
-                                                name="check-wanita" autocomplete="off">
-                                            <label class="btn btn-checkbox-gawedata px-4 ms-2"
-                                                for="assessment-check-wanita">Wanita</label>
-                                        </div>
-                                    </div>
-                                    <div class="row justify-content-between align-items-center mb-3">
-                                        <div class="col-4 text-start">Rentang Umur</div>
-                                        <div class="col-5 text-end">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <input type="number" name="age_start" id="assessment-age-start"
-                                                    class="form-control input-text text-center" min="0">
-                                                <span class="mx-2">sampai</span>
-                                                <input type="number" name="age_end" id="assessment-age-end"
-                                                    class="form-control input-text text-center" max="1000">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <select class="form-control input-text" id="assessment-province"
-                                            name="province[]" multiple="multiple">
-                                            <option value="all">Semua Provinsi</option>
-                                            @foreach ($locations as $location)
-                                                <option value="{{ $location['id'] }}">
-                                                    {{ $location['province_name'] }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <input type="hidden" name="cities[]" id="assessment-city-all">
-                                        <select class="form-control input-text" id="assessment-city" name="city[]"
-                                            multiple="multiple">
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <input type="hidden" name="educations[]" id="assessment-education-all">
-                                        <select class="form-control input-text" id="assessment-education"
-                                            name="education[]" multiple="multiple">
-                                            <option value="all">Semua Pendidikan</option>
-                                            @foreach ($educations as $education)
-                                                <option value="{{ $education['id'] }}">{{ $education['name'] }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <input type="hidden" name="professions[]" id="assessment-profession-all">
-                                        <select class="form-control input-text" id="assessment-profession"
-                                            name="profession[]" multiple="multiple">
-                                            <option value="all">Semua Profesi</option>
-                                            @foreach ($professions as $profession)
-                                                <option value="{{ $profession['id'] }}">{{ $profession['name'] }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <input type="hidden" name="expenses[]" id="assessment-expense-all">
-                                        <select class="form-control input-text" id="assessment-expense"
-                                            name="expense[]" multiple="multiple">
-                                            <option value="all">Semua Pengeluaran</option>
-                                            @foreach ($expenses as $expense)
-                                                <option value="{{ $expense['id'] }}">{{ $expense['name'] }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="row justify-content-between align-items-center px-2 mb-2">
-                                        <span class="col-4 text-gawedata text-start cursor-pointer ps-0"
-                                            id="create-assessment-back-button-5">
-                                            <span class="fa fa-fw fa-arrow-left me-2"></span>Sebelumnya
-                                        </span>
-                                        <button type="submit" class="btn btn-gawedata col-4 py-2"
-                                            id="create-assessment-next-button-5" disabled
-                                            onclick="event.preventDefault()">
-                                            Selanjutnya
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-7 text-center my-4 d-none" id="assessment-sixth-step">
-                            <div class="d-flex">
-                                <span class="fa fa-fw fa-times-circle fs-5 text-gray cursor-pointer ms-auto"
-                                    data-bs-dismiss="modal" aria-label="Close"></span>
-                            </div>
-                            <h5 class="my-1">Tentukan Responden</h5>
-                            <div class="row justify-content-center my-5 text-start">
-                                <div class="col-10">
-                                    <p class="mt-0 mb-2 font-weight-bold">Kuota Responden
-                                        <span class="fa fa-fw fa-info-circle text-secondary"></span>
-                                    </p>
-                                    <div class="profile-quota-box mb-1">
-                                        <div class="profile-quota" style="width: 30%;"></div>
-                                    </div>
-                                    <p class="my-0 text-secondary">Tersisa <span class="used-quota">0</span>/<span
-                                            class="user-quota">150</span> kuota
-                                        responden</p>
-                                    <div class="my-3">
-                                        <a href="#" class="text-gawedata text-decoration-none font-weight-bold">
-                                            <span class="fa fa-fw fa-phone-alt me-2"></span>Hubungi Admin Via Whatsapp
-                                        </a>
-                                    </div>
-                                    <div class="row justify-content-between align-items-center mb-3">
-                                        <div class="col-12">
-                                            <input type="number" name="respondent_quota" id="assessment-respondent"
-                                                class="form-control input-text" placeholder="Jumlah Responden" min="0"
-                                                required>
-                                            <span class="invalid-feedback text-end">
-                                                <strong>Kuota anda tidak mencukupi, silahkan hubungi admin.</strong>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-10">
-                                    <div class="row justify-content-between align-items-center px-2 mb-2">
-                                        <span class="col-4 text-gawedata text-start cursor-pointer ps-0"
-                                            id="create-assessment-back-button-6">
-                                            <span class="fa fa-fw fa-arrow-left me-2"></span>Sebelumnya
-                                        </span>
-                                        <button type="submit" class="btn btn-gawedata col-4 py-2" disabled
-                                            id="create-assessment-next-button-6">
+                                            id="create-assessment-next-button-4-irt-non-serentak">
                                             Selanjutnya
                                         </button>
                                     </div>

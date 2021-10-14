@@ -664,8 +664,28 @@
     {{-- assessment --}}
     <script>
         var assessment_type = 'irt';
+        var serentak = false;
 
         function changeAssessmentType(type) {
+            //remove serentak
+            if (type != 'rs') {
+                serentak = false;
+                $('#with_ranking_rs').prop('checked', false);
+                $('.serentak').removeClass('d-block').addClass('d-none');
+                $('.non-serentak').removeClass('d-none').addClass('d-block');
+            }
+            if (type != 'irt') {
+                serentak = false;
+                $('#with_ranking_irt').prop('checked', false);
+                $('.assessment-irt-non-serentak').removeClass('d-block').addClass('d-none');
+                $('.assessment-irt-serentak').removeClass('d-none').addClass('d-block');
+            } else {
+                if (!serentak) {
+                    $('.assessment-irt-non-serentak').removeClass('d-none').addClass('d-block');
+                } else {
+                    $('.assessment-irt-serentak').removeClass('d-none').addClass('d-block');
+                }
+            }
             assessment_type = type;
             $('#radio-label-assessment-irt').removeClass('active');
             $('#radio-label-assessment-rs').removeClass('active');
@@ -675,7 +695,43 @@
             $('.assessment-rs').removeClass('d-block').addClass('d-none');
             $('.assessment-sa').removeClass('d-block').addClass('d-none');
             $('.assessment-' + type).removeClass('d-none').addClass('d-block');
+            if (type == 'irt') {
+                toggleIRTSerentak();
+            } else if (type == 'rs') {
+                toggleSerentak();
+            }
+            $('#assessment-method').val(type);
+            if (serentak) {
+                $('#assessment-serentak').val('true');
+            } else {
+                $('#assessment-serentak').val('false');
+            }
             enableSecondAssessmentButton();
+        }
+
+        function toggleIRTSerentak() {
+            if ($('#with_ranking_irt').prop("checked") == true) {
+                serentak = true;
+                $('.assessment-irt-non-serentak').removeClass('d-block').addClass('d-none');
+                $('.assessment-irt-serentak').removeClass('d-none').addClass('d-block');
+            } else {
+                serentak = false;
+                $('.assessment-irt-serentak').removeClass('d-block').addClass('d-none');
+                $('.assessment-irt-non-serentak').removeClass('d-none').addClass('d-block');
+            }
+            toggleSerentak();
+        }
+
+        function toggleSerentak() {
+            if ($('#with_ranking_irt').prop("checked") == true || $('#with_ranking_rs').prop("checked") == true) {
+                serentak = true;
+                $('.non-serentak').removeClass('d-block').addClass('d-none');
+                $('.serentak').removeClass('d-none').addClass('d-block');
+            } else {
+                serentak = false;
+                $('.serentak').removeClass('d-block').addClass('d-none');
+                $('.non-serentak').removeClass('d-none').addClass('d-block');
+            }
         }
         //change step
         function changeAssessmentStep(beforeStep, afterStep, beforeSidebar, afterSidebar) {
@@ -692,47 +748,33 @@
             changeAssessmentStep('#assessment-first-step', '#assessment-second-step', 1, 2);
         })
         $('#create-assessment-next-button-2').click(function() {
-            if (assessment_type != 'sa') {
-                changeAssessmentStep('#assessment-second-step', '#assessment-third-step-irt-rs', 2, 3);
+            if (assessment_type == 'irt') {
+                if (!serentak) {
+                    changeAssessmentStep('#assessment-second-step', '#assessment-third-step-irt-non-serentak', 2,
+                        3);
+                } else {
+                    document.getElementById('create-assessment-form').submit();
+                }
             } else {
-                changeAssessmentStep('#assessment-second-step', '#assessment-fifth-step', 2, 3);
-            }
-        })
-        $('#create-assessment-next-button-3-irt-rs').click(function() {
-            changeAssessmentStep('#assessment-third-step-irt-rs', '#assessment-fourth-step-irt-rs', 3, 4);
-        })
-        $('#create-assessment-next-button-4-irt-rs').click(function() {
-            changeAssessmentStep('#assessment-fourth-step-irt-rs', '#assessment-fifth-step', 4, 5);
-        })
-        $('#create-assessment-next-button-5').click(function() {
-            if (assessment_type != 'sa') {
-                changeAssessmentStep('#assessment-fifth-step', '#assessment-sixth-step', 5, 6);
-            } else {
-                changeAssessmentStep('#assessment-fifth-step', '#assessment-sixth-step', 3, 4);
+                document.getElementById('create-assessment-form').submit();
             }
         })
         $('#create-assessment-back-button-2').click(function() {
             changeAssessmentStep('#assessment-second-step', '#assessment-first-step', 2, 1);
         })
-        $('#create-assessment-back-button-3-irt-rs').click(function() {
-            changeAssessmentStep('#assessment-third-step-irt-rs', '#assessment-second-step', 3, 2);
+        $('#create-assessment-next-button-3-irt-non-serentak').click(function() {
+            changeAssessmentStep('#assessment-third-step-irt-non-serentak',
+                '#assessment-fourth-step-irt-non-serentak', 3, 4);
         })
-        $('#create-assessment-back-button-4-irt-rs').click(function() {
-            changeAssessmentStep('#assessment-fourth-step-irt-rs', '#assessment-third-step-irt-rs', 4, 3);
+        $('#create-assessment-next-button-4-irt-non-serentak').click(function() {
+            document.getElementById('create-assessment-form').submit();
         })
-        $('#create-assessment-back-button-5').click(function() {
-            if (assessment_type != 'sa') {
-                changeAssessmentStep('#assessment-fifth-step', '#assessment-fourth-step-irt-rs', 5, 4);
-            } else {
-                changeAssessmentStep('#assessment-fifth-step', '#assessment-second-step', 3, 2);
-            }
+        $('#create-assessment-back-button-3-irt-non-serentak').click(function() {
+            changeAssessmentStep('#assessment-third-step-irt-non-serentak', '#assessment-second-step', 3, 2);
         })
-        $('#create-assessment-back-button-6').click(function() {
-            if (assessment_type != 'sa') {
-                changeAssessmentStep('#assessment-sixth-step', '#assessment-fifth-step', 6, 5);
-            } else {
-                changeAssessmentStep('#assessment-sixth-step', '#assessment-fifth-step', 4, 3);
-            }
+        $('#create-assessment-back-button-4-irt-non-serentak').click(function() {
+            changeAssessmentStep('#assessment-fourth-step-irt-non-serentak',
+                '#assessment-third-step-irt-non-serentak', 4, 3);
         })
     </script>
     {{-- second step --}}
@@ -740,26 +782,89 @@
         $(function() {
             $("#assessment-date").datepicker();
         });
+        $(function() {
+            $('#assessment-start-time-non-serentak').daterangepicker({
+                singleDatePicker: true,
+                startDate: moment(),
+                timePicker: true,
+                timePicker24Hour: true,
+                timePickerSeconds: true,
+                timePickerIncrement: 1,
+                locale: {
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                }
+            }, function(start, end, label) {});
+            $('#assessment-end-time-non-serentak').daterangepicker({
+                singleDatePicker: true,
+                startDate: moment(),
+                timePicker: true,
+                timePicker24Hour: true,
+                timePickerSeconds: true,
+                timePickerIncrement: 1,
+                locale: {
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                }
+            }, function(start, end, label) {});
+            $('#assessment-start-time').daterangepicker({
+                singleDatePicker: true,
+                startDate: moment(),
+                timePicker: true,
+                timePicker24Hour: true,
+                timePickerSeconds: true,
+                timePickerIncrement: 1,
+                locale: {
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                }
+            }, function(start, end, label) {});
+            $('#assessment-end-time').daterangepicker({
+                singleDatePicker: true,
+                startDate: moment(),
+                timePicker: true,
+                timePicker24Hour: true,
+                timePickerSeconds: true,
+                timePickerIncrement: 1,
+                locale: {
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                }
+            }, function(start, end, label) {});
+        });
 
         function enableSecondAssessmentButton() {
-            if (assessment_type != 'sa') {
+            if (serentak) {
                 if ($("#assessment-title").val() != "" &&
                     $("#assessment-description").val() != "" &&
                     $("#assessment-duration").val() != "" &&
                     $("#assessment-date").val() != "" &&
+                    $("#assessment-start-time-non-serentak").val() != "" &&
+                    $("#assessment-end-time-non-serentak").val() != "" &&
                     $("#assessment-type").val() != "") {
                     $("#create-assessment-next-button-2").prop("disabled", false);
                 } else {
                     $("#create-assessment-next-button-2").prop("disabled", true);
                 }
             } else {
-                if ($("#assessment-title").val() != "" &&
-                    $("#assessment-description").val() != "" &&
-                    $("#assessment-duration").val() != "" &&
-                    $("#assessment-type").val() != "") {
-                    $("#create-assessment-next-button-2").prop("disabled", false);
+                if (assessment_type != 'sa') {
+                    if ($("#assessment-title").val() != "" &&
+                        $("#assessment-description").val() != "" &&
+                        $("#assessment-duration").val() != "" &&
+                        $("#assessment-date").val() != "" &&
+                        $("#assessment-start-time").val() != "" &&
+                        $("#assessment-type").val() != "") {
+                        $("#create-assessment-next-button-2").prop("disabled", false);
+                    } else {
+                        $("#create-assessment-next-button-2").prop("disabled", true);
+                    }
                 } else {
-                    $("#create-assessment-next-button-2").prop("disabled", true);
+                    if ($("#assessment-title").val() != "" &&
+                        $("#assessment-description").val() != "" &&
+                        $("#assessment-duration").val() != "" &&
+                        $("#assessment-date").val() != "" &&
+                        $("#assessment-end-time").val() != "" &&
+                        $("#assessment-type").val() != "") {
+                        $("#create-assessment-next-button-2").prop("disabled", false);
+                    } else {
+                        $("#create-assessment-next-button-2").prop("disabled", true);
+                    }
                 }
             }
         }
@@ -784,37 +889,39 @@
         $("#assessment-duration").keyup(function() {
             enableSecondAssessmentButton();
         });
-        $("#assessment-date").change(function() {
+        $("#assessment-start-time-non-serentak").change(function() {
+            enableSecondAssessmentButton();
+        });
+        $("#assessment-end-time-non-serentak").change(function() {
+            enableSecondAssessmentButton();
+        });
+        $("#assessment-start-time").change(function() {
+            enableSecondAssessmentButton();
+        });
+        $("#assessment-end-time").change(function() {
             enableSecondAssessmentButton();
         });
     </script>
     {{-- third step irt rs --}}
     <script>
-        function enableThirdAssessmentIRTRSButton() {
-            calculateAssessmentDifficulty();
+        function enableThirdAssessmentIRTNonSerentakButton() {
             if ($("#assessment-easy-in-percent").val() != "" &&
                 $("#assessment-medium-in-percent").val() != "" &&
-                $("#assessment-hard-in-percent").val() != "" &&
-                $("#assessment-difficulty-percentage").html() == "100%") {
-                $("#create-assessment-next-button-3-irt-rs").prop("disabled", false);
+                $("#assessment-hard-in-percent").val() != "") {
+                $("#create-assessment-next-button-3-irt-non-serentak").prop("disabled", false);
             } else {
-                $("#create-assessment-next-button-3-irt-rs").prop("disabled", true);
+                $("#create-assessment-next-button-3-irt-non-serentak").prop("disabled", true);
             }
         }
 
-        function calculateAssessmentDifficulty() {
-            var difficulty_percentage = parseInt($("#assessment-easy-in-percent").val()) + parseInt($(
-                "#assessment-medium-in-percent").val()) + parseInt($("#assessment-hard-in-percent").val())
-            $("#assessment-difficulty-percentage").html(difficulty_percentage + '%')
-        }
         $("#assessment-easy-in-percent").keyup(function() {
-            enableThirdAssessmentIRTRSButton();
+            enableThirdAssessmentIRTNonSerentakButton();
         });
         $("#assessment-medium-in-percent").keyup(function() {
-            enableThirdAssessmentIRTRSButton();
+            enableThirdAssessmentIRTNonSerentakButton();
         });
         $("#assessment-hard-in-percent").keyup(function() {
-            enableThirdAssessmentIRTRSButton();
+            enableThirdAssessmentIRTNonSerentakButton();
         });
     </script>
     {{-- fourth step irt rs --}}
@@ -825,216 +932,9 @@
         }
 
         function subtractPoints(difficulty) {
-            $('#assessment-' + difficulty + '-in-points').val(parseInt($('#assessment-' + difficulty + '-in-points').val()) - 1);
+            $('#assessment-' + difficulty + '-in-points').val(parseInt($('#assessment-' + difficulty + '-in-points')
+                .val()) - 1);
         }
-    </script>
-    <script>
-        //fifth step
-        function enableFifthAssessmentButton() {
-            if ($("#assessment-age-start").val() != "" &&
-                $("#assessment-age-end").val() != "" &&
-                $("#assessment-province").val() != "" &&
-                $("#assessment-city").val() != "" &&
-                $("#assessment-education").val() != "" &&
-                $("#assessment-profession").val() != "" &&
-                $("#assessment-expense").val() != "") {
-                if ($("#assessment-check-pria").prop("checked") == true ||
-                    $("#assessment-check-wanita").prop("checked") == true) {
-                    $("#create-assessment-next-button-5").prop("disabled", false);
-                } else {
-                    $("#create-assessment-next-button-5").prop("disabled", true);
-                }
-            } else {
-                $("#create-assessment-next-button-5").prop("disabled", true);
-            }
-        }
-        $("#assessment-age-start").change(function() {
-            $("#assessment-age-end").attr('min', $("#assessment-age-start").val());
-        });
-        $(document).ready(function() {
-            $('#assessment-province').select2({
-                dropdownParent: $('#create-assessment-modal'),
-                placeholder: 'Domisili (Provinsi)'
-            });
-            $('#assessment-city').select2({
-                dropdownParent: $('#create-assessment-modal'),
-                placeholder: 'Domisili (Kota)',
-                disabled: true
-            });
-            $('#assessment-education').select2({
-                dropdownParent: $('#create-assessment-modal'),
-                placeholder: 'Latar Belakang Pendidikan'
-            });
-            $('#assessment-profession').select2({
-                dropdownParent: $('#create-assessment-modal'),
-                placeholder: 'Profesi'
-            });
-            $('#assessment-expense').select2({
-                dropdownParent: $('#create-assessment-modal'),
-                placeholder: 'Pengeluaran Rumah Tangga Per-Bulan'
-            });
-        });
-        //get city list
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        $('#assessment-province').on('change', function(e) {
-            if ($('#assessment-province').val().length == 0) {
-                $('#assessment-province').html('<option value="all">Semua Provinsi</option>')
-                Object.values(@json($locations)).forEach(element => {
-                    $('#assessment-province').append('<option value="' + element.id +
-                        '">' +
-                        element.province_name + '</option>')
-                });
-            }
-            if ($('#assessment-province').val()[0] == 'all') {
-                $('#assessment-province').html('<option value="all" selected>Semua Provinsi</option>')
-                $.post('{{ config('app.url') }}' + "/survey/getcity", {
-                        _token: CSRF_TOKEN,
-                    })
-                    .done(function(data) {
-                        $('#assessment-city').html('');
-                        $('#assessment-city').val(null);
-                        if (data.length == 0) {
-                            $('#assessment-city').prop("disabled", true);
-                        } else {
-                            $('#assessment-city').prop("disabled", false);
-                            $('#assessment-city').append('<option value="all">Semua Kota</option>')
-                            Object.values(data).forEach(element => {
-                                element.cities.forEach(element => {
-                                    $('#assessment-city').append('<option value="' + element
-                                        .id +
-                                        '">' +
-                                        element.city_name + '</option>')
-                                });
-                            });
-                        }
-                    })
-                    .fail(function() {
-                        console.log('fail');
-                    });
-            } else {
-                $.post('{{ config('app.url') }}' + "/survey/getcity", {
-                        _token: CSRF_TOKEN,
-                        data: $('#assessment-province').val(),
-                    })
-                    .done(function(data) {
-                        $('#assessment-city').html('');
-                        $('#assessment-city').val(null);
-                        if (data.length == 0) {
-                            $('#assessment-city').prop("disabled", true);
-                        } else {
-                            $('#assessment-city').prop("disabled", false);
-                            $('#assessment-city').append('<option value="all">Semua Kota</option>')
-                            Object.values(data).forEach(element => {
-                                element.cities.forEach(element => {
-                                    $('#assessment-city').append('<option value="' + element
-                                        .id +
-                                        '">' +
-                                        element.city_name + '</option>')
-                                });
-                            });
-                        }
-                    })
-                    .fail(function() {
-                        console.log('fail');
-                    });
-            }
-        });
-        $("#assessment-check-pria").click(function() {
-            enableFifthAssessmentButton();
-        });
-        $("#assessment-check-wanita").click(function() {
-            enableFifthAssessmentButton();
-        });
-        $("#assessment-age-start").keyup(function() {
-            enableFifthAssessmentButton();
-        });
-        $("#assessment-age-end").keyup(function() {
-            enableFifthAssessmentButton();
-        });
-        $('#assessment-city').on('change', function(e) {
-            $('#assessment-city-all').val(null);
-            if ($('#assessment-city').val().length == 0) {
-                $('#assessment-city').html('<option value="all">Semua Kota</option>')
-                $('#assessment-province').trigger('change')
-            }
-            if ($('#assessment-city').val()[0] == 'all') {
-                var selectedCities = [];
-                $("#assessment-city option").each(function() {
-                    if ($(this).val() != 'all') {
-                        selectedCities.push($(this).val());
-                    }
-                });
-                $('#assessment-city').html('<option value="all" selected>Semua Kota</option>')
-                $("#assessment-city-all").val(selectedCities);
-            }
-            enableFifthAssessmentButton();
-        });
-        $('#assessment-education').on('change', function(e) {
-            $('#assessment-education-all').val(null);
-            if ($('#assessment-education').val().length == 0) {
-                $('#assessment-education').html('<option value="all">Semua Pendidikan</option>')
-                Object.values(@json($educations)).forEach(element => {
-                    $('#assessment-education').append('<option value="' + element.id +
-                        '">' +
-                        element.name + '</option>')
-                });
-            }
-            if ($(this).val()[0] == 'all') {
-                var selectedEducations = [];
-                $("#assessment-education option").each(function() {
-                    if ($(this).val() != 'all') {
-                        selectedEducations.push($(this).val());
-                    }
-                });
-                $("#assessment-education-all").val(selectedEducations);
-                $('#assessment-education').html('<option value="all" selected>Semua Pendidikan</option>')
-            }
-            enableFifthAssessmentButton();
-        });
-        $('#assessment-profession').on('change', function(e) {
-            $('#assessment-profession-all').val(null);
-            if ($('#assessment-profession').val().length == 0) {
-                $('#assessment-profession').html('<option value="all">Semua Profesi</option>')
-                Object.values(@json($professions)).forEach(element => {
-                    $('#assessment-profession').append('<option value="' + element.id +
-                        '">' +
-                        element.name + '</option>')
-                });
-            }
-            if ($(this).val()[0] == 'all') {
-                var selectedProfessions = [];
-                $("#assessment-profession option").each(function() {
-                    if ($(this).val() != 'all') {
-                        selectedProfessions.push($(this).val());
-                    }
-                });
-                $("#assessment-profession-all").val(selectedProfessions);
-                $('#assessment-profession').html('<option value="all" selected>Semua Profesi</option>')
-            }
-            enableFifthAssessmentButton();
-        });
-        $('#assessment-expense').on('change', function(e) {
-            $('#assessment-expense-all').val(null);
-            if ($('#assessment-expense').val().length == 0) {
-                $('#assessment-expense').html('<option value="all">Semua Pengeluaran</option>')
-                Object.values(@json($expenses)).forEach(element => {
-                    $('#assessment-expense').append('<option value="' + element.id +
-                        '">' +
-                        element.name + '</option>')
-                });
-            }
-            if ($(this).val()[0] == 'all') {
-                var selectedExpenses = [];
-                $("#assessment-expense option").each(function() {
-                    if ($(this).val() != 'all') {
-                        selectedExpenses.push($(this).val());
-                    }
-                });
-                $("#assessment-expense-all").val(selectedExpenses);
-                $('#assessment-expense').html('<option value="all" selected>Semua Pengeluaran</option>')
-            }
-            enableFifthAssessmentButton();
-        });
     </script>
     <script>
         //sixth step
