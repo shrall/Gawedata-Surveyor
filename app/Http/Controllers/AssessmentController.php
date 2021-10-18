@@ -190,6 +190,9 @@ class AssessmentController extends Controller
             config('services.api.url') . '/assessmentQuestion/' . $id,
             $questions
         )->json();
+        if($request->change_tab){
+            return redirect()->route('assessment.showrespondent', ['id' => $id, 'i' => 1, 'new' => 'false']);
+        }
         if ($request->submit_question) {
             return redirect()->route('assessment.submit', ['id' => $id]);
         } else if ($request->new_question) {
@@ -227,7 +230,21 @@ class AssessmentController extends Controller
 
     public function submitted($id, $i)
     {
-        dd('submitted ' . $id);
+        $assessment = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/assessment/' . $id)
+            ->json()['data'];
+        return view('assessment.submitted', compact('assessment', 'i'));
+    }
+    public function submitted_respondent($id, $i)
+    {
+        $assessment = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/assessment/' . $id)
+            ->json()['data'];
+        return view('assessment.submitted_respondent', compact('assessment', 'i'));
     }
 
     public function refresh_irt_answer(Request $request)
@@ -340,6 +357,9 @@ class AssessmentController extends Controller
         } else {
             $new = 'false';
         }
+        if ($request->submit_question) {
+            return redirect()->route('assessment.submit', ['id' => $request->assessment_id]);
+        }
         if ($request->change_tab_bool) {
             return redirect()->route('assessment.show', ['id' => $request->assessment_id, 'i' => 1, 'new' => 'false']);
         } else {
@@ -358,6 +378,9 @@ class AssessmentController extends Controller
             $new = 'true';
         } else {
             $new = 'false';
+        }
+        if ($request->submit_question) {
+            return redirect()->route('assessment.submit', ['id' => $request->assessment_id]);
         }
         if ($request->change_tab_bool) {
             return redirect()->route('assessment.show', ['id' => $request->assessment_id, 'i' => 1, 'new' => 'false']);
@@ -389,7 +412,6 @@ class AssessmentController extends Controller
         $assessment = Http::withHeaders([
             'Authorization' => 'Bearer ' . session('token'),
         ])->patch(config('services.api.url') . '/submitAssessment/' . $id)->json();
-        dd($assessment);
         return redirect()->route('assessment.submitted', ['id' => $id, 'i' => 1]);
     }
 }

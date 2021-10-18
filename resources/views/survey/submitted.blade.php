@@ -18,6 +18,8 @@
                                 <div class="col-11 d-flex flex-column">
                                     <h6 class="text-gray">Single Answer</h6>
                                     <h6>{{ $survey['questions'][$i - 1]['question'] }}</h6>
+                                    <a href="{{ $survey['questions'][$i - 1]['image_path'] ?? '#' }}" target="_blank"
+                                        class="text-gawedata">{{$survey['questions'][$i - 1]['image_path'] ?? ''}}</a>
                                     <h6 class="text-gray">Jawaban</h6>
                                     @foreach ($survey['questions'][$i - 1]['answer_choices'] as $answer)
                                         <h6>{{ $answer['text'] }}</h6>
@@ -33,6 +35,8 @@
                                 <div class="col-11 d-flex flex-column">
                                     <h6 class="text-gray">Multiple Answer</h6>
                                     <h6>{{ $survey['questions'][$i - 1]['question'] }}</h6>
+                                    <a href="{{ $survey['questions'][$i - 1]['image_path'] ?? '#' }}" target="_blank"
+                                        class="text-gawedata">{{$survey['questions'][$i - 1]['image_path'] ?? ''}}</a>
                                     <h6 class="text-gray">Jawaban</h6>
                                     @foreach ($survey['questions'][$i - 1]['answer_choices'] as $answer)
                                         <h6>{{ $answer['text'] }}</h6>
@@ -48,6 +52,8 @@
                                 <div class="col-11 d-flex flex-column">
                                     <h6 class="text-gray">Scale Question</h6>
                                     <h6>{{ $survey['questions'][$i - 1]['question'] }}</h6>
+                                    <a href="{{ $survey['questions'][$i - 1]['image_path'] ?? '#' }}" target="_blank"
+                                        class="text-gawedata">{{$survey['questions'][$i - 1]['image_path'] ?? ''}}</a>
                                     <h6 class="text-gray">Jawaban</h6>
                                     <h6 class="d-flex">
                                         {{ $survey['questions'][$i - 1]['minimal_scale'] }}-{{ $survey['questions'][$i - 1]['maximal_scale'] }}
@@ -63,6 +69,8 @@
                                 <div class="col-11 d-flex flex-column">
                                     <h6 class="text-gray">Grid Question</h6>
                                     <h6>{{ $survey['questions'][$i - 1]['question'] }}</h6>
+                                    <a href="{{ $survey['questions'][$i - 1]['image_path'] ?? '#' }}" target="_blank"
+                                        class="text-gawedata">{{$survey['questions'][$i - 1]['image_path'] ?? ''}}</a>
                                     <h6 class="text-gray">Grid</h6>
                                     @foreach ($survey['questions'][$i - 1]['sub_questions'] as $question)
                                         <h6>{{ $question['question'] }}</h6>
@@ -82,6 +90,8 @@
                                 <div class="col-11 d-flex flex-column">
                                     <h6 class="text-gray">Priority Question</h6>
                                     <h6>{{ $survey['questions'][$i - 1]['question'] }}</h6>
+                                    <a href="{{ $survey['questions'][$i - 1]['image_path'] ?? '#' }}" target="_blank"
+                                        class="text-gawedata">{{$survey['questions'][$i - 1]['image_path'] ?? ''}}</a>
                                     <h6 class="text-gray">Jawaban</h6>
                                     @foreach ($survey['questions'][$i - 1]['answer_choices'] as $answer)
                                         <h6>{{ $answer['text'] }}</h6>
@@ -95,8 +105,10 @@
                                         class="badge-pertanyaan text-gawedata font-weight-bold p-2">P{{ $i }}</span>
                                 </div>
                                 <div class="col-11 d-flex flex-column">
-                                    <h6 class="text-gray">Priority Question</h6>
+                                    <h6 class="text-gray">Open Ended Question</h6>
                                     <h6>{{ $survey['questions'][$i - 1]['question'] }}</h6>
+                                    <a href="{{ $survey['questions'][$i - 1]['image_path'] ?? '#' }}" target="_blank"
+                                        class="text-gawedata">{{$survey['questions'][$i - 1]['image_path'] ?? ''}}</a>
                                 </div>
                             </div>
                         @elseif ($survey['questions'][$i - 1]['survey_question_type_id'] == 7)
@@ -108,6 +120,8 @@
                                 <div class="col-11 d-flex flex-column">
                                     <h6 class="text-gray">Action Question - Lihat Video</h6>
                                     <h6>{{ $survey['questions'][$i - 1]['question'] }}</h6>
+                                    <a href="{{ $survey['questions'][$i - 1]['image_path'] ?? '#' }}" target="_blank"
+                                        class="text-gawedata">{{$survey['questions'][$i - 1]['image_path'] ?? ''}}</a>
                                     <h6 class="text-gray">Action</h6>
                                     <a href="{{ $survey['questions'][$i - 1]['youtube_url'] }}">
                                         {{ $survey['questions'][$i - 1]['youtube_url'] }}
@@ -123,6 +137,8 @@
                                     <div class="col-11 d-flex flex-column">
                                         <h6 class="text-gray">Action Question - Install Aplikasi</h6>
                                         <h6>{{ $survey['questions'][$i - 1]['question'] }}</h6>
+                                        <a href="{{ $survey['questions'][$i - 1]['image_path'] ?? '#' }}" target="_blank"
+                                            class="text-gawedata">{{$survey['questions'][$i - 1]['image_path'] ?? ''}}</a>
                                         <h6 class="text-gray">Action</h6>
                                         <a href="{{ $survey['questions'][$i - 1]['android_app_url'] }}">
                                             {{ $survey['questions'][$i - 1]['android_app_url'] }}
@@ -141,6 +157,8 @@
                                 <div class="col-11 d-flex flex-column">
                                     <h6 class="text-gray">Action Question - Link Website</h6>
                                     <h6>{{ $survey['questions'][$i - 1]['question'] }}</h6>
+                                    <a href="{{ $survey['questions'][$i - 1]['image_path'] ?? '#' }}" target="_blank"
+                                        class="text-gawedata">{{$survey['questions'][$i - 1]['image_path'] ?? ''}}</a>
                                     <h6 class="text-gray">Action</h6>
                                     <a href="{{ $survey['questions'][$i - 1]['website_url'] }}">
                                         {{ $survey['questions'][$i - 1]['website_url'] }}
@@ -156,6 +174,8 @@
                                 <div class="col-11 d-flex flex-column">
                                     <h6 class="text-gray">Action Question - Unggah Foto</h6>
                                     <h6>{{ $survey['questions'][$i - 1]['question'] }}</h6>
+                                    <a href="{{ $survey['questions'][$i - 1]['image_path'] ?? '#' }}" target="_blank"
+                                        class="text-gawedata">{{$survey['questions'][$i - 1]['image_path'] ?? ''}}</a>
                                 </div>
                             </div>
                         @endif

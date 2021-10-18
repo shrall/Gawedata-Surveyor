@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-4 text-start border-end">
-                @include('assessment.inc.sidebar.submitted')
+                @include('assessment.inc.sidebar.submitted_respondent')
             </div>
             <div class="col-7 text-start my-4">
                 <div class="card card-survey-detail border-0 p-4 font-lato font-weight-bold">
@@ -14,13 +14,13 @@
                                 <span class="badge-pertanyaan text-gawedata font-weight-bold p-2">P{{ $i }}</span>
                             </div>
                             <div class="col-11 d-flex flex-column">
-                                <h6>{{ $assessment['questions'][$i - 1]['question'] }}</h6>
-                                <a href="{{ $assessment['questions'][$i - 1]['image_path'] ?? '#' }}" target="_blank"
-                                    class="text-gawedata">{{$assessment['questions'][$i - 1]['image_path'] ?? ''}}</a>
-                                <h6 class="text-gray">Jawaban</h6>
-                                @foreach ($assessment['questions'][$i - 1]['answer_choices'] as $answer)
-                                    <h6>{{ $answer['text'] }} ({{$answer['points']}} Poin) @if ($answer['is_right_answer'])<span class="text-success font-weight-bold">Benar</span>@endif </h6>
-                                @endforeach
+                                <h5 class="flex align-items-center justify-content-center">
+                                    {{$assessment['respondent_types'][$i - 1]['name']}}
+                                    <span class="badge-pertanyaan-new font-weight-bold px-2 py-1"
+                                        style="color: #3f60f5 !important;">
+                                        Skor : {{ $assessment['respondent_types'][$i - 1]['min_points'] }} - {{ $assessment['respondent_types'][$i - 1]['max_points'] }}
+                                    </span>
+                                </h5>
                                 <h6 class="text-gray">Pembahasan</h6>
                                 <h6 id="discussion"></h6>
                             </div>
@@ -39,6 +39,6 @@
             e.innerHTML = input;
             return e.childNodes[0].nodeValue;
         }
-        $('#discussion').append(htmlDecode("{{ $assessment['questions'][$i - 1]['discussion'] }}"))
+        $('#discussion').append(htmlDecode("{{ $assessment['respondent_types'][$i - 1]['discussion'] }}"))
     </script>
 @endsection

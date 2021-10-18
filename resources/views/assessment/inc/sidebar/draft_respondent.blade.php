@@ -4,17 +4,18 @@
             onclick="changeTab('pertanyaan');">Pertanyaan
         </a>
         <span class="text-gray font-weight-bold fs-4">|</span>
-        <a href="{{ route('assessment.showrespondent', ['id' => $assessment['id'], 'i' => 1, 'new' => 'false']) }}"
-            class="tab-gawedata-active tab-type text-decoration-none px-2 py-1 ms-auto fs-5" id="tab-responden"
-            >Tipe Responden
+        <a class="tab-gawedata-active tab-type text-decoration-none px-2 py-1 ms-auto fs-5" id="tab-responden"
+            onclick="changeTab('responden');">Tipe Responden
         </a>
     </div>
     <div class="d-flex align-items-center justify-content-between ms-3">
         <h4 class="font-lato ms-3">Tipe Responden</h4>
         <div id="add-question-button" class="fas fa-plus-circle text-gawedata fs-2 me-3 cursor-pointer"
-        @if (count($assessment['respondent_types']) > 0 || $new == 'true')
+        @if (count($assessment['respondent_types']) > 0 && $new == 'false')
             {{-- if udah ada pertanyaan, dia bikin new di index + 1 --}}
             onclick="saveDraft({{ count($assessment['respondent_types']) + 1 }}, true);"
+        @elseif ($new == 'true')
+            onclick="saveDraft({{ $i + 1 }}, true);"
         @else
             {{-- if belum ada pertanyaan, dia bikin new di pertama --}}
             onclick="saveDraft({{ $i }}, true);"

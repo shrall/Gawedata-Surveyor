@@ -74,7 +74,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                             <div class="text-start me-auto">
                                 <button class="btn btn-gawedata-danger" @if ($new == 'true') disabled @endif
                                     onclick="event.preventDefault();
-                                                                document.getElementById('delete-respondent-form').submit();">
+                                                                    document.getElementById('delete-respondent-form').submit();">
                                     <span class="fas fa-fw fa-trash-alt me-2"></span>Hapus
                                 </button>
                             </div>
@@ -103,6 +103,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                 value={{ $assessment['respondent_types'][$i - 1]['max_points'] ?? 100 }}>
             <input type="hidden" name="discussion" class="respondent-type-discussion"
                 value={{ $assessment['respondent_types'][$i - 1]['discussion'] ?? '' }}>
+            <input type="hidden" name="submit_question" id="submit-question">
         </form>
         <form action="{{ route('assessment.deleterespondenttype') }}" method="post" class="d-none"
             id="delete-respondent-form">
@@ -124,6 +125,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             <input type="hidden" name="min_points" class="respondent-type-min-points" value=0>
             <input type="hidden" name="max_points" class="respondent-type-max-points" value=100>
             <input type="hidden" name="discussion" class="respondent-type-discussion" value="">
+            <input type="hidden" name="submit_question" id="submit-question">
         </form>
     @endif
 @endsection
@@ -287,7 +289,9 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             })
             .then(editor => {
                 console.log(editor);
-                editor.setData(respondent_types[respondent_type_index]['discussion']);
+                if (respondent_types[respondent_type_index]['discussion']) {
+                    editor.setData(respondent_types[respondent_type_index]['discussion']);
+                }
                 editor.model.document.on('change:data', () => {
                     $('.respondent-type-discussion').val(editor.getData());
                     console.log(editor.getData());

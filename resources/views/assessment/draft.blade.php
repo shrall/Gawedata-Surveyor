@@ -262,6 +262,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
         <input type="text" name="question_index" id="input-question-index">
         <input type="text" name="new_question" id="new-question">
         <input type="text" name="submit_question" id="submit-question">
+        <input type="hidden" name="change_tab" id="change-tab">
     </form>
 @endsection
 
@@ -566,7 +567,9 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             })
             .then(editor => {
                 console.log(editor);
-                editor.setData(questions[question_index]['discussion']);
+                if (questions[question_index]['discussion']) {
+                    editor.setData(questions[question_index]['discussion']);
+                }
                 editor.model.document.on('change:data', () => {
                     questions[question_index]['discussion'] = editor.getData();
                     console.log(editor.getData());
@@ -593,9 +596,9 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
         }
     </script>
     <script>
-        // function changeTab(type) {
-        //     $('.tab-type').removeClass('tab-gawedata-active').addClass('tab-gawedata');
-        //     $('#tab-' + type).removeClass('tab-gawedata').addClass('tab-gawedata-active');
-        // }
+        function changeTab(type) {
+            $('#change-tab').val(1);
+            saveDraft(1, false);
+        }
     </script>
 @endsection

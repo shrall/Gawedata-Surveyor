@@ -1,13 +1,11 @@
 <ul class="list-unstyled my-4">
     @if ($assessment['assessment_type_id'] == 3)
     <div class="d-flex align-items-center justify-content-center gx-3 mb-5 px-2 font-nexa">
-        <a href="{{ route('assessment.show', ['id' => $assessment['id'], 'i' => 1, 'new' => 'false']) }}"
-            class="tab-gawedata-active tab-type text-decoration-none px-2 py-1 me-auto fs-5" id="tab-pertanyaan"
+        <a class="tab-gawedata-active tab-type text-decoration-none px-2 py-1 me-auto fs-5" id="tab-pertanyaan"
             onclick="changeTab('pertanyaan');">Pertanyaan
         </a>
         <span class="text-gray font-weight-bold fs-4">|</span>
-        <a href="{{ route('assessment.showrespondent', ['id' => $assessment['id'], 'i' => 1, 'new' => 'false']) }}"
-            class="tab-gawedata tab-type text-decoration-none px-2 py-1 ms-auto fs-5" id="tab-responden"
+        <a class="tab-gawedata tab-type text-decoration-none px-2 py-1 ms-auto fs-5" id="tab-responden"
             onclick="changeTab('responden');">Tipe Responden
         </a>
     </div>
