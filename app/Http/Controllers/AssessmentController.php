@@ -190,7 +190,7 @@ class AssessmentController extends Controller
             config('services.api.url') . '/assessmentQuestion/' . $id,
             $questions
         )->json();
-        if($request->change_tab){
+        if ($request->change_tab) {
             return redirect()->route('assessment.showrespondent', ['id' => $id, 'i' => 1, 'new' => 'false']);
         }
         if ($request->submit_question) {
@@ -225,7 +225,67 @@ class AssessmentController extends Controller
 
     public function hasil($id)
     {
-        dd('hasil ' . $id);
+        $assessment = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/assessment/' . $id)
+            ->json()['data'];
+        $result = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/assessmentTestResult/' . $id)
+            ->json()['data'];
+        return view('assessment.hasil', compact('assessment', 'result'));
+    }
+
+    public function analisa($id)
+    {
+        $assessment = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/assessment/' . $id)
+            ->json()['data'];
+        $result = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/assessmentRespondentAnalysis/' . $id)
+            ->json()['data'];
+        return view('assessment.analisa', compact('assessment', 'result'));
+    }
+
+    public function pertanyaan($id)
+    {
+        $assessment = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/assessment/' . $id)
+            ->json()['data'];
+        return view('assessment.pertanyaan', compact('assessment'));
+    }
+
+    public function kategori($id)
+    {
+        $assessment = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/assessment/' . $id)
+            ->json()['data'];
+        return view('assessment.kategori', compact('assessment'));
+    }
+
+    public function detail($id)
+    {
+        $assessment = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/assessment/' . $id)
+            ->json()['data'];
+        $result = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/assessmentTestResult/' . $id)
+            ->json()['data'];
+        return view('assessment.detail', compact('assessment', 'result'));
     }
 
     public function submitted($id, $i)

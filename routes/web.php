@@ -56,7 +56,12 @@ Route::group(['middleware' => ['surveyor']], function () {
     Route::post('assessment/get_assessment', [AssessmentController::class, 'get_assessment'])->name('assessment.getassessment');
     Route::get('assessment/{id}/{i}/{new}', [AssessmentController::class, 'show'])->name('assessment.show');
     Route::get('assessment/{id}/hasil', [AssessmentController::class, 'hasil'])->name('assessment.hasil');
+    Route::get('assessment/{id}/analisa', [AssessmentController::class, 'analisa'])->name('assessment.analisa');
+    Route::get('assessment/{id}/detail', [AssessmentController::class, 'detail'])->name('assessment.detail');
     Route::get('assessment/{id}/submit', [AssessmentController::class, 'submit'])->name('assessment.submit');
+    Route::get('assessment/{id}/pertanyaan', [AssessmentController::class, 'pertanyaan'])->name('assessment.pertanyaan');
+    Route::get('assessment/{id}/kategori', [AssessmentController::class, 'kategori'])->name('assessment.kategori');
+    Route::get('assessment/{id}/ranking', [AssessmentController::class, 'ranking'])->name('assessment.ranking');
     Route::get('assessment/{id}/submitted/question/{i}', [AssessmentController::class, 'submitted'])->name('assessment.submitted');
     Route::get('assessment/{id}/submitted/respondent/{i}', [AssessmentController::class, 'submitted_respondent'])->name('assessment.submitted.respondent');
     Route::post('assessment/refreshirtanswer', [AssessmentController::class, 'refresh_irt_answer'])->name('assessment.refreshirtanswer');

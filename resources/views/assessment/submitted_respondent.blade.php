@@ -10,9 +10,6 @@
                 <div class="card card-survey-detail border-0 p-4 font-lato font-weight-bold">
                     <div class="card-body">
                         <div class="single-answer-question row">
-                            <div class="col-1 pe-0">
-                                <span class="badge-pertanyaan text-gawedata font-weight-bold p-2">P{{ $i }}</span>
-                            </div>
                             <div class="col-11 d-flex flex-column">
                                 <h5 class="flex align-items-center justify-content-center">
                                     {{$assessment['respondent_types'][$i - 1]['name']}}
