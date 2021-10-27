@@ -108,17 +108,12 @@ $user = Http::withHeaders([
             });
         </script>
     @endforeach
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard-polyfill/3.0.3/main/clipboard-polyfill.js"
+        integrity="sha512-0IaxYIj68pTzpOBGd7U3RFiF6sUPKefI5SRsYaZkGiJsM+U1/VuKnzT7dkDUxlIYcZ57gULzEk+PgtMfVAyFTA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         function copyToClipboard() {
-            /* Get the text field */
-            var copyText = document.getElementById("survey-link");
-
-            /* Select the text field */
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); /* For mobile devices */
-
-            /* Copy the text inside the text field */
-            navigator.clipboard.writeText(copyText.value);
+            clipboard.writeText($('#survey-link').val());
         }
     </script>
 @endsection

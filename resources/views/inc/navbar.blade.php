@@ -79,7 +79,7 @@
     </h4>
     </ul>
     @endif
-    @if (Route::current()->getName() == 'assessment.hasil' || Route::current()->getName() == 'assessment.analisa' || Route::current()->getName() == 'assessment.detail' || Route::current()->getName() == 'assessment.show' || Route::current()->getName() == 'assessment.showrespondent' || Route::current()->getName() == 'assessment.submitted')
+    @if (Route::current()->getName() == 'assessment.hasil' || Route::current()->getName() == 'assessment.ranking' || Route::current()->getName() == 'assessment.kategori' || Route::current()->getName() == 'assessment.pertanyaan' || Route::current()->getName() == 'assessment.analisa' || Route::current()->getName() == 'assessment.detail' || Route::current()->getName() == 'assessment.show' || Route::current()->getName() == 'assessment.showrespondent' || Route::current()->getName() == 'assessment.submitted')
         <ul class="navbar-nav position-absolute top-50 start-50 translate-middle" style="z-index: 100;">
             <h4 class="font-lato font-weight-bold d-flex align-items-center mb-0">
                 {{ strlen($assessment['title']) > 25 ? substr($assessment['title'], 0, 23) . '...' : $assessment['title'] }}
@@ -95,7 +95,7 @@
                 <img src="{{ asset('images/survey-menu-button.svg') }}" width="21px"
                     class="far fa-fw fa-comment-dots text-gawedata cursor-pointer ms-2" id="survey-menu-button">
                 <div class="fs-6" id="survey-menu-box">
-                    @if (Route::current()->getName() == 'assessment.hasil' || Route::current()->getName() == 'assessment.analisa' || Route::current()->getName() == 'assessment.detail')
+                    @if (Route::current()->getName() == 'assessment.hasil' || Route::current()->getName() == 'assessment.analisa' || Route::current()->getName() == 'assessment.detail' || Route::current()->getName() == 'assessment.ranking' || Route::current()->getName() == 'assessment.kategori' || Route::current()->getName() == 'assessment.pertanyaan')
                         <div id="survey-menu" class="p-4">
                             <div>
                                 <span class="fa fa-fw fa-circle text-green me-2"></span>
@@ -234,6 +234,59 @@
                     Bagikan Survei
                 </a>
             </li>
+        @elseif (Route::current()->getName() == 'assessment.hasil' || Route::current()->getName() ==
+            'assessment.analisa' || Route::current()->getName() == 'assessment.detail' || Route::current()->getName() ==
+            'assessment.kategori' || Route::current()->getName() == 'assessment.pertanyaan' ||
+            Route::current()->getName() ==
+            'assessment.ranking')
+            @if ($assessment['assessment_type_id'] == 3)
+                @include('inc.modal.assessment.share')
+                <li class="nav-item mx-4">
+                    <a href="#" class="btn btn-gawedata-2 font-lato font-weight-bold" data-bs-toggle="modal"
+                        data-bs-target="#share-modal">
+                        <span class="far fa-fw fa-paper-plane"></span>
+                        Bagikan Tes
+                    </a>
+                </li>
+            @endif
+            @if ($assessment['assessment_type_id'] != 3 && !$assessment['is_simultaneously'])
+                @include('inc.modal.assessment.share')
+                <li class="nav-item mx-4">
+                    <a href="#" class="btn btn-gawedata-2 font-lato font-weight-bold" data-bs-toggle="modal"
+                        data-bs-target="#share-modal">
+                        <span class="far fa-fw fa-paper-plane"></span>
+                        Bagikan Tes
+                    </a>
+                </li>
+            @endif
+        @elseif (Route::current()->getName() == 'assessment.hasil' || Route::current()->getName() ==
+            'assessment.analisa' || Route::current()->getName() == 'assessment.detail' || Route::current()->getName() ==
+            'assessment.ranking')
+            @if ($assessment['assessment_type_id'] != 3 && $assessment['is_simultaneously'])
+                {{-- ini kalau belom dimulai --}}
+                <li class="nav-item flex align-items-center mx-4">
+                    <h6 class="my-0 text-gray">Waktu</h6>
+                    <h5 class="my-0">00:40:00</h5>
+                    <a href="#" class="btn btn-gawedata font-lato font-weight-bold">
+                        <span class="fas fa-fw fa-play"></span>
+                        Mulai Tes
+                    </a>
+                </li>
+                {{-- ini kalau udah distart --}}
+                {{-- <li class="nav-item flex align-items-center mx-4">
+                        <h6 class="my-0 text-gray">Waktu</h6>
+                        <h5 class="my-0 text-gawedata">00:40:00</h5>
+                        <a href="#" class="btn btn-gawedata-danger-2 font-lato font-weight-bold">
+                            <span class="fas fa-fw fa-stop-circle"></span>
+                            Stop Tes
+                        </a>
+                    </li> --}}
+                {{-- ini kalau udah selesai --}}
+                {{-- <li class="nav-item flex align-items-center mx-4">
+                        <h6 class="my-0 text-gray">Tes Selesai</h6>
+                        <h5 class="my-0 text-gray">00:40:00</h5>
+                    </li> --}}
+            @endif
         @endif
         <li class="nav-item mx-4 position-relative">
             <img src="{{ asset('images/logo.png') }}" id="user-profile" class="rounded-circle" width="50px"

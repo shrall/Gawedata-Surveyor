@@ -121,6 +121,11 @@ input[type='date']::-webkit-calendar-picker-indicator {
   background: #ffeeef;
   border-radius: 12px;
 }
+.btn-gawedata-danger-2 {
+    color: #fff !important;
+  background: #ff525d;
+  border-radius: 12px;
+}
 .btn-error {
   background-color: #ff525d;
   color: #fff;
@@ -408,6 +413,14 @@ ul.select2-results__options li:hover {
   color: #fff;
   background: #3f60f5;
   border-radius: 14px;
+}
+.card-link-assessment {
+    color: #fff;
+    background: #5875F6;
+    border-radius: 14px;
+}
+.card-link-assessment .cursor-pointer:hover{
+    color: #eee;
 }
 
 /* survey detail sidebar - published */

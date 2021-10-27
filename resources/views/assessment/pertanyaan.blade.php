@@ -54,4 +54,12 @@ $user = Http::withHeaders([
             $('#discussion-{{ $loop->iteration }}').append(htmlDecode("{{ $question['discussion'] }}"))
         @endforeach
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard-polyfill/3.0.3/main/clipboard-polyfill.js"
+        integrity="sha512-0IaxYIj68pTzpOBGd7U3RFiF6sUPKefI5SRsYaZkGiJsM+U1/VuKnzT7dkDUxlIYcZ57gULzEk+PgtMfVAyFTA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function copyToClipboard() {
+            clipboard.writeText($('#survey-link').val());
+        }
+    </script>
 @endsection

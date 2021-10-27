@@ -273,6 +273,21 @@ class AssessmentController extends Controller
         return view('assessment.kategori', compact('assessment'));
     }
 
+    public function ranking($id)
+    {
+        $assessment = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/assessment/' . $id)
+            ->json()['data'];
+            $result = Http::withHeaders([
+                'Authorization' => 'Bearer ' . session('token'),
+            ])
+                ->get(config('services.api.url') . '/assessmentRespondentAnalysis/' . $id)
+                ->json()['data'];
+        return view('assessment.ranking', compact('assessment', 'result'));
+    }
+
     public function detail($id)
     {
         $assessment = Http::withHeaders([

@@ -30,24 +30,19 @@ $user = Http::withHeaders([
                             </tr>
                         </thead>
                         <tbody class="text-gray" id="survey-view-list-box">
-                            @foreach ($result as $respondent)
+                            @foreach ($result['data'] as $respondent)
                                 <tr class="survey-row cursor-pointer @if ($loop->iteration > 1) border-top @endif">
                                     <th class="py-4 text-dark flex align-items-center justify-content-start" scope="row">
                                         <img src="{{ asset('images/logo.png') }}" class="rounded-circle me-2" width="30px"
                                             height="30px">
+                                        {{-- ini sementara --}}
                                         {{-- <img src="{{ config('services.api.url') .'/'. $respondent['profile_picture_path'] }}"
                                                 id="user-profile" class="rounded-circle" width="30px" height="30px"> --}}
                                         {{ $respondent['fullname'] }}
                                     </th>
-                                    {{-- ini sementara --}}
-                                    @if ($respondent['score'] == 0)
-                                        <td class="py-4 text-dark">Introvert
-                                        </td>
-                                    @else
-                                        <td class="py-4 text-dark">Ekstrovert
-                                        </td>
-                                    @endif
-                                    <td class="py-4 text-dark">{{ $respondent['score'] }}
+                                    <td class="py-4 text-dark align-middle">{{ $respondent['category']['name'] }}
+                                    </td>
+                                    <td class="py-4 text-dark align-middle">{{ $respondent['score'] }}
                                     </td>
                                 </tr>
                             @endforeach
@@ -69,15 +64,10 @@ $user = Http::withHeaders([
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script>
         var data = [
-            @foreach ($result as $respondent)
+            @foreach ($assessment['respondent_types'] as $type)
                 {
-                y: 1,
-                // ini sementara
-                @if ($respondent['score'] == 0)
-                    name: "Introvert"
-                @else
-                    name: "Ekstrovert"
-                @endif
+                y: {{ $type['respondent_count'] }},
+                name: "{{ $type['name'] }}"
                 },
             @endforeach
         ]
@@ -135,17 +125,12 @@ $user = Http::withHeaders([
             }]
         });
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard-polyfill/3.0.3/main/clipboard-polyfill.js"
+        integrity="sha512-0IaxYIj68pTzpOBGd7U3RFiF6sUPKefI5SRsYaZkGiJsM+U1/VuKnzT7dkDUxlIYcZ57gULzEk+PgtMfVAyFTA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         function copyToClipboard() {
-            /* Get the text field */
-            var copyText = document.getElementById("survey-link");
-
-            /* Select the text field */
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); /* For mobile devices */
-
-            /* Copy the text inside the text field */
-            navigator.clipboard.writeText(copyText.value);
+            clipboard.writeText($('#survey-link').val());
         }
     </script>
 @endsection
