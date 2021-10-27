@@ -16,13 +16,16 @@
                             <div class="col-11 d-flex flex-column">
                                 <h6>{{ $assessment['questions'][$i - 1]['question'] }}</h6>
                                 <a href="{{ $assessment['questions'][$i - 1]['image_path'] ?? '#' }}" target="_blank"
-                                    class="text-gawedata">{{$assessment['questions'][$i - 1]['image_path'] ?? ''}}</a>
+                                    class="text-gawedata">{{ $assessment['questions'][$i - 1]['image_path'] ?? '' }}</a>
                                 <h6 class="text-gray">Jawaban</h6>
                                 @foreach ($assessment['questions'][$i - 1]['answer_choices'] as $answer)
-                                    <h6>{{ $answer['text'] }} ({{$answer['points']}} Poin) @if ($answer['is_right_answer'])<span class="text-success font-weight-bold">Benar</span>@endif </h6>
+                                    <h6>{{ $answer['text'] }} ({{ $answer['points'] }} Poin) @if ($answer['is_right_answer'])<span class="text-success font-weight-bold">Benar</span>@endif
+                                    </h6>
                                 @endforeach
-                                <h6 class="text-gray">Pembahasan</h6>
-                                <h6 id="discussion"></h6>
+                                @if ($assessment['with_discussion'])
+                                    <h6 class="text-gray">Pembahasan</h6>
+                                    <h6 id="discussion"></h6>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -32,13 +35,15 @@
     </div>
 @endsection
 
-@section('scripts')
-    <script>
-        function htmlDecode(input) {
-            var e = document.createElement('div');
-            e.innerHTML = input;
-            return e.childNodes[0].nodeValue;
-        }
-        $('#discussion').append(htmlDecode("{{ $assessment['questions'][$i - 1]['discussion'] }}"))
-    </script>
-@endsection
+@if ($assessment['with_discussion'])
+    @section('scripts')
+        <script>
+            function htmlDecode(input) {
+                var e = document.createElement('div');
+                e.innerHTML = input;
+                return e.childNodes[0].nodeValue;
+            }
+            $('#discussion').append(htmlDecode("{{ $assessment['questions'][$i - 1]['discussion'] }}"))
+        </script>
+    @endsection
+@endif

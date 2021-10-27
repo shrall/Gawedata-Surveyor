@@ -33,11 +33,13 @@ $user = Http::withHeaders([
                             @foreach ($result['data'] as $respondent)
                                 <tr class="survey-row cursor-pointer @if ($loop->iteration > 1) border-top @endif">
                                     <th class="py-4 text-dark flex align-items-center justify-content-start" scope="row">
-                                        <img src="{{ asset('images/logo.png') }}" class="rounded-circle me-2" width="30px"
-                                            height="30px">
-                                        {{-- ini sementara --}}
-                                        {{-- <img src="{{ config('services.api.url') .'/'. $respondent['profile_picture_path'] }}"
-                                                id="user-profile" class="rounded-circle" width="30px" height="30px"> --}}
+                                        @if ($respondent['profile_picture_path'])
+                                            <img src="{{ config('services.asset.url') . '/' . $respondent['profile_picture_path'] }}"
+                                                id="user-profile" class="rounded-circle me-2" width="30px" height="30px">
+                                        @else
+                                            <img src="{{ asset('images/logo.png') }}" class="rounded-circle me-2"
+                                                width="30px" height="30px">
+                                        @endif
                                         {{ $respondent['fullname'] }}
                                     </th>
                                     <td class="py-4 text-dark align-middle">{{ $respondent['category']['name'] }}

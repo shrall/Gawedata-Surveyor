@@ -26,8 +26,10 @@ $user = Http::withHeaders([
                                             {{ $type['max_points'] }}
                                         </span>
                                     </h5>
-                                    <h6 class="text-gray">Pembahasan</h6>
-                                    <h6 id="discussion"></h6>
+                                    @if ($assessment['with_discussion'])
+                                        <h6 class="text-gray">Pembahasan</h6>
+                                        <h6 id="discussion"></h6>
+                                    @endif
                                 </div>
                             </div>
                         @endforeach
@@ -39,16 +41,18 @@ $user = Http::withHeaders([
 @endsection
 
 @section('scripts')
-    <script>
-        function htmlDecode(input) {
-            var e = document.createElement('div');
-            e.innerHTML = input;
-            return e.childNodes[0].nodeValue;
-        }
-        @foreach ($assessment['respondent_types'] as $type)
-            $('#discussion-{{ $loop->iteration }}').append(htmlDecode("{{ $type['discussion'] }}"))
-        @endforeach
-    </script>
+    @if ($assessment['with_discussion'])
+        <script>
+            function htmlDecode(input) {
+                var e = document.createElement('div');
+                e.innerHTML = input;
+                return e.childNodes[0].nodeValue;
+            }
+            @foreach ($assessment['respondent_types'] as $type)
+                $('#discussion-{{ $loop->iteration }}').append(htmlDecode("{{ $type['discussion'] }}"))
+            @endforeach
+        </script>
+    @endif
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard-polyfill/3.0.3/main/clipboard-polyfill.js"
         integrity="sha512-0IaxYIj68pTzpOBGd7U3RFiF6sUPKefI5SRsYaZkGiJsM+U1/VuKnzT7dkDUxlIYcZ57gULzEk+PgtMfVAyFTA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>

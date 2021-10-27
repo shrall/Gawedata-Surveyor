@@ -30,8 +30,12 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'asset' => [
+        'url' => env('ASSET_BASE_URL'),
+    ],
+
     'api' => [
-          'url' => env('API_BASE_URL'),
+        'url' => env('API_BASE_URL'),
     ]
 
 ];
