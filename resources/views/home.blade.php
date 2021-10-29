@@ -32,14 +32,14 @@
                 </div>
             </div>
         </div>
-        @if ($user['is_admin'])
-            <div class="d-flex align-items-center gx-3 mb-5 px-2 font-nexa">
-                <div class="tab-gawedata-active px-2 py-1" id="tab-general" onclick="changeType('General')">Survei Umum
-                </div>
-                <div class="tab-gawedata px-2 py-1" id="tab-daily" onclick="changeType('Daily')">Daily Survei</div>
-                <div class="tab-gawedata px-2 py-1" id="tab-assessment" onclick="changeType('Assessment')">Assessment</div>
+        <div class="d-flex align-items-center gx-3 mb-5 px-2 font-nexa">
+            <div class="tab-gawedata-active px-2 py-1" id="tab-general" onclick="changeType('General')">Survei Umum
             </div>
-        @endif
+            @if ($user['is_admin'])
+                <div class="tab-gawedata px-2 py-1" id="tab-daily" onclick="changeType('Daily')">Daily Survei</div>
+            @endif
+            <div class="tab-gawedata px-2 py-1" id="tab-assessment" onclick="changeType('Assessment')">Assessment</div>
+        </div>
         <div id="survey-container">
             @if (count($surveys['data']) > 0)
                 <div class="d-block" id="survey-view-grid">
