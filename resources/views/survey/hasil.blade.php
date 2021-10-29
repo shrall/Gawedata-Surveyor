@@ -141,7 +141,7 @@ $user = Http::withHeaders([
                                             <div class="carousel-inner">
                                                 @foreach ($question['results'] as $img)
                                                     <div class="carousel-item @if ($loop->iteration == 1) active @endif">
-                                                        <img src="https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg"
+                                                        <img src="{{ config('services.asset.url') . '/' . $img['image_path'] }}"
                                                             class="d-block mx-auto">
                                                     </div>
                                                 @endforeach
@@ -163,7 +163,7 @@ $user = Http::withHeaders([
                                                 <div class="survey-result-image-nav me-2"
                                                     data-bs-target="#action-image-carousel"
                                                     data-bs-slide-to="{{ $loop->iteration - 1 }}">
-                                                    <img src="https://www.imgworlds.com/wp-content/uploads/2015/12/18-CONTACTUS-HEADER.jpg"
+                                                    <img src="{{ config('services.asset.url') . '/' . $image['image_path'] }}"
                                                         class="survey-result-image-nav-item d-block mx-auto">
                                                 </div>
                                             @endforeach
