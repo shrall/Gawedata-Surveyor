@@ -42,7 +42,7 @@
                         <tr>
                             <td class="text-start text-gray" width="35%">Jumlah Responden mengisi</td>
                             <td class="text-start me-4 font-weight-bold">:
-                                {{ $result['total_respondent'] ?? 'ini sementara' }}</td>
+                                {{ $assessment['respondent_count'] }}</td>
                         </tr>
                     </table>
                 </div>
