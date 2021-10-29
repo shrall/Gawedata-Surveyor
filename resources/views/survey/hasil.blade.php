@@ -203,9 +203,6 @@ $user = Http::withHeaders([
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script>
-        console.log(@json($result['questions'][0]['result']));
-    </script>
     @foreach ($result['questions'] as $question)
         @if ($question['survey_question_type_id'] == 1)
             <script>
