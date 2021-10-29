@@ -127,7 +127,7 @@ $user = Http::withHeaders([
                                         {{ $question['answers_count'] }} Jawaban</h6>
                                 </div>
                             </div>
-                        @elseif ($question['survey_question_type_id'] == 9)
+                        @elseif ($question['survey_question_type_id'] == 10)
                             <div class="row">
                                 <div class="text-start">
                                     <h5 class="line-height-2">{{ $loop->iteration }}.{{ $question['question'] }}
@@ -171,22 +171,24 @@ $user = Http::withHeaders([
                                     </div>
                                 </div>
                             </div>
+                        @elseif ($question['survey_question_type_id'] == 5)
+                            <div class="row">
+                                <div class="text-start">
+                                    <h5 class="line-height-2">{{ $loop->iteration }}. {{ $question['question'] }}
+                                    </h5>
+                                    <h6 class="text-gray">Priority Question - {{ $question['answers_count'] }}
+                                        Jawaban</h6>
+                                </div>
+                                <div class="row">
+                                    @foreach ($question['result'] as $key => $data)
+                                        <div class="col-6">
+                                            <div id="priority-chart-{{ $key }}"></div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
                         @endif
                     @endforeach
-                    {{-- <div class="row">
-                        <div class="text-start">
-                            <h4 class="font-weight-bold">Pertanyaan Priority Answer</h4>
-                            <h6 class="text-gray"> Jawaban</h6>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div id="priority-chart-1"></div>
-                            </div>
-                            <div class="col-6">
-                                <div id="priority-chart-2"></div>
-                            </div>
-                        </div>
-                    </div> --}}
                 </div>
             </div>
         </div>
@@ -201,6 +203,9 @@ $user = Http::withHeaders([
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script>
+        console.log(@json($result['questions'][0]['result']));
+    </script>
     @foreach ($result['questions'] as $question)
         @if ($question['survey_question_type_id'] == 1)
             <script>
@@ -527,6 +532,98 @@ $user = Http::withHeaders([
                     series: data{{ $loop->iteration }},
                 });
             </script>
+        @elseif($question['survey_question_type_id'] == 5)
+            @foreach ($question['result'] as $key => $data)
+                <script>
+                    var data{{ $loop->iteration }} = [
+                        @foreach ($data as $answer)
+                            {
+                            y: @json($answer['count']),
+                            name: "{{ $answer['text'] }}"
+                            },
+                        @endforeach
+                    ]
+                    var multiTitle{{ $loop->iteration }} = []
+                    data{{ $loop->iteration }}.forEach(element => {
+                        multiTitle{{ $loop->iteration }}.push(element.name)
+                    });
+                    $('#priority-chart-{{ $key }}').highcharts({
+                        chart: {
+                            animation: false,
+                            type: 'bar',
+                            backgroundColor: null,
+                            height: 250
+                        },
+                        exporting: {
+                            enabled: false
+                        },
+                        legend: {
+                            enabled: false
+                        },
+                        xAxis: {
+                            categories: multiTitle{{ $loop->iteration }},
+                        },
+                        yAxis: [{
+                            gridLineDashStyle: 'longdashdot',
+                            min: 0,
+                            title: {
+                                text: ''
+                            }
+                        }],
+                        title: {
+                            text: "Urutan ke-{{ $loop->iteration }}",
+                            align: "left"
+                        },
+                        tooltip: {
+                            valueSuffix: ' Responden',
+                            enabled: true,
+                            backgroundColor: '#ffffff',
+                            borderColor: '#ffffff',
+                            borderRadius: 12,
+                            style: {
+                                fontFamily: 'Lato',
+                                fontWeight: 'bold',
+                            },
+                            formatter: function() {
+                                var divider = 0;
+                                this.series.data.forEach(element => {
+                                    divider += element.y
+                                });
+                                var percent = (100 * this.y) / divider;
+                                percent = percent.toFixed(1);
+                                return '<h5 style="color:#a4a4a4;font-size: 1.1rem;">' + this.key + '</h5><br><br><h6>' +
+                                    this.y + ' Responden (' + percent + '%)</h6>';
+                            }
+                        },
+                        plotOptions: {
+                            bar: {
+                                dataLabels: {
+                                    enabled: true,
+                                    formatter: function() {
+                                        var divider = 0;
+                                        this.series.data.forEach(element => {
+                                            divider += element.y
+                                        });
+                                        var percent = (100 * this.y) / divider;
+                                        percent = percent.toFixed(1);
+                                        return this.y + ' (' + percent + '%)';
+                                    },
+                                    style: {
+                                        fontFamily: 'Lato',
+                                        fontWeight: 'bold',
+                                        top: 0
+                                    },
+                                }
+                            },
+                        },
+                        series: [{
+                            data: data{{ $loop->iteration }},
+                            size: '90%',
+                            innerSize: '75%',
+                        }]
+                    });
+                </script>
+            @endforeach
         @endif
     @endforeach
     {{-- <script>
