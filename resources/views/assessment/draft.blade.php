@@ -424,7 +424,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                     questions[question_index]['image_path'] = @json(asset('/uploads/images/')) + '/' + data
                 },
             }).fail(function(error) {
-                console.log(error.response.data);
+                console.log(error.response);
                 console.log(error.response.status);
                 console.log(error.response.headers);
             });
