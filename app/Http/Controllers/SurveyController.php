@@ -169,7 +169,7 @@ class SurveyController extends Controller
                 $survey['questions'][$i - 1]['answer_choices'][0]['text'] = "";
             }
         }
-        if ($survey['status_id'] == 6) {
+        if ($survey['status_id'] == 6 || $survey['status_id'] == 7 || $survey['status_id'] == 8) {
             return redirect()->route('survey.hasil', $id);
         } else if ($survey['status_id'] == 5) {
             return redirect()->route('survey.submitted', ['id' => $survey['id'], 'i' => 1]);
@@ -236,7 +236,7 @@ class SurveyController extends Controller
             // dd($request);
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . session('token'),
-            ])->post(config('services.api.url') . '/survey/'. $id, [
+            ])->post(config('services.api.url') . '/survey/' . $id, [
                 'title' => $request->title,
                 'description' => $request->description,
                 'daily_date' => $request->daily_date,
