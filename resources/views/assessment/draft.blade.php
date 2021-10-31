@@ -505,6 +505,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                     // integration to choose the right communication channel. This example uses
                     // a POST request with JSON as a data structure but your configuration
                     // could be different.
+                    console.log('{{ route('assessment.uploadphotodiscussion') }}')
                     xhr.open('POST', '{{ route('assessment.uploadphotodiscussion') }}', true);
                     xhr.setRequestHeader('x-csrf-token', '{{ csrf_token() }}');
                     xhr.responseType = 'json';
