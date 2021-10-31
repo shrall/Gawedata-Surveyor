@@ -18,6 +18,14 @@
                                 <div class="text-green">
                                     <span class="fa fa-fw fa-circle text-green me-2"></span>Published
                                 </div>
+                            @elseif ($survey['status_id'] == 7)
+                                <div class="text-finished">
+                                    <span class="fa fa-fw fa-circle text-finished me-2"></span>Finished
+                                </div>
+                            @elseif ($survey['status_id'] == 8)
+                                <div class="text-red">
+                                    <span class="fa fa-fw fa-circle text-red me-2"></span>Stopped
+                                </div>
                             @endif
                             <div class="ms-auto">{{ date('d-m-y, H:i', strtotime($survey['created_at'])) }}
                                 WIB</div>
@@ -70,6 +78,18 @@
                             <td class="py-4">
                                 <div class="text-green">
                                     <span class="fa fa-fw fa-circle text-green me-2"></span>Published
+                                </div>
+                            </td>
+                        @elseif ($survey['status_id'] == 7)
+                            <td class="py-4">
+                                <div class="text-finished">
+                                    <span class="fa fa-fw fa-circle text-finished me-2"></span>Finished
+                                </div>
+                            </td>
+                        @elseif ($survey['status_id'] == 8)
+                            <td class="py-4">
+                                <div class="text-red">
+                                    <span class="fa fa-fw fa-circle text-red me-2"></span>Stopped
                                 </div>
                             </td>
                         @else

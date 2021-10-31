@@ -18,6 +18,14 @@
                                 <div class="text-green">
                                     <span class="fa fa-fw fa-circle text-green me-2"></span>Published
                                 </div>
+                            @elseif ($survey['status_id'] == 7)
+                                <div class="text-finished">
+                                    <span class="fa fa-fw fa-circle text-finished me-2"></span>Finished
+                                </div>
+                            @elseif ($survey['status_id'] == 8)
+                                <div class="text-red">
+                                    <span class="fa fa-fw fa-circle text-red me-2"></span>Stopped
+                                </div>
                             @endif
                             <div class="ms-auto">{{ date('d-m-y, H:i', strtotime($assessment['created_at'])) }}
                                 WIB</div>
@@ -78,6 +86,18 @@
                                     <span class="fa fa-fw fa-circle text-green me-2"></span>Published
                                 </div>
                             </td>
+                        @elseif ($survey['status_id'] == 7)
+                            <td class="py-4">
+                                <div class="text-finished">
+                                    <span class="fa fa-fw fa-circle text-finished me-2"></span>Finished
+                                </div>
+                            </td>
+                        @elseif ($survey['status_id'] == 8)
+                            <td class="py-4">
+                                <div class="text-red">
+                                    <span class="fa fa-fw fa-circle text-red me-2"></span>Stopped
+                                </div>
+                            </td>
                         @else
                             <td class="py-4"></td>
                         @endif
@@ -112,7 +132,7 @@
 @else
     <div class="row justify-content-center" id="survey-view-empty">
         <div class="col-4 text-center font-nexa my-5 pt-5">
-            <img src="{{ asset('images/assessment-empty.png') }}" alt="" srcset="">
+            <img src="{{ asset('images/survey-empty.png') }}" alt="" srcset="">
             <h5>Yuk, mulai buat assessment</h5>
         </div>
     </div>

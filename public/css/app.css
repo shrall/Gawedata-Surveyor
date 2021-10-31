@@ -87,6 +87,9 @@ input[type='date']::-webkit-calendar-picker-indicator {
 .text-red-disabled {
   color: #f7cdcf;
 }
+.text-finished {
+  color: #96a9ff;
+}
 .line-height-2 {
   line-height: 2;
 }
