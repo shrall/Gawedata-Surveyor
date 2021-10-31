@@ -459,6 +459,10 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
         };
     </script>
     <script>
+        if ({{ $assessment_type_id }} == 1 || {{ $assessment_type_id }} == 2) {
+            changeCorrectAnswer(1)
+        }
+
         function changeCorrectAnswer(order) {
             $('.assessment-correct-radio').removeClass('fas').removeClass('fa-check-circle').removeClass('text-gawedata');
             $('.assessment-correct-radio').addClass('far').addClass('fa-circle').addClass('text-gray');

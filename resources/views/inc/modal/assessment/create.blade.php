@@ -84,8 +84,7 @@
                                                             <input name="with_ranking_irt" id="with_ranking_irt"
                                                                 class="form-check-input form-check-input-switch  form-check-assessment
                                                                 cursor-pointer ms-3"
-                                                                onclick="toggleIRTSerentak();"
-                                                                type="checkbox">
+                                                                onclick="toggleIRTSerentak();" type="checkbox">
                                                         </div>
                                                     </div>
                                                 </label>
@@ -121,12 +120,12 @@
                                                         </div>
                                                         <div
                                                             class="form-check d-flex align-items-center form-switch mb-0 ms-2 ps-0">
-                                                            <label for="with_ranking_rs">Serentak (dengan ranking)</label>
+                                                            <label for="with_ranking_rs">Serentak (dengan
+                                                                ranking)</label>
                                                             <input name="with_ranking" id="with_ranking_rs"
                                                                 class="form-check-input form-check-input-switch form-check-assessment
                                                                 cursor-pointer ms-3"
-                                                                onclick="toggleSerentak();"
-                                                                type="checkbox">
+                                                                onclick="toggleSerentak();" type="checkbox">
                                                         </div>
                                                     </div>
                                                 </label>
@@ -196,8 +195,7 @@
                                         <div
                                             class="d-flex justify-content-between align-items-center position-relative">
                                             <input type="number" name="duration" id="assessment-duration"
-                                                placeholder="Durasi tes"
-                                                class="form-control input-text" required>
+                                                placeholder="Durasi tes" class="form-control input-text" required>
                                             <span
                                                 class="position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6 text-gray">menit</span>
                                         </div>
@@ -207,8 +205,10 @@
                                             <div class="col-6">
                                                 <div
                                                     class="d-flex justify-content-between align-items-center position-relative">
-                                                    <input type="text" name="start_time" id="assessment-start-time-non-serentak"
-                                                        class="form-control input-text" placeholder="Tanggal/Waktu Mulai Tes" required>
+                                                    <input type="text" name="start_time_ns"
+                                                        id="assessment-start-time-non-serentak"
+                                                        class="form-control input-text"
+                                                        placeholder="Tanggal/Waktu Mulai Tes" required>
                                                     <span
                                                         class="fa fa-fw fa-calendar-day position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6 text-gawedata"></span>
                                                 </div>
@@ -216,8 +216,10 @@
                                             <div class="col-6">
                                                 <div
                                                     class="d-flex justify-content-between align-items-center position-relative">
-                                                    <input type="text" name="end_time" id="assessment-end-time-non-serentak"
-                                                        class="form-control input-text" placeholder="Tanggal/Waktu Berakhir Tes" required>
+                                                    <input type="text" name="end_time_ns"
+                                                        id="assessment-end-time-non-serentak"
+                                                        class="form-control input-text"
+                                                        placeholder="Tanggal/Waktu Berakhir Tes" required>
                                                     <span
                                                         class="fa fa-fw fa-calendar-day position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6 text-gawedata"></span>
                                                 </div>
@@ -228,7 +230,8 @@
                                         <div
                                             class="d-flex justify-content-between align-items-center position-relative">
                                             <input type="text" name="start_time" id="assessment-start-time"
-                                                class="form-control input-text" placeholder="Tanggal/Waktu Mulai Tes" required>
+                                                class="form-control input-text" placeholder="Tanggal/Waktu Mulai Tes"
+                                                required>
                                             <span
                                                 class="fa fa-fw fa-calendar-day position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6 text-gawedata"></span>
                                         </div>
@@ -237,7 +240,8 @@
                                         <div
                                             class="d-flex justify-content-between align-items-center position-relative">
                                             <input type="text" name="end_time" id="assessment-end-time"
-                                                class="form-control input-text" placeholder="Tanggal Berakhir Pengisian" required>
+                                                class="form-control input-text"
+                                                placeholder="Tanggal Berakhir Pengisian" required>
                                             <span
                                                 class="fa fa-fw fa-calendar-day position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6 text-gawedata"></span>
                                         </div>
@@ -287,7 +291,7 @@
                             <h5 class="my-1">Tingkat Kesulitan</h5>
                             <div class="row justify-content-center my-5">
                                 <div class="col-11 text-center text-gray">
-                                    <p>Tingkat kesulitan dalam IRT dan Regular Scoring dapat membantu menentukan
+                                    <p>Tingkat kesulitan dalam IRT dapat membantu menentukan
                                         kemampuan para peserta
                                         secara keseluruhan dalam menjawab soal - soal dalam ujian yang dilaksanakan.
                                         Terdapat 3 Kategori, Sulit, sedang dan Mudah</p>
@@ -370,7 +374,8 @@
                                         <div class="input-group">
                                             <span class="input-group-text assessment-point-buttons"
                                                 onclick="subtractPoints('hard');">-</span>
-                                            <input type="text" class="form-control input-text text-center" value=0 id="assessment-hard-in-points" name="hard_in_points">
+                                            <input type="text" class="form-control input-text text-center" value=0
+                                                id="assessment-hard-in-points" name="hard_in_points">
                                             <span class="input-group-text assessment-point-buttons"
                                                 onclick="addPoints('hard');">+</span>
                                         </div>
@@ -384,7 +389,8 @@
                                         <div class="input-group">
                                             <span class="input-group-text assessment-point-buttons"
                                                 onclick="subtractPoints('medium');">-</span>
-                                            <input type="text" class="form-control input-text text-center" value=0 id="assessment-medium-in-points" name="medium_in_points">
+                                            <input type="text" class="form-control input-text text-center" value=0
+                                                id="assessment-medium-in-points" name="medium_in_points">
                                             <span class="input-group-text assessment-point-buttons"
                                                 onclick="addPoints('medium');">+</span>
                                         </div>
@@ -398,7 +404,8 @@
                                         <div class="input-group">
                                             <span class="input-group-text assessment-point-buttons"
                                                 onclick="subtractPoints('easy');">-</span>
-                                            <input type="text" class="form-control input-text text-center" value=0 id="assessment-easy-in-points" name="easy_in_points">
+                                            <input type="text" class="form-control input-text text-center" value=0
+                                                id="assessment-easy-in-points" name="easy_in_points">
                                             <span class="input-group-text assessment-point-buttons"
                                                 onclick="addPoints('easy');">+</span>
                                         </div>

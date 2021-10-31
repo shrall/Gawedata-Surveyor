@@ -664,6 +664,7 @@
                 $('#create-survey-daily').removeClass('d-block').addClass('d-none');
                 changeToAssessment(survey_sort, 1);
             }
+            toggleSurveyViewGrid();
         }
 
         function changeToAssessment(sort, page) {
@@ -804,6 +805,7 @@
         });
         $(function() {
             $('#assessment-start-time-non-serentak').daterangepicker({
+                autoUpdateInput: false,
                 singleDatePicker: true,
                 startDate: moment(),
                 timePicker: true,
@@ -814,7 +816,12 @@
                     format: 'YYYY-MM-DD HH:mm:ss'
                 }
             }, function(start, end, label) {});
+            $('#assessment-start-time-non-serentak').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
+                $('input[name="start_time"]').val(picker.startDate.format('YYYY-MM-DD'));
+            });
             $('#assessment-end-time-non-serentak').daterangepicker({
+                autoUpdateInput: false,
                 singleDatePicker: true,
                 startDate: moment(),
                 timePicker: true,
@@ -825,7 +832,12 @@
                     format: 'YYYY-MM-DD HH:mm:ss'
                 }
             }, function(start, end, label) {});
+            $('#assessment-end-time-non-serentak').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
+                $('input[name="start_time"]').val(picker.startDate.format('YYYY-MM-DD'));
+            });
             $('#assessment-start-time').daterangepicker({
+                autoUpdateInput: false,
                 singleDatePicker: true,
                 startDate: moment(),
                 timePicker: true,
@@ -836,7 +848,11 @@
                     format: 'YYYY-MM-DD HH:mm:ss'
                 }
             }, function(start, end, label) {});
+            $('#assessment-start-time').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
+            });
             $('#assessment-end-time').daterangepicker({
+                autoUpdateInput: false,
                 singleDatePicker: true,
                 startDate: moment(),
                 timePicker: true,
@@ -847,6 +863,9 @@
                     format: 'YYYY-MM-DD HH:mm:ss'
                 }
             }, function(start, end, label) {});
+            $('#assessment-end-time').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
+            });
         });
 
         function enableSecondAssessmentButton() {
@@ -854,9 +873,7 @@
                 if ($("#assessment-title").val() != "" &&
                     $("#assessment-description").val() != "" &&
                     $("#assessment-duration").val() != "" &&
-                    $("#assessment-date").val() != "" &&
-                    $("#assessment-start-time-non-serentak").val() != "" &&
-                    $("#assessment-end-time-non-serentak").val() != "" &&
+                    $("#assessment-start-time").val() != "" &&
                     $("#assessment-type").val() != "") {
                     $("#create-assessment-next-button-2").prop("disabled", false);
                 } else {
@@ -867,8 +884,8 @@
                     if ($("#assessment-title").val() != "" &&
                         $("#assessment-description").val() != "" &&
                         $("#assessment-duration").val() != "" &&
-                        $("#assessment-date").val() != "" &&
-                        $("#assessment-start-time").val() != "" &&
+                        $("#assessment-start-time-non-serentak").val() != "" &&
+                        $("#assessment-end-time-non-serentak").val() != "" &&
                         $("#assessment-type").val() != "") {
                         $("#create-assessment-next-button-2").prop("disabled", false);
                     } else {
@@ -877,8 +894,6 @@
                 } else {
                     if ($("#assessment-title").val() != "" &&
                         $("#assessment-description").val() != "" &&
-                        $("#assessment-duration").val() != "" &&
-                        $("#assessment-date").val() != "" &&
                         $("#assessment-end-time").val() != "" &&
                         $("#assessment-type").val() != "") {
                         $("#create-assessment-next-button-2").prop("disabled", false);
