@@ -525,8 +525,9 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                         //
                         // Your integration may handle upload errors in a different way so make sure
                         // it is done properly. The reject() function must be called when the upload fails.
+                        console.log(response);
                         if (!response || response.error) {
-                            return reject(response.error.message);
+                            return reject(response && response.error ? response.error.message : genericErrorText);
                         }
                         // If the upload is successful, resolve the upload promise with an object containing
                         // at least the "default" URL, pointing to the image on the server.
