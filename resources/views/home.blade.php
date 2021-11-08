@@ -698,14 +698,9 @@
             if (type != 'irt') {
                 serentak = false;
                 $('#with_ranking_irt').prop('checked', false);
-                $('.assessment-irt-non-serentak').removeClass('d-block').addClass('d-none');
-                $('.assessment-irt-serentak').removeClass('d-none').addClass('d-block');
+                $('.assessment-irt').removeClass('d-none').addClass('d-block');
             } else {
-                if (!serentak) {
-                    $('.assessment-irt-non-serentak').removeClass('d-none').addClass('d-block');
-                } else {
-                    $('.assessment-irt-serentak').removeClass('d-none').addClass('d-block');
-                }
+                $('.assessment-irt').removeClass('d-none').addClass('d-block');
             }
             assessment_type = type;
             $('#radio-label-assessment-irt').removeClass('active');
@@ -728,19 +723,6 @@
                 $('#assessment-serentak').val('false');
             }
             enableSecondAssessmentButton();
-        }
-
-        function toggleIRTSerentak() {
-            if ($('#with_ranking_irt').prop("checked") == true) {
-                serentak = true;
-                $('.assessment-irt-non-serentak').removeClass('d-block').addClass('d-none');
-                $('.assessment-irt-serentak').removeClass('d-none').addClass('d-block');
-            } else {
-                serentak = false;
-                $('.assessment-irt-serentak').removeClass('d-block').addClass('d-none');
-                $('.assessment-irt-non-serentak').removeClass('d-none').addClass('d-block');
-            }
-            toggleSerentak();
         }
 
         function toggleSerentak() {
@@ -770,12 +752,8 @@
         })
         $('#create-assessment-next-button-2').click(function() {
             if (assessment_type == 'irt') {
-                if (!serentak) {
-                    changeAssessmentStep('#assessment-second-step', '#assessment-third-step-irt-non-serentak', 2,
-                        3);
-                } else {
-                    document.getElementById('create-assessment-form').submit();
-                }
+                changeAssessmentStep('#assessment-second-step', '#assessment-third-step-irt', 2,
+                    3);
             } else {
                 document.getElementById('create-assessment-form').submit();
             }
@@ -783,19 +761,19 @@
         $('#create-assessment-back-button-2').click(function() {
             changeAssessmentStep('#assessment-second-step', '#assessment-first-step', 2, 1);
         })
-        $('#create-assessment-next-button-3-irt-non-serentak').click(function() {
-            changeAssessmentStep('#assessment-third-step-irt-non-serentak',
-                '#assessment-fourth-step-irt-non-serentak', 3, 4);
+        $('#create-assessment-next-button-3-irt').click(function() {
+            changeAssessmentStep('#assessment-third-step-irt',
+                '#assessment-fourth-step-irt', 3, 4);
         })
-        $('#create-assessment-next-button-4-irt-non-serentak').click(function() {
+        $('#create-assessment-next-button-4-irt').click(function() {
             document.getElementById('create-assessment-form').submit();
         })
-        $('#create-assessment-back-button-3-irt-non-serentak').click(function() {
-            changeAssessmentStep('#assessment-third-step-irt-non-serentak', '#assessment-second-step', 3, 2);
+        $('#create-assessment-back-button-3-irt').click(function() {
+            changeAssessmentStep('#assessment-third-step-irt', '#assessment-second-step', 3, 2);
         })
-        $('#create-assessment-back-button-4-irt-non-serentak').click(function() {
-            changeAssessmentStep('#assessment-fourth-step-irt-non-serentak',
-                '#assessment-third-step-irt-non-serentak', 4, 3);
+        $('#create-assessment-back-button-4-irt').click(function() {
+            changeAssessmentStep('#assessment-fourth-step-irt',
+                '#assessment-third-step-irt', 4, 3);
         })
     </script>
     {{-- second step --}}
@@ -939,24 +917,24 @@
     </script>
     {{-- third step irt rs --}}
     <script>
-        function enableThirdAssessmentIRTNonSerentakButton() {
+        function enableThirdAssessmentIRTButton() {
             if ($("#assessment-easy-in-percent").val() != "" &&
                 $("#assessment-medium-in-percent").val() != "" &&
                 $("#assessment-hard-in-percent").val() != "") {
-                $("#create-assessment-next-button-3-irt-non-serentak").prop("disabled", false);
+                $("#create-assessment-next-button-3-irt").prop("disabled", false);
             } else {
-                $("#create-assessment-next-button-3-irt-non-serentak").prop("disabled", true);
+                $("#create-assessment-next-button-3-irt").prop("disabled", true);
             }
         }
 
         $("#assessment-easy-in-percent").keyup(function() {
-            enableThirdAssessmentIRTNonSerentakButton();
+            enableThirdAssessmentIRTButton();
         });
         $("#assessment-medium-in-percent").keyup(function() {
-            enableThirdAssessmentIRTNonSerentakButton();
+            enableThirdAssessmentIRTButton();
         });
         $("#assessment-hard-in-percent").keyup(function() {
-            enableThirdAssessmentIRTNonSerentakButton();
+            enableThirdAssessmentIRTButton();
         });
     </script>
     {{-- fourth step irt rs --}}
@@ -970,24 +948,5 @@
             $('#assessment-' + difficulty + '-in-points').val(parseInt($('#assessment-' + difficulty + '-in-points')
                 .val()) - 1);
         }
-    </script>
-    <script>
-        //sixth step
-        function enableSixthAssessmentButton() {
-            console.log(parseInt($("#assessment-respondent").val()));
-            if (parseInt($("#assessment-respondent").val()) <= parseInt($(".user-quota").html())) {
-                $("#create-assessment-next-button-6").prop("disabled", false);
-            } else {
-                $("#create-assessment-next-button-6").prop("disabled", true);
-            }
-        }
-        $("#assessment-respondent").keyup(function() {
-            if (parseInt($("#assessment-respondent").val()) <= parseInt($(".user-quota").html())) {
-                $('#assessment-respondent').removeClass('is-invalid');
-            } else {
-                $('#assessment-respondent').addClass('is-invalid');
-            }
-            enableSixthAssessmentButton();
-        });
     </script>
 @endsection

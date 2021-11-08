@@ -10,7 +10,7 @@
                     <div class="row">
                         <div class="col-5 text-start border-end pt-5 pe-0">
                             <ul
-                                class="list-unstyled font-weight-bold my-5 create-assessment-sidebar assessment-rs assessment-sa assessment-irt-serentak d-none">
+                                class="list-unstyled font-weight-bold my-5 create-assessment-sidebar assessment-rs assessment-sa d-none">
                                 <li class="my-4 active position-relative">
                                     <span class="text-gray text-decoration-none fs-6">1. Pilih Jenis Tes</span>
                                     <div class="active-border py-1 position-absolute end-0 d-inline"> </div>
@@ -21,7 +21,7 @@
                                 </li>
                             </ul>
                             <ul
-                                class="list-unstyled font-weight-bold my-5 create-assessment-sidebar assessment-irt-non-serentak">
+                                class="list-unstyled font-weight-bold my-5 create-assessment-sidebar assessment-irt">
                                 <li class="my-4 active position-relative">
                                     <span class="text-gray text-decoration-none fs-6">1. Pilih Jenis Tes</span>
                                     <div class="active-border py-1 position-absolute end-0 d-inline"> </div>
@@ -283,7 +283,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-7 text-center my-4 d-none" id="assessment-third-step-irt-non-serentak">
+                        <div class="col-7 text-center my-4 d-none" id="assessment-third-step-irt">
                             <div class="d-flex">
                                 <span class="fa fa-fw fa-times-circle fs-5 text-gray cursor-pointer ms-auto"
                                     data-bs-dismiss="modal" aria-label="Close"></span>
@@ -342,11 +342,11 @@
                                 <div class="col-11">
                                     <div class="row justify-content-between align-items-center px-2 mb-2">
                                         <span class="col-4 text-gawedata text-start cursor-pointer ps-0"
-                                            id="create-assessment-back-button-3-irt-non-serentak">
+                                            id="create-assessment-back-button-3-irt">
                                             <span class="fa fa-fw fa-arrow-left me-2"></span>Sebelumnya
                                         </span>
                                         <button type="submit" class="btn btn-gawedata col-4 py-2"
-                                            id="create-assessment-next-button-3-irt-non-serentak"
+                                            id="create-assessment-next-button-3-irt"
                                             onclick="event.preventDefault()">
                                             Selanjutnya
                                         </button>
@@ -354,7 +354,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-7 text-center my-4 d-none" id="assessment-fourth-step-irt-non-serentak">
+                        <div class="col-7 text-center my-4 d-none" id="assessment-fourth-step-irt">
                             <div class="d-flex">
                                 <span class="fa fa-fw fa-times-circle fs-5 text-gray cursor-pointer ms-auto"
                                     data-bs-dismiss="modal" aria-label="Close"></span>
@@ -415,11 +415,11 @@
                                 <div class="col-10">
                                     <div class="row justify-content-between align-items-center px-2 mb-2">
                                         <span class="col-4 text-gawedata text-start cursor-pointer ps-0"
-                                            id="create-assessment-back-button-4-irt-non-serentak">
+                                            id="create-assessment-back-button-4-irt">
                                             <span class="fa fa-fw fa-arrow-left me-2"></span>Sebelumnya
                                         </span>
                                         <button type="submit" class="btn btn-gawedata col-4 py-2"
-                                            id="create-assessment-next-button-4-irt-non-serentak">
+                                            id="create-assessment-next-button-4-irt">
                                             Selanjutnya
                                         </button>
                                     </div>
