@@ -303,7 +303,7 @@
                                         <div
                                             class="d-flex justify-content-between align-items-center position-relative">
                                             <input type="number" name="hard_in_percent" id="assessment-hard-in-percent"
-                                                class="form-control input-text" min="0" max="100" value=0 required>
+                                                class="form-control input-text" min="0" max="100" value=25 required>
                                             <span
                                                 class="fa fa-fw fa-percent position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6"></span>
                                         </div>
@@ -318,7 +318,7 @@
                                             class="d-flex justify-content-between align-items-center position-relative">
                                             <input type="number" name="medium_in_percent"
                                                 id="assessment-medium-in-percent" class="form-control input-text"
-                                                min="0" max="100" value=0 required>
+                                                min="0" max="100" value=50 required>
                                             <span
                                                 class="fa fa-fw fa-percent position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6"></span>
                                         </div>
@@ -332,7 +332,7 @@
                                         <div
                                             class="d-flex justify-content-between align-items-center position-relative">
                                             <input type="number" name="easy_in_percent" id="assessment-easy-in-percent"
-                                                class="form-control input-text" min="0" max="100" value=0 required>
+                                                class="form-control input-text" min="0" max="100" value=75 required>
                                             <span
                                                 class="fa fa-fw fa-percent position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6"></span>
                                         </div>

@@ -18,11 +18,11 @@
                                 <div class="text-green">
                                     <span class="fa fa-fw fa-circle text-green me-2"></span>Published
                                 </div>
-                            @elseif ($survey['status_id'] == 7)
+                            @elseif ($assessment['status_id'] == 7)
                                 <div class="text-finished">
                                     <span class="fa fa-fw fa-circle text-finished me-2"></span>Finished
                                 </div>
-                            @elseif ($survey['status_id'] == 8)
+                            @elseif ($assessment['status_id'] == 8)
                                 <div class="text-red">
                                     <span class="fa fa-fw fa-circle text-red me-2"></span>Stopped
                                 </div>
@@ -86,13 +86,13 @@
                                     <span class="fa fa-fw fa-circle text-green me-2"></span>Published
                                 </div>
                             </td>
-                        @elseif ($survey['status_id'] == 7)
+                        @elseif ($assessment['status_id'] == 7)
                             <td class="py-4">
                                 <div class="text-finished">
                                     <span class="fa fa-fw fa-circle text-finished me-2"></span>Finished
                                 </div>
                             </td>
-                        @elseif ($survey['status_id'] == 8)
+                        @elseif ($assessment['status_id'] == 8)
                             <td class="py-4">
                                 <div class="text-red">
                                     <span class="fa fa-fw fa-circle text-red me-2"></span>Stopped
