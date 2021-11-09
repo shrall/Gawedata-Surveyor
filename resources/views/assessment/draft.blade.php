@@ -23,7 +23,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                                 <textarea type="text" name="question" id="input-question" class="form-control input-text"
                                     style="padding-left:3.5rem !important;resize: none; height:8rem;"
                                     placeholder="Tuliskan Pertanyaan Disini"
-                                    onkeyup="setQuestion()">{{ $assessment['questions'][$i - 1]['question'] }}</textarea>
+                                    onkeyup="setQuestion()">{{ $assessment['questions'][$i - 1]['question'] == 'Pertanyaan Baru' ? '' : $assessment['questions'][$i - 1]['question'] }}</textarea>
                             </div>
                         </div>
                         @if ($assessment_type_id == 1)
@@ -63,13 +63,8 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                                                     id="answer-{{ $loop->iteration }}" class="form-control input-text"
                                                     style="padding-left:3.5rem !important;"
                                                     placeholder="Tuliskan Jawaban Disini"
-                                                    value="{{ $answer['text'] ?? '' }}"
+                                                    value="{{ $answer['text'] == 'Answer Choice 1' || $answer['text'] == 'Answer Choice 2' ? '' : $answer['text'] }}"
                                                     onkeyup="setNewAnswer({{ $loop->iteration }});">
-                                            </div>
-                                            <div class="col-1 text-start d-flex align-items-center">
-                                                <span class="fas fa-fw fa-trash-alt text-gray cursor-pointer fs-3"
-                                                    id="answer_delete{{ $loop->iteration }}"
-                                                    onclick="deleteAnswer({{ $loop->iteration }});"></span>
                                             </div>
                                             <div class="col-3">
                                                 <div class="input-group">
@@ -82,6 +77,11 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                                                     <span class="input-group-text assessment-point-buttons"
                                                         onclick="addPoints({{ $loop->iteration }});">+</span>
                                                 </div>
+                                            </div>
+                                            <div class="col-1 text-start d-flex align-items-center">
+                                                <span class="fas fa-fw fa-trash-alt text-gray cursor-pointer fs-3"
+                                                    id="answer_delete{{ $loop->iteration }}"
+                                                    onclick="deleteAnswer({{ $loop->iteration }});"></span>
                                             </div>
                                         </div>
                                     @endforeach
@@ -485,7 +485,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
         }
     </script>
     @if ($assessment['with_discussion'])
-        <script src="{{asset('js/ckeditor.js')}}"></script>
+        <script src="{{ asset('js/ckeditor.js') }}"></script>
         <script>
             ClassicEditor.create(document.querySelector('#input-discussion'), {
                     simpleUpload: {
