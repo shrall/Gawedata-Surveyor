@@ -810,7 +810,7 @@
             }, function(start, end, label) {});
             $('#assessment-end-time-non-serentak').on('apply.daterangepicker', function(ev, picker) {
                 $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
-                $('input[name="start_time"]').val(picker.startDate.format('YYYY-MM-DD'));
+                $('input[name="end_time"]').val(picker.startDate.format('YYYY-MM-DD'));
             });
             $('#assessment-start-time').daterangepicker({
                 autoUpdateInput: false,
