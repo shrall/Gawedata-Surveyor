@@ -84,7 +84,7 @@
                                                             <input name="with_ranking_irt" id="with_ranking_irt"
                                                                 class="form-check-input form-check-input-switch  form-check-assessment
                                                                 cursor-pointer ms-3"
-                                                                onclick="toggleIRTSerentak();" type="checkbox">
+                                                                onclick="toggleSerentak();" type="checkbox">
                                                         </div>
                                                     </div>
                                                 </label>

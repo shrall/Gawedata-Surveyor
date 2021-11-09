@@ -711,9 +711,7 @@
             $('.assessment-rs').removeClass('d-block').addClass('d-none');
             $('.assessment-sa').removeClass('d-block').addClass('d-none');
             $('.assessment-' + type).removeClass('d-none').addClass('d-block');
-            if (type == 'irt') {
-                toggleIRTSerentak();
-            } else if (type == 'rs') {
+            if (type == 'irt' && type == 'rs') {
                 toggleSerentak();
             }
             $('#assessment-method').val(type);
