@@ -10,7 +10,7 @@
                 @if (Route::current()->getName() == 'survey.hasil' || Route::current()->getName() == 'survey.analisa' || Route::current()->getName() == 'survey.detail' || Route::current()->getName() == 'survey.show' || Route::current()->getName() == 'survey.submitted')
                     <ul class="navbar-nav position-absolute top-50 start-50 translate-middle" style="z-index: 100;">
                         <h4 class="font-lato font-weight-bold mb-0">
-                            {{ strlen($survey['title']) > 25 ? substr($survey['title'], 0, 23) . '...' : $survey['title'] }}
+                            {{ strlen($assessment['title']) > 25 ? substr($assessment['title'], 0, 23) . '...' : $assessment['title'] }}
                             <img src="{{ asset('images/survey-menu-button.svg') }}" width="21px"
                                 class="far fa-fw fa-comment-dots text-gawedata cursor-pointer ms-2"
                                 id="survey-menu-button">
@@ -52,7 +52,7 @@
                                         <hr>
                                         <div class="my-3">
                                             <a href="#" class="text-dark text-decoration-none font-weight-bold"
-                                                data-bs-toggle="modal" @if ($survey['daily_date'])
+                                                data-bs-toggle="modal" @if ($assessment['daily_date'])
                                                 data-bs-target="#update-survey-modal-daily"
                                             @else
                                                 data-bs-target="#update-survey-modal"
@@ -67,8 +67,9 @@
                                     class="text-red text-decoration-none font-weight-bold" id="survey-delete-button">
                                     Hapus Survei
                                 </a>
-                                <form id="survey-delete-form" action="{{ route('survey.destroy', $survey['id']) }}"
-                                    method="POST" style="display: none;">
+                                <form id="survey-delete-form"
+                                    action="{{ route('survey.destroy', $assessment['id']) }}" method="POST"
+                                    style="display: none;">
                                     @csrf
                                     <input name="_method" type="hidden" value="DELETE">
                                 </form>
@@ -98,8 +99,16 @@
                     @if (Route::current()->getName() == 'assessment.hasil' || Route::current()->getName() == 'assessment.analisa' || Route::current()->getName() == 'assessment.detail' || Route::current()->getName() == 'assessment.ranking' || Route::current()->getName() == 'assessment.kategori' || Route::current()->getName() == 'assessment.pertanyaan')
                         <div id="survey-menu" class="p-4">
                             <div>
-                                <span class="fa fa-fw fa-circle text-green me-2"></span>
-                                <span class="text-green">Published</span>
+                                @if ($assessment['status_id'] == 6)
+                                    <span class="fa fa-fw fa-circle text-green me-2"></span>
+                                    <span class="text-green">Published</span>
+                                @elseif ($assessment['status_id'] == 7)
+                                    <span class="fa fa-fw fa-circle text-finished me-2"></span>
+                                    <span class="text-finished">Finished</span>
+                                @elseif ($assessment['status_id'] == 8)
+                                    <span class="fa fa-fw fa-circle text-red me-2"></span>
+                                    <span class="text-red">Stopped</span>
+                                @endif
                             </div>
                             <hr>
                             <div class="mt-3">
@@ -196,7 +205,7 @@
                     Simpan (Draft)
                 </a>
             </li>
-            @if ($survey['daily_date'])
+            @if ($assessment['daily_date'])
                 @include('inc.modal.survey.update_daily')
             @else
                 @include('inc.modal.survey.update')
@@ -249,7 +258,7 @@
                     </a>
                 </li>
             @endif
-            @if ($assessment['assessment_type_id'] != 3 && !$assessment['is_simultaneously'])
+            @if ($assessment['assessment_type_id'] != 3 && $assessment['is_simultaneously'] == 0)
                 @include('inc.modal.assessment.share')
                 <li class="nav-item mx-4">
                     <a href="#" class="btn btn-gawedata-2 font-lato font-weight-bold" data-bs-toggle="modal"
@@ -259,32 +268,31 @@
                     </a>
                 </li>
             @endif
-        @elseif (Route::current()->getName() == 'assessment.hasil' || Route::current()->getName() ==
-            'assessment.analisa' || Route::current()->getName() == 'assessment.detail' || Route::current()->getName() ==
-            'assessment.ranking')
-            @if ($assessment['assessment_type_id'] != 3 && $assessment['is_simultaneously'])
-                {{-- ini kalau belom dimulai --}}
-                <li class="nav-item flex align-items-center mx-4">
-                    <h6 class="my-0 text-gray">Waktu</h6>
-                    <h5 class="my-0">00:40:00</h5>
-                    <a href="#" class="btn btn-gawedata font-lato font-weight-bold">
-                        <span class="fas fa-fw fa-play"></span>
-                        Mulai Tes
-                    </a>
-                </li>
+            @if ($assessment['assessment_type_id'] != 3 && $assessment['is_simultaneously'] == 1)
+                @if ($assessment['status_id'] == 8)
+                    <li class="nav-item d-flex align-items-center mx-4">
+                        <h6 class="mx-2 my-0 text-gray">Tes Selesai</h6>
+                        <h5 class="mx-2 my-0 text-gray">00:40:00</h5>
+                    </li>
+                @endif
+                @if ($assessment['status_id'] == 6)
+                    <li class="nav-item d-flex align-items-center mx-4">
+                        <h6 class="mx-2 my-0 text-gray">Waktu</h6>
+                        <h5 class="mx-2 my-0">00:40:00</h5>
+                        <a href="#" class="mx-2 btn btn-gawedata font-lato font-weight-bold">
+                            <span class="fas fa-fw fa-play"></span>
+                            Mulai Tes
+                        </a>
+                    </li>
+                @endif
                 {{-- ini kalau udah distart --}}
-                {{-- <li class="nav-item flex align-items-center mx-4">
-                        <h6 class="my-0 text-gray">Waktu</h6>
-                        <h5 class="my-0 text-gawedata">00:40:00</h5>
-                        <a href="#" class="btn btn-gawedata-danger-2 font-lato font-weight-bold">
+                {{-- <li class="nav-item d-flex align-items-center mx-4">
+                        <h6 class="mx-2 my-0 text-gray">Waktu</h6>
+                        <h5 class="mx-2 my-0 text-gawedata">00:40:00</h5>
+                        <a href="#" class="mx-2 btn btn-gawedata-danger-2 font-lato font-weight-bold">
                             <span class="fas fa-fw fa-stop-circle"></span>
                             Stop Tes
                         </a>
-                    </li> --}}
-                {{-- ini kalau udah selesai --}}
-                {{-- <li class="nav-item flex align-items-center mx-4">
-                        <h6 class="my-0 text-gray">Tes Selesai</h6>
-                        <h5 class="my-0 text-gray">00:40:00</h5>
                     </li> --}}
             @endif
         @endif

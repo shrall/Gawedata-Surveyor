@@ -133,7 +133,7 @@ class AssessmentController extends Controller
                 $assessment['questions'][$i - 1]['answer_choices'][1]['text'] = "";
             }
         }
-        if ($assessment['status_id'] == 6) {
+        if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8) {
             return redirect()->route('assessment.hasil', $id);
         } else if ($assessment['status_id'] == 5) {
             return redirect()->route('assessment.submitted', ['id' => $assessment['id'], 'i' => 1]);
@@ -310,6 +310,9 @@ class AssessmentController extends Controller
         ])
             ->get(config('services.api.url') . '/assessment/' . $id)
             ->json()['data'];
+        if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8) {
+            return redirect()->route('assessment.hasil', $id);
+        }
         return view('assessment.submitted', compact('assessment', 'i'));
     }
     public function submitted_respondent($id, $i)

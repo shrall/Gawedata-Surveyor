@@ -13,23 +13,30 @@ $user = Http::withHeaders([
                 @include('assessment.inc.sidebar.published')
             </div>
             <div class="col-7 text-center my-4">
-                <div class="card card-survey-detail border-0 ms-4 p-4 font-lato">
-                    @foreach ($result['questions'] as $question)
-                        <div class="row">
-                            <div class="text-start">
-                                <h5 class="line-height-2">{{ $loop->iteration }}. {{ $question['question'] }}
-                                </h5>
-                                <h6 class="text-gray">{{ $question['answers_count'] ?? 0 }} Jawaban
-                                </h6>
-                            </div>
+                @if ($assessment['respondent_count'] != 0)
+                    <div class="card card-survey-detail border-0 ms-4 p-4 font-lato">
+                        @foreach ($result['questions'] as $question)
                             <div class="row">
-                                <div class="col-12">
-                                    <div id="chart-{{ $loop->iteration }}"></div>
+                                <div class="text-start">
+                                    <h5 class="line-height-2">{{ $loop->iteration }}. {{ $question['question'] }}
+                                    </h5>
+                                    <h6 class="text-gray">{{ $question['answers_count'] ?? 0 }} Jawaban
+                                    </h6>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div id="chart-{{ $loop->iteration }}"></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
-                </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="d-flex flex-column align-items-center justify-content-center" style="height: 100%">
+                        <div class="span fa fa-fw fa-pie-chart text-gray mb-4" style="font-size: 12rem" ></div>
+                        <h3 class="text-gray">Hasil tes akan muncul setelah tes selesai.</h3>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

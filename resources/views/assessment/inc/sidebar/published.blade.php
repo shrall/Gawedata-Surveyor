@@ -1,5 +1,5 @@
 <ul class="list-unstyled my-4">
-    @if ($assessment['assessment_type_id'] != 3 && !$assessment['is_simultaneously'])
+    @if ($assessment['assessment_type_id'] != 3 && $assessment['is_simultaneously'] == 1)
         <li class="my-4">
             <div class="card card-responden mx-3 p-4">
                 <h6 class="mb-4">Bagikan Link Tes kepada Responden</h6>
