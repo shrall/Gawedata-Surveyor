@@ -698,9 +698,8 @@
             if (type != 'irt') {
                 serentak = false;
                 $('#with_ranking_irt').prop('checked', false);
-                $('.assessment-irt').removeClass('d-none').addClass('d-block');
-            } else {
-                $('.assessment-irt').removeClass('d-none').addClass('d-block');
+                $('.serentak').removeClass('d-block').addClass('d-none');
+                $('.non-serentak').removeClass('d-none').addClass('d-block');
             }
             assessment_type = type;
             $('#radio-label-assessment-irt').removeClass('active');
@@ -711,7 +710,7 @@
             $('.assessment-rs').removeClass('d-block').addClass('d-none');
             $('.assessment-sa').removeClass('d-block').addClass('d-none');
             $('.assessment-' + type).removeClass('d-none').addClass('d-block');
-            if (type == 'irt' && type == 'rs') {
+            if (type == 'irt' || type == 'rs') {
                 toggleSerentak();
             }
             $('#assessment-method').val(type);
