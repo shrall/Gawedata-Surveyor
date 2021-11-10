@@ -45,6 +45,16 @@ class AssessmentController extends Controller
             $method = 3;
             $test_date = $request->end_time;
         }
+        if(!$request->start_time_ns){
+            $start_time = $request->start_time;
+        }else{
+            $start_time = $request->start_time_ns;
+        }
+        if(!$request->end_time_ns){
+            $end_time = $request->end_time;
+        }else{
+            $end_time = $request->end_time_ns;
+        }
         if ($request->assessment_serentak == 'true') {
             $serentak = true;
         } else {
@@ -68,11 +78,12 @@ class AssessmentController extends Controller
             'description' => $request->description,
             'duration' => $request->duration,
             'test_date' => $test_date,
-            'start_time' => $request->start_time_ns,
-            'end_time' => $request->end_time_ns,
+            'start_time' => $start_time,
+            'end_time' => $end_time,
             'is_simultaneously' => $serentak,
             'is_private' => $private,
             'with_discussion' => $discussion,
+            'with_ranking' => $serentak,
             'easy_in_percent' => $request->easy_in_percent,
             'medium_in_percent' => $request->medium_in_percent,
             'hard_in_percent' => $request->hard_in_percent,
