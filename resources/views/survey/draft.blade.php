@@ -978,48 +978,47 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     </script>
     <script>
         var loadFile = function(event) {
-            $('.survey-question-image-preview').attr('src', URL.createObjectURL(event.target.files[0]));
             var formData = new FormData();
-            formData.append('_token', CSRF_TOKEN);
-            formData.append('photo', $('#photo')[0].files[0]);
+            formData.append('image', $('#photo')[0].files[0]);
             $.ajax({
-                url: "{{ config('app.url') }}" + "/survey/" + @json($survey['id']) + "/uploadphoto",
+                url: "{{ config('services.api.url') }}" + "/image",
                 type: 'POST',
+                "mimeType": "multipart/form-data",
                 data: formData,
                 processData: false, // tell jQuery not to process the data
                 contentType: false, // tell jQuery not to set contentType
+                headers: {
+                    "Authorization": "Bearer {{ session('token') }}",
+                },
                 success: function(data) {
-                    console.log(data);
-                    questions[question_index]['image_path'] = @json(asset('/uploads/images/')) + '/' + data
+                    $('.survey-question-image-preview').attr('src', URL.createObjectURL(event.target.files[
+                        0]));
+                    questions[question_index]['image_path'] = @json(config('services.asset.url')) + '/' + JSON.parse(data)['data']['path']
                 },
             }).fail(function(error) {
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
+                console.log(error);
             });
         };
     </script>
     <script>
-        var gridLoadFile = function(event, index) {
+        var gridLoadFile = function(event) {
             var formData = new FormData();
-            formData.append('_token', CSRF_TOKEN);
-            console.log('#question_image' + index);
-            formData.append('photo', $('#question_image' + index)[0].files[0]);
+            formData.append('image', $('#question_image' + index)[0].files[0]);
             $.ajax({
-                url: "{{ config('app.url') }}" + "/survey/" + @json($survey['id']) + "/uploadphoto/grid",
+                url: "{{ config('services.api.url') }}" + "/image",
                 type: 'POST',
+                "mimeType": "multipart/form-data",
                 data: formData,
                 processData: false, // tell jQuery not to process the data
                 contentType: false, // tell jQuery not to set contentType
+                headers: {
+                    "Authorization": "Bearer {{ session('token') }}",
+                },
                 success: function(data) {
-                    console.log(data);
-                    questions[question_index]['sub_questions'][index - 1]['image_path'] =
-                        @json(asset('/uploads/grid/')) + '/' + data
+                    questions[question_index]['sub_questions'][index - 1]['image_path'] = @json(config('services.asset.url')) + '/' + JSON.parse(data)['data']['path']
                 },
             }).fail(function(error) {
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
+                console.log(error);
             });
         };
     </script>

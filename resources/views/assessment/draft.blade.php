@@ -422,18 +422,22 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
     </script>
     <script>
         var loadFile = function(event) {
-            $('.survey-question-image-preview').attr('src', URL.createObjectURL(event.target.files[0]));
             var formData = new FormData();
-            formData.append('_token', CSRF_TOKEN);
-            formData.append('photo', $('#photo')[0].files[0]);
+            formData.append('image', $('#photo')[0].files[0]);
             $.ajax({
-                url: "{{ config('app.url') }}" + "/assessment/" + @json($assessment['id']) + "/uploadphoto",
+                url: "{{ config('services.api.url') }}" + "/image",
                 type: 'POST',
+                "mimeType": "multipart/form-data",
                 data: formData,
                 processData: false, // tell jQuery not to process the data
                 contentType: false, // tell jQuery not to set contentType
+                headers: {
+                    "Authorization": "Bearer {{ session('token') }}",
+                },
                 success: function(data) {
-                    questions[question_index]['image_path'] = @json(asset('/uploads/images/')) + '/' + data
+                    $('.survey-question-image-preview').attr('src', URL.createObjectURL(event.target.files[
+                        0]));
+                    questions[question_index]['image_path'] = @json(config('services.asset.url')) + '/' + JSON.parse(data)['data']['path']
                 },
             }).fail(function(error) {
                 console.log(error);
