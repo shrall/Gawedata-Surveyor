@@ -269,31 +269,72 @@
                 </li>
             @endif
             @if ($assessment['assessment_type_id'] != 3 && $assessment['is_simultaneously'] == 1)
+                @php
+                    $time = Carbon\Carbon::now()->tz('utc');
+                    $duration = $assessment['duration'];
+                    $hour = 0;
+                    $minute = 0;
+                    while ($duration >= 60) {
+                        $hour++;
+                        $duration -= 60;
+                    }
+                    if ($duration < 60) {
+                        $minute = $duration;
+                    }
+                    if ($hour < 10) {
+                        $hour = '0' . $hour;
+                    }
+                    if ($minute < 10) {
+                        $minute = '0' . $minute;
+                    }
+                @endphp
                 @if ($assessment['status_id'] == 8)
                     <li class="nav-item d-flex align-items-center mx-4">
                         <h6 class="mx-2 my-0 text-gray">Tes Selesai</h6>
-                        <h5 class="mx-2 my-0 text-gray">00:40:00</h5>
+                        <h5 class="mx-2 my-0 text-gray">{{ $hour }}:{{ $minute }}:00</h5>
                     </li>
                 @endif
                 @if ($assessment['status_id'] == 6)
-                    <li class="nav-item d-flex align-items-center mx-4">
+                    <li class="nav-item d-flex align-items-center mx-4" id="start-button">
                         <h6 class="mx-2 my-0 text-gray">Waktu</h6>
-                        <h5 class="mx-2 my-0">00:40:00</h5>
-                        <a href="#" class="mx-2 btn btn-gawedata font-lato font-weight-bold">
+                        <h5 class="mx-2 my-0 assessment-countdown">{{ $hour }}:{{ $minute }}:00</h5>
+                        <a onclick="startAssessment({{ $assessment['id'] }});"
+                            class="mx-2 btn btn-gawedata font-lato font-weight-bold">
                             <span class="fas fa-fw fa-play"></span>
                             Mulai Tes
                         </a>
                     </li>
-                @endif
-                {{-- ini kalau udah distart --}}
-                {{-- <li class="nav-item d-flex align-items-center mx-4">
+                    <li class="nav-item align-items-center mx-4 d-none" id="stop-button">
                         <h6 class="mx-2 my-0 text-gray">Waktu</h6>
-                        <h5 class="mx-2 my-0 text-gawedata">00:40:00</h5>
-                        <a href="#" class="mx-2 btn btn-gawedata-danger-2 font-lato font-weight-bold">
+                        <h5 class="mx-2 my-0 text-gawedata assessment-countdown">
+                            {{ $hour }}:{{ $minute }}:00</h5>
+                        <a onclick="stopAssessment({{ $assessment['id'] }});"
+                            class="mx-2 btn btn-gawedata-danger-2 font-lato font-weight-bold">
                             <span class="fas fa-fw fa-stop-circle"></span>
                             Stop Tes
                         </a>
-                    </li> --}}
+                    </li>
+                    <li class="nav-item align-items-center mx-4 d-none" id="done-button">
+                        <h6 class="mx-2 my-0 text-gray">Tes Selesai</h6>
+                        <h5 class="mx-2 my-0 text-gray">{{ $hour }}:{{ $minute }}:00</h5>
+                    </li>
+                @endif
+                @if ($assessment['status_id'] == 9)
+                    <li class="nav-item d-flex align-items-center mx-4" id="stop-button">
+                        <h6 class="mx-2 my-0 text-gray">Waktu</h6>
+                        <h5 class="mx-2 my-0 text-gawedata assessment-countdown">
+                            {{ $hour }}:{{ $minute }}:00</h5>
+                        <a onclick="stopAssessment({{ $assessment['id'] }});"
+                            class="mx-2 btn btn-gawedata-danger-2 font-lato font-weight-bold">
+                            <span class="fas fa-fw fa-stop-circle"></span>
+                            Stop Tes
+                        </a>
+                    </li>
+                    <li class="nav-item align-items-center mx-4 d-none" id="done-button">
+                        <h6 class="mx-2 my-0 text-gray">Tes Selesai</h6>
+                        <h5 class="mx-2 my-0 text-gray">{{ $hour }}:{{ $minute }}:00</h5>
+                    </li>
+                @endif
             @endif
         @endif
         <li class="nav-item mx-4 position-relative">

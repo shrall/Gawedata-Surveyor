@@ -25,7 +25,6 @@
             "Authorization":"Bearer {{ session('token') }}",
             },
             success: function(data) {
-            console.log(data)
             }
             });
         @endif

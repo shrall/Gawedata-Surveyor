@@ -70,4 +70,97 @@ $user = Http::withHeaders([
             clipboard.writeText($('#survey-link').val());
         }
     </script>
+    <script>
+        var start = new Date().getUTCDate();
+        var end = start + @json($assessment['duration'] * 60);
+        var distance = end - start;
+
+        function startAssessment(id) {
+            $.ajax({
+                    url: '{{ config('services.api.url') }}' + "/startStopAssessment/" + id + "?action=STARTED",
+                    type: 'PATCH',
+                    headers: {
+                        "Authorization": "Bearer {{ session('token') }}",
+                    },
+                    success: function(res) {
+                        console.log(res);
+                        $('#start-button').removeClass('d-flex').addClass('d-none');
+                        $('#stop-button').removeClass('d-none').addClass('d-flex');
+                        startCountdown(distance);
+                    }
+                })
+                .done(function(data) {
+                    console.log(data);
+                })
+                .fail(function(e) {
+                    console.log(e);
+                });
+        }
+
+        function stopAssessment(id) {
+            $.ajax({
+                    url: '{{ config('services.api.url') }}' + "/startStopAssessment/" + id + "?action=STOPPED",
+                    type: 'PATCH',
+                    headers: {
+                        "Authorization": "Bearer {{ session('token') }}",
+                    },
+                    success: function(res) {
+                        console.log(res);
+                        $('#stop-button').removeClass('d-flex').addClass('d-none');
+                        $('#done-button').removeClass('d-none').addClass('d-flex');
+                    }
+                })
+                .done(function(data) {
+                    console.log(data);
+                })
+                .fail(function(e) {
+                    console.log(e);
+                });
+        }
+    </script>
+    <script>
+        var negativeTrigger = false;
+
+        function startCountdown(intervals) {
+            var interval = intervals;
+            setInterval(function() {
+                if (interval < 0 || negativeTrigger) {
+                    negativeTrigger = true;
+                    interval = Math.abs(interval);
+                }
+                var hours = Math.floor((interval % (1000 * 60 * 60 * 24)) / 60 / 60);
+                var minutes = Math.floor((interval % (1000 * 60 * 60)) / 60);
+                var seconds = Math.floor((interval % (1000 * 60))) - (parseInt(minutes) * 60);
+                if (hours < 10 && hours > 0) {
+                    hours = "0" + hours
+                }
+                if (minutes < 10 && minutes > 0) {
+                    minutes = "0" + minutes
+                }
+                if (seconds < 10 && seconds > 0) {
+                    seconds = "0" + seconds
+                }
+                if (!negativeTrigger) {
+                    $('.assessment-countdown').html(hours + ":" + minutes + ":" + seconds);
+                    interval--;
+                }else{
+                    $('.assessment-countdown').html("-"+hours + ":" + minutes + ":" + seconds);
+                    interval++;
+                }
+            }, 1000);
+        }
+    </script>
+    @if ($assessment['status_id'] == 9)
+        <script>
+            var startnew = @json(strtotime(Carbon\Carbon::now()->tz('utc')));
+            var endnew = @json(strtotime($assessment['end_time']));
+            var distancenew = endnew - startnew;
+            console.log(startnew);
+            console.log(endnew);
+            console.log(distancenew);
+            $(window).on('load', function() {
+                startCountdown(distancenew);
+            });
+        </script>
+    @endif
 @endsection
