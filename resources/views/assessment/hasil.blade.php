@@ -136,7 +136,7 @@ $user = Http::withHeaders([
                         "Authorization": "Bearer {{ session('token') }}",
                     },
                     success: function(res) {
-                        console.log(res);
+                        $('#the-start-button').html('<span class="fa fa-fw fa-spin fa-circle-notch"></span>');
                         $('#start-button').removeClass('d-flex').addClass('d-none');
                         $('#stop-button').removeClass('d-none').addClass('d-flex');
                         startCountdown(distance);
@@ -158,7 +158,7 @@ $user = Http::withHeaders([
                         "Authorization": "Bearer {{ session('token') }}",
                     },
                     success: function(res) {
-                        console.log(res);
+                        $('#the-stop-button').html('<span class="fa fa-fw fa-spin fa-circle-notch"></span>');
                         $('#stop-button').removeClass('d-flex').addClass('d-none');
                         $('#done-button').removeClass('d-none').addClass('d-flex');
                     }
@@ -196,8 +196,8 @@ $user = Http::withHeaders([
                 if (!negativeTrigger) {
                     $('.assessment-countdown').html(hours + ":" + minutes + ":" + seconds);
                     interval--;
-                }else{
-                    $('.assessment-countdown').html("-"+hours + ":" + minutes + ":" + seconds);
+                } else {
+                    $('.assessment-countdown').html("-" + hours + ":" + minutes + ":" + seconds);
                     interval++;
                 }
             }, 1000);

@@ -24,28 +24,23 @@ $user = Http::withHeaders([
                     <div id="survey-view-list">
                         <table class="table table-borderless table-hover text-start">
                             <tbody class="text-gray" id="survey-view-list-box">
-                                <tr class="survey-row cursor-pointer">
-                                    <td class="py-4 text-dark align-middle" width="10px">1</td>
-                                    <th class="py-4 text-dark flex align-items-center justify-content-start" scope="row">
-                                        <img src="{{ asset('images/logo.png') }}" class="rounded-circle me-2" width="30px"
-                                            height="30px">
-                                        {{-- <img src="{{ config('services.api.url') .'/'. $respondent['profile_picture_path'] }}"
-                                                id="user-profile" class="rounded-circle" width="30px" height="30px"> --}}
-                                        Andi
-                                    </th>
-                                    <td class="py-4 text-dark text-end align-middle">Skor: 123</td>
-                                </tr>
-                                <tr class="survey-row cursor-pointer border-top">
-                                    <td class="py-4 text-dark align-middle" width="10px">2</td>
-                                    <th class="py-4 text-dark flex align-items-center justify-content-start" scope="row">
-                                        <img src="{{ asset('images/logo.png') }}" class="rounded-circle me-2" width="30px"
-                                            height="30px">
-                                        {{-- <img src="{{ config('services.api.url') .'/'. $respondent['profile_picture_path'] }}"
-                                                id="user-profile" class="rounded-circle" width="30px" height="30px"> --}}
-                                        Budi
-                                    </th>
-                                    <td class="py-4 text-dark text-end align-middle">Skor: 111</td>
-                                </tr>
+                                @foreach ($result['data'] as $respondent)
+                                    <tr class="survey-row cursor-pointer border-top">
+                                        <td class="py-4 text-dark align-middle" width="10px">2</td>
+                                        <th class="py-4 text-dark flex align-items-center justify-content-start"
+                                            scope="row">
+                                            @if ($respondent['profile_picture_path'])
+                                                <img src="{{ config('services.api.url') . '/' . $respondent['profile_picture_path'] }}"
+                                                    id="user-profile" class="rounded-circle" width="30px" height="30px">
+                                            @else
+                                                <img src="{{ asset('images/logo.png') }}" class="rounded-circle me-2"
+                                                    width="30px" height="30px">
+                                            @endif
+                                            {{$respondent['fullname']}}
+                                        </th>
+                                        <td class="py-4 text-dark text-end align-middle">Skor: {{$respondent['score']}}</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -143,8 +138,8 @@ $user = Http::withHeaders([
                 if (!negativeTrigger) {
                     $('.assessment-countdown').html(hours + ":" + minutes + ":" + seconds);
                     interval--;
-                }else{
-                    $('.assessment-countdown').html("-"+hours + ":" + minutes + ":" + seconds);
+                } else {
+                    $('.assessment-countdown').html("-" + hours + ":" + minutes + ":" + seconds);
                     interval++;
                 }
             }, 1000);

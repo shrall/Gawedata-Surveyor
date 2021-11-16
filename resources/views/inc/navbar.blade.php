@@ -298,7 +298,7 @@
                     <li class="nav-item d-flex align-items-center mx-4" id="start-button">
                         <h6 class="mx-2 my-0 text-gray">Waktu</h6>
                         <h5 class="mx-2 my-0 assessment-countdown">{{ $hour }}:{{ $minute }}:00</h5>
-                        <a onclick="startAssessment({{ $assessment['id'] }});"
+                        <a onclick="startAssessment({{ $assessment['id'] }});" id="the-start-button"
                             class="mx-2 btn btn-gawedata font-lato font-weight-bold">
                             <span class="fas fa-fw fa-play"></span>
                             Mulai Tes
@@ -308,7 +308,7 @@
                         <h6 class="mx-2 my-0 text-gray">Waktu</h6>
                         <h5 class="mx-2 my-0 text-gawedata assessment-countdown">
                             {{ $hour }}:{{ $minute }}:00</h5>
-                        <a onclick="stopAssessment({{ $assessment['id'] }});"
+                        <a onclick="stopAssessment({{ $assessment['id'] }});" id="the-stop-button"
                             class="mx-2 btn btn-gawedata-danger-2 font-lato font-weight-bold">
                             <span class="fas fa-fw fa-stop-circle"></span>
                             Stop Tes
@@ -324,7 +324,7 @@
                         <h6 class="mx-2 my-0 text-gray">Waktu</h6>
                         <h5 class="mx-2 my-0 text-gawedata assessment-countdown">
                             {{ $hour }}:{{ $minute }}:00</h5>
-                        <a onclick="stopAssessment({{ $assessment['id'] }});"
+                        <a onclick="stopAssessment({{ $assessment['id'] }});" id="the-stop-button"
                             class="mx-2 btn btn-gawedata-danger-2 font-lato font-weight-bold">
                             <span class="fas fa-fw fa-stop-circle"></span>
                             Stop Tes

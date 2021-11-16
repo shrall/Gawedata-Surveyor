@@ -45,14 +45,14 @@ class AssessmentController extends Controller
             $method = 3;
             $test_date = $request->end_time;
         }
-        if(!$request->start_time_ns){
+        if (!$request->start_time_ns) {
             $start_time = $request->start_time;
-        }else{
+        } else {
             $start_time = $request->start_time_ns;
         }
-        if(!$request->end_time_ns){
+        if (!$request->end_time_ns) {
             $end_time = $request->end_time;
-        }else{
+        } else {
             $end_time = $request->end_time_ns;
         }
         if ($request->assessment_serentak == 'true') {
@@ -144,7 +144,7 @@ class AssessmentController extends Controller
                 $assessment['questions'][$i - 1]['answer_choices'][1]['text'] = "";
             }
         }
-        if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8) {
+        if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
             return redirect()->route('assessment.hasil', $id);
         } else if ($assessment['status_id'] == 5) {
             return redirect()->route('assessment.submitted', ['id' => $assessment['id'], 'i' => 1]);
@@ -246,7 +246,11 @@ class AssessmentController extends Controller
         ])
             ->get(config('services.api.url') . '/assessmentTestResult/' . $id)
             ->json()['data'];
-        return view('assessment.hasil', compact('assessment', 'result'));
+        if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
+            return view('assessment.hasil', compact('assessment', 'result'));
+        } else {
+            return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
+        }
     }
 
     public function analisa($id)
@@ -261,7 +265,11 @@ class AssessmentController extends Controller
         ])
             ->get(config('services.api.url') . '/assessmentRespondentAnalysis/' . $id)
             ->json()['data'];
-        return view('assessment.analisa', compact('assessment', 'result'));
+        if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
+            return view('assessment.analisa', compact('assessment', 'result'));
+        } else {
+            return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
+        }
     }
 
     public function pertanyaan($id)
@@ -271,7 +279,11 @@ class AssessmentController extends Controller
         ])
             ->get(config('services.api.url') . '/assessment/' . $id)
             ->json()['data'];
-        return view('assessment.pertanyaan', compact('assessment'));
+        if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
+            return view('assessment.pertanyaan', compact('assessment'));
+        } else {
+            return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
+        }
     }
 
     public function kategori($id)
@@ -281,7 +293,11 @@ class AssessmentController extends Controller
         ])
             ->get(config('services.api.url') . '/assessment/' . $id)
             ->json()['data'];
-        return view('assessment.kategori', compact('assessment'));
+        if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
+            return view('assessment.kategori', compact('assessment'));
+        } else {
+            return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
+        }
     }
 
     public function ranking($id)
@@ -296,7 +312,11 @@ class AssessmentController extends Controller
         ])
             ->get(config('services.api.url') . '/assessmentRespondentAnalysis/' . $id)
             ->json()['data'];
-        return view('assessment.ranking', compact('assessment', 'result'));
+        if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
+            return view('assessment.ranking', compact('assessment', 'result'));
+        } else {
+            return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
+        }
     }
 
     public function detail($id)
@@ -311,7 +331,11 @@ class AssessmentController extends Controller
         ])
             ->get(config('services.api.url') . '/assessmentTestResult/' . $id)
             ->json()['data'];
-        return view('assessment.detail', compact('assessment', 'result'));
+        if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
+            return view('assessment.detail', compact('assessment', 'result'));
+        } else {
+            return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
+        }
     }
 
     public function submitted($id, $i)
@@ -321,10 +345,14 @@ class AssessmentController extends Controller
         ])
             ->get(config('services.api.url') . '/assessment/' . $id)
             ->json()['data'];
-        if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8) {
+        if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
             return redirect()->route('assessment.hasil', $id);
         }
-        return view('assessment.submitted', compact('assessment', 'i'));
+        if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
+            return view('assessment.submitted', compact('assessment', 'i'));
+        } else {
+            return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
+        }
     }
     public function submitted_respondent($id, $i)
     {
@@ -333,7 +361,11 @@ class AssessmentController extends Controller
         ])
             ->get(config('services.api.url') . '/assessment/' . $id)
             ->json()['data'];
-        return view('assessment.submitted_respondent', compact('assessment', 'i'));
+        if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
+            return view('assessment.submitted_respondent', compact('assessment', 'i'));
+        } else {
+            return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
+        }
     }
 
     public function refresh_irt_answer(Request $request)
