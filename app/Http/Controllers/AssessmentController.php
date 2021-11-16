@@ -248,6 +248,8 @@ class AssessmentController extends Controller
             ->json()['data'];
         if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
             return view('assessment.hasil', compact('assessment', 'result'));
+        } else if($assessment['status_id'] == 5) {
+            return redirect()->route('assessment.submit', ['id' => $id]);
         } else {
             return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
         }
@@ -267,6 +269,8 @@ class AssessmentController extends Controller
             ->json()['data'];
         if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
             return view('assessment.analisa', compact('assessment', 'result'));
+        } else if($assessment['status_id'] == 5) {
+            return redirect()->route('assessment.submit', ['id' => $id]);
         } else {
             return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
         }
@@ -281,6 +285,8 @@ class AssessmentController extends Controller
             ->json()['data'];
         if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
             return view('assessment.pertanyaan', compact('assessment'));
+        } else if($assessment['status_id'] == 5) {
+            return redirect()->route('assessment.submit', ['id' => $id]);
         } else {
             return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
         }
@@ -295,6 +301,8 @@ class AssessmentController extends Controller
             ->json()['data'];
         if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
             return view('assessment.kategori', compact('assessment'));
+        } else if($assessment['status_id'] == 5) {
+            return redirect()->route('assessment.submit', ['id' => $id]);
         } else {
             return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
         }
@@ -314,6 +322,8 @@ class AssessmentController extends Controller
             ->json()['data'];
         if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
             return view('assessment.ranking', compact('assessment', 'result'));
+        } else if($assessment['status_id'] == 5) {
+            return redirect()->route('assessment.submit', ['id' => $id]);
         } else {
             return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
         }
@@ -333,6 +343,8 @@ class AssessmentController extends Controller
             ->json()['data'];
         if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
             return view('assessment.detail', compact('assessment', 'result'));
+        } else if($assessment['status_id'] == 5) {
+            return redirect()->route('assessment.submit', ['id' => $id]);
         } else {
             return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
         }
@@ -349,6 +361,8 @@ class AssessmentController extends Controller
             return redirect()->route('assessment.hasil', $id);
         }
         if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
+            return view('assessment.hasil', compact('assessment', 'i'));
+        } else if($assessment['status_id'] == 5) {
             return view('assessment.submitted', compact('assessment', 'i'));
         } else {
             return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
