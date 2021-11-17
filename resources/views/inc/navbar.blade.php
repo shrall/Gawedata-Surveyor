@@ -10,7 +10,7 @@
                 @if (Route::current()->getName() == 'survey.hasil' || Route::current()->getName() == 'survey.analisa' || Route::current()->getName() == 'survey.detail' || Route::current()->getName() == 'survey.show' || Route::current()->getName() == 'survey.submitted')
                     <ul class="navbar-nav position-absolute top-50 start-50 translate-middle" style="z-index: 100;">
                         <h4 class="font-lato font-weight-bold mb-0">
-                            {{ strlen($assessment['title']) > 25 ? substr($assessment['title'], 0, 23) . '...' : $assessment['title'] }}
+                            {{ strlen($survey['title']) > 25 ? substr($survey['title'], 0, 23) . '...' : $survey['title'] }}
                             <img src="{{ asset('images/survey-menu-button.svg') }}" width="21px"
                                 class="far fa-fw fa-comment-dots text-gawedata cursor-pointer ms-2"
                                 id="survey-menu-button">
