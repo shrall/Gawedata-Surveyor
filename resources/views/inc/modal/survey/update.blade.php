@@ -144,7 +144,7 @@
                                             <div class="col-4 text-start">Jenis Kelamin</div>
                                             <div class="col-6 text-end">
                                                 <input type="checkbox" class="btn-check" id="check-pria"
-                                                    name="check-pria" @if ($survey['gender_criteria'][0]['gender_id'] == 1) checked @endif @if (count($survey['gender_criteria']) > 1)
+                                                    name="check-pria" @if (count($survey['gender_criteria']) > 0  && $survey['gender_criteria'][0]['gender_id'] == 1) checked @endif @if (count($survey['gender_criteria']) > 1)
                                                 @if ($survey['gender_criteria'][1]['gender_id'] == 1)
                                                     checked @endif @endif autocomplete="off">
                                                     <label class="btn btn-checkbox-gawedata px-4 me-2"
