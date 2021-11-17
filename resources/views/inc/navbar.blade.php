@@ -12,6 +12,8 @@
                         <h4 class="font-lato font-weight-bold mb-0">
                             @if(isset($assessment))
                                 {{ strlen($assessment['title']) > 25 ? substr($assessment['title'], 0, 23) . '...' : $assessment['title'] }}
+                            @elseif(isset($survey))
+
                             @endif
                             <img src="{{ asset('images/survey-menu-button.svg') }}" width="21px"
                                 class="far fa-fw fa-comment-dots text-gawedata cursor-pointer ms-2"
@@ -54,7 +56,7 @@
                                         <hr>
                                         <div class="my-3">
                                             <a href="#" class="text-dark text-decoration-none font-weight-bold"
-                                                data-bs-toggle="modal" @if ($assessment['daily_date'])
+                                                data-bs-toggle="modal" @if (isset($assessment) && $assessment['daily_date'])
                                                 data-bs-target="#update-survey-modal-daily"
                                             @else
                                                 data-bs-target="#update-survey-modal"
