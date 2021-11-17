@@ -211,7 +211,7 @@
                     Simpan (Draft)
                 </a>
             </li>
-            @if ($assessment['daily_date'])
+            @if (isset($assessment) && $assessment['daily_date'])
                 @include('inc.modal.survey.update_daily')
             @else
                 @include('inc.modal.survey.update')
