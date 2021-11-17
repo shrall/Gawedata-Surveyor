@@ -154,7 +154,7 @@
                                                     @if ($survey['gender_criteria'][1]['gender_id'] == 2)
                                                         checked @endif
                                                 @endif
-                                                @if ($survey['gender_criteria'][0]['gender_id'] == 2) checked
+                                                @if (count($survey['gender_criteria']) > 0  && $survey['gender_criteria'][0]['gender_id'] == 2) checked
                                                     @endif autocomplete="off">
                                                     <label class="btn btn-checkbox-gawedata px-4 ms-2"
                                                         for="check-wanita">Wanita</label>
