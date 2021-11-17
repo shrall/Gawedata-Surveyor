@@ -13,7 +13,7 @@
                             @if(isset($assessment))
                                 {{ strlen($assessment['title']) > 25 ? substr($assessment['title'], 0, 23) . '...' : $assessment['title'] }}
                             @elseif(isset($survey))
-
+                                {{ strlen($survey['title']) > 25 ? substr($survey['title'], 0, 23) . '...' : $survey['title'] }}
                             @endif
                             <img src="{{ asset('images/survey-menu-button.svg') }}" width="21px"
                                 class="far fa-fw fa-comment-dots text-gawedata cursor-pointer ms-2"
