@@ -49,7 +49,9 @@
                                         <div class="dropdown" id="select-survey-category">
                                             <span class="form-control input-text d-flex align-items-center"
                                                 type="button" data-bs-toggle="dropdown" id="selected-survey-category">
-                                                {{ $survey['category']['name'] }}
+                                                @if(isset($survey['category']))
+                                                    {{ $survey['category']['name'] }}
+                                                @endif
                                                 <span class="fa fa-fw fa-chevron-down ms-auto"></span>
                                             </span>
                                             <ul class="dropdown-menu w-100 px-2">
@@ -142,7 +144,7 @@
                                             <div class="col-4 text-start">Jenis Kelamin</div>
                                             <div class="col-6 text-end">
                                                 <input type="checkbox" class="btn-check" id="check-pria"
-                                                    name="check-pria" @if ($survey['gender_criteria'][0]['gender_id'] == 1) checked @endif @if (count($survey['gender_criteria']) > 1)
+                                                    name="check-pria" @if (count($survey['gender_criteria']) > 0  && $survey['gender_criteria'][0]['gender_id'] == 1) checked @endif @if (count($survey['gender_criteria']) > 1)
                                                 @if ($survey['gender_criteria'][1]['gender_id'] == 1)
                                                     checked @endif @endif autocomplete="off">
                                                     <label class="btn btn-checkbox-gawedata px-4 me-2"
@@ -152,7 +154,7 @@
                                                     @if ($survey['gender_criteria'][1]['gender_id'] == 2)
                                                         checked @endif
                                                 @endif
-                                                @if ($survey['gender_criteria'][0]['gender_id'] == 2) checked
+                                                @if (count($survey['gender_criteria']) > 0  && $survey['gender_criteria'][0]['gender_id'] == 2) checked
                                                     @endif autocomplete="off">
                                                     <label class="btn btn-checkbox-gawedata px-4 ms-2"
                                                         for="check-wanita">Wanita</label>
