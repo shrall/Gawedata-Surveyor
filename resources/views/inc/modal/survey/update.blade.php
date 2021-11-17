@@ -49,7 +49,9 @@
                                         <div class="dropdown" id="select-survey-category">
                                             <span class="form-control input-text d-flex align-items-center"
                                                 type="button" data-bs-toggle="dropdown" id="selected-survey-category">
-                                                {{ $survey['category']['name'] }}
+                                                @if(isseet($survey['category']['name']))
+                                                    {{ $survey['category']['name'] }}
+                                                @endif
                                                 <span class="fa fa-fw fa-chevron-down ms-auto"></span>
                                             </span>
                                             <ul class="dropdown-menu w-100 px-2">
