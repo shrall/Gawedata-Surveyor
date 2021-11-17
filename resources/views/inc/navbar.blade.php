@@ -71,12 +71,14 @@
                                     class="text-red text-decoration-none font-weight-bold" id="survey-delete-button">
                                     Hapus Survei
                                 </a>
-                                <form id="survey-delete-form"
-                                    action="{{ route('survey.destroy', $assessment['id']) }}" method="POST"
-                                    style="display: none;">
-                                    @csrf
-                                    <input name="_method" type="hidden" value="DELETE">
-                                </form>
+                                @if(isset($assessment))
+                                    <form id="survey-delete-form"
+                                        action="{{ route('survey.destroy', $assessment['id']) }}" method="POST"
+                                        style="display: none;">
+                                        @csrf
+                                        <input name="_method" type="hidden" value="DELETE">
+                                    </form>
+                                @endif
                             </div>
             </div>
         @endif
