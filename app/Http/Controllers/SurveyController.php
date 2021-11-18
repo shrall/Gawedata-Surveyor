@@ -41,11 +41,12 @@ class SurveyController extends Controller
             ])->post(config('services.api.url') . '/survey', [
                 'title' => $request->title,
                 'description' => $request->description,
+                'is_private' => false,
+                'survey_type' => 'Daily',
                 'daily_date' => $request->daily_date,
                 'start_time' => $request->start_time,
                 'end_time' => $request->end_time,
-                'description' => $request->description,
-                'is_private' => false,
+                'points' => $request->survey_points,
                 'estimate_time' => '-'
             ])->json();
             if ($response['success']) {

@@ -36,7 +36,7 @@
             <div class="tab-gawedata-active px-2 py-1" id="tab-general" onclick="changeType('General')">Survei Umum
             </div>
             @if ($user['is_admin'])
-                <div class="tab-gawedata px-2 py-1" id="tab-daily" onclick="changeType('Daily')">Daily Survei</div>
+                <div class="tab-gawedata px-2 py-1" id="tab-daily" onclick="changeType('Daily')">Survei Harian</div>
             @endif
             <div class="tab-gawedata px-2 py-1" id="tab-assessment" onclick="changeType('Assessment')">Assessment</div>
         </div>

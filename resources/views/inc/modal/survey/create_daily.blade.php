@@ -10,7 +10,7 @@
                         aria-label="Close"></span>
                 </div>
                 <div class="modal-header border-0 pt-0 justify-content-center">
-                    <h5>Daily Survei Baru</h5>
+                    <h5>Survei Harian Baru</h5>
                 </div>
                 <div class="modal-body text-left">
                     <div class="mb-3">
@@ -40,6 +40,9 @@
                                     class="fa fa-fw fa-clock position-absolute top-50 end-0 translate-middle-y pe-4 me-3 fs-6 text-gawedata"></span>
                             </div>
                         </div>
+                    </div>
+                    <div class="mb-3">
+                        <h5 class="text-center">Total Point Didapatkan</h5>
                     </div>
                     <div class="mb-3">
                         <div class="d-flex justify-content-between align-items-center position-relative">
