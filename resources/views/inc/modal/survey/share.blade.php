@@ -13,7 +13,7 @@
                     disabled>
                 @elseif ($survey['type']['id'] == 2)
                 <input type="text" name="link" id="survey-link" class="form-control input-text w-100"
-                    value="{{ 'https://gawedata.com/survey/' . str_replace("-", " ", strtolower($survey['category']['name'])) . '/' . $survey['slug'] }}"
+                    value="{{ 'https://gawedata.com/survey/' . str_replace(" ", "-", strtolower($survey['category']['name'])) . '/' . $survey['slug'] }}"
                     disabled>
                 @endif
             </div>
