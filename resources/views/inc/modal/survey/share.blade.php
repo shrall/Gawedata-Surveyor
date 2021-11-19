@@ -7,14 +7,10 @@
                 <span class="fas fa-fw fa-times text-gray" data-bs-dismiss="modal"></span>
             </div>
             <div class="modal-body py-0">
-                @if ($survey['type']['id'] == 1)
-                <input type="text" name="link" id="survey-link" class="form-control input-text w-100"
-                    value="{{ 'https://gawedata.com/survey/' . $survey['slug'] }}"
-                    disabled>
-                @elseif ($survey['type']['id'] == 2)
-                <input type="text" name="link" id="survey-link" class="form-control input-text w-100"
-                    value="{{ 'https://gawedata.com/survey/' . str_replace(" ", "-", strtolower($survey['category']['name'])) . '/' . $survey['slug'] }}"
-                    disabled>
+                @if ($survey['type']['id'] == 2)
+                    <input type="text" name="link" id="survey-link" class="form-control input-text w-100"
+                        value="{{ 'https://gawedata.com/survey/' . str_replace(' ', '-', strtolower($survey['category']['name'])) . '/' . $survey['slug'] }}"
+                        disabled>
                 @endif
             </div>
             <div class="modal-footer border-0">

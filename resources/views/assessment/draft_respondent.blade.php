@@ -11,7 +11,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                 @include('assessment.inc.sidebar.draft_respondent')
             </div>
             @if (count($assessment['respondent_types']) > 0 || $new == 'true')
-                <div class="col-7 text-center my-4">
+                <div class="col-7 my-4">
                     <h4 class="font-lato text-start ms-5">Buat Kategori</h4>
                     <div class="card card-survey-detail border-0 ms-4 p-4 font-lato">
                         @if ($assessment_type_id == 3)

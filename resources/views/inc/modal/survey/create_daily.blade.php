@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <h5 class="text-center">Total Point Didapatkan</h5>
+                        <p class="text-center">Total Point Didapatkan</p>
                     </div>
                     <div class="mb-3">
                         <div class="d-flex justify-content-between align-items-center position-relative">

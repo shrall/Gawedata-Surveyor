@@ -10,7 +10,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             <div class="col-4 text-start border-end" style="min-height: 90vh;">
                 @include('assessment.inc.sidebar.draft')
             </div>
-            <div class="col-7 text-center my-4">
+            <div class="col-7 my-4">
                 @if (count($assessment['questions']) > 0)
                     <h4 class="font-lato text-start ms-5">Buat Pertanyaan</h4>
                     <div class="card card-survey-detail border-0 ms-4 p-4 font-lato">
@@ -236,7 +236,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                                 <div class="col-12 position-relative">
                                     <textarea type="text" name="discussion" id="input-discussion"
                                         class="form-control input-text"
-                                        style="resize: none; height:8rem;">{{ $assessment['questions'][$i - 1]['discussion'] }}</textarea>
+                                        style="resize: none; height:8rem; text-align: left;">{{ $assessment['questions'][$i - 1]['discussion'] }}</textarea>
                                 </div>
                             </div>
                             <hr>

@@ -67,7 +67,7 @@
                                     class="text-red text-decoration-none font-weight-bold" id="survey-delete-button">
                                     Hapus Survei
                                 </a>
-                                @if(isset($assessment))
+                                @if (isset($assessment))
                                     <form id="survey-delete-form"
                                         action="{{ route('survey.destroy', $assessment['id']) }}" method="POST"
                                         style="display: none;">
@@ -238,13 +238,15 @@
         @elseif (Route::current()->getName() == 'survey.hasil' || Route::current()->getName() ==
             'survey.analisa' || Route::current()->getName() == 'survey.detail')
             @include('inc.modal.survey.share')
-            <li class="nav-item mx-4">
-                <a href="#" class="btn btn-gawedata-2 font-lato font-weight-bold" data-bs-toggle="modal"
-                    data-bs-target="#share-modal">
-                    <span class="far fa-fw fa-paper-plane"></span>
-                    Bagikan Survei
-                </a>
-            </li>
+            @if ($survey['type']['id'] == 2)
+                <li class="nav-item mx-4">
+                    <a href="#" class="btn btn-gawedata-2 font-lato font-weight-bold" data-bs-toggle="modal"
+                        data-bs-target="#share-modal">
+                        <span class="far fa-fw fa-paper-plane"></span>
+                        Bagikan Survei
+                    </a>
+                </li>
+            @endif
         @elseif (Route::current()->getName() == 'assessment.hasil' || Route::current()->getName() ==
             'assessment.analisa' || Route::current()->getName() == 'assessment.detail' || Route::current()->getName() ==
             'assessment.kategori' || Route::current()->getName() == 'assessment.pertanyaan' ||

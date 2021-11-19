@@ -49,6 +49,7 @@ class SurveyController extends Controller
                 'points' => $request->survey_points,
                 'estimate_time' => '-'
             ])->json();
+            dd($response);
             if ($response['success']) {
                 return redirect()->route('survey.show', ['id' => $response['data']['id'], 'i' => 1, 'new' => 'false']);
             } else {

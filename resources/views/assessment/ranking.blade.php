@@ -71,6 +71,7 @@ $user = Http::withHeaders([
         var distance = end - start;
 
         function startAssessment(id) {
+            $('#the-start-button').html('<span class="fa fa-fw fa-spin fa-circle-notch"></span>');
             $.ajax({
                     url: '{{ config('services.api.url') }}' + "/startStopAssessment/" + id + "?action=STARTED",
                     type: 'PATCH',
@@ -93,6 +94,7 @@ $user = Http::withHeaders([
         }
 
         function stopAssessment(id) {
+            $('#the-stop-button').html('<span class="fa fa-fw fa-spin fa-circle-notch"></span>');
             $.ajax({
                     url: '{{ config('services.api.url') }}' + "/startStopAssessment/" + id + "?action=STOPPED",
                     type: 'PATCH',
@@ -124,8 +126,9 @@ $user = Http::withHeaders([
                     interval = Math.abs(interval);
                 }
                 var hours = Math.floor((interval % (1000 * 60 * 60 * 24)) / 60 / 60);
-                var minutes = Math.floor((interval % (1000 * 60 * 60)) / 60);
-                var seconds = Math.floor((interval % (1000 * 60))) - (parseInt(minutes) * 60);
+                var minutes = Math.floor((interval % (1000 * 60 * 60)) / 60) - (parseInt(hours) * 60);
+                var seconds = Math.floor((interval % (1000 * 60))) - (Math.floor((interval % (1000 * 60 * 60)) /
+                    60) * 60);
                 if (hours < 10 && hours > 0) {
                     hours = "0" + hours
                 }
