@@ -14,7 +14,7 @@
                                 <div class="text-gawedata">
                                     <span class="fa fa-fw fa-circle text-gawedata me-2"></span>Submitted
                                 </div>
-                            @elseif ($assessment['status_id'] == 6)
+                            @elseif ($assessment['status_id'] == 6 || $assessment['status_id'] == 9)
                                 <div class="text-green">
                                     <span class="fa fa-fw fa-circle text-green me-2"></span>Published
                                 </div>
@@ -80,7 +80,7 @@
                                     <span class="fa fa-fw fa-circle text-gawedata me-2"></span>Submitted
                                 </div>
                             </td>
-                        @elseif ($assessment['status_id'] == 6)
+                        @elseif ($assessment['status_id'] == 6 || $assessment['status_id'] == 9)
                             <td class="py-4">
                                 <div class="text-green">
                                     <span class="fa fa-fw fa-circle text-green me-2"></span>Published
