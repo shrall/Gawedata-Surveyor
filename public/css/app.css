@@ -125,7 +125,7 @@ input[type='date']::-webkit-calendar-picker-indicator {
   border-radius: 12px;
 }
 .btn-gawedata-danger-2 {
-    color: #fff !important;
+  color: #fff !important;
   background: #ff525d;
   border-radius: 12px;
 }
@@ -418,12 +418,12 @@ ul.select2-results__options li:hover {
   border-radius: 14px;
 }
 .card-link-assessment {
-    color: #fff;
-    background: #5875F6;
-    border-radius: 14px;
+  color: #fff;
+  background: #5875f6;
+  border-radius: 14px;
 }
-.card-link-assessment .cursor-pointer:hover{
-    color: #eee;
+.card-link-assessment .cursor-pointer:hover {
+  color: #eee;
 }
 
 /* survey detail sidebar - published */
@@ -557,6 +557,19 @@ ul.select2-results__options li:hover {
 .survey-question-image-preview {
   border-radius: 12px;
 }
+.survey-question-image-delete {
+  position: absolute;
+  border-radius: 12px;
+  background-color: #fff;
+  opacity: 0.5;
+  bottom: 1rem;
+  right: 1rem;
+  cursor: pointer;
+}
+.survey-question-image-delete:hover {
+    opacity: 0.9;
+    color: #000;
+}
 
 /* switch lainnya */
 .form-switch .form-check-input {
@@ -617,14 +630,14 @@ ul.select2-results__options li:hover {
   background-color: #fff;
 }
 .form-check-assessment:checked {
-    background-color: #49D579 !important;
-    border-color: #49D579 !important;
+  background-color: #49d579 !important;
+  border-color: #49d579 !important;
 }
 /* irt rs fourth step  */
-.assessment-point-buttons{
-    background-color: #FBFBFB !important;
-    cursor: pointer;
+.assessment-point-buttons {
+  background-color: #fbfbfb !important;
+  cursor: pointer;
 }
-.assessment-point-buttons:hover{
-    background-color: #eee !important;
+.assessment-point-buttons:hover {
+  background-color: #eee !important;
 }

@@ -80,9 +80,19 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         </div>
                         <div id="grid-question" class="@if ($question_type_id == 4) d-block @else d-none @endif">
                             <div class="row">
-                                <div class="col-7">
+                                <div class="col-7 position-relative">
                                     <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
-                                        class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                                        class="survey-question-image-preview w-100 my-2">
+                                    @if ($survey['questions'][$i - 1]['image_path'])
+                                        <div class="survey-question-image-delete p-2" onclick="deleteQuestionImage();">
+                                            <span class="fa fa-fw fa-trash fs-4"></span>
+                                        </div>
+                                    @else
+                                        <div class="survey-question-image-delete p-2 d-none"
+                                            onclick="deleteQuestionImage();">
+                                            <span class="fa fa-fw fa-trash fs-4"></span>
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="col-5">
                                 </div>
@@ -993,12 +1003,21 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 success: function(data) {
                     $('.survey-question-image-preview').attr('src', URL.createObjectURL(event.target.files[
                         0]));
-                    questions[question_index]['image_path'] = @json(config('services.asset.url')) + '/' + JSON.parse(data)['data']['path']
+                    $('.survey-question-image-delete').removeClass('d-none').addClass('d-block');
+                    questions[question_index]['image_path'] = @json(config('services.asset.url')) + '/' + JSON.parse(
+                        data)['data']['path']
                 },
             }).fail(function(error) {
                 console.log(error);
             });
         };
+    </script>
+    <script>
+        function deleteQuestionImage() {
+            $('.survey-question-image-preview').attr('src', null);
+            $('.survey-question-image-delete').addClass('d-none').removeClass('d-block');
+            questions[question_index]['image_path'] = null
+        }
     </script>
     <script>
         var gridLoadFile = function(event) {
@@ -1015,7 +1034,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                     "Authorization": "Bearer {{ session('token') }}",
                 },
                 success: function(data) {
-                    questions[question_index]['sub_questions'][index - 1]['image_path'] = @json(config('services.asset.url')) + '/' + JSON.parse(data)['data']['path']
+                    questions[question_index]['sub_questions'][index - 1]['image_path'] =
+                        @json(config('services.asset.url')) + '/' + JSON.parse(data)['data']['path']
                 },
             }).fail(function(error) {
                 console.log(error);
