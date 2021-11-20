@@ -15,6 +15,13 @@ $user = Http::withHeaders([
             <div class="col-7 text-center my-4">
                 @if ($assessment['respondent_count'] != 0)
                     <div class="card card-survey-detail border-0 ms-4 p-4 font-lato">
+                        <div class="row justify-content-end">
+                            <a href="{{ config('services.api.url') . '/downloadAssessment/' . $assessment['id'] . '/' . $user['id'] }}"
+                                class="col-3 btn btn-gawedata-3 font-lato font-weight-bold">
+                                <span class="fa fa-fw fa-file-download"></span>
+                                Download Hasil (.csv)
+                            </a>
+                        </div>
                         @foreach ($result['questions'] as $question)
                             <div class="row">
                                 <div class="text-start">
