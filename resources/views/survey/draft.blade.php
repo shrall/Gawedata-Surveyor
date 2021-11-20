@@ -1498,9 +1498,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         format: 'YYYY-MM-DD',
                     },
                     singleDatePicker: true,
-                    startDate: {{ $survey['daily_date'] }},
+                    startDate: "{{ $survey['daily_date'] }}",
                 }, function(start, end, label) {
-                    console.log(start.format('YYYY-MM-DD'));
                     $('#input-daily-date').val(start.format('YYYY-MM-DD'));
                 });
                 $('input[name="daily_timepicker"]').daterangepicker({
@@ -1513,10 +1512,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                     startDate: "{{ $survey['start_time'] }}",
                     endDate: "{{ $survey['end_time'] }}",
                 }, function(start, end, label) {
-                    console.log(start.format('HH:mm'));
                     $('#input-daily-start').val(start.format('HH:mm'));
                     $('#input-daily-end').val(end.format('HH:mm'));
-                    console.log($('#input-daily-start').val());
                 }).on('show.daterangepicker', function(ev, picker) {
                     picker.container.find(".calendar-table").hide();
                 });
