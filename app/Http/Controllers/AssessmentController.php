@@ -248,7 +248,7 @@ class AssessmentController extends Controller
             ->json()['data'];
         if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
             return view('assessment.hasil', compact('assessment', 'result'));
-        } else if($assessment['status_id'] == 5) {
+        } else if ($assessment['status_id'] == 5) {
             return redirect()->route('assessment.submit', ['id' => $id]);
         } else {
             return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
@@ -269,7 +269,7 @@ class AssessmentController extends Controller
             ->json()['data'];
         if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
             return view('assessment.analisa', compact('assessment', 'result'));
-        } else if($assessment['status_id'] == 5) {
+        } else if ($assessment['status_id'] == 5) {
             return redirect()->route('assessment.submit', ['id' => $id]);
         } else {
             return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
@@ -285,7 +285,7 @@ class AssessmentController extends Controller
             ->json()['data'];
         if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
             return view('assessment.pertanyaan', compact('assessment'));
-        } else if($assessment['status_id'] == 5) {
+        } else if ($assessment['status_id'] == 5) {
             return redirect()->route('assessment.submit', ['id' => $id]);
         } else {
             return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
@@ -301,7 +301,7 @@ class AssessmentController extends Controller
             ->json()['data'];
         if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
             return view('assessment.kategori', compact('assessment'));
-        } else if($assessment['status_id'] == 5) {
+        } else if ($assessment['status_id'] == 5) {
             return redirect()->route('assessment.submit', ['id' => $id]);
         } else {
             return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
@@ -322,7 +322,7 @@ class AssessmentController extends Controller
             ->json()['data'];
         if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
             return view('assessment.ranking', compact('assessment', 'result'));
-        } else if($assessment['status_id'] == 5) {
+        } else if ($assessment['status_id'] == 5) {
             return redirect()->route('assessment.submit', ['id' => $id]);
         } else {
             return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
@@ -343,7 +343,7 @@ class AssessmentController extends Controller
             ->json()['data'];
         if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
             return view('assessment.detail', compact('assessment', 'result'));
-        } else if($assessment['status_id'] == 5) {
+        } else if ($assessment['status_id'] == 5) {
             return redirect()->route('assessment.submit', ['id' => $id]);
         } else {
             return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
@@ -362,7 +362,7 @@ class AssessmentController extends Controller
         }
         if ($assessment['status_id'] == 6 || $assessment['status_id'] == 7 || $assessment['status_id'] == 8 || $assessment['status_id'] == 9) {
             return view('assessment.hasil', compact('assessment', 'i'));
-        } else if($assessment['status_id'] == 5) {
+        } else if ($assessment['status_id'] == 5) {
             return view('assessment.submitted', compact('assessment', 'i'));
         } else {
             return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
@@ -549,5 +549,49 @@ class AssessmentController extends Controller
             'Authorization' => 'Bearer ' . session('token'),
         ])->patch(config('services.api.url') . '/submitAssessment/' . $id)->json();
         return redirect()->route('assessment.submitted', ['id' => $id, 'i' => 1]);
+    }
+    public function change_settings(Request $request, $id)
+    {
+        if ($request->assessment_method == 'irt') {
+            $method = 1;
+            $test_date = $request->start_time;
+        } else if ($request->assessment_method == 'rs') {
+            $method = 2;
+            $test_date = $request->start_time;
+        } else {
+            $method = 3;
+            $test_date = $request->end_time;
+        }
+        if (!$request->start_time_ns) {
+            $start_time = $request->start_time;
+        } else {
+            $start_time = $request->start_time_ns;
+        }
+        if (!$request->end_time_ns) {
+            $end_time = $request->end_time;
+        } else {
+            $end_time = $request->end_time_ns;
+        }
+        if ($request->assessment_serentak == 'true') {
+            $serentak = "true";
+        } else {
+            $serentak = "false";
+        }
+        if ($request->assessment_type == 'Public') {
+            $private = "false";
+        } else {
+            $private = "true";
+        }
+        if ($request->with_discussion) {
+            $discussion = "true";
+        } else {
+            $discussion = "false";
+        }
+        $path = $id . "?assessment_type_id=" . $method . "&is_private=" . $private . "&with_discussion=" . $discussion . "&title=" . $request->title . "&description=" . $request->description . "&test_date=" . $test_date . "&is_simultaneously=" . $serentak . "&duration=" . $request->duration . "&with_ranking=" . $serentak . "&hard_in_percent=" . $request->hard_in_percent . "&medium_in_percent=" . $request->medium_in_percent . "&easy_in_percent=" . $request->easy_in_percent . "&hard_in_points=" . $request->hard_in_points . "&medium_in_points=" . $request->medium_in_points . "&easy_in_points=" . $request->easy_in_points . "&start_time=" . $start_time . "&end_time=" . $end_time;
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->patch(config('services.api.url') . '/assessment/' . $path)->json();
+        return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
     }
 }

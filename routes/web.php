@@ -69,6 +69,7 @@ Route::group(['middleware' => ['surveyor']], function () {
     Route::post('assessment/refreshsaanswer', [AssessmentController::class, 'refresh_sa_answer'])->name('assessment.refreshsaanswer');
     Route::post('assessment/{id}/uploadphoto', [AssessmentController::class, 'upload_photo'])->name('assessment.uploadphoto');
     Route::post('assessment/uploadphotodiscussion', [AssessmentController::class, 'upload_photo_discussion'])->name('assessment.uploadphotodiscussion');
+    Route::put('assessment/{assessment}/changesettings', [AssessmentController::class, 'change_settings'])->name('assessment.changesettings');
     //assessment - responden type
     Route::get('assessmentrespondent/{id}/{i}/{new}', [AssessmentController::class, 'show_respondent'])->name('assessment.showrespondent');
     Route::post('assessment/createrespondenttype', [AssessmentController::class, 'store_respondent_type'])->name('assessment.createrespondenttype');

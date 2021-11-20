@@ -76,7 +76,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                             <div class="text-start me-auto">
                                 <button class="btn btn-gawedata-danger" @if ($new == 'true') disabled @endif
                                     onclick="event.preventDefault();
-                                                                            document.getElementById('delete-respondent-form').submit();">
+                                                                                document.getElementById('delete-respondent-form').submit();">
                                     <span class="fas fa-fw fa-trash-alt me-2"></span>Hapus
                                 </button>
                             </div>
@@ -181,7 +181,8 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                 success: function(data) {
                     $('.survey-question-image-preview').attr('src', URL.createObjectURL(event.target.files[
                         0]));
-                    questions[question_index]['image_path'] = @json(config('services.asset.url')) + '/' + JSON.parse(data)['data']['path']
+                    questions[question_index]['image_path'] = @json(config('services.asset.url')) + '/' + JSON.parse(
+                        data)['data']['path']
                 },
             }).fail(function(error) {
                 console.log(error);
@@ -334,6 +335,273 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
         function changeTab(type) {
             $('.respondent-type-change-tab-bool').val(1)
             saveDraft(1, false);
+        }
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    {{-- assessment --}}
+    <script>
+        var assessment_type = 'irt';
+        var serentak = false;
+
+        function changeAssessmentType(type) {
+            //remove serentak
+            if (type != 'rs') {
+                serentak = false;
+                $('#with_ranking_rs').prop('checked', false);
+                $('.serentak').removeClass('d-block').addClass('d-none');
+                $('.non-serentak').removeClass('d-none').addClass('d-block');
+            }
+            if (type != 'irt') {
+                serentak = false;
+                $('#with_ranking_irt').prop('checked', false);
+                $('.serentak').removeClass('d-block').addClass('d-none');
+                $('.non-serentak').removeClass('d-none').addClass('d-block');
+            }
+            assessment_type = type;
+            $('#radio-label-assessment-irt').removeClass('active');
+            $('#radio-label-assessment-rs').removeClass('active');
+            $('#radio-label-assessment-sa').removeClass('active');
+            $('#radio-label-assessment-' + type).addClass('active');
+            $('.assessment-irt').removeClass('d-block').addClass('d-none');
+            $('.assessment-rs').removeClass('d-block').addClass('d-none');
+            $('.assessment-sa').removeClass('d-block').addClass('d-none');
+            $('.assessment-' + type).removeClass('d-none').addClass('d-block');
+            if (type == 'irt' || type == 'rs') {
+                toggleSerentak();
+            }
+            $('#assessment-method').val(type);
+            if (serentak) {
+                $('#assessment-serentak').val('true');
+            } else {
+                $('#assessment-serentak').val('false');
+            }
+            enableSecondAssessmentButton();
+        }
+
+        function toggleSerentak() {
+            if ($('#with_ranking_irt').prop("checked") == true || $('#with_ranking_rs').prop("checked") == true) {
+                serentak = true;
+                $('.non-serentak').removeClass('d-block').addClass('d-none');
+                $('.serentak').removeClass('d-none').addClass('d-block');
+            } else {
+                serentak = false;
+                $('.serentak').removeClass('d-block').addClass('d-none');
+                $('.non-serentak').removeClass('d-none').addClass('d-block');
+            }
+        }
+        //change step
+        function changeAssessmentStep(beforeStep, afterStep, beforeSidebar, afterSidebar) {
+            $(beforeStep).addClass('d-none');
+            $(afterStep).removeClass('d-none');
+            $('.create-assessment-sidebar').find('li:nth-child(' + beforeSidebar + ')').removeClass('active');
+            $('.create-assessment-sidebar').find('li:nth-child(' + afterSidebar + ')').addClass('active');
+            $('.create-assessment-sidebar').find('li:nth-child(' + beforeSidebar + ')').find('div').removeClass('d-inline');
+            $('.create-assessment-sidebar').find('li:nth-child(' + beforeSidebar + ')').find('div').addClass('d-none');
+            $('.create-assessment-sidebar').find('li:nth-child(' + afterSidebar + ')').find('div').removeClass('d-none');
+            $('.create-assessment-sidebar').find('li:nth-child(' + afterSidebar + ')').find('div').addClass('d-inline');
+        }
+        $('#create-assessment-next-button-1').click(function() {
+            changeAssessmentStep('#assessment-first-step', '#assessment-second-step', 1, 2);
+        })
+        $('#create-assessment-next-button-2').click(function() {
+            if (assessment_type == 'irt') {
+                changeAssessmentStep('#assessment-second-step', '#assessment-third-step-irt', 2,
+                    3);
+            } else {
+                document.getElementById('create-assessment-form').submit();
+            }
+        })
+        $('#create-assessment-back-button-2').click(function() {
+            changeAssessmentStep('#assessment-second-step', '#assessment-first-step', 2, 1);
+        })
+        $('#create-assessment-next-button-3-irt').click(function() {
+            changeAssessmentStep('#assessment-third-step-irt',
+                '#assessment-fourth-step-irt', 3, 4);
+        })
+        $('#create-assessment-next-button-4-irt').click(function() {
+            document.getElementById('create-assessment-form').submit();
+        })
+        $('#create-assessment-back-button-3-irt').click(function() {
+            changeAssessmentStep('#assessment-third-step-irt', '#assessment-second-step', 3, 2);
+        })
+        $('#create-assessment-back-button-4-irt').click(function() {
+            changeAssessmentStep('#assessment-fourth-step-irt',
+                '#assessment-third-step-irt', 4, 3);
+        })
+    </script>
+    {{-- second step --}}
+    <script>
+        $(function() {
+            $("#assessment-date").datepicker();
+        });
+        $(function() {
+            $('#assessment-start-time-non-serentak').daterangepicker({
+                autoUpdateInput: false,
+                singleDatePicker: true,
+                startDate: "{{$assessment['start_time']}}",
+                timePicker: true,
+                timePicker24Hour: true,
+                timePickerSeconds: true,
+                timePickerIncrement: 1,
+                locale: {
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                }
+            }, function(start, end, label) {});
+            $('#assessment-start-time-non-serentak').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
+                $('input[name="start_time"]').val(picker.startDate.format('YYYY-MM-DD'));
+            });
+            $('#assessment-end-time-non-serentak').daterangepicker({
+                autoUpdateInput: false,
+                singleDatePicker: true,
+                startDate: "{{$assessment['end_time']}}",
+                timePicker: true,
+                timePicker24Hour: true,
+                timePickerSeconds: true,
+                timePickerIncrement: 1,
+                locale: {
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                }
+            }, function(start, end, label) {});
+            $('#assessment-end-time-non-serentak').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
+                $('input[name="end_time"]').val(picker.startDate.format('YYYY-MM-DD'));
+            });
+            $('#assessment-start-time').daterangepicker({
+                autoUpdateInput: false,
+                singleDatePicker: true,
+                startDate: "{{$assessment['start_time']}}",
+                timePicker: true,
+                timePicker24Hour: true,
+                timePickerSeconds: true,
+                timePickerIncrement: 1,
+                locale: {
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                }
+            }, function(start, end, label) {});
+            $('#assessment-start-time').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
+            });
+            $('#assessment-end-time').daterangepicker({
+                autoUpdateInput: false,
+                singleDatePicker: true,
+                startDate: "{{$assessment['end_time']}}",
+                timePicker: true,
+                timePicker24Hour: true,
+                timePickerSeconds: true,
+                timePickerIncrement: 1,
+                locale: {
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                }
+            }, function(start, end, label) {});
+            $('#assessment-end-time').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
+            });
+        });
+
+        function enableSecondAssessmentButton() {
+            if (serentak) {
+                if ($("#assessment-title").val() != "" &&
+                    $("#assessment-description").val() != "" &&
+                    $("#assessment-duration").val() != "" &&
+                    $("#assessment-start-time").val() != "" &&
+                    $("#assessment-type").val() != "") {
+                    $("#create-assessment-next-button-2").prop("disabled", false);
+                } else {
+                    $("#create-assessment-next-button-2").prop("disabled", true);
+                }
+            } else {
+                if (assessment_type != 'sa') {
+                    if ($("#assessment-title").val() != "" &&
+                        $("#assessment-description").val() != "" &&
+                        $("#assessment-duration").val() != "" &&
+                        $("#assessment-start-time-non-serentak").val() != "" &&
+                        $("#assessment-end-time-non-serentak").val() != "" &&
+                        $("#assessment-type").val() != "") {
+                        $("#create-assessment-next-button-2").prop("disabled", false);
+                    } else {
+                        $("#create-assessment-next-button-2").prop("disabled", true);
+                    }
+                } else {
+                    if ($("#assessment-title").val() != "" &&
+                        $("#assessment-description").val() != "" &&
+                        $("#assessment-end-time").val() != "" &&
+                        $("#assessment-type").val() != "") {
+                        $("#create-assessment-next-button-2").prop("disabled", false);
+                    } else {
+                        $("#create-assessment-next-button-2").prop("disabled", true);
+                    }
+                }
+            }
+        }
+        $(function() {
+            $('#select-assessment-type').find('li').click(function() {
+                $('#selected-assessment-type').html($(this).text() +
+                    '<span class="fa fa-fw fa-chevron-down ms-auto"></span>');
+                if ($(this).data("type") == 'public') {
+                    $('#assessment-type').val('Public');
+                } else {
+                    $('#assessment-type').val('Private');
+                }
+                enableSecondAssessmentButton();
+            });
+        });
+        $("#assessment-title").keyup(function() {
+            enableSecondAssessmentButton();
+        });
+        $("#assessment-description").keyup(function() {
+            enableSecondAssessmentButton();
+        });
+        $("#assessment-duration").keyup(function() {
+            enableSecondAssessmentButton();
+        });
+        $("#assessment-start-time-non-serentak").change(function() {
+            enableSecondAssessmentButton();
+        });
+        $("#assessment-end-time-non-serentak").change(function() {
+            enableSecondAssessmentButton();
+        });
+        $("#assessment-start-time").change(function() {
+            enableSecondAssessmentButton();
+        });
+        $("#assessment-end-time").change(function() {
+            enableSecondAssessmentButton();
+        });
+    </script>
+    {{-- third step irt rs --}}
+    <script>
+        function enableThirdAssessmentIRTButton() {
+            if ($("#assessment-easy-in-percent").val() != "" &&
+                $("#assessment-medium-in-percent").val() != "" &&
+                $("#assessment-hard-in-percent").val() != "") {
+                $("#create-assessment-next-button-3-irt").prop("disabled", false);
+            } else {
+                $("#create-assessment-next-button-3-irt").prop("disabled", true);
+            }
+        }
+
+        $("#assessment-easy-in-percent").keyup(function() {
+            enableThirdAssessmentIRTButton();
+        });
+        $("#assessment-medium-in-percent").keyup(function() {
+            enableThirdAssessmentIRTButton();
+        });
+        $("#assessment-hard-in-percent").keyup(function() {
+            enableThirdAssessmentIRTButton();
+        });
+    </script>
+    {{-- fourth step irt rs --}}
+    <script>
+        function addPoints(difficulty) {
+            $('#assessment-' + difficulty + '-in-points').val(parseInt($('#assessment-' + difficulty + '-in-points')
+                .val()) + 1);
+        }
+
+        function subtractPoints(difficulty) {
+            $('#assessment-' + difficulty + '-in-points').val(parseInt($('#assessment-' + difficulty + '-in-points')
+                .val()) - 1);
         }
     </script>
 @endsection
