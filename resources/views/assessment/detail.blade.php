@@ -1,13 +1,26 @@
 @extends('layouts.app')
-
+@php
+$user = Http::withHeaders([
+    'Authorization' => 'Bearer ' . session('token'),
+])
+    ->get(config('services.api.url') . '/details')
+    ->json()['data'];
+@endphp
 @section('content')
     <div class="container">
         <div class="row" style="height:90vh;">
             <div class="col-4 text-start border-end">
                 @include('assessment.inc.sidebar.published')
             </div>
-            <div class="col-8 text-center my-4">
+            <div class="col-7 text-center my-4">
                 <div class="card card-survey-detail border-0 p-4">
+                    <div class="row justify-content-end">
+                        <a href="{{ config('services.api.url') . '/downloadAssessment/' . $assessment['id'] . '/' . $user['id'] }}"
+                            class="col-3 btn btn-gawedata-3 font-lato font-weight-bold">
+                            <span class="fa fa-fw fa-file-download"></span>
+                            Download Hasil (.csv)
+                        </a>
+                    </div>
                     <table class="ms-4 px-4 py-2 font-lato">
                         <tr>
                             <td class="text-start text-gray" width="35%">ID Tes</td>

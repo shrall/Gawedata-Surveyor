@@ -57,7 +57,6 @@
                     <th class="font-weight-regular" scope="col">Status</th>
                     <th class="font-weight-regular" scope="col">Tipe Tes</th>
                     <th class="font-weight-regular" scope="col">Tanggal Publish</th>
-                    <th class="font-weight-regular" scope="col">Waktu Survei</th>
                     <th class="font-weight-regular" scope="col">Last Update</th>
                 </tr>
             </thead>
@@ -117,10 +116,6 @@
                         <td class="py-4">
                             <span class="fa fa-fw fa-calendar-day me-2"></span>
                             {{ date('d/m/y', strtotime($assessment['test_date'])) }}
-                        </td>
-                        <td class="py-4">
-                            <span class="fa fa-fw fa-clock me-2"></span>
-                            API Belum
                         </td>
                         <td class="py-4">{{ date('d-m-y, H:i', strtotime($assessment['updated_at'])) }} WIB
                         </td>

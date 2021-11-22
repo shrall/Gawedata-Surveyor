@@ -13,6 +13,13 @@ $user = Http::withHeaders([
                 @include('assessment.inc.sidebar.published')
             </div>
             <div class="col-7 text-center my-4">
+                <div class="row justify-content-end mb-2">
+                    <a href="{{ config('services.api.url') . '/downloadAssessment/' . $assessment['id'] . '/' . $user['id'] }}"
+                        class="col-3 btn btn-gawedata-3 font-lato font-weight-bold">
+                        <span class="fa fa-fw fa-file-download"></span>
+                        Download Hasil (.csv)
+                    </a>
+                </div>
                 <div class="row">
                     <div class="row">
                         <div class="col-12">

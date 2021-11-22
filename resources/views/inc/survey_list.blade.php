@@ -27,8 +27,16 @@
                                     <span class="fa fa-fw fa-circle text-red me-2"></span>Stopped
                                 </div>
                             @endif
-                            <div class="ms-auto">{{ date('d-m-y, H:i', strtotime($survey['created_at'])) }}
-                                WIB</div>
+                            @if ($survey['survey_type_id'] == 1)
+                                <div class="ms-auto flex align-items-center" style="font-size: 0.85em;">
+                                    {{ date('d-m-y', strtotime($survey['daily_date'])) }},
+                                    {{ date('H:i', strtotime($survey['start_time'])) }}
+                                    - {{ date('H:i', strtotime($survey['end_time'])) }}
+                                    WIB</div>
+                            @else
+                                <div class="ms-auto">{{ date('d-m-y, H:i', strtotime($survey['created_at'])) }}
+                                    WIB</div>
+                            @endif
                         </div>
                         <div class="card-body mt-4 pb-0">
                             <h5 class="font-weight-bold text-dark">
@@ -51,8 +59,11 @@
                     <th class="font-weight-regular" scope="col" width="45%">Nama Survei</th>
                     <th class="font-weight-regular" scope="col">Status</th>
                     <th class="font-weight-regular" scope="col">Jenis</th>
+                    @if ($survey['survey_type_id'] == 1)
+                        <th class="font-weight-regular" scope="col">Waktu Survei</th>
+                    @endif
                     <th class="font-weight-regular" scope="col">Jumlah Responden</th>
-                    <th class="font-weight-regular" scope="col">Tanggal Rilis</th>
+                    <th class="font-weight-regular" scope="col">Last Update</th>
                 </tr>
             </thead>
             <tbody class="text-gray" id="survey-view-list-box">
@@ -108,9 +119,18 @@
                                 </div>
                             </td>
                         @endif
+                        @if ($survey['survey_type_id'] == 1)
+                            <td class="py-4">
+                                <div class="text-gray">
+                                    <span
+                                        class="fa fa-fw fa-clock me-2"></span>{{ date('H:i', strtotime($survey['start_time'])) }}
+                                    - {{ date('H:i', strtotime($survey['end_time'])) }} WIB
+                                </div>
+                            </td>
+                        @endif
                         <td class="py-4"><span class="fa fa-fw fa-users me-2"></span>
                             0/{{ $survey['respondent_quota'] }} Responden</td>
-                        <td class="py-4">{{ date('d-m-y, H:i', strtotime($survey['created_at'])) }} WIB
+                        <td class="py-4">{{ date('d-m-y, H:i', strtotime($survey['updated_at'])) }} WIB
                         </td>
                     </tr>
                 @endforeach
