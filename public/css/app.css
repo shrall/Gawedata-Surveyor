@@ -568,6 +568,9 @@ ul.select2-results__options li:hover {
   border: 0;
   color: transparent;
 }
+.survey-question-image-delete:focus {
+  border: 0;
+}
 .survey-question-image-delete:hover + .survey-question-image-delete-icon {
   color: #ddd;
 }
