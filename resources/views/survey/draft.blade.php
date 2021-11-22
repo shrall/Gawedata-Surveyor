@@ -80,18 +80,25 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         </div>
                         <div id="grid-question" class="@if ($question_type_id == 4) d-block @else d-none @endif">
                             <div class="row">
-                                <div class="col-7 position-relative">
+                                <div class="col-7 position-relative mt-2" style="padding-right: 0;">
                                     <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
-                                        class="survey-question-image-preview w-100 my-2">
+                                        class="survey-question-image-preview w-100">
                                     @if ($survey['questions'][$i - 1]['image_path'])
-                                        <div class="survey-question-image-delete p-2" onclick="deleteQuestionImage();">
-                                            <span class="fa fa-fw fa-trash fs-4"></span>
-                                        </div>
-                                    @else
-                                        <div class="survey-question-image-delete p-2 d-none"
+                                        <div class="survey-question-image-delete p-2 position-absolute survey-question-image"
                                             onclick="deleteQuestionImage();">
                                             <span class="fa fa-fw fa-trash fs-4"></span>
                                         </div>
+                                        <span
+                                            class="fa fa-fw fa-trash fs-4 position-absolute survey-question-image-delete-icon survey-question-image"
+                                            onclick="deleteQuestionImage();"></span>
+                                    @else
+                                        <div class="survey-question-image-delete p-2 position-absolute survey-question-image d-none"
+                                            onclick="deleteQuestionImage();">
+                                            <span class="fa fa-fw fa-trash fs-4"></span>
+                                        </div>
+                                        <span
+                                            class="fa fa-fw fa-trash fs-4 position-absolute survey-question-image-delete-icon survey-question-image d-none"
+                                            onclick="deleteQuestionImage();"></span>
                                     @endif
                                 </div>
                                 <div class="col-5">
@@ -99,7 +106,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <h6 class="text-start">Grid Pertanyaan<span class="text-gray ms-2">(Baris)</span>
+                                    <h6 class="text-start mt-2">Grid Pertanyaan<span class="text-gray ms-2">(Baris)</span>
                                     </h6>
                                     <div class="grid-question-list">
                                         @foreach ($survey['questions'][$i - 1]['sub_questions'] as $question)
@@ -144,7 +151,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <h6 class="text-start">Jawaban<span class="text-gray ms-2">(Kolom)</span></h6>
+                                    <h6 class="text-start mt-2">Jawaban<span class="text-gray ms-2">(Kolom)</span></h6>
                                     <div class="grid-answer-list">
                                         @foreach ($survey['questions'][$i - 1]['sub_questions'] as $key => $question)
                                             @if ($key == 0)
@@ -218,14 +225,31 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         </div>
                         <div id="single-answer-question" class="@if ($question_type_id == 1 || $question_type_id == 2 || $question_type_id == 5) d-block @else d-none @endif">
                             <div class="row">
-                                <div class="col-7">
+                                <div class="col-7 position-relative mt-2" style="padding-right: 0;">
                                     <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
-                                        class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                                        class="survey-question-image-preview w-100">
+                                    @if ($survey['questions'][$i - 1]['image_path'])
+                                        <div class="survey-question-image-delete p-2 position-absolute survey-question-image"
+                                            onclick="deleteQuestionImage();">
+                                            <span class="fa fa-fw fa-trash fs-4"></span>
+                                        </div>
+                                        <span
+                                            class="fa fa-fw fa-trash fs-4 position-absolute survey-question-image-delete-icon survey-question-image"
+                                            onclick="deleteQuestionImage();"></span>
+                                    @else
+                                        <div class="survey-question-image-delete p-2 position-absolute survey-question-image d-none"
+                                            onclick="deleteQuestionImage();">
+                                            <span class="fa fa-fw fa-trash fs-4"></span>
+                                        </div>
+                                        <span
+                                            class="fa fa-fw fa-trash fs-4 position-absolute survey-question-image-delete-icon survey-question-image d-none"
+                                            onclick="deleteQuestionImage();"></span>
+                                    @endif
                                 </div>
                                 <div class="col-5">
                                 </div>
                             </div>
-                            <h6 class="text-start @if ($question_type_id == 1 || $question_type_id == 2) d-block @else d-none @endif" id="single-question-title">Jawaban</h6>
+                            <h6 class="text-start mt-2 @if ($question_type_id == 1 || $question_type_id == 2) d-block @else d-none @endif" id="single-question-title">Jawaban</h6>
                             <div class="row mb-2 @if ($question_type_id == 5) d-block @else d-none @endif" id="priority-question-title">
                                 <div class="col-8 row align-items-center pe-0">
                                     <h6 class="text-start col-3 mt-2">Jawaban</h6>
@@ -446,14 +470,31 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         </div>
         <div id="open-ended-question" class="@if ($question_type_id == 6) d-block @else d-none @endif">
             <div class="row">
-                <div class="col-7">
+                <div class="col-7 position-relative mt-2" style="padding-right: 0;">
                     <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
-                        class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                        class="survey-question-image-preview w-100">
+                    @if ($survey['questions'][$i - 1]['image_path'])
+                        <div class="survey-question-image-delete p-2 position-absolute survey-question-image"
+                            onclick="deleteQuestionImage();">
+                            <span class="fa fa-fw fa-trash fs-4"></span>
+                        </div>
+                        <span
+                            class="fa fa-fw fa-trash fs-4 position-absolute survey-question-image-delete-icon survey-question-image"
+                            onclick="deleteQuestionImage();"></span>
+                    @else
+                        <div class="survey-question-image-delete p-2 position-absolute survey-question-image d-none"
+                            onclick="deleteQuestionImage();">
+                            <span class="fa fa-fw fa-trash fs-4"></span>
+                        </div>
+                        <span
+                            class="fa fa-fw fa-trash fs-4 position-absolute survey-question-image-delete-icon survey-question-image d-none"
+                            onclick="deleteQuestionImage();"></span>
+                    @endif
                 </div>
                 <div class="col-5">
                 </div>
             </div>
-            <h6 class="text-start">Jawaban</h6>
+            <h6 class="text-start mt-2">Jawaban</h6>
             <div class="open-ended-answer">
                 <div class="row">
                     <div class="col-12">
@@ -478,14 +519,31 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         </div>
         <div id="action-question" class="@if ($question_type_id == 7 || $question_type_id == 8 || $question_type_id == 9 || $question_type_id == 10) d-block @else d-none @endif">
             <div class="row">
-                <div class="col-7">
+                <div class="col-7 position-relative mt-2" style="padding-right: 0;">
                     <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
-                        class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                        class="survey-question-image-preview w-100">
+                    @if ($survey['questions'][$i - 1]['image_path'])
+                        <div class="survey-question-image-delete p-2 position-absolute survey-question-image"
+                            onclick="deleteQuestionImage();">
+                            <span class="fa fa-fw fa-trash fs-4"></span>
+                        </div>
+                        <span
+                            class="fa fa-fw fa-trash fs-4 position-absolute survey-question-image-delete-icon survey-question-image"
+                            onclick="deleteQuestionImage();"></span>
+                    @else
+                        <div class="survey-question-image-delete p-2 position-absolute survey-question-image d-none"
+                            onclick="deleteQuestionImage();">
+                            <span class="fa fa-fw fa-trash fs-4"></span>
+                        </div>
+                        <span
+                            class="fa fa-fw fa-trash fs-4 position-absolute survey-question-image-delete-icon survey-question-image d-none"
+                            onclick="deleteQuestionImage();"></span>
+                    @endif
                 </div>
                 <div class="col-5">
                 </div>
             </div>
-            <h6 class="text-start">Jawaban</h6>
+            <h6 class="text-start mt-2">Jawaban</h6>
             <div class="open-ended-answer">
                 <div class="row">
                     <div class="col-5">
@@ -1003,7 +1061,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 success: function(data) {
                     $('.survey-question-image-preview').attr('src', URL.createObjectURL(event.target.files[
                         0]));
-                    $('.survey-question-image-delete').removeClass('d-none').addClass('d-block');
+                    $('.survey-question-image').removeClass('d-none').addClass('d-block');
                     questions[question_index]['image_path'] = @json(config('services.asset.url')) + '/' + JSON.parse(
                         data)['data']['path']
                 },
@@ -1015,7 +1073,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     <script>
         function deleteQuestionImage() {
             $('.survey-question-image-preview').attr('src', null);
-            $('.survey-question-image-delete').addClass('d-none').removeClass('d-block');
+            $('.survey-question-image').addClass('d-none').removeClass('d-block');
             questions[question_index]['image_path'] = null
         }
     </script>

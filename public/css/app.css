@@ -559,16 +559,26 @@ ul.select2-results__options li:hover {
 }
 .survey-question-image-delete {
   position: absolute;
-  border-radius: 12px;
-  background-color: #fff;
+  border-radius: 8px;
+  background-color: #ddd;
   opacity: 0.5;
-  bottom: 1rem;
-  right: 1rem;
+  bottom: 12px;
+  right: 12px;
+  cursor: pointer;
+  border: 0;
+  color: transparent;
+}
+.survey-question-image-delete:hover + .survey-question-image-delete-icon {
+  color: #ddd;
+}
+.survey-question-image-delete-icon {
+  color: white;
+  bottom: 1.4rem;
+  right: 1.4rem;
   cursor: pointer;
 }
-.survey-question-image-delete:hover {
-    opacity: 0.9;
-    color: #000;
+.survey-question-image-delete-icon:hover {
+  color: #ddd;
 }
 
 /* switch lainnya */
