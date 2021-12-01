@@ -224,6 +224,17 @@ class AssessmentController extends Controller
         //
     }
 
+    public function filter_sort(Request $request)
+    {
+        $assessments = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->get(config('services.api.url') . '/assessment?paginate=16&sort=' . $request->sort . '&page=' . $request->page . '&filter=' . $request->filter)
+            ->json()['data'];
+            $view = $request->view;
+        return view('inc.assessment_list', compact('assessments', 'view'));
+    }
+
     public function get_assessment(Request $request)
     {
         $assessments = Http::withHeaders([

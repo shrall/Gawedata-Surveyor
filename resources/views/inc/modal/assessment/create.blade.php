@@ -8,7 +8,7 @@
                     <input type="hidden" id="assessment-method" name="assessment_method" value="irt">
                     <input type="hidden" id="assessment-serentak" name="assessment_serentak" value="false">
                     <div class="row">
-                        <div class="col-5 text-start border-end pt-5 pe-0">
+                        <div class="col-4 text-start border-end pt-5 pe-0">
                             <ul
                                 class="list-unstyled font-weight-bold my-5 create-assessment-sidebar assessment-rs assessment-sa d-none">
                                 <li class="my-4 active position-relative">
@@ -40,7 +40,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-7 text-center my-4 d-inline" id="assessment-first-step">
+                        <div class="col-8 text-center my-4 d-inline" id="assessment-first-step">
                             <div class="d-flex">
                                 <span class="fa fa-fw fa-times-circle fs-5 text-gray cursor-pointer ms-auto"
                                     data-bs-dismiss="modal" aria-label="Close"></span>
@@ -66,7 +66,7 @@
                                                     <div class="card-body py-0">
                                                         <span class="font-weight-regular">
                                                             Mengutamakan karakteristik dari setiap soal.
-                                                            <a href="#">Baca selengkapnya</a>
+                                                            <a href="#" class="irt-info">Baca selengkapnya</a>
                                                         </span>
                                                     </div>
                                                     <div class="card-footer d-flex align-items-center assessment-irt">
@@ -173,7 +173,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-7 text-center my-4 d-none" id="assessment-second-step">
+                        <div class="col-8 text-center my-4 d-none" id="assessment-second-step">
                             <div class="d-flex">
                                 <span class="fa fa-fw fa-times-circle fs-5 text-gray cursor-pointer ms-auto"
                                     data-bs-dismiss="modal" aria-label="Close"></span>
@@ -283,7 +283,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-7 text-center my-4 d-none" id="assessment-third-step-irt">
+                        <div class="col-8 text-center my-4 d-none" id="assessment-third-step-irt">
                             <div class="d-flex">
                                 <span class="fa fa-fw fa-times-circle fs-5 text-gray cursor-pointer ms-auto"
                                     data-bs-dismiss="modal" aria-label="Close"></span>
@@ -354,7 +354,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-7 text-center my-4 d-none" id="assessment-fourth-step-irt">
+                        <div class="col-8 text-center my-4 d-none" id="assessment-fourth-step-irt">
                             <div class="d-flex">
                                 <span class="fa fa-fw fa-times-circle fs-5 text-gray cursor-pointer ms-auto"
                                     data-bs-dismiss="modal" aria-label="Close"></span>

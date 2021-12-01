@@ -8,8 +8,9 @@
         ->get(config('services.api.url') . '/details')
         ->json()['data'];
     @endphp
-    <div class="container">
-        <div class="d-flex align-items-center gx-3 mt-5 mb-3 font-lato">
+    <div class="container pt-5">
+        {{-- <div class="alert-danger-gawedata mb-3 px-3 py-4">Terdapat survei harian pada hari yang sama, silahkan hapus survei sebelumnya.</div> --}}
+        <div class="d-flex align-items-center gx-3 mb-3 font-lato">
             <div class="mx-2">
                 <h2>Daftar Survei</h2>
             </div>
@@ -220,11 +221,7 @@
 
         function changePage(page) {
             survey_page = page;
-            if (survey_type == 'Assessment') {
-                changeToAssessment(survey_sort, survey_page);
-            } else {
-                changeSortFilter(survey_filter, survey_sort, survey_page);
-            }
+            changeSortFilter(survey_filter, survey_sort, survey_page);
         };
 
         function changeFilter(filter) {
@@ -238,14 +235,16 @@
         }
 
         function changeSortFilter(filter, sort, page) {
-            $.post('{{ config('app.url') }}' + "/survey/filter_sort", {
+            $.post('{{ config('app.url') }}' + "/" + current_tab + "/filter_sort", {
                     _token: CSRF_TOKEN,
                     filter: filter,
                     sort: sort,
                     filter: survey_type,
-                    page: page
+                    page: page,
+                    view: survey_view
                 })
                 .done(function(data) {
+                    console.log(data);
                     $('#survey-container').html(data);
                 })
                 .fail(function(e) {
@@ -255,14 +254,18 @@
     </script>
     {{-- toggle view --}}
     <script>
+        var survey_view = 'card';
+
         function toggleSurveyViewList() {
             if ($("#survey-view-grid").hasClass('d-block')) {
+                survey_view = 'list';
                 toggleSurveyView('#survey-view-list', '#survey-button-list', '#survey-view-grid', '#survey-button-grid')
             }
         }
 
         function toggleSurveyViewGrid() {
             if ($("#survey-view-list").hasClass('d-block')) {
+                survey_view = 'card';
                 toggleSurveyView('#survey-view-grid', '#survey-button-grid', '#survey-view-list', '#survey-button-list')
             }
         }
@@ -633,10 +636,12 @@
     {{-- daily survey tabs --}}
     <script>
         var survey_type = 'General';
+        var current_tab = 'survey';
 
         function changeType(type) {
             survey_type = type;
             if (type != 'Assessment') {
+                current_tab = 'survey';
                 if (type == 'Daily') {
                     //ke daily
                     $('#tab-general').removeClass('tab-gawedata-active').addClass('tab-gawedata');
@@ -654,17 +659,17 @@
                     $('#create-survey-general').removeClass('d-none').addClass('d-block');
                     $('#create-assessment').removeClass('d-block').addClass('d-none');
                 }
-                changeSortFilter(survey_filter, survey_sort);
+                changeSortFilter(survey_filter, survey_sort, 1);
             } else {
+                current_tab = 'assessment';
                 $('#tab-assessment').removeClass('tab-gawedata').addClass('tab-gawedata-active');
                 $('#tab-general').removeClass('tab-gawedata-active').addClass('tab-gawedata');
                 $('#tab-daily').removeClass('tab-gawedata-active').addClass('tab-gawedata');
                 $('#create-assessment').removeClass('d-none').addClass('d-block');
                 $('#create-survey-general').removeClass('d-block').addClass('d-none');
                 $('#create-survey-daily').removeClass('d-block').addClass('d-none');
-                changeToAssessment(survey_sort, 1);
+                changeSortFilter(survey_filter, survey_sort, 1);
             }
-            toggleSurveyViewGrid();
         }
 
         function changeToAssessment(sort, page) {
@@ -787,6 +792,7 @@
                 timePicker24Hour: true,
                 timePickerSeconds: true,
                 timePickerIncrement: 1,
+                drops: "up",
                 locale: {
                     format: 'YYYY-MM-DD HH:mm:ss'
                 }
@@ -803,6 +809,7 @@
                 timePicker24Hour: true,
                 timePickerSeconds: true,
                 timePickerIncrement: 1,
+                drops: "up",
                 locale: {
                     format: 'YYYY-MM-DD HH:mm:ss'
                 }
@@ -819,6 +826,7 @@
                 timePicker24Hour: true,
                 timePickerSeconds: true,
                 timePickerIncrement: 1,
+                drops: "up",
                 locale: {
                     format: 'YYYY-MM-DD HH:mm:ss'
                 }
@@ -834,6 +842,7 @@
                 timePicker24Hour: true,
                 timePickerSeconds: true,
                 timePickerIncrement: 1,
+                drops: "up",
                 locale: {
                     format: 'YYYY-MM-DD HH:mm:ss'
                 }

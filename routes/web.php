@@ -53,6 +53,7 @@ Route::group(['middleware' => ['surveyor']], function () {
     Route::put('survey/{survey}/changesettings', [SurveyController::class, 'change_settings'])->name('survey.changesettings');
     //assessment
     Route::resource('assessment', AssessmentController::class);
+    Route::post('assessment/filter_sort', [AssessmentController::class, 'filter_sort'])->name('assessment.filtersort');
     Route::post('assessment/get_assessment', [AssessmentController::class, 'get_assessment'])->name('assessment.getassessment');
     Route::get('assessment/{id}/{i}/{new}', [AssessmentController::class, 'show'])->name('assessment.show');
     Route::get('assessment/{id}/hasil', [AssessmentController::class, 'hasil'])->name('assessment.hasil');

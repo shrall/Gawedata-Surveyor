@@ -406,7 +406,7 @@
                                             class="user-quota">150</span> kuota
                                         responden</p>
                                     <div class="my-3">
-                                        <a href="#" class="text-gawedata text-decoration-none font-weight-bold">
+                                        <a href="https://wa.me/62811366839" class="text-gawedata text-decoration-none font-weight-bold">
                                             <span class="fa fa-fw fa-phone-alt me-2"></span>Hubungi Admin Via Whatsapp
                                         </a>
                                     </div>

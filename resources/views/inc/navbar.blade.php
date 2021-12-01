@@ -22,12 +22,31 @@
                                             <span class="text-green">Published</span>
                                         </div>
                                         <hr>
-                                        <div class="mt-3">
-                                            <div class="text-red-disabled text-decoration-none font-weight-bold"
-                                                id="survey-delete-button">
-                                                Hapus Survei
+                                        @if (isset($survey) && $survey['daily_date'])
+                                            <div class="mt-3">
+                                                <a href="#" onclick="event.preventDefault();
+                                                    document.getElementById('survey-delete-form').submit();"
+                                                    class="text-red text-decoration-none font-weight-bold"
+                                                    id="survey-delete-button">
+                                                    Hapus Survei
+                                                </a>
+                                                @if (isset($survey))
+                                                    <form id="survey-delete-form"
+                                                        action="{{ route('survey.destroy', $survey['id']) }}"
+                                                        method="POST" style="display: none;">
+                                                        @csrf
+                                                        <input name="_method" type="hidden" value="DELETE">
+                                                    </form>
+                                                @endif
                                             </div>
-                                        </div>
+                                        @elseif (isset($survey))
+                                            <div class="mt-3">
+                                                <div class="text-red-disabled text-decoration-none font-weight-bold"
+                                                    id="survey-delete-button">
+                                                    Hapus Survei
+                                                </div>
+                                            </div>
+                                        @endif
                                     </div>
                                 @elseif (Route::current()->getName() == 'survey.submitted')
                                     <div id="survey-menu" class="p-4">
@@ -36,12 +55,31 @@
                                             <span class="text-gawedata">Submitted</span>
                                         </div>
                                         <hr>
-                                        <div class="mt-3">
-                                            <div class="text-red-disabled text-decoration-none font-weight-bold"
-                                                id="survey-delete-button">
-                                                Hapus Survei
+                                        @if (isset($survey) && $survey['daily_date'])
+                                            <div class="mt-3">
+                                                <a href="#" onclick="event.preventDefault();
+                                                    document.getElementById('survey-delete-form').submit();"
+                                                    class="text-red text-decoration-none font-weight-bold"
+                                                    id="survey-delete-button">
+                                                    Hapus Survei
+                                                </a>
+                                                @if (isset($survey))
+                                                    <form id="survey-delete-form"
+                                                        action="{{ route('survey.destroy', $survey['id']) }}"
+                                                        method="POST" style="display: none;">
+                                                        @csrf
+                                                        <input name="_method" type="hidden" value="DELETE">
+                                                    </form>
+                                                @endif
                                             </div>
-                                        </div>
+                                        @elseif (isset($survey))
+                                            <div class="mt-3">
+                                                <div class="text-red-disabled text-decoration-none font-weight-bold"
+                                                    id="survey-delete-button">
+                                                    Hapus Survei
+                                                </div>
+                                            </div>
+                                        @endif
                                     </div>
                                 @elseif (Route::current()->getName() == 'survey.show')
                                     <div id="survey-menu" class="p-4">
@@ -59,8 +97,8 @@
                                                 </a>
                                             @elseif (isset($survey))
                                                 <a href="#" class="text-dark text-decoration-none font-weight-bold"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#update-survey-modal" id="survey-setting-button">
+                                                    data-bs-toggle="modal" data-bs-target="#update-survey-modal"
+                                                    id="survey-setting-button">
                                                     Pengaturan Survei
                                                 </a>
                                             @endif
@@ -368,7 +406,7 @@
                                         class="user-quota">150</span> kuota
                                     responden</p>
                                 <div class="my-3">
-                                    <a href="#" class="text-gawedata text-decoration-none font-weight-bold">
+                                    <a href="https://wa.me/62811366839" class="text-gawedata text-decoration-none font-weight-bold">
                                         <span class="fa fa-fw fa-phone-alt me-2"></span>Hubungi Admin Via Whatsapp
                                     </a>
                                 </div>

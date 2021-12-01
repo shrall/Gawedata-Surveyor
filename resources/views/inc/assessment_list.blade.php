@@ -1,5 +1,5 @@
 @if (count($assessments['data']) > 0)
-    <div class="d-block" id="survey-view-grid">
+    <div class="@if (isset($view) && $view == 'card') d-block @elseif(isset($view) && $view == 'list') d-none @else d-block @endif" id="survey-view-grid">
         <div class="row gy-4 mb-4" id="survey-view-grid-box">
             @foreach ($assessments['data'] as $assessment)
                 <a href="{{ route('assessment.show', ['id' => $assessment['id'], 'i' => 1, 'new' => 'false']) }}"
@@ -49,7 +49,7 @@
             @endforeach
         </div>
     </div>
-    <div class="d-none" id="survey-view-list">
+    <div class="@if (isset($view) && $view == 'list') d-block @elseif(isset($view) && $view == 'card') d-none @else d-none @endif" id="survey-view-list">
         <table class="table table-borderless table-hover">
             <thead>
                 <tr class="text-gray">
@@ -155,3 +155,9 @@
         </ul>
     </nav>
 @endif
+
+<script>
+    $(".survey-row").click(function() {
+        window.location = $(this).data("href");
+    });
+</script>

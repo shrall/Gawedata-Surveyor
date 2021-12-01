@@ -163,6 +163,13 @@ input[type='date']::-webkit-calendar-picker-indicator {
   cursor: pointer;
 }
 
+/* alerts */
+.alert-danger-gawedata {
+  color: #fff;
+  background: #e33935;
+  border-radius: 10px;
+}
+
 /* assessment status */
 .assessment-status-irt {
   color: #ff52cf;
@@ -181,6 +188,10 @@ input[type='date']::-webkit-calendar-picker-indicator {
   background: #dbfff6;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.irt-info, .irt-info:hover, .irt-info:visited{
+    color: #fff!important;
 }
 
 /* error handling */

@@ -345,7 +345,8 @@ class SurveyController extends Controller
         ])
             ->get(config('services.api.url') . '/survey?paginate=16&sort=' . $request->sort . '&page=' . $request->page . '&filter=' . $request->filter)
             ->json()['data'];
-        return view('inc.survey_list', compact('surveys'));
+        $view = $request->view;
+        return view('inc.survey_list', compact('surveys', 'view'));
     }
 
     public function get_city(Request $request)

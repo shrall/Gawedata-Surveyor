@@ -95,7 +95,7 @@
                                                     <div class="card-body py-0">
                                                         <span class="font-weight-regular">
                                                             Mengutamakan karakteristik dari setiap soal.
-                                                            <a href="#">Baca selengkapnya</a>
+                                                            <a href="#" class="irt-info">Baca selengkapnya</a>
                                                         </span>
                                                     </div>
                                                     <div @if ($assessment['assessment_type_id'] == 1)

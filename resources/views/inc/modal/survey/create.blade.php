@@ -224,9 +224,9 @@
                                 <div class="col-10">
                                     <div class="row justify-content-between align-items-center mb-3">
                                         <div class="col-5 text-start">Estimasi Waktu Pengerjaan</div>
-                                        <div class="col-3 text-end">
+                                        <div class="col-4 text-end">
                                             <div class="input-group mb-3">
-                                              <input type="number" class="form-control input-text" name="estimate_time">
+                                              <input type="number" class="form-control input-text" name="estimate_time" style="width: 3rem;">
                                               <span class="input-group-text input-text text-gray" style="padding-left: 0.65rem !important; padding-right: 0.65rem !important;">Menit</span>
                                             </div>
                                         </div>
@@ -252,7 +252,7 @@
                                     <p class="my-0 text-secondary">Tersisa <span class="used-quota">0</span>/<span class="user-quota">150</span> kuota
                                         responden</p>
                                     <div class="my-3">
-                                        <a href="#" class="text-gawedata text-decoration-none font-weight-bold">
+                                        <a href="https://wa.me/62811366839" class="text-gawedata text-decoration-none font-weight-bold">
                                             <span class="fa fa-fw fa-phone-alt me-2"></span>Hubungi Admin Via Whatsapp
                                         </a>
                                     </div>

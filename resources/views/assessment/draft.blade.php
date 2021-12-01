@@ -281,7 +281,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                                 </div>
                             </div>
                         @endif
-                        @if ($assessment['with_discussion'])
+                        @if ($assessment['with_discussion'] && $assessment_type_id != 3)
                             <h6 class="text-start">Pembahasan</h6>
                             <div class="row">
                                 <div class="col-12 position-relative">
@@ -703,6 +703,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                 timePicker24Hour: true,
                 timePickerSeconds: true,
                 timePickerIncrement: 1,
+                drops: "up",
                 locale: {
                     format: 'YYYY-MM-DD HH:mm:ss'
                 }
@@ -719,6 +720,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                 timePicker24Hour: true,
                 timePickerSeconds: true,
                 timePickerIncrement: 1,
+                drops: "up",
                 locale: {
                     format: 'YYYY-MM-DD HH:mm:ss'
                 }
@@ -735,6 +737,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                 timePicker24Hour: true,
                 timePickerSeconds: true,
                 timePickerIncrement: 1,
+                drops: "up",
                 locale: {
                     format: 'YYYY-MM-DD HH:mm:ss'
                 }
@@ -750,6 +753,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                 timePicker24Hour: true,
                 timePickerSeconds: true,
                 timePickerIncrement: 1,
+                drops: "up",
                 locale: {
                     format: 'YYYY-MM-DD HH:mm:ss'
                 }

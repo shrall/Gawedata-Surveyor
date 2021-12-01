@@ -445,6 +445,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                 timePicker24Hour: true,
                 timePickerSeconds: true,
                 timePickerIncrement: 1,
+                drops: "up",
                 locale: {
                     format: 'YYYY-MM-DD HH:mm:ss'
                 }
@@ -461,6 +462,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                 timePicker24Hour: true,
                 timePickerSeconds: true,
                 timePickerIncrement: 1,
+                drops: "up",
                 locale: {
                     format: 'YYYY-MM-DD HH:mm:ss'
                 }
@@ -477,6 +479,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                 timePicker24Hour: true,
                 timePickerSeconds: true,
                 timePickerIncrement: 1,
+                drops: "up",
                 locale: {
                     format: 'YYYY-MM-DD HH:mm:ss'
                 }
@@ -492,6 +495,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                 timePicker24Hour: true,
                 timePickerSeconds: true,
                 timePickerIncrement: 1,
+                drops: "up",
                 locale: {
                     format: 'YYYY-MM-DD HH:mm:ss'
                 }

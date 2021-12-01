@@ -14,9 +14,9 @@ $user = Http::withHeaders([
             </div>
             <div class="col-7 text-center my-4">
                 <div class="card card-survey-detail border-0 p-4">
-                    <div class="row justify-content-end">
+                    <div class="d-flex ms-auto">
                         <a href="{{ config('services.api.url') . '/downloadAssessment/' . $assessment['id'] . '/' . $user['id'] }}"
-                            class="col-3 btn btn-gawedata-3 font-lato font-weight-bold">
+                            class="btn btn-gawedata-3 font-lato font-weight-bold w-100">
                             <span class="fa fa-fw fa-file-download"></span>
                             Download Hasil (.csv)
                         </a>

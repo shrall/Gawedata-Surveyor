@@ -14,18 +14,18 @@ $user = Http::withHeaders([
             </div>
             <div class="col-7 text-center my-4">
                 @if ($assessment['respondent_count'] != 0)
-                    <div class="row justify-content-end mb-2">
+                    <div class="d-flex mb-2">
                         <a href="{{ config('services.api.url') . '/downloadAssessment/' . $assessment['id'] . '/' . $user['id'] }}"
-                            class="col-3 btn btn-gawedata-3 font-lato font-weight-bold">
+                            class="btn btn-gawedata-3 font-lato font-weight-bold ms-auto">
                             <span class="fa fa-fw fa-file-download"></span>
                             Download Hasil (.csv)
                         </a>
                     </div>
                     <div id="survey-view-list">
-                        <table class="table table-borderless table-hover text-start">
+                        <table class="table table-borderless text-start">
                             <tbody class="text-gray" id="survey-view-list-box">
                                 @foreach ($result['data'] as $respondent)
-                                    <tr class="survey-row cursor-pointer @if ($loop->iteration != 1)border-top @endif">
+                                    <tr class="survey-row @if ($loop->iteration != 1)border-top @endif">
                                         <td class="py-4 text-dark align-middle" width="10px">{{ $loop->iteration }}</td>
                                         <th class="py-4 text-dark flex align-items-center justify-content-start"
                                             scope="row">

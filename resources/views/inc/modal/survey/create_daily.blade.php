@@ -27,13 +27,13 @@
                             <input type="hidden" name="daily_date" id="input-daily-date" value="{{date('Y-m-d')}}">
                             <input type="hidden" name="start_time" id="input-daily-start" value="00:00">
                             <input type="hidden" name="end_time" id="input-daily-end" value="23:59">
-                            <div class="col-8 d-flex justify-content-between align-items-center position-relative">
+                            <div class="col-7 d-flex justify-content-between align-items-center position-relative">
                                 <input type="text" name="daily_datepicker" id="survey-daily-date"
                                     class="form-control input-text" required>
                                 <span
                                     class="fa fa-fw fa-calendar-day position-absolute top-50 end-0 translate-middle-y pe-4 me-3 fs-6 text-gawedata"></span>
                             </div>
-                            <div class="col-4 d-flex justify-content-between align-items-center position-relative">
+                            <div class="col-5 d-flex justify-content-between align-items-center position-relative">
                                 <input type="text" name="daily_timepicker" id="survey-daily-time"
                                     class="form-control input-text" required>
                                 <span
