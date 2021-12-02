@@ -32,6 +32,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => ['surveyor']], function () {
     Route::get('edit-profile', [UserController::class, 'edit_profile'])->name('user.editprofile');
+    Route::post('edit-profile', [UserController::class, 'update_profile'])->name('user.updateprofile');
     Route::get('reset-password', [UserController::class, 'reset_password'])->name('user.resetpassword');
     Route::post('reset-password', [UserController::class, 'update_password'])->name('user.updatepassword');
     Route::resource('survey', SurveyController::class);

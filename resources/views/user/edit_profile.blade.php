@@ -16,20 +16,23 @@ $user = Http::withHeaders([
             </div>
             <div class="col-4">
                 <div class="container ms-5">
-                    <h2 class="my-5">Edit Profile</h2>
-                    <div class="mb-3">
-                        <input id="name" type="text" class="form-control input-text"
-                            name="name" required placeholder="Nama" value="{{$user['name']}}">
-                    </div>
-                    <div class="my-3">
-                        <input id="email" type="email" class="form-control input-text"
-                            name="email" required placeholder="E-Mail" value="{{$user['email']}}">
-                    </div>
-                    <div class="row justify-content-center px-2 mt-5 mb-2">
-                        <button type="submit" class="btn btn-gawedata col-12 py-2">
-                            {{ __('Simpan') }}
-                        </button>
-                    </div>
+                    <form action="{{ route('user.updateprofile') }}" method="post">
+                        @csrf
+                        <h2 class="my-5">Edit Profile</h2>
+                        <div class="mb-3">
+                            <input id="name" type="text" class="form-control input-text" name="name" required
+                                placeholder="Nama" value="{{ $user['name'] }}">
+                        </div>
+                        <div class="my-3">
+                            <input id="email" type="email" class="form-control input-text" name="email" required
+                                placeholder="E-Mail" value="{{ $user['email'] }}">
+                        </div>
+                        <div class="row justify-content-center px-2 mt-5 mb-2">
+                            <button type="submit" class="btn btn-gawedata col-12 py-2">
+                                {{ __('Simpan') }}
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
