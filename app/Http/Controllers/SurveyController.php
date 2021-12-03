@@ -52,7 +52,7 @@ class SurveyController extends Controller
             if ($response['success']) {
                 return redirect()->route('survey.show', ['id' => $response['data']['id'], 'i' => 1, 'new' => 'false']);
             } else {
-                return redirect()->route('home');
+                return redirect()->route('home')->with('Error', $response['message']);
             }
         } else {
             if ($request->cities[0] == null) {

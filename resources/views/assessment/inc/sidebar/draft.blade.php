@@ -17,7 +17,7 @@
     </div>
     <div id="survey-detail-sidebar" class="ms-4 me-3">
         @if (count($assessment['questions']) > 0)
-            <div id="simpleList" class="list-group position-relative pe-2" style="height: 80vh!important; overflow: scroll;">
+            <div id="simpleList" class="list-group position-relative pe-2" style="height: 80vh!important; overflow: auto;">
                 @foreach ($assessment['questions'] as $question)
                     <a href="#" class="text-decoration-none cursor-pointer survey-question-card"
                         onclick="saveDraft({{ $loop->iteration }}, false);">

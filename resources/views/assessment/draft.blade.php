@@ -307,8 +307,14 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                             </div>
                             <div class="text-end">
                                 <button class="btn btn-gawedata-3">
-                                    <label for="photo" class="font-lato cursor-pointer"><span
-                                            class="fas fa-fw fa-image me-2"></span>Gambar</label>
+                                    <label for="photo" class="font-lato cursor-pointer">
+                                        <span class="fas fa-fw fa-image me-2"></span>
+                                        @if ($assessment['questions'][$i - 1]['image_path'])
+                                            <span id="label-gambar">Ganti gambar</span>
+                                        @else
+                                            <span id="label-gambar">Gambar</span>
+                                        @endif
+                                    </label>
                                     <input type="file" name="photo" id="photo" class="d-none" accept="image/*"
                                         onchange="loadFile(event)">
                                 </button>
@@ -490,7 +496,8 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                         0]));
                     $('.survey-question-image').removeClass('d-none').addClass('d-block');
                     questions[question_index]['image_path'] = @json(config('services.asset.url')) + '/' + JSON.parse(
-                        data)['data']['path']
+                        data)['data']['path'];
+                    $('#label-gambar').html('Ganti gambar');
                 },
             }).fail(function(error) {
                 console.log(error);
@@ -502,6 +509,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             $('.survey-question-image-preview').attr('src', null);
             $('.survey-question-image').addClass('d-none').removeClass('d-block');
             questions[question_index]['image_path'] = null
+            $('#label-gambar').html('Gambar');
         }
     </script>
     <script>

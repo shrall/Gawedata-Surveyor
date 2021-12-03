@@ -44,7 +44,7 @@
                             </h5>
                         </div>
                         <div class="card-footer pt-0">
-                            <span class="fa fa-fw fa-users me-2"></span> 0/{{ $survey['respondent_quota'] }}
+                            <span class="fa fa-fw fa-users me-2"></span> {{ $survey['respondents_answered_question_count'] }}/{{ $survey['respondent_quota'] }}
                             Responden
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                             </td>
                         @endif
                         <td class="py-4"><span class="fa fa-fw fa-users me-2"></span>
-                            0/{{ $survey['respondent_quota'] }} Responden</td>
+                            {{ $survey['respondents_answered_question_count'] }}/{{ $survey['respondent_quota'] }} Responden</td>
                         <td class="py-4">{{ date('d-m-y, H:i', strtotime($survey['updated_at'])) }} WIB
                         </td>
                     </tr>

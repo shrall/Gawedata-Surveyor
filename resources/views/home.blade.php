@@ -9,7 +9,9 @@
         ->json()['data'];
     @endphp
     <div class="container pt-5">
-        {{-- <div class="alert-danger-gawedata mb-3 px-3 py-4">Terdapat survei harian pada hari yang sama, silahkan hapus survei sebelumnya.</div> --}}
+        @if (session('Error'))
+            <div class="alert-danger-gawedata mb-3 px-3 py-4">{{ session('Error') }}</div>
+        @endif
         <div class="d-flex align-items-center gx-3 mb-3 font-lato">
             <div class="mx-2">
                 <h2>Daftar Survei</h2>

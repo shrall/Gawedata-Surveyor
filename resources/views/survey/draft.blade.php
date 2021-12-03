@@ -635,8 +635,14 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             </div>
             <div class="text-end">
                 <button class="btn btn-gawedata-3">
-                    <label for="photo" class="font-lato cursor-pointer"><span
-                            class="fas fa-fw fa-image me-2"></span>Gambar</label>
+                    <label for="photo" class="font-lato cursor-pointer">
+                        <span class="fas fa-fw fa-image me-2"></span>
+                        @if ($survey['questions'][$i - 1]['image_path'])
+                            <span id="label-gambar">Ganti gambar</span>
+                        @else
+                            <span id="label-gambar">Gambar</span>
+                        @endif
+                    </label>
                     <input type="file" name="photo" id="photo" class="d-none" accept="image/*"
                         onchange="loadFile(event)">
                 </button>
@@ -1063,7 +1069,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         0]));
                     $('.survey-question-image').removeClass('d-none').addClass('d-block');
                     questions[question_index]['image_path'] = @json(config('services.asset.url')) + '/' + JSON.parse(
-                        data)['data']['path']
+                        data)['data']['path'];
+                    $('#label-gambar').html('Ganti gambar');
                 },
             }).fail(function(error) {
                 console.log(error);
@@ -1075,6 +1082,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             $('.survey-question-image-preview').attr('src', null);
             $('.survey-question-image').addClass('d-none').removeClass('d-block');
             questions[question_index]['image_path'] = null
+            $('#label-gambar').html('Gambar');
         }
     </script>
     <script>
