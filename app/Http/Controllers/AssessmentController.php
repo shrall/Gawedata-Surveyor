@@ -221,7 +221,10 @@ class AssessmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])->delete(config('services.api.url') . '/assessment/' . $id)->json();
+        return redirect()->route('home');
     }
 
     public function filter_sort(Request $request)
