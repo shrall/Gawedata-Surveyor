@@ -17,12 +17,12 @@
     </div>
     <div id="survey-detail-sidebar" class="ms-4 me-3">
         @if (count($assessment['questions']) > 0)
-            <div id="simpleList" class="list-group position-relative pe-2" style="height: 80vh!important; overflow: auto;">
+            <div id="simpleList" class="list-group position-relative pe-2" style="height: 80vh!important; overflow-y: auto:">
                 @foreach ($assessment['questions'] as $question)
                     <a href="#" class="text-decoration-none cursor-pointer survey-question-card"
                         onclick="saveDraft({{ $loop->iteration }}, false);">
                         <li class="font-lato my-4 pe-4 py-3 @if ($loop->iteration == $i) active @endif position-relative">
-                            <div class="active-border py-1 top-50 start-0 translate-middle-y d-inline position-absolute @if ($loop->iteration != $i) invisible @endif"> 
+                            <div class="active-border py-1 top-50 start-0 translate-middle-y d-inline position-absolute @if ($loop->iteration != $i) invisible @endif">
                             </div>
                             <div class="d-flex align-items-center justify-content-end ms-4">
                                 <div class="d-flex flex-column me-auto">

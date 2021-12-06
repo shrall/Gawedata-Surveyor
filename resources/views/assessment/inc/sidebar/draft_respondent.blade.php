@@ -23,13 +23,13 @@
             ></div>
     </div>
     <div id="survey-detail-sidebar" class="ms-4 me-3">
-        <div class="list-group" style="height: 80vh!important; overflow: auto;">
+        <div class="list-group" style="height: 80vh!important; overflow-y: auto:">
             @if (count($assessment['respondent_types']) > 0)
                 @foreach ($assessment['respondent_types'] as $respondent)
                     <a href="#" class="text-decoration-none cursor-pointer survey-question-card"
                         onclick="saveDraft({{ $loop->iteration }}, false);">
                         <li class="font-lato my-2 pe-4 py-3 @if ($loop->iteration == $i) active @endif position-relative">
-                            <div class="active-border py-1 top-50 start-0 translate-middle-y d-inline position-absolute @if ($loop->iteration != $i) invisible @endif"> 
+                            <div class="active-border py-1 top-50 start-0 translate-middle-y d-inline position-absolute @if ($loop->iteration != $i) invisible @endif">
                             </div>
                             <div class="d-flex align-items-center justify-content-between ms-4">
                                 <span class="sidebar-question text-gray text-decoration-none ms-1 fs-6"
@@ -51,7 +51,7 @@
             @if ($new == 'true')
                 <a href="#" class="text-decoration-none cursor-pointer survey-question-card">
                     <li class="font-lato my-2 pe-4 py-3 active position-relative">
-                        <div class="active-border py-1 top-50 start-0 translate-middle-y d-inline position-absolute"> 
+                        <div class="active-border py-1 top-50 start-0 translate-middle-y d-inline position-absolute">
                         </div>
                         <div class="d-flex align-items-center justify-content-between ms-4">
                             <span class="sidebar-question text-gray text-decoration-none ms-1 fs-6"

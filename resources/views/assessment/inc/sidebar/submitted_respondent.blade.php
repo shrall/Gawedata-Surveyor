@@ -20,13 +20,13 @@
     @endif
     <div id="survey-detail-sidebar" class="mx-3">
         <h4 class="font-lato ms-3">Pertanyaan</h4>
-        <div class="position-relative pe-2" style="height: 60vh!important; overflow: auto;">
+        <div class="position-relative pe-2" style="height: 60vh!important; overflow-y: auto:">
         @if (count($assessment['respondent_types']) > 0)
             @foreach ($assessment['respondent_types'] as $respondent)
                 <a href="{{route('assessment.submitted.respondent', ['id' => $assessment['id'], 'i' => $loop->iteration])}}"
                     class="text-decoration-none cursor-pointer survey-question-card">
                     <li class="font-lato my-2 pe-4 py-3 @if ($loop->iteration == $i) active @endif position-relative">
-                        <div class="active-border py-1 top-50 start-0 translate-middle-y d-inline position-absolute @if ($loop->iteration != $i) invisible @endif"> 
+                        <div class="active-border py-1 top-50 start-0 translate-middle-y d-inline position-absolute @if ($loop->iteration != $i) invisible @endif">
                         </div>
                         <div class="d-flex align-items-center justify-content-between ms-4">
                             <span class="sidebar-question text-gray text-decoration-none ms-1 fs-6"
