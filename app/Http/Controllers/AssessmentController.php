@@ -456,7 +456,7 @@ class AssessmentController extends Controller
         }
         return response()->json([
             "uploaded" => true,
-            'url' => $response,
+            'url' => config('services.asset.url')  . '/' .  $response['data']['path'],
         ]);
     }
 
