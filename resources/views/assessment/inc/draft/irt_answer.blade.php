@@ -27,12 +27,12 @@
             <div class="col-3">
                 <div class="input-group">
                     <span class="input-group-text assessment-point-buttons"
-                        onclick="subtractPoints({{ $loop->iteration }});">-</span>
+                        onclick="subtractAnswerPoints({{ $loop->iteration }});">-</span>
                     <input type="text" class="form-control input-text text-center" value={{ $answer['points'] }}
                         onkeyup="setAnswerPoints({{ $loop->iteration }});"
                         id="answer-points-{{ $loop->iteration }}">
                     <span class="input-group-text assessment-point-buttons"
-                        onclick="addPoints({{ $loop->iteration }});">+</span>
+                        onclick="addAnswerPoints({{ $loop->iteration }});">+</span>
                 </div>
             </div>
             <div class="col-1 text-start d-flex align-items-center">

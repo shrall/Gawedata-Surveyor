@@ -469,6 +469,7 @@ ul.select2-results__options li:hover {
 #survey-detail-sidebar li .active-border {
   border-left: 4px solid #3f60f5 !important;
   border-radius: 0 16px 16px 0;
+  height: 50%;
 }
 
 /* survey detail - detail survei */

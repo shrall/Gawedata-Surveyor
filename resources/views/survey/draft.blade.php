@@ -627,7 +627,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 </button>
             </div>
             <div class="text-end me-2">
-                <button class="btn btn-gawedata-3" onclick="copyQuestion({{ $i }});">
+                <button class="btn btn-gawedata-3" onclick="copyQuestion({{ $i }});" id="button-disabled">
                     <label class="font-lato cursor-pointer">
                         <span class="fas fa-fw fa-copy me-2"></span>Duplikat
                     </label>

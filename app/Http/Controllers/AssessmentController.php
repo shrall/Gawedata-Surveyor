@@ -38,13 +38,25 @@ class AssessmentController extends Controller
     {
         if ($request->assessment_method == 'irt') {
             $method = 1;
-            $test_date = $request->start_time;
+            if (!$request->start_time_ns) {
+                $test_date = $request->start_time;
+            } else {
+                $test_date = $request->start_time_ns;
+            }
         } else if ($request->assessment_method == 'rs') {
             $method = 2;
-            $test_date = $request->start_time;
+            if (!$request->start_time_ns) {
+                $test_date = $request->start_time;
+            } else {
+                $test_date = $request->start_time_ns;
+            }
         } else {
             $method = 3;
-            $test_date = $request->end_time;
+            if (!$request->end_time_ns) {
+                $test_date = $request->end_time;
+            } else {
+                $test_date = $request->end_time_ns;
+            }
         }
         if (!$request->start_time_ns) {
             $start_time = $request->start_time;
