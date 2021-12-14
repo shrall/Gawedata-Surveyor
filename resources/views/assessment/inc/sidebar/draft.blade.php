@@ -1,4 +1,4 @@
-<ul class="list-unstyled my-4">
+<ul class="list-unstyled my-4" style="max-height: 100vh; overflow-y: auto;">
     @if ($assessment['assessment_type_id'] == 3)
     <div class="d-flex align-items-center justify-content-center gx-3 mb-5 px-2 font-nexa">
         <a class="tab-gawedata-active tab-type text-decoration-none px-2 py-1 me-auto fs-5" id="tab-pertanyaan"
