@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 
 class AssessmentController extends Controller
@@ -37,13 +38,25 @@ class AssessmentController extends Controller
     {
         if ($request->assessment_method == 'irt') {
             $method = 1;
-            $test_date = $request->start_time;
+            if (!$request->start_time_ns) {
+                $test_date = $request->start_time;
+            } else {
+                $test_date = $request->start_time_ns;
+            }
         } else if ($request->assessment_method == 'rs') {
             $method = 2;
-            $test_date = $request->start_time;
+            if (!$request->start_time_ns) {
+                $test_date = $request->start_time;
+            } else {
+                $test_date = $request->start_time_ns;
+            }
         } else {
             $method = 3;
-            $test_date = $request->end_time;
+            if (!$request->end_time_ns) {
+                $test_date = $request->end_time;
+            } else {
+                $test_date = $request->end_time_ns;
+            }
         }
         if (!$request->start_time_ns) {
             $start_time = $request->start_time;
@@ -201,6 +214,7 @@ class AssessmentController extends Controller
             config('services.api.url') . '/assessmentQuestion/' . $id,
             $questions
         )->json();
+        // dd($response);
         if ($request->change_tab) {
             return redirect()->route('assessment.showrespondent', ['id' => $id, 'i' => 1, 'new' => 'false']);
         }
@@ -234,7 +248,7 @@ class AssessmentController extends Controller
         ])
             ->get(config('services.api.url') . '/assessment?paginate=16&sort=' . $request->sort . '&page=' . $request->page . '&filter=' . $request->filter)
             ->json()['data'];
-            $view = $request->view;
+        $view = $request->view;
         return view('inc.assessment_list', compact('assessments', 'view'));
     }
 
@@ -440,16 +454,24 @@ class AssessmentController extends Controller
     public function upload_photo_discussion(Request $request)
     {
         if ($request->has('upload')) {
-            $photo = 'assessment-discussion-' . time() . '-' . $request['upload']->getClientOriginalName();
-            $request->upload->move(public_path('uploads/images'), $photo);
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer ' . session('token'),
+            ])->attach(
+                'image',
+                fopen($request->upload, 'r')
+            )->post(
+                config('services.api.url') . '/image'
+            )->json();
         } else {
             $photo = null;
         }
         return response()->json([
             "uploaded" => true,
-            'url' => asset('/uploads/images') . '/' . $photo
+            'url' => config('services.asset.url')  . '/' .  $response['data']['path'],
         ]);
     }
+
     public function show_respondent($id, $i, $new)
     {
         $locations = Http::withHeaders([

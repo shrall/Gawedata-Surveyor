@@ -802,6 +802,7 @@
             $('#assessment-start-time-non-serentak').on('apply.daterangepicker', function(ev, picker) {
                 $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
                 $('input[name="start_time"]').val(picker.startDate.format('YYYY-MM-DD'));
+                setEndTimeNS(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
             });
             $('#assessment-end-time-non-serentak').daterangepicker({
                 autoUpdateInput: false,
@@ -819,7 +820,50 @@
             $('#assessment-end-time-non-serentak').on('apply.daterangepicker', function(ev, picker) {
                 $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
                 $('input[name="end_time"]').val(picker.startDate.format('YYYY-MM-DD'));
+                setStartTimeNS(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
             });
+
+            function setStartTimeNS(time) {
+                $('#assessment-start-time-non-serentak').daterangepicker({
+                    autoUpdateInput: false,
+                    singleDatePicker: true,
+                    maxDate: time,
+                    timePicker: true,
+                    timePicker24Hour: true,
+                    timePickerSeconds: true,
+                    timePickerIncrement: 1,
+                    drops: "up",
+                    locale: {
+                        format: 'YYYY-MM-DD HH:mm:ss'
+                    }
+                }, function(start, end, label) {});
+                $('#assessment-start-time-non-serentak').on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
+                    $('input[name="start_time"]').val(picker.startDate.format('YYYY-MM-DD'));
+                    setEndTimeNS(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
+                });
+            }
+
+            function setEndTimeNS(time) {
+                $('#assessment-end-time-non-serentak').daterangepicker({
+                    autoUpdateInput: false,
+                    singleDatePicker: true,
+                    minDate: time,
+                    timePicker: true,
+                    timePicker24Hour: true,
+                    timePickerSeconds: true,
+                    timePickerIncrement: 1,
+                    drops: "up",
+                    locale: {
+                        format: 'YYYY-MM-DD HH:mm:ss'
+                    }
+                }, function(start, end, label) {});
+                $('#assessment-end-time-non-serentak').on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
+                    $('input[name="end_time"]').val(picker.startDate.format('YYYY-MM-DD'));
+                    setStartTimeNS(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
+                });
+            }
             $('#assessment-start-time').daterangepicker({
                 autoUpdateInput: false,
                 singleDatePicker: true,

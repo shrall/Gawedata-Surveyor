@@ -86,13 +86,13 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                                             <div class="col-3">
                                                 <div class="input-group">
                                                     <span class="input-group-text assessment-point-buttons"
-                                                        onclick="subtractPoints({{ $loop->iteration }});">-</span>
+                                                        onclick="subtractAnswerPoints({{ $loop->iteration }});">-</span>
                                                     <input type="text" class="form-control input-text text-center"
                                                         value={{ $answer['points'] }}
                                                         onkeyup="setAnswerPoints({{ $loop->iteration }});"
                                                         id="answer-points-{{ $loop->iteration }}">
                                                     <span class="input-group-text assessment-point-buttons"
-                                                        onclick="addPoints({{ $loop->iteration }});">+</span>
+                                                        onclick="addAnswerPoints({{ $loop->iteration }});">+</span>
                                                 </div>
                                             </div>
                                             <div class="col-1 text-start d-flex align-items-center">
@@ -177,13 +177,13 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                                             <div class="col-3">
                                                 <div class="input-group">
                                                     <span class="input-group-text assessment-point-buttons"
-                                                        onclick="subtractPoints({{ $loop->iteration }});">-</span>
+                                                        onclick="subtractAnswerPoints({{ $loop->iteration }});">-</span>
                                                     <input type="text" class="form-control input-text text-center"
                                                         value={{ $answer['points'] }}
                                                         onkeyup="setAnswerPoints({{ $loop->iteration }});"
                                                         id="answer-points-{{ $loop->iteration }}">
                                                     <span class="input-group-text assessment-point-buttons"
-                                                        onclick="addPoints({{ $loop->iteration }});">+</span>
+                                                        onclick="addAnswerPoints({{ $loop->iteration }});">+</span>
                                                 </div>
                                             </div>
                                             <div class="col-1 text-start d-flex align-items-center">
@@ -255,13 +255,13 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                                             <div class="col-3">
                                                 <div class="input-group">
                                                     <span class="input-group-text assessment-point-buttons"
-                                                        onclick="subtractPoints({{ $loop->iteration }});">-</span>
+                                                        onclick="subtractAnswerPoints({{ $loop->iteration }});">-</span>
                                                     <input type="text" class="form-control input-text text-center"
                                                         value={{ $answer['points'] }}
                                                         onkeyup="setAnswerPoints({{ $loop->iteration }});"
                                                         id="answer-points-{{ $loop->iteration }}">
                                                     <span class="input-group-text assessment-point-buttons"
-                                                        onclick="addPoints({{ $loop->iteration }});">+</span>
+                                                        onclick="addAnswerPoints({{ $loop->iteration }});">+</span>
                                                 </div>
                                             </div>
                                             <div class="col-1 text-start d-flex align-items-center">
@@ -299,7 +299,8 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                                 </button>
                             </div>
                             <div class="text-end me-2">
-                                <button class="btn btn-gawedata-3" onclick="copyQuestion({{ $i }});">
+                                <button class="btn btn-gawedata-3" onclick="copyQuestion({{ $i }});" disabled
+                                    id="button-duplicate">
                                     <label class="font-lato cursor-pointer">
                                         <span class="fas fa-fw fa-copy me-2"></span>Duplikat
                                     </label>
@@ -363,6 +364,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
         // main question
         function setQuestion() {
             questions[question_index]['question'] = $('#input-question').val();
+            checkAllFields();
         }
     </script>
     <script>
@@ -382,6 +384,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             } else if ({{ $assessment_type_id }} == 3) {
                 refreshSAAnswer();
             }
+            checkAllFields();
         }
 
         function deleteAnswer(int) {
@@ -440,6 +443,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
 
         function setNewAnswer(index) {
             questions[question_index]['answer_choices'][index - 1]['text'] = $('#answer-' + index).val();
+            checkAllFields();
         }
     </script>
     <script>
@@ -464,6 +468,26 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
         }
     </script>
     <script>
+        checkAllFields();
+        var isNull = false;
+
+        function checkAllFields() {
+            if (questions[{{ $i - 1 }}].question == "") {
+                isNull = true;
+            }
+            questions[{{ $i - 1 }}].answer_choices.forEach(element => {
+                if (element.text == '') {
+                    isNull = true;
+                }
+            });
+            if (!isNull) {
+                $("#button-duplicate").prop("disabled", false);
+            } else {
+                $("#button-duplicate").prop("disabled", true);
+            }
+            isNull = 0;
+        }
+
         function copyQuestion(index) {
             var copied_question = questions[index - 1];
             questions.push(copied_question);
@@ -564,6 +588,9 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                         uploadUrl: {
                             url: "{{ route('assessment.uploadphotodiscussion') }}"
                         }
+                    },
+                    mediaEmbed: {
+                        previewsInData: true
                     }
                 }).then(editor => {
                     console.log(editor);
@@ -587,12 +614,12 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
         }
     </script>
     <script>
-        function addPoints(order) {
+        function addAnswerPoints(order) {
             $('#answer-points-' + order).val(parseInt($('#answer-points-' + order).val()) + 1);
             setAnswerPoints(order);
         }
 
-        function subtractPoints(order) {
+        function subtractAnswerPoints(order) {
             $('#answer-points-' + order).val(parseInt($('#answer-points-' + order).val()) - 1);
             setAnswerPoints(order);
         }
@@ -719,6 +746,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             $('#assessment-start-time-non-serentak').on('apply.daterangepicker', function(ev, picker) {
                 $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
                 $('input[name="start_time"]').val(picker.startDate.format('YYYY-MM-DD'));
+                setEndTimeNS(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
             });
             $('#assessment-end-time-non-serentak').daterangepicker({
                 autoUpdateInput: false,
@@ -736,7 +764,50 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             $('#assessment-end-time-non-serentak').on('apply.daterangepicker', function(ev, picker) {
                 $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
                 $('input[name="end_time"]').val(picker.startDate.format('YYYY-MM-DD'));
+                setStartTimeNS(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
             });
+
+            function setStartTimeNS(time) {
+                $('#assessment-start-time-non-serentak').daterangepicker({
+                    autoUpdateInput: false,
+                    singleDatePicker: true,
+                    maxDate: time,
+                    timePicker: true,
+                    timePicker24Hour: true,
+                    timePickerSeconds: true,
+                    timePickerIncrement: 1,
+                    drops: "up",
+                    locale: {
+                        format: 'YYYY-MM-DD HH:mm:ss'
+                    }
+                }, function(start, end, label) {});
+                $('#assessment-start-time-non-serentak').on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
+                    $('input[name="start_time"]').val(picker.startDate.format('YYYY-MM-DD'));
+                    setEndTimeNS(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
+                });
+            }
+
+            function setEndTimeNS(time) {
+                $('#assessment-end-time-non-serentak').daterangepicker({
+                    autoUpdateInput: false,
+                    singleDatePicker: true,
+                    minDate: time,
+                    timePicker: true,
+                    timePicker24Hour: true,
+                    timePickerSeconds: true,
+                    timePickerIncrement: 1,
+                    drops: "up",
+                    locale: {
+                        format: 'YYYY-MM-DD HH:mm:ss'
+                    }
+                }, function(start, end, label) {});
+                $('#assessment-end-time-non-serentak').on('apply.daterangepicker', function(ev, picker) {
+                    $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
+                    $('input[name="end_time"]').val(picker.startDate.format('YYYY-MM-DD'));
+                    setStartTimeNS(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
+                });
+            }
             $('#assessment-start-time').daterangepicker({
                 autoUpdateInput: false,
                 singleDatePicker: true,

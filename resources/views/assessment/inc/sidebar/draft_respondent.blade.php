@@ -10,8 +10,7 @@
     </div>
     <div class="d-flex align-items-center justify-content-between ms-3">
         <h4 class="font-lato ms-3">Tipe Responden</h4>
-        <div id="add-question-button" class="fas fa-plus-circle text-gawedata fs-2 me-3 cursor-pointer"
-        @if (count($assessment['respondent_types']) > 0 && $new == 'false')
+        <div id="add-question-button" class="fas fa-plus-circle text-gawedata fs-2 me-3 cursor-pointer" @if (count($assessment['respondent_types']) > 0 && $new == 'false')
             {{-- if udah ada pertanyaan, dia bikin new di index + 1 --}}
             onclick="saveDraft({{ count($assessment['respondent_types']) + 1 }}, true);"
         @elseif ($new == 'true')
@@ -23,27 +22,28 @@
             ></div>
     </div>
     <div id="survey-detail-sidebar" class="ms-4 me-3">
-        <div class="list-group" style="height: 80vh!important; overflow: auto;">
+        <div class="list-group" style="height: 80vh!important; overflow-y: auto:">
             @if (count($assessment['respondent_types']) > 0)
                 @foreach ($assessment['respondent_types'] as $respondent)
                     <a href="#" class="text-decoration-none cursor-pointer survey-question-card"
                         onclick="saveDraft({{ $loop->iteration }}, false);">
                         <li class="font-lato my-2 pe-4 py-3 @if ($loop->iteration == $i) active @endif position-relative">
-                            <div class="active-border py-1 top-50 start-0 translate-middle-y d-inline position-absolute @if ($loop->iteration != $i) invisible @endif"> 
-                            </div>
-                            <div class="d-flex align-items-center justify-content-between ms-4">
-                                <span class="sidebar-question text-gray text-decoration-none ms-1 fs-6"
-                                    style="color: #000 !important;">
-                                    @if ($respondent['name'] != '')
-                                        {{ strlen($respondent['name']) > 25 ? substr($respondent['name'], 0, 23) . '...' : $respondent['name'] }}
-                                    @else
-                                        Responden Baru
-                                    @endif
-                                </span>
-                                <span class="badge-pertanyaan-new font-weight-bold px-2 py-1" style="color: #3f60f5 !important;">
-                                    Skor : {{$respondent['min_points']}} - {{$respondent['max_points']}}
-                                </span>
-                            </div>
+                            <div
+                                class="active-border position-absolute py-1  top-50 start-0 translate-middle-y d-inline @if ($loop->iteration != $i) invisible @endif">
+                                <div class="d-flex align-items-center justify-content-between ms-4">
+                                    <span class="sidebar-question text-gray text-decoration-none ms-1 fs-6"
+                                        style="color: #000 !important;">
+                                        @if ($respondent['name'] != '')
+                                            {{ strlen($respondent['name']) > 25 ? substr($respondent['name'], 0, 23) . '...' : $respondent['name'] }}
+                                        @else
+                                            Responden Baru
+                                        @endif
+                                    </span>
+                                    <span class="badge-pertanyaan-new font-weight-bold px-2 py-1"
+                                        style="color: #3f60f5 !important;">
+                                        Skor : {{ $respondent['min_points'] }} - {{ $respondent['max_points'] }}
+                                    </span>
+                                </div>
                         </li>
                     </a>
                 @endforeach
@@ -51,14 +51,15 @@
             @if ($new == 'true')
                 <a href="#" class="text-decoration-none cursor-pointer survey-question-card">
                     <li class="font-lato my-2 pe-4 py-3 active position-relative">
-                        <div class="active-border py-1 top-50 start-0 translate-middle-y d-inline position-absolute"> 
+                        <div class="active-border py-1 top-50 start-0 translate-middle-y d-inline position-absolute">
                         </div>
                         <div class="d-flex align-items-center justify-content-between ms-4">
                             <span class="sidebar-question text-gray text-decoration-none ms-1 fs-6"
                                 style="color: #000 !important;">
                                 Responden Baru
                             </span>
-                            <span class="badge-pertanyaan-new font-weight-bold px-2 py-1" style="color: #3f60f5 !important;">
+                            <span class="badge-pertanyaan-new font-weight-bold px-2 py-1"
+                                style="color: #3f60f5 !important;">
                                 Skor : 0 - 100
                             </span>
                         </div>
