@@ -666,3 +666,11 @@ ul.select2-results__options li:hover {
 .assessment-point-buttons:hover {
   background-color: #eee !important;
 }
+
+/* discussion */
+#discussion .image img{
+    width: 100%;
+}
+#discussion .table table tbody, #discussion .table table thead, #discussion .table table tbody tr, #discussion .table table tbody tr td{
+    border-width: 1px;
+}
