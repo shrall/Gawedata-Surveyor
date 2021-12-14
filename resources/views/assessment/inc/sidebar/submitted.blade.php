@@ -20,6 +20,7 @@
     @endif
     <div id="survey-detail-sidebar" class="mx-3">
         <h4 class="font-lato ms-3">Pertanyaan</h4>
+        <div class="position-relative pe-2" style="height: 60vh!important; overflow: auto;">
         @foreach ($assessment['questions'] as $question)
             <a href="{{route('assessment.submitted', ['id' => $assessment['id'], 'i' => $loop->iteration])}}" class="text-decoration-none">
                 <li class="font-lato my-4 pe-4 py-3 @if ($loop->iteration == $i) active @endif position-relative" style="padding-left: 4rem !important;">
@@ -30,5 +31,6 @@
                 </li>
             </a>
         @endforeach
+        </div>
     </div>
 </ul>

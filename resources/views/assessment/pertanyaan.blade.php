@@ -14,6 +14,13 @@ $user = Http::withHeaders([
             </div>
             <div class="col-7 text-start my-4">
                 <div class="card card-survey-detail border-0 p-4 font-lato font-weight-bold">
+                    <div class="d-flex ms-auto">
+                        <a href="{{ config('services.api.url') . '/downloadAssessment/' . $assessment['id'] . '/' . $user['id'] }}"
+                            class="btn btn-gawedata-3 font-lato font-weight-bold w-100">
+                            <span class="fa fa-fw fa-file-download"></span>
+                            Download Hasil (.csv)
+                        </a>
+                    </div>
                     <div class="card-body">
                         @foreach ($assessment['questions'] as $question)
                             <div class="single-answer-question row">
@@ -72,6 +79,7 @@ $user = Http::withHeaders([
         var distance = end - start;
 
         function startAssessment(id) {
+            $('#the-start-button').html('<span class="fa fa-fw fa-spin fa-circle-notch"></span>');
             $.ajax({
                     url: '{{ config('services.api.url') }}' + "/startStopAssessment/" + id + "?action=STARTED",
                     type: 'PATCH',
@@ -94,6 +102,7 @@ $user = Http::withHeaders([
         }
 
         function stopAssessment(id) {
+            $('#the-stop-button').html('<span class="fa fa-fw fa-spin fa-circle-notch"></span>');
             $.ajax({
                     url: '{{ config('services.api.url') }}' + "/startStopAssessment/" + id + "?action=STOPPED",
                     type: 'PATCH',
@@ -125,8 +134,9 @@ $user = Http::withHeaders([
                     interval = Math.abs(interval);
                 }
                 var hours = Math.floor((interval % (1000 * 60 * 60 * 24)) / 60 / 60);
-                var minutes = Math.floor((interval % (1000 * 60 * 60)) / 60);
-                var seconds = Math.floor((interval % (1000 * 60))) - (parseInt(minutes) * 60);
+                var minutes = Math.floor((interval % (1000 * 60 * 60)) / 60) - (parseInt(hours) * 60);
+                var seconds = Math.floor((interval % (1000 * 60))) - (Math.floor((interval % (1000 * 60 * 60)) /
+                    60) * 60);
                 if (hours < 10 && hours > 0) {
                     hours = "0" + hours
                 }

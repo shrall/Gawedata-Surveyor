@@ -1,5 +1,5 @@
 @if (count($surveys['data']) > 0)
-    <div class="d-block" id="survey-view-grid">
+    <div class="@if (isset($view) && $view == 'card') d-block @elseif(isset($view) && $view == 'list') d-none @else d-block @endif" id="survey-view-grid">
         <div class="row gy-4 mb-4" id="survey-view-grid-box">
             @foreach ($surveys['data'] as $survey)
                 <a href="{{ route('survey.show', ['id' => $survey['id'], 'i' => 1, 'new' => 'false']) }}"
@@ -27,8 +27,16 @@
                                     <span class="fa fa-fw fa-circle text-red me-2"></span>Stopped
                                 </div>
                             @endif
-                            <div class="ms-auto">{{ date('d-m-y, H:i', strtotime($survey['created_at'])) }}
-                                WIB</div>
+                            @if ($survey['survey_type_id'] == 1)
+                                <div class="ms-auto flex align-items-center" style="font-size: 0.85em;">
+                                    {{ date('d-m-y', strtotime($survey['daily_date'])) }},
+                                    {{ date('H:i', strtotime($survey['start_time'])) }}
+                                    - {{ date('H:i', strtotime($survey['end_time'])) }}
+                                    WIB</div>
+                            @else
+                                <div class="ms-auto">{{ date('d-m-y, H:i', strtotime($survey['created_at'])) }}
+                                    WIB</div>
+                            @endif
                         </div>
                         <div class="card-body mt-4 pb-0">
                             <h5 class="font-weight-bold text-dark">
@@ -36,7 +44,7 @@
                             </h5>
                         </div>
                         <div class="card-footer pt-0">
-                            <span class="fa fa-fw fa-users me-2"></span> 0/{{ $survey['respondent_quota'] }}
+                            <span class="fa fa-fw fa-users me-2"></span> {{ $survey['respondents_answered_question_count'] }}/{{ $survey['respondent_quota'] }}
                             Responden
                         </div>
                     </div>
@@ -44,15 +52,18 @@
             @endforeach
         </div>
     </div>
-    <div class="d-none" id="survey-view-list">
+    <div class="@if (isset($view) && $view == 'list') d-block @elseif(isset($view) && $view == 'card') d-none @else d-none @endif" id="survey-view-list">
         <table class="table table-borderless table-hover">
             <thead>
                 <tr class="text-gray">
                     <th class="font-weight-regular" scope="col" width="45%">Nama Survei</th>
                     <th class="font-weight-regular" scope="col">Status</th>
                     <th class="font-weight-regular" scope="col">Jenis</th>
+                    @if ($survey['survey_type_id'] == 1)
+                        <th class="font-weight-regular" scope="col">Waktu Survei</th>
+                    @endif
                     <th class="font-weight-regular" scope="col">Jumlah Responden</th>
-                    <th class="font-weight-regular" scope="col">Tanggal Rilis</th>
+                    <th class="font-weight-regular" scope="col">Last Update</th>
                 </tr>
             </thead>
             <tbody class="text-gray" id="survey-view-list-box">
@@ -108,9 +119,18 @@
                                 </div>
                             </td>
                         @endif
+                        @if ($survey['survey_type_id'] == 1)
+                            <td class="py-4">
+                                <div class="text-gray">
+                                    <span
+                                        class="fa fa-fw fa-clock me-2"></span>{{ date('H:i', strtotime($survey['start_time'])) }}
+                                    - {{ date('H:i', strtotime($survey['end_time'])) }} WIB
+                                </div>
+                            </td>
+                        @endif
                         <td class="py-4"><span class="fa fa-fw fa-users me-2"></span>
-                            0/{{ $survey['respondent_quota'] }} Responden</td>
-                        <td class="py-4">{{ date('d-m-y, H:i', strtotime($survey['created_at'])) }} WIB
+                            {{ $survey['respondents_answered_question_count'] }}/{{ $survey['respondent_quota'] }} Responden</td>
+                        <td class="py-4">{{ date('d-m-y, H:i', strtotime($survey['updated_at'])) }} WIB
                         </td>
                     </tr>
                 @endforeach
@@ -148,3 +168,9 @@
         </ul>
     </nav>
 @endif
+
+<script>
+    $(".survey-row").click(function() {
+        window.location = $(this).data("href");
+    });
+</script>

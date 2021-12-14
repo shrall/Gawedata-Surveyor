@@ -1,13 +1,26 @@
 @extends('layouts.app')
-
+@php
+$user = Http::withHeaders([
+    'Authorization' => 'Bearer ' . session('token'),
+])
+    ->get(config('services.api.url') . '/details')
+    ->json()['data'];
+@endphp
 @section('content')
     <div class="container">
         <div class="row" style="height:90vh;">
             <div class="col-4 text-start border-end">
                 @include('assessment.inc.sidebar.published')
             </div>
-            <div class="col-8 text-center my-4">
+            <div class="col-7 text-center my-4">
                 <div class="card card-survey-detail border-0 p-4">
+                    <div class="d-flex ms-auto">
+                        <a href="{{ config('services.api.url') . '/downloadAssessment/' . $assessment['id'] . '/' . $user['id'] }}"
+                            class="btn btn-gawedata-3 font-lato font-weight-bold w-100">
+                            <span class="fa fa-fw fa-file-download"></span>
+                            Download Hasil (.csv)
+                        </a>
+                    </div>
                     <table class="ms-4 px-4 py-2 font-lato">
                         <tr>
                             <td class="text-start text-gray" width="35%">ID Tes</td>
@@ -66,6 +79,7 @@
         var distance = end - start;
 
         function startAssessment(id) {
+            $('#the-start-button').html('<span class="fa fa-fw fa-spin fa-circle-notch"></span>');
             $.ajax({
                     url: '{{ config('services.api.url') }}' + "/startStopAssessment/" + id + "?action=STARTED",
                     type: 'PATCH',
@@ -73,7 +87,6 @@
                         "Authorization": "Bearer {{ session('token') }}",
                     },
                     success: function(res) {
-                        console.log(res);
                         $('#start-button').removeClass('d-flex').addClass('d-none');
                         $('#stop-button').removeClass('d-none').addClass('d-flex');
                         startCountdown(distance);
@@ -88,6 +101,7 @@
         }
 
         function stopAssessment(id) {
+            $('#the-stop-button').html('<span class="fa fa-fw fa-spin fa-circle-notch"></span>');
             $.ajax({
                     url: '{{ config('services.api.url') }}' + "/startStopAssessment/" + id + "?action=STOPPED",
                     type: 'PATCH',
@@ -95,7 +109,6 @@
                         "Authorization": "Bearer {{ session('token') }}",
                     },
                     success: function(res) {
-                        console.log(res);
                         $('#stop-button').removeClass('d-flex').addClass('d-none');
                         $('#done-button').removeClass('d-none').addClass('d-flex');
                     }
@@ -119,8 +132,9 @@
                     interval = Math.abs(interval);
                 }
                 var hours = Math.floor((interval % (1000 * 60 * 60 * 24)) / 60 / 60);
-                var minutes = Math.floor((interval % (1000 * 60 * 60)) / 60);
-                var seconds = Math.floor((interval % (1000 * 60))) - (parseInt(minutes) * 60);
+                var minutes = Math.floor((interval % (1000 * 60 * 60)) / 60) - (parseInt(hours) * 60);
+                var seconds = Math.floor((interval % (1000 * 60))) - (Math.floor((interval % (1000 * 60 * 60)) /
+                    60) * 60);
                 if (hours < 10 && hours > 0) {
                     hours = "0" + hours
                 }

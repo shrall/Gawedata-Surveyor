@@ -32,6 +32,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => ['surveyor']], function () {
     Route::get('edit-profile', [UserController::class, 'edit_profile'])->name('user.editprofile');
+    Route::post('edit-profile', [UserController::class, 'update_profile'])->name('user.updateprofile');
     Route::get('reset-password', [UserController::class, 'reset_password'])->name('user.resetpassword');
     Route::post('reset-password', [UserController::class, 'update_password'])->name('user.updatepassword');
     Route::resource('survey', SurveyController::class);
@@ -53,6 +54,7 @@ Route::group(['middleware' => ['surveyor']], function () {
     Route::put('survey/{survey}/changesettings', [SurveyController::class, 'change_settings'])->name('survey.changesettings');
     //assessment
     Route::resource('assessment', AssessmentController::class);
+    Route::post('assessment/filter_sort', [AssessmentController::class, 'filter_sort'])->name('assessment.filtersort');
     Route::post('assessment/get_assessment', [AssessmentController::class, 'get_assessment'])->name('assessment.getassessment');
     Route::get('assessment/{id}/{i}/{new}', [AssessmentController::class, 'show'])->name('assessment.show');
     Route::get('assessment/{id}/hasil', [AssessmentController::class, 'hasil'])->name('assessment.hasil');
@@ -69,6 +71,7 @@ Route::group(['middleware' => ['surveyor']], function () {
     Route::post('assessment/refreshsaanswer', [AssessmentController::class, 'refresh_sa_answer'])->name('assessment.refreshsaanswer');
     Route::post('assessment/{id}/uploadphoto', [AssessmentController::class, 'upload_photo'])->name('assessment.uploadphoto');
     Route::post('assessment/uploadphotodiscussion', [AssessmentController::class, 'upload_photo_discussion'])->name('assessment.uploadphotodiscussion');
+    Route::put('assessment/{assessment}/changesettings', [AssessmentController::class, 'change_settings'])->name('assessment.changesettings');
     //assessment - responden type
     Route::get('assessmentrespondent/{id}/{i}/{new}', [AssessmentController::class, 'show_respondent'])->name('assessment.showrespondent');
     Route::post('assessment/createrespondenttype', [AssessmentController::class, 'store_respondent_type'])->name('assessment.createrespondenttype');

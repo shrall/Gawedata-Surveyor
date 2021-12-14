@@ -13,6 +13,13 @@ $user = Http::withHeaders([
                 @include('assessment.inc.sidebar.published')
             </div>
             <div class="col-7 text-center my-4">
+                <div class="d-flex mb-2">
+                    <a href="{{ config('services.api.url') . '/downloadAssessment/' . $assessment['id'] . '/' . $user['id'] }}"
+                        class="btn btn-gawedata-3 font-lato font-weight-bold ms-auto">
+                        <span class="fa fa-fw fa-file-download"></span>
+                        Download Hasil (.csv)
+                    </a>
+                </div>
                 <div class="row">
                     <div class="row">
                         <div class="col-12">
@@ -21,7 +28,7 @@ $user = Http::withHeaders([
                     </div>
                 </div>
                 <div id="survey-view-list">
-                    <table class="table table-borderless table-hover text-start">
+                    <table class="table table-borderless text-start">
                         <thead>
                             <tr class="text-gray">
                                 <th class="font-weight-regular" scope="col" width="45%">Nama Responden</th>
@@ -31,7 +38,7 @@ $user = Http::withHeaders([
                         </thead>
                         <tbody class="text-gray" id="survey-view-list-box">
                             @foreach ($result['data'] as $respondent)
-                                <tr class="survey-row cursor-pointer @if ($loop->iteration > 1) border-top @endif">
+                                <tr class="survey-row @if ($loop->iteration > 1) border-top @endif">
                                     <th class="py-4 text-dark flex align-items-center justify-content-start" scope="row">
                                         @if ($respondent['profile_picture_path'])
                                             <img src="{{ config('services.asset.url') . '/' . $respondent['profile_picture_path'] }}"

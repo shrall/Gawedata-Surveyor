@@ -80,16 +80,33 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         </div>
                         <div id="grid-question" class="@if ($question_type_id == 4) d-block @else d-none @endif">
                             <div class="row">
-                                <div class="col-7">
+                                <div class="col-7 position-relative mt-2" style="padding-right: 0;">
                                     <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
-                                        class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                                        class="survey-question-image-preview w-100">
+                                    @if ($survey['questions'][$i - 1]['image_path'])
+                                        <div class="survey-question-image-delete p-2 position-absolute survey-question-image"
+                                            onclick="deleteQuestionImage();">
+                                            <span class="fa fa-fw fa-trash fs-4"></span>
+                                        </div>
+                                        <span
+                                            class="fa fa-fw fa-trash fs-4 position-absolute survey-question-image-delete-icon survey-question-image"
+                                            onclick="deleteQuestionImage();"></span>
+                                    @else
+                                        <div class="survey-question-image-delete p-2 position-absolute survey-question-image d-none"
+                                            onclick="deleteQuestionImage();">
+                                            <span class="fa fa-fw fa-trash fs-4"></span>
+                                        </div>
+                                        <span
+                                            class="fa fa-fw fa-trash fs-4 position-absolute survey-question-image-delete-icon survey-question-image d-none"
+                                            onclick="deleteQuestionImage();"></span>
+                                    @endif
                                 </div>
                                 <div class="col-5">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <h6 class="text-start">Grid Pertanyaan<span class="text-gray ms-2">(Baris)</span>
+                                    <h6 class="text-start mt-2">Grid Pertanyaan<span class="text-gray ms-2">(Baris)</span>
                                     </h6>
                                     <div class="grid-question-list">
                                         @foreach ($survey['questions'][$i - 1]['sub_questions'] as $question)
@@ -134,7 +151,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <h6 class="text-start">Jawaban<span class="text-gray ms-2">(Kolom)</span></h6>
+                                    <h6 class="text-start mt-2">Jawaban<span class="text-gray ms-2">(Kolom)</span></h6>
                                     <div class="grid-answer-list">
                                         @foreach ($survey['questions'][$i - 1]['sub_questions'] as $key => $question)
                                             @if ($key == 0)
@@ -208,14 +225,31 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         </div>
                         <div id="single-answer-question" class="@if ($question_type_id == 1 || $question_type_id == 2 || $question_type_id == 5) d-block @else d-none @endif">
                             <div class="row">
-                                <div class="col-7">
+                                <div class="col-7 position-relative mt-2" style="padding-right: 0;">
                                     <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
-                                        class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                                        class="survey-question-image-preview w-100">
+                                    @if ($survey['questions'][$i - 1]['image_path'])
+                                        <div class="survey-question-image-delete p-2 position-absolute survey-question-image"
+                                            onclick="deleteQuestionImage();">
+                                            <span class="fa fa-fw fa-trash fs-4"></span>
+                                        </div>
+                                        <span
+                                            class="fa fa-fw fa-trash fs-4 position-absolute survey-question-image-delete-icon survey-question-image"
+                                            onclick="deleteQuestionImage();"></span>
+                                    @else
+                                        <div class="survey-question-image-delete p-2 position-absolute survey-question-image d-none"
+                                            onclick="deleteQuestionImage();">
+                                            <span class="fa fa-fw fa-trash fs-4"></span>
+                                        </div>
+                                        <span
+                                            class="fa fa-fw fa-trash fs-4 position-absolute survey-question-image-delete-icon survey-question-image d-none"
+                                            onclick="deleteQuestionImage();"></span>
+                                    @endif
                                 </div>
                                 <div class="col-5">
                                 </div>
                             </div>
-                            <h6 class="text-start @if ($question_type_id == 1 || $question_type_id == 2) d-block @else d-none @endif" id="single-question-title">Jawaban</h6>
+                            <h6 class="text-start mt-2 @if ($question_type_id == 1 || $question_type_id == 2) d-block @else d-none @endif" id="single-question-title">Jawaban</h6>
                             <div class="row mb-2 @if ($question_type_id == 5) d-block @else d-none @endif" id="priority-question-title">
                                 <div class="col-8 row align-items-center pe-0">
                                     <h6 class="text-start col-3 mt-2">Jawaban</h6>
@@ -436,14 +470,31 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         </div>
         <div id="open-ended-question" class="@if ($question_type_id == 6) d-block @else d-none @endif">
             <div class="row">
-                <div class="col-7">
+                <div class="col-7 position-relative mt-2" style="padding-right: 0;">
                     <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
-                        class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                        class="survey-question-image-preview w-100">
+                    @if ($survey['questions'][$i - 1]['image_path'])
+                        <div class="survey-question-image-delete p-2 position-absolute survey-question-image"
+                            onclick="deleteQuestionImage();">
+                            <span class="fa fa-fw fa-trash fs-4"></span>
+                        </div>
+                        <span
+                            class="fa fa-fw fa-trash fs-4 position-absolute survey-question-image-delete-icon survey-question-image"
+                            onclick="deleteQuestionImage();"></span>
+                    @else
+                        <div class="survey-question-image-delete p-2 position-absolute survey-question-image d-none"
+                            onclick="deleteQuestionImage();">
+                            <span class="fa fa-fw fa-trash fs-4"></span>
+                        </div>
+                        <span
+                            class="fa fa-fw fa-trash fs-4 position-absolute survey-question-image-delete-icon survey-question-image d-none"
+                            onclick="deleteQuestionImage();"></span>
+                    @endif
                 </div>
                 <div class="col-5">
                 </div>
             </div>
-            <h6 class="text-start">Jawaban</h6>
+            <h6 class="text-start mt-2">Jawaban</h6>
             <div class="open-ended-answer">
                 <div class="row">
                     <div class="col-12">
@@ -468,14 +519,31 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         </div>
         <div id="action-question" class="@if ($question_type_id == 7 || $question_type_id == 8 || $question_type_id == 9 || $question_type_id == 10) d-block @else d-none @endif">
             <div class="row">
-                <div class="col-7">
+                <div class="col-7 position-relative mt-2" style="padding-right: 0;">
                     <img src="{{ $survey['questions'][$i - 1]['image_path'] }}"
-                        class="survey-question-image-preview w-100 my-2" alt="" srcset="">
+                        class="survey-question-image-preview w-100">
+                    @if ($survey['questions'][$i - 1]['image_path'])
+                        <div class="survey-question-image-delete p-2 position-absolute survey-question-image"
+                            onclick="deleteQuestionImage();">
+                            <span class="fa fa-fw fa-trash fs-4"></span>
+                        </div>
+                        <span
+                            class="fa fa-fw fa-trash fs-4 position-absolute survey-question-image-delete-icon survey-question-image"
+                            onclick="deleteQuestionImage();"></span>
+                    @else
+                        <div class="survey-question-image-delete p-2 position-absolute survey-question-image d-none"
+                            onclick="deleteQuestionImage();">
+                            <span class="fa fa-fw fa-trash fs-4"></span>
+                        </div>
+                        <span
+                            class="fa fa-fw fa-trash fs-4 position-absolute survey-question-image-delete-icon survey-question-image d-none"
+                            onclick="deleteQuestionImage();"></span>
+                    @endif
                 </div>
                 <div class="col-5">
                 </div>
             </div>
-            <h6 class="text-start">Jawaban</h6>
+            <h6 class="text-start mt-2">Jawaban</h6>
             <div class="open-ended-answer">
                 <div class="row">
                     <div class="col-5">
@@ -567,8 +635,14 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             </div>
             <div class="text-end">
                 <button class="btn btn-gawedata-3">
-                    <label for="photo" class="font-lato cursor-pointer"><span
-                            class="fas fa-fw fa-image me-2"></span>Gambar</label>
+                    <label for="photo" class="font-lato cursor-pointer">
+                        <span class="fas fa-fw fa-image me-2"></span>
+                        @if ($survey['questions'][$i - 1]['image_path'])
+                            <span id="label-gambar">Ganti gambar</span>
+                        @else
+                            <span id="label-gambar">Gambar</span>
+                        @endif
+                    </label>
                     <input type="file" name="photo" id="photo" class="d-none" accept="image/*"
                         onchange="loadFile(event)">
                 </button>
@@ -993,12 +1067,23 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 success: function(data) {
                     $('.survey-question-image-preview').attr('src', URL.createObjectURL(event.target.files[
                         0]));
-                    questions[question_index]['image_path'] = @json(config('services.asset.url')) + '/' + JSON.parse(data)['data']['path']
+                    $('.survey-question-image').removeClass('d-none').addClass('d-block');
+                    questions[question_index]['image_path'] = @json(config('services.asset.url')) + '/' + JSON.parse(
+                        data)['data']['path'];
+                    $('#label-gambar').html('Ganti gambar');
                 },
             }).fail(function(error) {
                 console.log(error);
             });
         };
+    </script>
+    <script>
+        function deleteQuestionImage() {
+            $('.survey-question-image-preview').attr('src', null);
+            $('.survey-question-image').addClass('d-none').removeClass('d-block');
+            questions[question_index]['image_path'] = null
+            $('#label-gambar').html('Gambar');
+        }
     </script>
     <script>
         var gridLoadFile = function(event) {
@@ -1015,7 +1100,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                     "Authorization": "Bearer {{ session('token') }}",
                 },
                 success: function(data) {
-                    questions[question_index]['sub_questions'][index - 1]['image_path'] = @json(config('services.asset.url')) + '/' + JSON.parse(data)['data']['path']
+                    questions[question_index]['sub_questions'][index - 1]['image_path'] =
+                        @json(config('services.asset.url')) + '/' + JSON.parse(data)['data']['path']
                 },
             }).fail(function(error) {
                 console.log(error);
@@ -1498,9 +1584,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         format: 'YYYY-MM-DD',
                     },
                     singleDatePicker: true,
-                    startDate: {{ $survey['daily_date'] }},
+                    startDate: "{{ $survey['daily_date'] }}",
                 }, function(start, end, label) {
-                    console.log(start.format('YYYY-MM-DD'));
                     $('#input-daily-date').val(start.format('YYYY-MM-DD'));
                 });
                 $('input[name="daily_timepicker"]').daterangepicker({
@@ -1513,10 +1598,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                     startDate: "{{ $survey['start_time'] }}",
                     endDate: "{{ $survey['end_time'] }}",
                 }, function(start, end, label) {
-                    console.log(start.format('HH:mm'));
                     $('#input-daily-start').val(start.format('HH:mm'));
                     $('#input-daily-end').val(end.format('HH:mm'));
-                    console.log($('#input-daily-start').val());
                 }).on('show.daterangepicker', function(ev, picker) {
                     picker.container.find(".calendar-table").hide();
                 });

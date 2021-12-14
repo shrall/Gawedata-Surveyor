@@ -42,6 +42,9 @@
                         </div>
                     </div>
                     <div class="mb-3">
+                        <p class="text-center">Total Point Didapatkan</p>
+                    </div>
+                    <div class="mb-3">
                         <div class="d-flex justify-content-between align-items-center position-relative">
                             <span
                                 class="fa fa-fw fa-minus-square position-absolute top-50 start-0 translate-middle-y ps-2 ms-2 fs-5 text-gawedata cursor-pointer"

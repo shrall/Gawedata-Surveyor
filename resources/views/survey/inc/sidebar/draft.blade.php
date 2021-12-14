@@ -1,12 +1,12 @@
 <ul class="list-unstyled my-4">
-    <div class="d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center justify-content-between mb-3">
         <h4 class="font-lato ms-3">Pertanyaan</h4>
         <div id="add-question-button" class="fas fa-plus-circle text-gawedata fs-2 me-3 cursor-pointer"
             onclick="saveDraft({{ $i }}, true);"></div>
     </div>
     <div id="survey-detail-sidebar" class="mx-3">
         @if (count($survey['questions']) > 0)
-        <div id="simpleList" class="list-group">
+        <div id="simpleList" class="list-group position-relative pe-2" style="height: 80vh!important; overflow: auto;">
             @foreach ($survey['questions'] as $question)
                 <a href="#" class="text-decoration-none cursor-pointer survey-question-card"
                     onclick="saveDraft({{ $loop->iteration }}, false);">

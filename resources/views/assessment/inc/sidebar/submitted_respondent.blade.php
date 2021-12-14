@@ -20,6 +20,7 @@
     @endif
     <div id="survey-detail-sidebar" class="mx-3">
         <h4 class="font-lato ms-3">Pertanyaan</h4>
+        <div class="position-relative pe-2" style="height: 60vh!important; overflow: auto;">
         @if (count($assessment['respondent_types']) > 0)
             @foreach ($assessment['respondent_types'] as $respondent)
                 <a href="{{route('assessment.submitted.respondent', ['id' => $assessment['id'], 'i' => $loop->iteration])}}"
@@ -40,5 +41,6 @@
                 </a>
             @endforeach
         @endif
+        </div>
     </div>
 </ul>

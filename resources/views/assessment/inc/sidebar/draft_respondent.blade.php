@@ -23,7 +23,7 @@
             ></div>
     </div>
     <div id="survey-detail-sidebar" class="ms-4 me-3">
-        <div class="list-group">
+        <div class="list-group" style="height: 80vh!important; overflow: auto;">
             @if (count($assessment['respondent_types']) > 0)
                 @foreach ($assessment['respondent_types'] as $respondent)
                     <a href="#" class="text-decoration-none cursor-pointer survey-question-card"

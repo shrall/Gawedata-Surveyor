@@ -1,13 +1,20 @@
+@php
+if ($survey['respondent_quota'] == 0) {
+    $percent = 0;
+} else {
+    $percent = ($result['total_respondent'] / $survey['respondent_quota']) * 100;
+}
+@endphp
 <ul class="list-unstyled my-4">
     <li class="my-4">
         <div class="card card-responden mx-3 p-4">
             <h5 class="mb-4">Responden</h5>
             <div class="responden-quota-box mb-1">
-                <div class="responden-quota" style="width: 30%;"></div>
+                <div class="responden-quota" style="width: {{ $percent }}%;"></div>
             </div>
             <div class="d-flex justify-content-between font-nexa font-weight-regular">
-                <span>{{$result['total_respondent']}} Mengisi</span>
-                <span>{{$survey['respondent_quota']}}</span>
+                <span>{{ $result['total_respondent'] }} Mengisi</span>
+                <span>{{ $survey['respondent_quota'] }}</span>
             </div>
         </div>
     </li>

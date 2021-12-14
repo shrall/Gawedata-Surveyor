@@ -1,5 +1,5 @@
 @if (count($assessments['data']) > 0)
-    <div class="d-block" id="survey-view-grid">
+    <div class="@if (isset($view) && $view == 'card') d-block @elseif(isset($view) && $view == 'list') d-none @else d-block @endif" id="survey-view-grid">
         <div class="row gy-4 mb-4" id="survey-view-grid-box">
             @foreach ($assessments['data'] as $assessment)
                 <a href="{{ route('assessment.show', ['id' => $assessment['id'], 'i' => 1, 'new' => 'false']) }}"
@@ -14,7 +14,7 @@
                                 <div class="text-gawedata">
                                     <span class="fa fa-fw fa-circle text-gawedata me-2"></span>Submitted
                                 </div>
-                            @elseif ($assessment['status_id'] == 6)
+                            @elseif ($assessment['status_id'] == 6 || $assessment['status_id'] == 9)
                                 <div class="text-green">
                                     <span class="fa fa-fw fa-circle text-green me-2"></span>Published
                                 </div>
@@ -49,7 +49,7 @@
             @endforeach
         </div>
     </div>
-    <div class="d-none" id="survey-view-list">
+    <div class="@if (isset($view) && $view == 'list') d-block @elseif(isset($view) && $view == 'card') d-none @else d-none @endif" id="survey-view-list">
         <table class="table table-borderless table-hover">
             <thead>
                 <tr class="text-gray">
@@ -57,7 +57,6 @@
                     <th class="font-weight-regular" scope="col">Status</th>
                     <th class="font-weight-regular" scope="col">Tipe Tes</th>
                     <th class="font-weight-regular" scope="col">Tanggal Publish</th>
-                    <th class="font-weight-regular" scope="col">Waktu Survei</th>
                     <th class="font-weight-regular" scope="col">Last Update</th>
                 </tr>
             </thead>
@@ -80,7 +79,7 @@
                                     <span class="fa fa-fw fa-circle text-gawedata me-2"></span>Submitted
                                 </div>
                             </td>
-                        @elseif ($assessment['status_id'] == 6)
+                        @elseif ($assessment['status_id'] == 6 || $assessment['status_id'] == 9)
                             <td class="py-4">
                                 <div class="text-green">
                                     <span class="fa fa-fw fa-circle text-green me-2"></span>Published
@@ -117,10 +116,6 @@
                         <td class="py-4">
                             <span class="fa fa-fw fa-calendar-day me-2"></span>
                             {{ date('d/m/y', strtotime($assessment['test_date'])) }}
-                        </td>
-                        <td class="py-4">
-                            <span class="fa fa-fw fa-clock me-2"></span>
-                            API Belum
                         </td>
                         <td class="py-4">{{ date('d-m-y, H:i', strtotime($assessment['updated_at'])) }} WIB
                         </td>
@@ -160,3 +155,9 @@
         </ul>
     </nav>
 @endif
+
+<script>
+    $(".survey-row").click(function() {
+        window.location = $(this).data("href");
+    });
+</script>

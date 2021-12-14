@@ -13,6 +13,16 @@ class UserController extends Controller
         return view('user.edit_profile');
     }
 
+    public function update_profile(Request $request)
+    {
+        $path = "?name=" . $request->name . "&email=" . $request->email;
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+        ])
+            ->patch(config('services.api.url') . '/updateProfile' . $path)->json();
+        return view('user.edit_profile');
+    }
+
     public function reset_password()
     {
         return view('user.reset_password');

@@ -41,17 +41,18 @@ class SurveyController extends Controller
             ])->post(config('services.api.url') . '/survey', [
                 'title' => $request->title,
                 'description' => $request->description,
+                'is_private' => false,
+                'survey_type' => 'Daily',
                 'daily_date' => $request->daily_date,
                 'start_time' => $request->start_time,
                 'end_time' => $request->end_time,
-                'description' => $request->description,
-                'is_private' => false,
+                'points' => $request->survey_points,
                 'estimate_time' => '-'
             ])->json();
             if ($response['success']) {
                 return redirect()->route('survey.show', ['id' => $response['data']['id'], 'i' => 1, 'new' => 'false']);
             } else {
-                return redirect()->route('home');
+                return redirect()->route('home')->with('Error', $response['message']);
             }
         } else {
             if ($request->cities[0] == null) {
@@ -233,18 +234,17 @@ class SurveyController extends Controller
     public function change_settings(Request $request, $id)
     {
         if ($request->has('daily_date')) {
-            // dd($request);
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . session('token'),
-            ])->post(config('services.api.url') . '/survey/' . $id, [
+            ])->post(config('services.api.url') . '/survey', [
                 'title' => $request->title,
                 'description' => $request->description,
+                'is_private' => false,
+                'survey_type' => 'Daily',
                 'daily_date' => $request->daily_date,
                 'start_time' => $request->start_time,
                 'end_time' => $request->end_time,
-                'description' => $request->description,
                 'points' => $request->survey_points,
-                'is_private' => false,
                 'estimate_time' => '-'
             ])->json();
             if ($response['success']) {
@@ -253,25 +253,41 @@ class SurveyController extends Controller
                 return redirect()->route('home');
             }
         } else {
-            if ($request->cities[0] == null) {
-                $city_criteria = $request->city;
+            if ($request->cities) {
+                if ($request->cities[0] == null) {
+                    $city_criteria = $request->city;
+                } else {
+                    $city_criteria = explode(",", $request->cities[0]);
+                }
             } else {
-                $city_criteria = explode(",", $request->cities[0]);
+                $city_criteria = null;
             }
-            if ($request->educations[0] == null) {
-                $education_criteria = $request->education;
+            if ($request->educations) {
+                if ($request->educations[0] == null) {
+                    $education_criteria = $request->education;
+                } else {
+                    $education_criteria = explode(",", $request->educations[0]);
+                }
             } else {
-                $education_criteria = explode(",", $request->educations[0]);
+                $education_criteria = null;
             }
-            if ($request->professions[0] == null) {
-                $profession_criteria = $request->profession;
+            if ($request->professions) {
+                if ($request->professions[0] == null) {
+                    $profession_criteria = $request->profession;
+                } else {
+                    $profession_criteria = explode(",", $request->professions[0]);
+                }
             } else {
-                $profession_criteria = explode(",", $request->professions[0]);
+                $profession_criteria = null;
             }
-            if ($request->expenses[0] == null) {
-                $expense_criteria = $request->expense;
+            if ($request->expenses) {
+                if ($request->expenses[0] == null) {
+                    $expense_criteria = $request->expense;
+                } else {
+                    $expense_criteria = explode(",", $request->expenses[0]);
+                }
             } else {
-                $expense_criteria = explode(",", $request->expenses[0]);
+                $expense_criteria = null;
             }
             if ($request->survey_type == 'Public') {
                 $is_private = false;
@@ -293,6 +309,8 @@ class SurveyController extends Controller
                 'survey_category_id' => $request->survey_category,
                 'respondent_quota' => $request->survey_respondent,
                 'is_private' => $is_private,
+                'survey_type' => 'General',
+                'general_expired_date' => date('Y-m-d', strtotime($request->survey_deadline)),
                 'min_age_criteria' => $request->age_start,
                 'max_age_criteria' => $request->age_end,
                 'estimate_time' => $request->estimate_time,
@@ -327,7 +345,8 @@ class SurveyController extends Controller
         ])
             ->get(config('services.api.url') . '/survey?paginate=16&sort=' . $request->sort . '&page=' . $request->page . '&filter=' . $request->filter)
             ->json()['data'];
-        return view('inc.survey_list', compact('surveys'));
+        $view = $request->view;
+        return view('inc.survey_list', compact('surveys', 'view'));
     }
 
     public function get_city(Request $request)
