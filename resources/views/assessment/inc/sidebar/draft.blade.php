@@ -1,4 +1,4 @@
-<ul class="list-unstyled my-4" style="max-height: 100vh; overflow-y: auto;">
+<ul class="list-unstyled my-4">
     @if ($assessment['assessment_type_id'] == 3)
         <div class="d-flex align-items-center justify-content-center gx-3 mb-5 px-2 font-nexa">
             <a class="tab-gawedata-active tab-type text-decoration-none px-2 py-1 me-auto fs-5" id="tab-pertanyaan"
@@ -15,7 +15,7 @@
         <div id="add-question-button" class="fas fa-plus-circle text-gawedata fs-2 me-3 cursor-pointer"
             onclick="saveDraft({{ $i }}, true);"></div>
     </div>
-    <div id="survey-detail-sidebar" class="ms-4 me-3">
+    <div id="survey-detail-sidebar" class="ms-4 me-3" style="max-height: 100vh; overflow-y: auto;">
         @if (count($assessment['questions']) > 0)
             <div id="simpleList" class="list-group position-relative pe-2"
                 style="height: 80vh!important; overflow-y: auto:">
