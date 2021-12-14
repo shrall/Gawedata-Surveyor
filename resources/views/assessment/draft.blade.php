@@ -565,8 +565,16 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
         };
     </script>
     <script>
+        var answerSelectedOnLoad = true;
         if ({{ $assessment_type_id }} == 1 || {{ $assessment_type_id }} == 2) {
-            changeCorrectAnswer(1)
+            questions[question_index]['answer_choices'].forEach(element => {
+                if (element.is_right_answer) {
+                    answerSelectedOnLoad = false;
+                }
+            });
+            if (answerSelectedOnLoad) {
+                changeCorrectAnswer(1)
+            }
         }
 
         function changeCorrectAnswer(order) {
