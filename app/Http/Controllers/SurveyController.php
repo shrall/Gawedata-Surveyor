@@ -225,9 +225,17 @@ class SurveyController extends Controller
         if ($request->submit_question) {
             return redirect()->route('survey.submit', ['id' => $id]);
         } else if ($request->new_question) {
-            return redirect()->route('survey.show', ['id' => $id, 'i' => count($questions), 'new' => 'true']);
+            if (count($response['data']) == count($questions)) {
+                return redirect()->route('survey.show', ['id' => $id, 'i' => count($questions), 'new' => 'true']);
+            } else {
+                return redirect()->route('survey.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
+            }
         } else {
-            return redirect()->route('survey.show', ['id' => $id, 'i' => $request->question_index, 'new' => 'false']);
+            if (count($response['data']) >= $request->question_index) {
+                return redirect()->route('survey.show', ['id' => $id, 'i' => $request->question_index, 'new' => 'false']);
+            } else {
+                return redirect()->route('survey.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
+            }
         }
     }
 

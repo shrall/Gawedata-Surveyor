@@ -343,6 +343,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var questions = @json($assessment['questions']);
         var question_index = @json($i - 1);
+        var question_id = questions[question_index].id;
     </script>
     <script>
         $('#survey-setting-button').click(function() {
@@ -449,12 +450,29 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
     <script>
         function saveDraft(index, new_bool) {
             event.preventDefault();
+            var fieldEmpty = false;
             if (new_bool) {
                 $('#new-question').val(1);
             }
-            $('#input-questions').val(JSON.stringify(questions));
             $('#input-question-index').val(index);
-            document.getElementById('question-form').submit();
+            if (questions.length > 0) {
+                questions[question_index].answer_choices.forEach(element => {
+                    if (element.text == '') {
+                        fieldEmpty = true;
+                    }
+                });
+                if (questions[question_index].question == '') {
+                    fieldEmpty = true;
+                }
+            }
+            if (fieldEmpty) {
+                questions.splice(question_index, 1);
+                $('#input-questions').val(JSON.stringify(questions));
+                document.getElementById('question-form').submit();
+            } else {
+                $('#input-questions').val(JSON.stringify(questions));
+                document.getElementById('question-form').submit();
+            }
         }
     </script>
     <script>
@@ -552,7 +570,12 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                 var element = questions[evt.oldIndex];
                 questions.splice(evt.oldIndex, 1);
                 questions.splice(evt.newIndex, 0, element);
-                $('#save-draft-button').attr("onclick", "saveDraft(" + (evt.newIndex + 1) + ", false);");
+                questions.forEach(function(value, i) {
+                    if (value.id == question_id) {
+                        question_index = i;
+                        $('#save-draft-button').attr("onclick", "saveDraft(" + (i + 1) + ", false);");
+                    }
+                });
                 reorder_question_link();
             },
         });

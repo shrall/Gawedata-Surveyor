@@ -668,6 +668,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var questions = @json($survey['questions']);
         var question_index = @json($i - 1);
+        var question_id = questions[question_index].id;
     </script>
     <script>
         // answer templates
@@ -1017,13 +1018,49 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     <script>
         function saveDraft(index, new_bool) {
             event.preventDefault();
+            var fieldEmpty = false;
             if (new_bool) {
                 $('#new-question').val(1);
             }
-            $('#input-questions').val(JSON.stringify(questions));
             $('#input-question-index').val(index);
-            console.log(questions);
-            document.getElementById('question-form').submit();
+            console.log(questions[question_index]);
+            if (questions.length > 0) {
+                if (questions[question_index].survey_question_type_id == 1) {
+                    questions[question_index].answer_choices.forEach(element => {
+                        if (element.answer == '') {
+                            fieldEmpty = true;
+                        }
+                    });
+                } else if (questions[question_index].survey_question_type_id == 2) {
+                    questions[question_index].answer_choices.forEach(element => {
+                        if (element == '') {
+                            fieldEmpty = true;
+                        }
+                    });
+                } else if (questions[question_index].survey_question_type_id == 4) {
+                    questions[question_index].sub_questions.forEach(element => {
+                        if (element.question == '') {
+                            fieldEmpty = true;
+                        }
+                        element.answer_choices.forEach(elementa => {
+                            if (elementa == '') {
+                                fieldEmpty = true;
+                            }
+                        });
+                    });
+                }
+                if (questions[question_index].question == '') {
+                    fieldEmpty = true;
+                }
+            }
+            if (fieldEmpty) {
+                questions.splice(question_index, 1);
+                $('#input-questions').val(JSON.stringify(questions));
+                document.getElementById('question-form').submit();
+            } else {
+                $('#input-questions').val(JSON.stringify(questions));
+                document.getElementById('question-form').submit();
+            }
         }
     </script>
     <script>
@@ -1519,7 +1556,12 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 var element = questions[evt.oldIndex];
                 questions.splice(evt.oldIndex, 1);
                 questions.splice(evt.newIndex, 0, element);
-                $('#save-draft-button').attr("onclick", "saveDraft(" + (evt.newIndex + 1) + ", false);");
+                questions.forEach(function(value, i) {
+                    if (value.id == question_id) {
+                        question_index = i;
+                        $('#save-draft-button').attr("onclick", "saveDraft(" + (i + 1) + ", false);");
+                    }
+                });
                 reorder_question_link();
             },
         });
