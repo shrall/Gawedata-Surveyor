@@ -1433,7 +1433,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     <script>
         //third step
         $(function() {
-            $("#survey-deadline").datepicker();
+            $("#survey-deadline").datepicker({ minDate: 0 });
         });
 
         function enableThirdButton() {
@@ -1626,6 +1626,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         format: 'YYYY-MM-DD',
                     },
                     singleDatePicker: true,
+                    minDate: moment(),
                     startDate: "{{ $survey['daily_date'] }}",
                 }, function(start, end, label) {
                     $('#input-daily-date').val(start.format('YYYY-MM-DD'));

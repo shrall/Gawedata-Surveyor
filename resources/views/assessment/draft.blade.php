@@ -764,6 +764,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             $('#assessment-start-time-non-serentak').daterangepicker({
                 autoUpdateInput: false,
                 singleDatePicker: true,
+                minDate: moment(),
                 startDate: "{{ $assessment['start_time'] }}",
                 timePicker: true,
                 timePicker24Hour: true,
@@ -782,6 +783,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             $('#assessment-end-time-non-serentak').daterangepicker({
                 autoUpdateInput: false,
                 singleDatePicker: true,
+                minDate: moment(),
                 startDate: "{{ $assessment['end_time'] }}",
                 timePicker: true,
                 timePicker24Hour: true,
@@ -802,6 +804,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                 $('#assessment-start-time-non-serentak').daterangepicker({
                     autoUpdateInput: false,
                     singleDatePicker: true,
+                    minDate: moment(),
                     maxDate: time,
                     timePicker: true,
                     timePicker24Hour: true,
@@ -842,6 +845,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             $('#assessment-start-time').daterangepicker({
                 autoUpdateInput: false,
                 singleDatePicker: true,
+                minDate: moment(),
                 startDate: "{{ $assessment['start_time'] }}",
                 timePicker: true,
                 timePicker24Hour: true,
@@ -858,6 +862,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             $('#assessment-end-time').daterangepicker({
                 autoUpdateInput: false,
                 singleDatePicker: true,
+                minDate: moment(),
                 startDate: "{{ $assessment['end_time'] }}",
                 timePicker: true,
                 timePicker24Hour: true,

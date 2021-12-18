@@ -236,7 +236,7 @@
                                         <div class="col-7 text-end">
                                             <div
                                                 class="d-flex justify-content-between align-items-center position-relative">
-                                                <input type="text" name="survey_deadline" id="survey-deadline"
+                                                <input type="text" name="survey_deadline" id="survey-deadline" autocomplete="off"
                                                     class="form-control input-text" required>
                                                 <span
                                                     class="fa fa-fw fa-calendar-day position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6 text-gawedata"></span>

@@ -207,7 +207,7 @@
                                                     class="d-flex justify-content-between align-items-center position-relative">
                                                     <input type="text" name="start_time_ns"
                                                         id="assessment-start-time-non-serentak"
-                                                        class="form-control input-text"
+                                                        class="form-control input-text" autocomplete="off"
                                                         placeholder="Tanggal/Waktu Mulai Tes" required>
                                                     <span
                                                         class="fa fa-fw fa-calendar-day position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6 text-gawedata"></span>
@@ -218,7 +218,7 @@
                                                     class="d-flex justify-content-between align-items-center position-relative">
                                                     <input type="text" name="end_time_ns"
                                                         id="assessment-end-time-non-serentak"
-                                                        class="form-control input-text"
+                                                        class="form-control input-text" autocomplete="off"
                                                         placeholder="Tanggal/Waktu Berakhir Tes" required>
                                                     <span
                                                         class="fa fa-fw fa-calendar-day position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6 text-gawedata"></span>
@@ -229,7 +229,7 @@
                                     <div class="mb-3 assessment-irt assessment-rs serentak d-none">
                                         <div
                                             class="d-flex justify-content-between align-items-center position-relative">
-                                            <input type="text" name="start_time" id="assessment-start-time"
+                                            <input type="text" name="start_time" id="assessment-start-time" autocomplete="off"
                                                 class="form-control input-text" placeholder="Tanggal/Waktu Mulai Tes"
                                                 required>
                                             <span
@@ -240,7 +240,7 @@
                                         <div
                                             class="d-flex justify-content-between align-items-center position-relative">
                                             <input type="text" name="end_time" id="assessment-end-time"
-                                                class="form-control input-text"
+                                                class="form-control input-text" autocomplete="off"
                                                 placeholder="Tanggal Berakhir Pengisian" required>
                                             <span
                                                 class="fa fa-fw fa-calendar-day position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6 text-gawedata"></span>
