@@ -448,30 +448,35 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
         }
     </script>
     <script>
+        var saveClicked = false;
+
         function saveDraft(index, new_bool) {
             event.preventDefault();
-            var fieldEmpty = false;
-            if (new_bool) {
-                $('#new-question').val(1);
-            }
-            $('#input-question-index').val(index);
-            if (questions.length > 0) {
-                questions[question_index].answer_choices.forEach(element => {
-                    if (element.text == '') {
+            if (!saveClicked) {
+                var fieldEmpty = false;
+                if (new_bool) {
+                    $('#new-question').val(1);
+                }
+                $('#input-question-index').val(index);
+                if (questions.length > 0) {
+                    questions[question_index].answer_choices.forEach(element => {
+                        if (element.text == '') {
+                            fieldEmpty = true;
+                        }
+                    });
+                    if (questions[question_index].question == '') {
                         fieldEmpty = true;
                     }
-                });
-                if (questions[question_index].question == '') {
-                    fieldEmpty = true;
                 }
-            }
-            if (fieldEmpty) {
-                questions.splice(question_index, 1);
-                $('#input-questions').val(JSON.stringify(questions));
-                document.getElementById('question-form').submit();
-            } else {
-                $('#input-questions').val(JSON.stringify(questions));
-                document.getElementById('question-form').submit();
+                if (fieldEmpty) {
+                    questions.splice(question_index, 1);
+                    $('#input-questions').val(JSON.stringify(questions));
+                    document.getElementById('question-form').submit();
+                } else {
+                    $('#input-questions').val(JSON.stringify(questions));
+                    document.getElementById('question-form').submit();
+                }
+                saveClicked = true;
             }
         }
     </script>
@@ -490,10 +495,10 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
         var isNull = false;
 
         function checkAllFields() {
-            if (questions[{{ $i - 1 }}].question == "") {
+            if (questions[question_index].question == "") {
                 isNull = true;
             }
-            questions[{{ $i - 1 }}].answer_choices.forEach(element => {
+            questions[question_index].answer_choices.forEach(element => {
                 if (element.text == '') {
                     isNull = true;
                 }

@@ -76,7 +76,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                             <div class="text-start me-auto">
                                 <button class="btn btn-gawedata-danger" @if ($new == 'true') disabled @endif
                                     onclick="event.preventDefault();
-                                                                                    document.getElementById('delete-respondent-form').submit();">
+                                                                                        document.getElementById('delete-respondent-form').submit();">
                                     <span class="fas fa-fw fa-trash-alt me-2"></span>Hapus
                                 </button>
                             </div>
@@ -144,16 +144,21 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
         });
     </script>
     <script>
+        var saveClicked = false;
+
         function saveDraft(index, new_bool) {
             event.preventDefault();
-            if (new_bool) {
-                $('.respondent-type-new-bool').val(1)
-            }
-            $('.respondent-type-next').val(index)
-            if ({{ $new }}) {
-                document.getElementById('create-respondent-form').submit();
-            } else {
-                document.getElementById('update-respondent-form').submit();
+            if (!saveClicked) {
+                if (new_bool) {
+                    $('.respondent-type-new-bool').val(1)
+                }
+                $('.respondent-type-next').val(index)
+                if ({{ $new }}) {
+                    document.getElementById('create-respondent-form').submit();
+                } else {
+                    document.getElementById('update-respondent-form').submit();
+                }
+                saveClicked = true;
             }
         }
     </script>
