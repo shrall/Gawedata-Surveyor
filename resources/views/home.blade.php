@@ -615,6 +615,7 @@
                 timePicker: true,
                 timePicker24Hour: true,
                 timePickerIncrement: 1,
+                minDate: moment(),
                 locale: {
                     format: 'HH:mm'
                 }

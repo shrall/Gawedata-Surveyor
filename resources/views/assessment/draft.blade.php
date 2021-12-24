@@ -87,7 +87,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                                                 <div class="input-group">
                                                     <span class="input-group-text assessment-point-buttons"
                                                         onclick="subtractAnswerPoints({{ $loop->iteration }});">-</span>
-                                                    <input type="text" class="form-control input-text text-center"
+                                                    <input type="number" class="form-control input-text text-center"
                                                         value={{ $answer['points'] }}
                                                         onkeyup="setAnswerPoints({{ $loop->iteration }});"
                                                         id="answer-points-{{ $loop->iteration }}">
@@ -178,7 +178,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                                                 <div class="input-group">
                                                     <span class="input-group-text assessment-point-buttons"
                                                         onclick="subtractAnswerPoints({{ $loop->iteration }});">-</span>
-                                                    <input type="text" class="form-control input-text text-center"
+                                                    <input type="number" class="form-control input-text text-center"
                                                         value={{ $answer['points'] }}
                                                         onkeyup="setAnswerPoints({{ $loop->iteration }});"
                                                         id="answer-points-{{ $loop->iteration }}">
@@ -256,7 +256,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                                                 <div class="input-group">
                                                     <span class="input-group-text assessment-point-buttons"
                                                         onclick="subtractAnswerPoints({{ $loop->iteration }});">-</span>
-                                                    <input type="text" class="form-control input-text text-center"
+                                                    <input type="number" class="form-control input-text text-center"
                                                         value={{ $answer['points'] }}
                                                         onkeyup="setAnswerPoints({{ $loop->iteration }});"
                                                         id="answer-points-{{ $loop->iteration }}">
@@ -616,7 +616,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             questions[question_index]['answer_choices'][order - 1]['is_right_answer'] = true;
         }
     </script>
-    @if ($assessment['with_discussion'])
+    @if ($assessment['with_discussion'] && $assessment['assessment_type_id'] != 3)
         <script src="{{ asset('js/ckeditor.js') }}"></script>
         <script>
             ClassicEditor.create(document.querySelector('#input-discussion'), {
@@ -671,8 +671,19 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     {{-- assessment --}}
     <script>
-        var assessment_type = 'irt';
-        var serentak = false;
+        console.log(@json($assessment));
+        if (@json($assessment['assessment_type_id']) == 1) {
+            var assessment_type = 'irt';
+        } else if (@json($assessment['assessment_type_id']) == 2) {
+            var assessment_type = 'rs';
+        } else if (@json($assessment['assessment_type_id']) == 3) {
+            var assessment_type = 'sa';
+        }
+        if (@json($assessment['is_simultaneously']) == 1 || @json($assessment['with_ranking'])) {
+            var serentak = true;
+        } else {
+            var serentak = false;
+        }
 
         function changeAssessmentType(type) {
             //remove serentak

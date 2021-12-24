@@ -1700,6 +1700,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                     timePicker: true,
                     timePicker24Hour: true,
                     timePickerIncrement: 1,
+                    minDate: moment(),
                     locale: {
                         format: 'HH:mm'
                     },
