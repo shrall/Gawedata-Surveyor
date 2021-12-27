@@ -627,7 +627,8 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 </button>
             </div>
             <div class="text-end me-2">
-                <button class="btn btn-gawedata-3" onclick="copyQuestion({{ $i }});" id="button-disabled">
+                <button class="btn btn-gawedata-3" onclick="copyQuestion({{ $i }});" id="button-duplicate"
+                    disabled>
                     <label class="font-lato cursor-pointer">
                         <span class="fas fa-fw fa-copy me-2"></span>Duplikat
                     </label>
@@ -668,6 +669,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var questions = @json($survey['questions']);
         var question_index = @json($i - 1);
+        var question_id = questions[question_index].id;
     </script>
     <script>
         // answer templates
@@ -800,12 +802,14 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 $('.question-type-text-guide').html('Responden melakukan sesuatu untuk menjawab.')
                 $('#action-question').removeClass('d-none').addClass('d-block');
             }
+            checkAllFields();
         });
     </script>
     <script>
         // main question
         function setQuestion() {
             questions[question_index]['question'] = $('#input-question').val();
+            checkAllFields();
         }
     </script>
     <script>
@@ -825,6 +829,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 questions[question_index]['answer_choices'][questions[question_index]['answer_choices'].length - 1] = ""
                 refreshSingleAnswerAjax();
             }
+            checkAllFields();
         }
 
         function deleteSingleAnswer(int) {
@@ -870,19 +875,23 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
 
         function setNewSingleAnswer(index) {
             questions[question_index]['answer_choices'][index - 1] = $('#answer-single' + index).val();
+            checkAllFields();
         }
 
         function setNewSingleAnswerSkipLogic(index) {
             questions[question_index]['answer_choices'][index - 1]['answer'] = $('#answer-single' + index).val();
+            checkAllFields();
         }
     </script>
     <script>
         function setMinimalScale() {
             questions[question_index]['minimal_scale'] = $('#minimal-scale').val();
+            checkAllFields();
         }
 
         function setMaximalScale() {
             questions[question_index]['maximal_scale'] = $('#maximal-scale').val();
+            checkAllFields();
         }
     </script>
     <script>
@@ -909,6 +918,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
             questions[question_index]['sub_questions'][questions[question_index]['sub_questions'].length - 1]['question'] =
                 ""
             refreshGridQuestionAjax();
+            checkAllFields();
         }
 
         function addGridAnswer() {
@@ -922,6 +932,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 }
             });
             refreshGridAnswerAjax();
+            checkAllFields();
         }
 
         function deleteGridQuestion(int) {
@@ -972,12 +983,14 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
 
         function setNewGridQuestion(index) {
             questions[question_index]['sub_questions'][index - 1]['question'] = $('#question' + index).val();
+            checkAllFields();
         }
 
         function setNewGridAnswer(index) {
             questions[question_index]['sub_questions'].forEach(element => {
                 element['answer_choices'][index - 1] = $('#answer-grid' + index).val();
             });
+            checkAllFields();
         }
     </script>
     <script>
@@ -1000,30 +1013,76 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
 
         function setVideoURL() {
             questions[question_index]['youtube_url'] = $('#action_video_answer').val();
+            checkAllFields();
         }
 
         function setAndroidURL() {
             questions[question_index]['android_app_url'] = $('#action_android_answer').val();
+            checkAllFields();
         }
 
         function setiOSURL() {
             questions[question_index]['ios_app_url'] = $('#action_ios_answer').val();
+            checkAllFields();
         }
 
         function setWebsiteURL() {
             questions[question_index]['website_url'] = $('#action_website_answer').val();
+            checkAllFields();
         }
     </script>
     <script>
+        var saveClicked = false;
+
         function saveDraft(index, new_bool) {
             event.preventDefault();
-            if (new_bool) {
-                $('#new-question').val(1);
+            if (!saveClicked) {
+                var fieldEmpty = false;
+                if (new_bool) {
+                    $('#new-question').val(1);
+                }
+                $('#input-question-index').val(index);
+                console.log(questions[question_index]);
+                if (questions.length > 0) {
+                    if (questions[question_index].survey_question_type_id == 1) {
+                        questions[question_index].answer_choices.forEach(element => {
+                            if (element.answer == '') {
+                                fieldEmpty = true;
+                            }
+                        });
+                    } else if (questions[question_index].survey_question_type_id == 2 || questions[question_index]
+                        .survey_question_type_id == 5) {
+                        questions[question_index].answer_choices.forEach(element => {
+                            if (element == '') {
+                                fieldEmpty = true;
+                            }
+                        });
+                    } else if (questions[question_index].survey_question_type_id == 4) {
+                        questions[question_index].sub_questions.forEach(element => {
+                            if (element.question == '') {
+                                fieldEmpty = true;
+                            }
+                            element.answer_choices.forEach(elementa => {
+                                if (elementa == '') {
+                                    fieldEmpty = true;
+                                }
+                            });
+                        });
+                    }
+                    if (questions[question_index].question == '') {
+                        fieldEmpty = true;
+                    }
+                }
+                if (fieldEmpty) {
+                    questions.splice(question_index, 1);
+                    $('#input-questions').val(JSON.stringify(questions));
+                    document.getElementById('question-form').submit();
+                } else {
+                    $('#input-questions').val(JSON.stringify(questions));
+                    document.getElementById('question-form').submit();
+                }
+                saveClicked = true;
             }
-            $('#input-questions').val(JSON.stringify(questions));
-            $('#input-question-index').val(index);
-            console.log(questions);
-            document.getElementById('question-form').submit();
         }
     </script>
     <script>
@@ -1037,6 +1096,47 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
         }
     </script>
     <script>
+        checkAllFields();
+        var isNull = false;
+
+        function checkAllFields() {
+            console.log(questions[question_index])
+            if (questions[question_index].question == "") {
+                isNull = true;
+            }
+            if (questions[question_index].survey_question_type_id == 1) {
+                questions[question_index].answer_choices.forEach(element => {
+                    if (element.answer == '') {
+                        isNull = true;
+                    }
+                });
+            } else if (questions[question_index].survey_question_type_id == 2 || questions[question_index]
+                .survey_question_type_id == 5) {
+                questions[question_index].answer_choices.forEach(element => {
+                    if (element == '') {
+                        isNull = true;
+                    }
+                });
+            } else if (questions[question_index].survey_question_type_id == 4) {
+                questions[question_index].sub_questions.forEach(element => {
+                    if (element.question == '') {
+                        isNull = true;
+                    }
+                    element.answer_choices.forEach(elementa => {
+                        if (elementa == '') {
+                            isNull = true;
+                        }
+                    });
+                });
+            }
+            if (!isNull) {
+                $("#button-duplicate").prop("disabled", false);
+            } else {
+                $("#button-duplicate").prop("disabled", true);
+            }
+            isNull = 0;
+        }
+
         function copyQuestion(index) {
             var copied_question = questions[index - 1];
             questions.push(copied_question);
@@ -1396,7 +1496,9 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
     <script>
         //third step
         $(function() {
-            $("#survey-deadline").datepicker();
+            $("#survey-deadline").datepicker({
+                minDate: 0
+            });
         });
 
         function enableThirdButton() {
@@ -1519,7 +1621,12 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                 var element = questions[evt.oldIndex];
                 questions.splice(evt.oldIndex, 1);
                 questions.splice(evt.newIndex, 0, element);
-                $('#save-draft-button').attr("onclick", "saveDraft(" + (evt.newIndex + 1) + ", false);");
+                questions.forEach(function(value, i) {
+                    if (value.id == question_id) {
+                        question_index = i;
+                        $('#save-draft-button').attr("onclick", "saveDraft(" + (i + 1) + ", false);");
+                    }
+                });
                 reorder_question_link();
             },
         });
@@ -1584,6 +1691,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                         format: 'YYYY-MM-DD',
                     },
                     singleDatePicker: true,
+                    minDate: moment(),
                     startDate: "{{ $survey['daily_date'] }}",
                 }, function(start, end, label) {
                     $('#input-daily-date').val(start.format('YYYY-MM-DD'));
@@ -1592,6 +1700,7 @@ $question_type_id = $survey['questions'][$i - 1]['survey_question_type_id'] ?? n
                     timePicker: true,
                     timePicker24Hour: true,
                     timePickerIncrement: 1,
+                    minDate: moment(),
                     locale: {
                         format: 'HH:mm'
                     },

@@ -87,7 +87,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                                                 <div class="input-group">
                                                     <span class="input-group-text assessment-point-buttons"
                                                         onclick="subtractAnswerPoints({{ $loop->iteration }});">-</span>
-                                                    <input type="text" class="form-control input-text text-center"
+                                                    <input type="number" class="form-control input-text text-center"
                                                         value={{ $answer['points'] }}
                                                         onkeyup="setAnswerPoints({{ $loop->iteration }});"
                                                         id="answer-points-{{ $loop->iteration }}">
@@ -178,7 +178,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                                                 <div class="input-group">
                                                     <span class="input-group-text assessment-point-buttons"
                                                         onclick="subtractAnswerPoints({{ $loop->iteration }});">-</span>
-                                                    <input type="text" class="form-control input-text text-center"
+                                                    <input type="number" class="form-control input-text text-center"
                                                         value={{ $answer['points'] }}
                                                         onkeyup="setAnswerPoints({{ $loop->iteration }});"
                                                         id="answer-points-{{ $loop->iteration }}">
@@ -256,7 +256,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                                                 <div class="input-group">
                                                     <span class="input-group-text assessment-point-buttons"
                                                         onclick="subtractAnswerPoints({{ $loop->iteration }});">-</span>
-                                                    <input type="text" class="form-control input-text text-center"
+                                                    <input type="number" class="form-control input-text text-center"
                                                         value={{ $answer['points'] }}
                                                         onkeyup="setAnswerPoints({{ $loop->iteration }});"
                                                         id="answer-points-{{ $loop->iteration }}">
@@ -343,6 +343,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var questions = @json($assessment['questions']);
         var question_index = @json($i - 1);
+        var question_id = questions[question_index].id;
     </script>
     <script>
         $('#survey-setting-button').click(function() {
@@ -447,14 +448,36 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
         }
     </script>
     <script>
+        var saveClicked = false;
+
         function saveDraft(index, new_bool) {
             event.preventDefault();
-            if (new_bool) {
-                $('#new-question').val(1);
+            if (!saveClicked) {
+                var fieldEmpty = false;
+                if (new_bool) {
+                    $('#new-question').val(1);
+                }
+                $('#input-question-index').val(index);
+                if (questions.length > 0) {
+                    questions[question_index].answer_choices.forEach(element => {
+                        if (element.text == '') {
+                            fieldEmpty = true;
+                        }
+                    });
+                    if (questions[question_index].question == '') {
+                        fieldEmpty = true;
+                    }
+                }
+                if (fieldEmpty) {
+                    questions.splice(question_index, 1);
+                    $('#input-questions').val(JSON.stringify(questions));
+                    document.getElementById('question-form').submit();
+                } else {
+                    $('#input-questions').val(JSON.stringify(questions));
+                    document.getElementById('question-form').submit();
+                }
+                saveClicked = true;
             }
-            $('#input-questions').val(JSON.stringify(questions));
-            $('#input-question-index').val(index);
-            document.getElementById('question-form').submit();
         }
     </script>
     <script>
@@ -472,10 +495,10 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
         var isNull = false;
 
         function checkAllFields() {
-            if (questions[{{ $i - 1 }}].question == "") {
+            if (questions[question_index].question == "") {
                 isNull = true;
             }
-            questions[{{ $i - 1 }}].answer_choices.forEach(element => {
+            questions[question_index].answer_choices.forEach(element => {
                 if (element.text == '') {
                     isNull = true;
                 }
@@ -552,7 +575,12 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                 var element = questions[evt.oldIndex];
                 questions.splice(evt.oldIndex, 1);
                 questions.splice(evt.newIndex, 0, element);
-                $('#save-draft-button').attr("onclick", "saveDraft(" + (evt.newIndex + 1) + ", false);");
+                questions.forEach(function(value, i) {
+                    if (value.id == question_id) {
+                        question_index = i;
+                        $('#save-draft-button').attr("onclick", "saveDraft(" + (i + 1) + ", false);");
+                    }
+                });
                 reorder_question_link();
             },
         });
@@ -588,7 +616,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             questions[question_index]['answer_choices'][order - 1]['is_right_answer'] = true;
         }
     </script>
-    @if ($assessment['with_discussion'])
+    @if ($assessment['with_discussion'] && $assessment['assessment_type_id'] != 3)
         <script src="{{ asset('js/ckeditor.js') }}"></script>
         <script>
             ClassicEditor.create(document.querySelector('#input-discussion'), {
@@ -643,8 +671,19 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     {{-- assessment --}}
     <script>
-        var assessment_type = 'irt';
-        var serentak = false;
+        console.log(@json($assessment));
+        if (@json($assessment['assessment_type_id']) == 1) {
+            var assessment_type = 'irt';
+        } else if (@json($assessment['assessment_type_id']) == 2) {
+            var assessment_type = 'rs';
+        } else if (@json($assessment['assessment_type_id']) == 3) {
+            var assessment_type = 'sa';
+        }
+        if (@json($assessment['is_simultaneously']) == 1 || @json($assessment['with_ranking'])) {
+            var serentak = true;
+        } else {
+            var serentak = false;
+        }
 
         function changeAssessmentType(type) {
             //remove serentak
@@ -741,6 +780,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             $('#assessment-start-time-non-serentak').daterangepicker({
                 autoUpdateInput: false,
                 singleDatePicker: true,
+                minDate: moment(),
                 startDate: "{{ $assessment['start_time'] }}",
                 timePicker: true,
                 timePicker24Hour: true,
@@ -759,6 +799,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             $('#assessment-end-time-non-serentak').daterangepicker({
                 autoUpdateInput: false,
                 singleDatePicker: true,
+                minDate: moment(),
                 startDate: "{{ $assessment['end_time'] }}",
                 timePicker: true,
                 timePicker24Hour: true,
@@ -779,6 +820,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
                 $('#assessment-start-time-non-serentak').daterangepicker({
                     autoUpdateInput: false,
                     singleDatePicker: true,
+                    minDate: moment(),
                     maxDate: time,
                     timePicker: true,
                     timePicker24Hour: true,
@@ -819,6 +861,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             $('#assessment-start-time').daterangepicker({
                 autoUpdateInput: false,
                 singleDatePicker: true,
+                minDate: moment(),
                 startDate: "{{ $assessment['start_time'] }}",
                 timePicker: true,
                 timePicker24Hour: true,
@@ -835,6 +878,7 @@ $assessment_type_id = $assessment['assessment_type_id'] ?? null;
             $('#assessment-end-time').daterangepicker({
                 autoUpdateInput: false,
                 singleDatePicker: true,
+                minDate: moment(),
                 startDate: "{{ $assessment['end_time'] }}",
                 timePicker: true,
                 timePicker24Hour: true,

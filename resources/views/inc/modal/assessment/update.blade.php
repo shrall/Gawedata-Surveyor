@@ -365,7 +365,7 @@
                                             id="create-assessment-back-button-2">
                                             <span class="fa fa-fw fa-arrow-left me-2"></span>Sebelumnya
                                         </span>
-                                        <button type="submit" class="btn btn-gawedata col-4 py-2" disabled
+                                        <button type="submit" class="btn btn-gawedata col-4 py-2"
                                             id="create-assessment-next-button-2" onclick="event.preventDefault()">
                                             Selanjutnya
                                         </button>
@@ -394,7 +394,7 @@
                                             class="d-flex justify-content-between align-items-center position-relative">
                                             <input type="number" name="hard_in_percent" id="assessment-hard-in-percent"
                                                 value="{{ $assessment['hard_in_percent'] ?? 25 }}"
-                                                class="form-control input-text" min="0" max="100" value=25 required>
+                                                class="form-control input-text" min="0" max="100" required>
                                             <span
                                                 class="fa fa-fw fa-percent position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6"></span>
                                         </div>
@@ -410,7 +410,7 @@
                                             <input type="number" name="medium_in_percent"
                                                 value="{{ $assessment['medium_in_percent'] ?? 50 }}"
                                                 id="assessment-medium-in-percent" class="form-control input-text"
-                                                min="0" max="100" value=50 required>
+                                                min="0" max="100" required>
                                             <span
                                                 class="fa fa-fw fa-percent position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6"></span>
                                         </div>
@@ -425,7 +425,7 @@
                                             class="d-flex justify-content-between align-items-center position-relative">
                                             <input type="number" name="easy_in_percent" id="assessment-easy-in-percent"
                                                 value="{{ $assessment['easy_in_percent'] ?? 75 }}"
-                                                class="form-control input-text" min="0" max="100" value=75 required>
+                                                class="form-control input-text" min="0" max="100" required>
                                             <span
                                                 class="fa fa-fw fa-percent position-absolute top-50 end-0 translate-middle-y pe-4 me-2 fs-6"></span>
                                         </div>

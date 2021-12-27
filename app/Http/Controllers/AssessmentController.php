@@ -214,16 +214,23 @@ class AssessmentController extends Controller
             config('services.api.url') . '/assessmentQuestion/' . $id,
             $questions
         )->json();
-        // dd($response);
         if ($request->change_tab) {
             return redirect()->route('assessment.showrespondent', ['id' => $id, 'i' => 1, 'new' => 'false']);
         }
         if ($request->submit_question) {
             return redirect()->route('assessment.submit', ['id' => $id]);
         } else if ($request->new_question) {
-            return redirect()->route('assessment.show', ['id' => $id, 'i' => count($questions), 'new' => 'true']);
+            if (count($response['data']) == count($questions)) {
+                return redirect()->route('assessment.show', ['id' => $id, 'i' => count($questions), 'new' => 'true']);
+            } else {
+                return redirect()->route('assessment.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
+            }
         } else {
-            return redirect()->route('assessment.show', ['id' => $id, 'i' => $request->question_index, 'new' => 'false']);
+            if (count($response['data']) >= $request->question_index) {
+                return redirect()->route('assessment.show', ['id' => $id, 'i' => $request->question_index, 'new' => 'false']);
+            } else {
+                return redirect()->route('survey.show', ['id' => $id, 'i' => 1, 'new' => 'false']);
+            }
         }
     }
 

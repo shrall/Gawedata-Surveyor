@@ -531,7 +531,9 @@
     <script>
         //third step
         $(function() {
-            $("#survey-deadline").datepicker();
+            $("#survey-deadline").datepicker({
+                minDate: 0,
+            });
         });
 
         function enableThirdButton() {
@@ -604,6 +606,7 @@
             $('input[name="daily_datepicker"]').daterangepicker({
                 singleDatePicker: true,
                 startDate: moment(),
+                minDate: moment(),
             }, function(start, end, label) {
                 console.log(start.format('YYYY-MM-DD'));
                 $('#input-daily-date').val(start.format('YYYY-MM-DD'));
@@ -612,6 +615,7 @@
                 timePicker: true,
                 timePicker24Hour: true,
                 timePickerIncrement: 1,
+                minDate: moment(),
                 locale: {
                     format: 'HH:mm'
                 }
@@ -789,6 +793,7 @@
             $('#assessment-start-time-non-serentak').daterangepicker({
                 autoUpdateInput: false,
                 singleDatePicker: true,
+                minDate: moment(),
                 startDate: moment(),
                 timePicker: true,
                 timePicker24Hour: true,
@@ -807,6 +812,7 @@
             $('#assessment-end-time-non-serentak').daterangepicker({
                 autoUpdateInput: false,
                 singleDatePicker: true,
+                minDate: moment(),
                 startDate: moment(),
                 timePicker: true,
                 timePicker24Hour: true,
@@ -827,6 +833,7 @@
                 $('#assessment-start-time-non-serentak').daterangepicker({
                     autoUpdateInput: false,
                     singleDatePicker: true,
+                    minDate: moment(),
                     maxDate: time,
                     timePicker: true,
                     timePicker24Hour: true,
@@ -867,6 +874,7 @@
             $('#assessment-start-time').daterangepicker({
                 autoUpdateInput: false,
                 singleDatePicker: true,
+                minDate: moment(),
                 startDate: moment(),
                 timePicker: true,
                 timePicker24Hour: true,
@@ -883,6 +891,7 @@
             $('#assessment-end-time').daterangepicker({
                 autoUpdateInput: false,
                 singleDatePicker: true,
+                minDate: moment(),
                 startDate: moment(),
                 timePicker: true,
                 timePicker24Hour: true,
