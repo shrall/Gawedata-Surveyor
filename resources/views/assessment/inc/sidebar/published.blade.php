@@ -4,8 +4,8 @@
             <div class="card card-responden mx-3 p-4">
                 <h6 class="mb-4">Bagikan Link Tes kepada Responden</h6>
                 <div class="card card-link-assessment flex-row align-items-center justify-content-between p-3">
-                    <input type="hidden" id="survey-link" value="{{ 'https://gawedata.com/assessment/' . $assessment['slug'] }}">
-                    <div>{{ 'https://gawedata.com/assessment/' . $assessment['slug'] }}</div>
+                    <input type="hidden" id="survey-link" value="{{ 'https://gawedata.app.link/assessment/' . $assessment['slug'] }}">
+                    <div>{{ 'https://gawedata.app.link/assessment/' . $assessment['slug'] }}</div>
                     @if ($assessment['shareable_link'])
                         <span class="far fa-fw fa-copy cursor-pointer" onclick="copyToClipboard();"></span>
                     @endif
