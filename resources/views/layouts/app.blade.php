@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <link rel="icon" type="image/x-icon" href="{{asset('favicon.ico')}}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -60,6 +60,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous">
     </script>
+    <script>
+        $("a").click(function(event) {
+            if ($(this).hasClass("disabled")) {
+                event.preventDefault();
+            }
+            $(this).addClass("disabled");
+        });
+    </script>
 
     @yield('scripts')
     @if (Route::current()->getName() == 'home')
@@ -70,7 +78,7 @@
         <script>
             $(window).on('load', function() {
                 console.log(@json($user));
-                var total_quota = @json($user['available_respondent_quota'])+@json($user['used_respondent_quota']);
+                var total_quota = @json($user['available_respondent_quota']) + @json($user['used_respondent_quota']);
                 $(".used-quota").html(@json($user['available_respondent_quota']))
                 $(".user-quota").html(total_quota)
                 var quota_percentage = @json($user['available_respondent_quota']) / total_quota * 100
