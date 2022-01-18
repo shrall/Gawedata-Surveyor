@@ -161,3 +161,12 @@
         window.location = $(this).data("href");
     });
 </script>
+
+<script>
+    $("a").click(function(event) {
+        if ($(this).hasClass("disabled")) {
+            event.preventDefault();
+        }
+        $(this).addClass("disabled");
+    });
+</script>
