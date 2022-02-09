@@ -220,18 +220,18 @@
                 <ul class="navbar-nav ms-auto align-items-center">
                     @if (Route::current()->getName() == 'home')
                         <li class="nav-item mx-4">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#create-survey-modal"
-                                id="create-survey-general" class="btn btn-gawedata font-lato d-block">
+                            <div data-bs-toggle="modal" data-bs-target="#create-survey-modal" id="create-survey-general"
+                                class="btn btn-gawedata font-lato d-block">
                                 Buat Survei
-                            </a>
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#create-survey-modal-daily"
+                            </div>
+                            <div data-bs-toggle="modal" data-bs-target="#create-survey-modal-daily"
                                 id="create-survey-daily" class="btn btn-gawedata font-lato d-none">
                                 Buat Survei
-                            </a>
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#create-assessment-modal"
-                                id="create-assessment" class="btn btn-gawedata font-lato d-none">
+                            </div>
+                            <div data-bs-toggle="modal" data-bs-target="#create-assessment-modal" id="create-assessment"
+                                class="btn btn-gawedata font-lato d-none">
                                 Buat Assessment
-                            </a>
+                            </div>
                         </li>
                         @include('inc.modal.survey.create')
                         @include('inc.modal.survey.create_daily')
@@ -288,11 +288,11 @@
                         @include('inc.modal.survey.share')
                         @if ($survey['type']['id'] == 2)
                             <li class="nav-item mx-4">
-                                <a href="#" class="btn btn-gawedata-2 font-lato font-weight-bold" data-bs-toggle="modal"
+                                <div class="btn btn-gawedata-2 font-lato font-weight-bold" data-bs-toggle="modal"
                                     data-bs-target="#share-modal">
                                     <span class="far fa-fw fa-paper-plane"></span>
                                     Bagikan Survei
-                                </a>
+                                </div>
                             </li>
                         @endif
                     @elseif (Route::current()->getName() == 'assessment.hasil' || Route::current()->getName() ==
@@ -304,21 +304,21 @@
                         @if ($assessment['assessment_type_id'] == 3)
                             @include('inc.modal.assessment.share')
                             <li class="nav-item mx-4">
-                                <a href="#" class="btn btn-gawedata-2 font-lato font-weight-bold" data-bs-toggle="modal"
+                                <div class="btn btn-gawedata-2 font-lato font-weight-bold" data-bs-toggle="modal"
                                     data-bs-target="#share-modal">
                                     <span class="far fa-fw fa-paper-plane"></span>
                                     Bagikan Tes
-                                </a>
+                                </div>
                             </li>
                         @endif
                         @if ($assessment['assessment_type_id'] != 3 && $assessment['is_simultaneously'] == 0)
                             @include('inc.modal.assessment.share')
                             <li class="nav-item mx-4">
-                                <a href="#" class="btn btn-gawedata-2 font-lato font-weight-bold" data-bs-toggle="modal"
+                                <div class="btn btn-gawedata-2 font-lato font-weight-bold" data-bs-toggle="modal"
                                     data-bs-target="#share-modal">
                                     <span class="far fa-fw fa-paper-plane"></span>
                                     Bagikan Tes
-                                </a>
+                                </div>
                             </li>
                         @endif
                         @if ($assessment['assessment_type_id'] != 3 && $assessment['is_simultaneously'] == 1)
@@ -406,7 +406,8 @@
                                         class="user-quota">150</span> kuota
                                     responden</p>
                                 <div class="my-3">
-                                    <a href="https://wa.me/62811366839" target="_blank" class="text-gawedata text-decoration-none font-weight-bold">
+                                    <a href="https://wa.me/62811366839" target="_blank"
+                                        class="text-gawedata text-decoration-none font-weight-bold">
                                         <span class="fa fa-fw fa-phone-alt me-2"></span>Hubungi Admin Via Whatsapp
                                     </a>
                                 </div>

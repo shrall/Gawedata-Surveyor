@@ -3,7 +3,7 @@
         <div class="row gy-4 mb-4" id="survey-view-grid-box">
             @foreach ($assessments['data'] as $assessment)
                 <a href="{{ route('assessment.show', ['id' => $assessment['id'], 'i' => 1, 'new' => 'false']) }}"
-                    class="col-3 text-decoration-none">
+                    class="col-3 text-decoration-none" title="{{$assessment['title']}}">
                     <div class="card card-survey-grid px-1 py-3 text-gray">
                         <div class="card-header d-flex align-items-center">
                             @if ($assessment['status_id'] == 4)
