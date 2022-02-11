@@ -49,7 +49,7 @@
                     <div class="row gy-4 mb-4" id="survey-view-grid-box">
                         @foreach ($surveys['data'] as $survey)
                             <a href="{{ route('survey.show', ['id' => $survey['id'], 'i' => 1, 'new' => 'false']) }}"
-                                class="col-3 text-decoration-none" title="{{$survey['title']}}">
+                                class="col-3 text-decoration-none" title="{{ $survey['title'] }}">
                                 <div class="card card-survey-grid px-1 py-3 text-gray">
                                     <div class="card-header d-flex align-items-center">
                                         @if ($survey['status_id'] == 4)
@@ -179,7 +179,7 @@
                 <nav id="survey-pagination">
                     <ul class="pagination justify-content-center">
                         @foreach ($surveys['links'] as $page)
-                            <li class="cursor-pointer page-item @if (!$page['url'])disabled @endif @if ($page['active'])active @endif">
+                            <li class="cursor-pointer page-item @if (!$page['url']) disabled @endif @if ($page['active'])active @endif">
                                 @if ($loop->iteration == 1)
                                     <a onclick="changePage({{ $surveys['current_page'] - 1 }});" class="page-link">
                                         Previous
@@ -208,6 +208,7 @@
         $(".survey-row").click(function() {
             window.location = $(this).data("href");
         });
+
     </script>
     {{-- filter + sort --}}
     <script>
@@ -253,6 +254,7 @@
                     console.log(e);
                 });
         }
+
     </script>
     {{-- toggle view --}}
     <script>
@@ -283,6 +285,7 @@
             $(buttonOff).removeClass('text-gawedata');
             $(buttonOff).addClass('text-secondary');
         }
+
     </script>
     {{-- create survey --}}
     <script>
@@ -321,6 +324,7 @@
         $("#survey-description").keyup(function() {
             enableFirstButton();
         });
+
     </script>
     <script>
         //second step public
@@ -396,7 +400,8 @@
                                 element.cities.forEach(element => {
                                     $('#survey-city').append('<option value="' + element.id +
                                         '">' +
-                                        element.city_name + '</option>')
+                                        element.type + " " + element.city_name + '</option>'
+                                        )
                                 });
                             });
                         }
@@ -421,7 +426,8 @@
                                 element.cities.forEach(element => {
                                     $('#survey-city').append('<option value="' + element.id +
                                         '">' +
-                                        element.city_name + '</option>')
+                                        element.type + " " + element.city_name + '</option>'
+                                        )
                                 });
                             });
                         }
@@ -527,6 +533,7 @@
             }
             enableSecondButton();
         });
+
     </script>
     <script>
         //third step
@@ -555,6 +562,7 @@
         $("#survey-deadline").change(function() {
             enableThirdButton();
         });
+
     </script>
     <script>
         //change step
@@ -594,6 +602,7 @@
                 changeStep('#third-step', '#second-step-public', 3, 2);
             }
         })
+
     </script>
     {{-- date range picker --}}
     {{-- https://www.daterangepicker.com/ --}}
@@ -638,6 +647,7 @@
                 }
             }
         }
+
     </script>
     {{-- daily survey tabs --}}
     <script>
@@ -692,6 +702,7 @@
                     console.log(e);
                 });
         }
+
     </script>
     {{-- assessment --}}
     <script>
@@ -783,6 +794,7 @@
             changeAssessmentStep('#assessment-fourth-step-irt',
                 '#assessment-third-step-irt', 4, 3);
         })
+
     </script>
     {{-- second step --}}
     <script>
@@ -975,6 +987,7 @@
         $("#assessment-end-time").change(function() {
             enableSecondAssessmentButton();
         });
+
     </script>
     {{-- third step irt rs --}}
     <script>
@@ -997,6 +1010,7 @@
         $("#assessment-hard-in-percent").keyup(function() {
             enableThirdAssessmentIRTButton();
         });
+
     </script>
     {{-- fourth step irt rs --}}
     <script>
@@ -1009,5 +1023,6 @@
             $('#assessment-' + difficulty + '-in-points').val(parseInt($('#assessment-' + difficulty + '-in-points')
                 .val()) - 1);
         }
+
     </script>
 @endsection
