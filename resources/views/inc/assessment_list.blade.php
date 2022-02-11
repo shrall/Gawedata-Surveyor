@@ -30,12 +30,10 @@
                             <div class="ms-auto">{{ date('d-m-y, H:i', strtotime($assessment['created_at'])) }}
                                 WIB</div>
                         </div>
-                        <div class="card-body mt-4 pb-0">
+                        <div class="card-body mt-2 pb-0">
                             <h5 class="font-weight-bold text-dark">
                                 {{ strlen($assessment['title']) > 25 ? substr($assessment['title'], 0, 20) . '...' : $assessment['title'] }}
                             </h5>
-                        </div>
-                        <div class="card-footer pt-0">
                             @if ($assessment['assessment_type_id'] == 1)
                                 <span class="px-2 py-1 assessment-status-irt font-nexa">IRT</span>
                             @elseif ($assessment['assessment_type_id'] == 2)
@@ -43,6 +41,10 @@
                             @elseif ($assessment['assessment_type_id'] == 3)
                                 <span class="px-2 py-1 assessment-status-sa font-nexa">Self-Assessment</span>
                             @endif
+                        </div>
+                        <div class="card-footer">
+                            <span class="fa fa-fw fa-users me-2"></span> {{ $assessment['respondents_answered_question_count'] }}/{{ $assessment['respondent_quota'] }}
+                            Responden
                         </div>
                     </div>
                 </a>
