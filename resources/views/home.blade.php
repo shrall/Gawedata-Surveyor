@@ -48,7 +48,8 @@
                 <div class="d-block" id="survey-view-grid">
                     <div class="row gy-4 mb-4" id="survey-view-grid-box">
                         @foreach ($surveys['data'] as $survey)
-                            <a href="{{ route('survey.show', ['id' => $survey['id'], 'i' => 1, 'new' => 'false']) }}"
+                            @include('inc.modal.survey.rejected_grid')
+                            <a @if ($survey['status_id'] == 3) onclick="$('#reject-grid-modal-'+{{ $survey['id'] }}).modal('show');" @else href="{{ route('survey.show', ['id' => $survey['id'], 'i' => 1, 'new' => 'false']) }}" @endif
                                 class="col-3 text-decoration-none" title="{{ $survey['title'] }}">
                                 <div class="card card-survey-grid px-1 py-3 text-gray">
                                     <div class="card-header d-flex align-items-center">
@@ -71,6 +72,10 @@
                                         @elseif ($survey['status_id'] == 8)
                                             <div class="text-red">
                                                 <span class="fa fa-fw fa-circle text-red me-2"></span>Stopped
+                                            </div>
+                                        @elseif ($survey['status_id'] == 3)
+                                            <div class="text-red">
+                                                <span class="fa fa-fw fa-circle text-red me-2"></span>Rejected
                                             </div>
                                         @endif
                                         <div class="ms-auto">
@@ -105,8 +110,10 @@
                         </thead>
                         <tbody class="text-gray" id="survey-view-list-box">
                             @foreach ($surveys['data'] as $survey)
+                                @include('inc.modal.survey.rejected_list')
                                 <tr class="survey-row cursor-pointer @if ($loop->iteration > 1) border-top @endif"
-                                    data-href="{{ route('survey.show', ['id' => $survey['id'], 'i' => 1, 'new' => 'false']) }}">
+                                    data-href="{{ route('survey.show', ['id' => $survey['id'], 'i' => 1, 'new' => 'false']) }}"
+                                    data-status=3 data-id={{ $survey['id'] }}>
                                     <th class="py-4 text-dark fs-5" scope="row">
                                         {{ strlen($survey['title']) > 25 ? substr($survey['title'], 0, 33) . '...' : $survey['title'] }}
                                     </th>
@@ -138,6 +145,12 @@
                                         <td class="py-4">
                                             <div class="text-red">
                                                 <span class="fa fa-fw fa-circle text-red me-2"></span>Stopped
+                                            </div>
+                                        </td>
+                                    @elseif ($survey['status_id'] == 3)
+                                        <td class="py-4">
+                                            <div class="text-red">
+                                                <span class="fa fa-fw fa-circle text-red me-2"></span>Rejected
                                             </div>
                                         </td>
                                     @else
@@ -179,7 +192,8 @@
                 <nav id="survey-pagination">
                     <ul class="pagination justify-content-center">
                         @foreach ($surveys['links'] as $page)
-                            <li class="cursor-pointer page-item @if (!$page['url']) disabled @endif @if ($page['active'])active @endif">
+                            <li
+                                class="cursor-pointer page-item @if (!$page['url']) disabled @endif @if ($page['active']) active @endif">
                                 @if ($loop->iteration == 1)
                                     <a onclick="changePage({{ $surveys['current_page'] - 1 }});" class="page-link">
                                         Previous
@@ -206,9 +220,12 @@
     {{-- to survey detail --}}
     <script>
         $(".survey-row").click(function() {
-            window.location = $(this).data("href");
+            if ($(this).data("status") == 3) {
+                $('#reject-list-modal-' + $(this).data("id")).modal('show');
+            } else {
+                window.location = $(this).data("href");
+            }
         });
-
     </script>
     {{-- filter + sort --}}
     <script>
@@ -254,7 +271,6 @@
                     console.log(e);
                 });
         }
-
     </script>
     {{-- toggle view --}}
     <script>
@@ -285,7 +301,6 @@
             $(buttonOff).removeClass('text-gawedata');
             $(buttonOff).addClass('text-secondary');
         }
-
     </script>
     {{-- create survey --}}
     <script>
@@ -324,7 +339,6 @@
         $("#survey-description").keyup(function() {
             enableFirstButton();
         });
-
     </script>
     <script>
         //second step public
@@ -401,7 +415,7 @@
                                     $('#survey-city').append('<option value="' + element.id +
                                         '">' +
                                         element.type + " " + element.city_name + '</option>'
-                                        )
+                                    )
                                 });
                             });
                         }
@@ -427,7 +441,7 @@
                                     $('#survey-city').append('<option value="' + element.id +
                                         '">' +
                                         element.type + " " + element.city_name + '</option>'
-                                        )
+                                    )
                                 });
                             });
                         }
@@ -533,7 +547,6 @@
             }
             enableSecondButton();
         });
-
     </script>
     <script>
         //third step
@@ -562,7 +575,6 @@
         $("#survey-deadline").change(function() {
             enableThirdButton();
         });
-
     </script>
     <script>
         //change step
@@ -602,7 +614,6 @@
                 changeStep('#third-step', '#second-step-public', 3, 2);
             }
         })
-
     </script>
     {{-- date range picker --}}
     {{-- https://www.daterangepicker.com/ --}}
@@ -647,7 +658,6 @@
                 }
             }
         }
-
     </script>
     {{-- daily survey tabs --}}
     <script>
@@ -702,7 +712,6 @@
                     console.log(e);
                 });
         }
-
     </script>
     {{-- assessment --}}
     <script>
@@ -794,7 +803,6 @@
             changeAssessmentStep('#assessment-fourth-step-irt',
                 '#assessment-third-step-irt', 4, 3);
         })
-
     </script>
     {{-- second step --}}
     <script>
@@ -987,7 +995,6 @@
         $("#assessment-end-time").change(function() {
             enableSecondAssessmentButton();
         });
-
     </script>
     {{-- third step irt rs --}}
     <script>
@@ -1010,7 +1017,6 @@
         $("#assessment-hard-in-percent").keyup(function() {
             enableThirdAssessmentIRTButton();
         });
-
     </script>
     {{-- fourth step irt rs --}}
     <script>
@@ -1023,6 +1029,5 @@
             $('#assessment-' + difficulty + '-in-points').val(parseInt($('#assessment-' + difficulty + '-in-points')
                 .val()) - 1);
         }
-
     </script>
 @endsection
