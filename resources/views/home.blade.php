@@ -113,7 +113,7 @@
                                 @include('inc.modal.survey.rejected_list')
                                 <tr class="survey-row cursor-pointer @if ($loop->iteration > 1) border-top @endif"
                                     data-href="{{ route('survey.show', ['id' => $survey['id'], 'i' => 1, 'new' => 'false']) }}"
-                                    data-status=3 data-id={{ $survey['id'] }}>
+                                    data-status={{$survey['status_id']}} data-id={{ $survey['id'] }}>
                                     <th class="py-4 text-dark fs-5" scope="row">
                                         {{ strlen($survey['title']) > 25 ? substr($survey['title'], 0, 33) . '...' : $survey['title'] }}
                                     </th>
@@ -221,7 +221,9 @@
     <script>
         $(".survey-row").click(function() {
             if ($(this).data("status") == 3) {
-                $('#reject-list-modal-' + $(this).data("id")).modal('show');
+                if (survey_type != 'Assessment') {
+                    $('#reject-list-modal-' + $(this).data("id")).modal('show');
+                }
             } else {
                 window.location = $(this).data("href");
             }

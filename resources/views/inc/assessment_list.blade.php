@@ -1,9 +1,10 @@
 @if (count($assessments['data']) > 0)
-    <div class="@if (isset($view) && $view == 'card') d-block @elseif(isset($view) && $view == 'list') d-none @else d-block @endif" id="survey-view-grid">
+    <div class="@if (isset($view) && $view == 'card') d-block @elseif(isset($view) && $view == 'list') d-none @else d-block @endif"
+        id="survey-view-grid">
         <div class="row gy-4 mb-4" id="survey-view-grid-box">
             @foreach ($assessments['data'] as $assessment)
-                <a href="{{ route('assessment.show', ['id' => $assessment['id'], 'i' => 1, 'new' => 'false']) }}"
-                    class="col-3 text-decoration-none" title="{{$assessment['title']}}">
+                <a @if ($assessment['status_id'] != 3) href="{{ route('assessment.show', ['id' => $assessment['id'], 'i' => 1, 'new' => 'false']) }}" @endif
+                    class="col-3 text-decoration-none" title="{{ $assessment['title'] }}">
                     <div class="card card-survey-grid px-1 py-3 text-gray">
                         <div class="card-header d-flex align-items-center">
                             @if ($assessment['status_id'] == 4)
@@ -26,6 +27,10 @@
                                 <div class="text-red">
                                     <span class="fa fa-fw fa-circle text-red me-2"></span>Stopped
                                 </div>
+                            @elseif ($assessment['status_id'] == 3)
+                                <div class="text-red">
+                                    <span class="fa fa-fw fa-circle text-red me-2"></span>Rejected
+                                </div>
                             @endif
                             <div class="ms-auto">{{ date('d-m-y, H:i', strtotime($assessment['created_at'])) }}
                                 WIB</div>
@@ -43,7 +48,8 @@
                             @endif
                         </div>
                         <div class="card-footer">
-                            <span class="fa fa-fw fa-users me-2"></span> {{ $assessment['respondents_answered_question_count'] }}/{{ $assessment['respondent_quota'] }}
+                            <span class="fa fa-fw fa-users me-2"></span>
+                            {{ $assessment['respondents_answered_question_count'] }}/{{ $assessment['respondent_quota'] }}
                             Responden
                         </div>
                     </div>
@@ -51,7 +57,8 @@
             @endforeach
         </div>
     </div>
-    <div class="@if (isset($view) && $view == 'list') d-block @elseif(isset($view) && $view == 'card') d-none @else d-none @endif" id="survey-view-list">
+    <div class="@if (isset($view) && $view == 'list') d-block @elseif(isset($view) && $view == 'card') d-none @else d-none @endif"
+        id="survey-view-list">
         <table class="table table-borderless table-hover">
             <thead>
                 <tr class="text-gray">
@@ -65,6 +72,7 @@
             <tbody class="text-gray" id="survey-view-list-box">
                 @foreach ($assessments['data'] as $assessment)
                     <tr class="survey-row cursor-pointer @if ($loop->iteration > 1) border-top @endif"
+                        data-status={{ $assessment['status_id'] }}
                         data-href="{{ route('assessment.show', ['id' => $assessment['id'], 'i' => 1, 'new' => 'false']) }}">
                         <th class="py-4 text-dark fs-5" scope="row">
                             {{ strlen($assessment['title']) > 25 ? substr($assessment['title'], 0, 33) . '...' : $assessment['title'] }}
@@ -97,6 +105,12 @@
                             <td class="py-4">
                                 <div class="text-red">
                                     <span class="fa fa-fw fa-circle text-red me-2"></span>Stopped
+                                </div>
+                            </td>
+                        @elseif ($assessment['status_id'] == 3)
+                            <td class="py-4">
+                                <div class="text-red">
+                                    <span class="fa fa-fw fa-circle text-red me-2"></span>Rejected
                                 </div>
                             </td>
                         @else
@@ -138,7 +152,8 @@
     <nav id="assessment-pagination">
         <ul class="pagination justify-content-center">
             @foreach ($assessments['links'] as $page)
-                <li class="cursor-pointer page-item @if (!$page['url'])disabled @endif @if ($page['active'])active @endif">
+                <li
+                    class="cursor-pointer page-item @if (!$page['url']) disabled @endif @if ($page['active']) active @endif">
                     @if ($loop->iteration == 1)
                         <a onclick="changePage({{ $assessments['current_page'] - 1 }});" class="page-link">
                             Previous
@@ -160,7 +175,9 @@
 
 <script>
     $(".survey-row").click(function() {
-        window.location = $(this).data("href");
+        if ($(this).data("status") != 3) {
+            window.location = $(this).data("href");
+        }
     });
 </script>
 
