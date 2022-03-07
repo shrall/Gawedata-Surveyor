@@ -180,9 +180,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                @elseif (Route::current()->getName() == 'assessment.show' ||
-                                    Route::current()->getName() ==
-                                    'assessment.showrespondent')
+                                @elseif (Route::current()->getName() == 'assessment.show' || Route::current()->getName() == 'assessment.showrespondent')
                                     <div id="survey-menu" class="p-4">
                                         <div>
                                             <span class="fa fa-fw fa-circle text-yellow me-2"></span>
@@ -262,13 +260,13 @@
                         @endif
                         @include('inc.modal.survey.submit')
                         <li class="nav-item mx-2">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#submit-modal"
-                                class="btn btn-gawedata font-lato font-weight-bold">
+                            <a href="#"
+                                @if (count($survey['questions']) > 0) data-bs-toggle="modal" data-bs-target="#submit-modal" @endif
+                                class="btn btn-gawedata font-lato font-weight-bold @if (count($survey['questions']) == 0) disabled @endif">
                                 Submit Survei
                             </a>
                         </li>
-                    @elseif (Route::current()->getName() == 'assessment.show' || Route::current()->getName() ==
-                        'assessment.showrespondent')
+                    @elseif (Route::current()->getName() == 'assessment.show' || Route::current()->getName() == 'assessment.showrespondent')
                         <li class="nav-item mx-2">
                             <a href="#" class="btn btn-gawedata-2 font-lato" id="save-draft-button"
                                 onclick="saveDraft({{ $i }}, false);">
@@ -278,13 +276,12 @@
                         @include('inc.modal.assessment.update')
                         @include('inc.modal.assessment.submit')
                         <li class="nav-item mx-2">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#submit-modal"
-                                class="btn btn-gawedata font-lato font-weight-bold">
+                            <a href="#" @if (count($assessment['questions']) > 0) data-bs-toggle="modal" data-bs-target="#submit-modal" @endif
+                                class="btn btn-gawedata font-lato font-weight-bold @if (count($assessment['questions']) == 0) disabled @endif">
                                 Submit
                             </a>
                         </li>
-                    @elseif (Route::current()->getName() == 'survey.hasil' || Route::current()->getName() ==
-                        'survey.analisa' || Route::current()->getName() == 'survey.detail')
+                    @elseif (Route::current()->getName() == 'survey.hasil' || Route::current()->getName() == 'survey.analisa' || Route::current()->getName() == 'survey.detail')
                         @include('inc.modal.survey.share')
                         @if ($survey['type']['id'] == 2)
                             <li class="nav-item mx-4">
@@ -295,12 +292,7 @@
                                 </div>
                             </li>
                         @endif
-                    @elseif (Route::current()->getName() == 'assessment.hasil' || Route::current()->getName() ==
-                        'assessment.analisa' || Route::current()->getName() == 'assessment.detail' ||
-                        Route::current()->getName() ==
-                        'assessment.kategori' || Route::current()->getName() == 'assessment.pertanyaan' ||
-                        Route::current()->getName() ==
-                        'assessment.ranking')
+                    @elseif (Route::current()->getName() == 'assessment.hasil' || Route::current()->getName() == 'assessment.analisa' || Route::current()->getName() == 'assessment.detail' || Route::current()->getName() == 'assessment.kategori' || Route::current()->getName() == 'assessment.pertanyaan' || Route::current()->getName() == 'assessment.ranking')
                         @if ($assessment['assessment_type_id'] == 3)
                             @include('inc.modal.assessment.share')
                             <li class="nav-item mx-4">
