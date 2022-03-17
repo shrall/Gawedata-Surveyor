@@ -17,10 +17,17 @@
                             <div class="fs-6" id="survey-menu-box">
                                 @if (Route::current()->getName() == 'survey.hasil' || Route::current()->getName() == 'survey.analisa' || Route::current()->getName() == 'survey.detail')
                                     <div id="survey-menu" class="p-4">
-                                        <div>
-                                            <span class="fa fa-fw fa-circle text-green me-2"></span>
-                                            <span class="text-green">Published</span>
-                                        </div>
+                                        @if ($survey['status_id'] == 7)
+                                            <div>
+                                                <span class="fa fa-fw fa-circle text-finished me-2"></span>
+                                                <span class="text-finished">Finished</span>
+                                            </div>
+                                        @else
+                                            <div>
+                                                <span class="fa fa-fw fa-circle text-green me-2"></span>
+                                                <span class="text-green">Published</span>
+                                            </div>
+                                        @endif
                                         <hr>
                                         @if (isset($survey) && $survey['daily_date'])
                                             <div class="mt-3">
@@ -276,7 +283,8 @@
                         @include('inc.modal.assessment.update')
                         @include('inc.modal.assessment.submit')
                         <li class="nav-item mx-2">
-                            <a href="#" @if (count($assessment['questions']) > 0) data-bs-toggle="modal" data-bs-target="#submit-modal" @endif
+                            <a href="#"
+                                @if (count($assessment['questions']) > 0) data-bs-toggle="modal" data-bs-target="#submit-modal" @endif
                                 class="btn btn-gawedata font-lato font-weight-bold @if (count($assessment['questions']) == 0) disabled @endif">
                                 Submit
                             </a>
