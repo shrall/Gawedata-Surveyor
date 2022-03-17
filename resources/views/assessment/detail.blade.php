@@ -42,7 +42,7 @@ $user = Http::withHeaders([
                         <tr>
                             <td class="text-start text-gray" width="35%">Tgl Survei Dimulai</td>
                             <td class="text-start me-4 font-weight-bold">:
-                                {{ date('d-m-y', strtotime($assessment['test_date'])) }}</td>
+                                {{ date('d-m-Y', strtotime($assessment['test_date'])) }}</td>
                         </tr>
                         <tr>
                             <td class="text-start text-gray" width="35%">Jumlah Pertanyaan</td>

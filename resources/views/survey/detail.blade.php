@@ -35,11 +35,11 @@
                         </tr>
                         <tr>
                             <td class="text-start text-gray" width="35%">Tgl Survei Dimulai</td>
-                            <td class="text-start me-4 font-weight-bold">: {{ date('d-m-y', strtotime($survey['created_at'])) }}</td>
+                            <td class="text-start me-4 font-weight-bold">: {{ date('d-m-Y', strtotime($survey['created_at'])) }}</td>
                         </tr>
                         <tr>
                             <td class="text-start text-gray" width="35%">Tgl Survei Selesai</td>
-                            <td class="text-start me-4 font-weight-bold">: {{ date('d-m-y', strtotime($survey['general_expired_date'])) }}</td>
+                            <td class="text-start me-4 font-weight-bold">: {{ date('d-m-Y', strtotime($survey['general_expired_date'])) }}</td>
                         </tr>
                         <tr>
                             <td class="text-start text-gray" width="35%">Jumlah Pertanyaan</td>
